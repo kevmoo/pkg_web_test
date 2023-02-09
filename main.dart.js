@@ -236,16 +236,2054 @@
     typesOffset = init.types.length;
     hunk(hunkHelpers, init, holders, $);
   }
-  var J = {Interceptor: function Interceptor() {
-    }, JavaScriptObject: function JavaScriptObject() {
-    }},
-  A = {Object: function Object() {
+  var A = {JS_CONST: function JS_CONST() {
+    }, LateError: function LateError(t0) {
+      this._message = t0;
+    }, ListIterator: function ListIterator(t0, t1, t2) {
+      var _ = this;
+      _.__internal$_iterable = t0;
+      _.__internal$_length = t1;
+      _.__internal$_index = 0;
+      _.__internal$_current = null;
+      _.$ti = t2;
+    }, FixedLengthListMixin: function FixedLengthListMixin() {
+    },
+    unminifyOrTag(rawClassName) {
+      var preserved = init.mangledGlobalNames[rawClassName];
+      if (preserved != null)
+        return preserved;
+      return rawClassName;
+    },
+    isJsIndexable(object, record) {
+      var result;
+      if (record != null) {
+        result = record.x;
+        if (result != null)
+          return result;
+      }
+      return type$.JavaScriptIndexingBehavior_dynamic._is(object);
+    },
+    S(value) {
+      var result;
+      if (typeof value == "string")
+        return value;
+      if (typeof value == "number") {
+        if (value !== 0)
+          return "" + value;
+      } else if (true === value)
+        return "true";
+      else if (false === value)
+        return "false";
+      else if (value == null)
+        return "null";
+      result = J.toString$0$(value);
+      return result;
+    },
+    Primitives_objectTypeName(object) {
+      return A.Primitives__objectTypeNameNewRti(object);
+    },
+    Primitives__objectTypeNameNewRti(object) {
+      var interceptor, dispatchName, $constructor, constructorName;
+      if (object instanceof A.Object)
+        return A._rtiToString(A.instanceType(object), null);
+      interceptor = J.getInterceptor$(object);
+      if (interceptor === B.Interceptor_methods || interceptor === B.JavaScriptObject_methods || type$.UnknownJavaScriptObject._is(object)) {
+        dispatchName = B.C_JS_CONST(object);
+        if (dispatchName !== "Object" && dispatchName !== "")
+          return dispatchName;
+        $constructor = object.constructor;
+        if (typeof $constructor == "function") {
+          constructorName = $constructor.name;
+          if (typeof constructorName == "string" && constructorName !== "Object" && constructorName !== "")
+            return constructorName;
+        }
+      }
+      return A._rtiToString(A.instanceType(object), null);
+    },
+    ioore(receiver, index) {
+      if (receiver == null)
+        J.get$length$asx(receiver);
+      throw A.wrapException(A.diagnoseIndexError(receiver, index));
+    },
+    diagnoseIndexError(indexable, index) {
+      var $length, _s5_ = "index";
+      if (!A._isInt(index))
+        return new A.ArgumentError(true, index, _s5_, null);
+      $length = J.get$length$asx(indexable);
+      if (index < 0 || index >= $length)
+        return new A.IndexError($length, true, index, _s5_, "Index out of range");
+      return new A.RangeError(null, null, true, index, _s5_, "Value not in range");
+    },
+    wrapException(ex) {
+      var wrapper, t1;
+      if (ex == null)
+        ex = new A.TypeError();
+      wrapper = new Error();
+      wrapper.dartException = ex;
+      t1 = A.toStringWrapper;
+      if ("defineProperty" in Object) {
+        Object.defineProperty(wrapper, "message", {get: t1});
+        wrapper.name = "";
+      } else
+        wrapper.toString = t1;
+      return wrapper;
+    },
+    toStringWrapper() {
+      return J.toString$0$(this.dartException);
+    },
+    throwExpression(ex) {
+      throw A.wrapException(ex);
+    },
+    throwConcurrentModificationError(collection) {
+      throw A.wrapException(A.ConcurrentModificationError$(collection));
+    },
+    Closure_fromTearOff(parameters) {
+      var $prototype, $constructor, t2, trampoline, applyTrampoline, i, stub, stub0, stubName, stubCallName,
+        container = parameters.co,
+        isStatic = parameters.iS,
+        isIntercepted = parameters.iI,
+        needsDirectAccess = parameters.nDA,
+        applyTrampolineIndex = parameters.aI,
+        funsOrNames = parameters.fs,
+        callNames = parameters.cs,
+        $name = funsOrNames[0],
+        callName = callNames[0],
+        $function = container[$name],
+        t1 = parameters.fT;
+      t1.toString;
+      $prototype = isStatic ? Object.create(new A.StaticClosure().constructor.prototype) : Object.create(new A.BoundClosure(null, null).constructor.prototype);
+      $prototype.$initialize = $prototype.constructor;
+      if (isStatic)
+        $constructor = function static_tear_off() {
+          this.$initialize();
+        };
+      else
+        $constructor = function tear_off(a, b) {
+          this.$initialize(a, b);
+        };
+      $prototype.constructor = $constructor;
+      $constructor.prototype = $prototype;
+      $prototype.$_name = $name;
+      $prototype.$_target = $function;
+      t2 = !isStatic;
+      if (t2)
+        trampoline = A.Closure_forwardCallTo($name, $function, isIntercepted, needsDirectAccess);
+      else {
+        $prototype.$static_name = $name;
+        trampoline = $function;
+      }
+      $prototype.$signature = A.Closure__computeSignatureFunctionNewRti(t1, isStatic, isIntercepted);
+      $prototype[callName] = trampoline;
+      for (applyTrampoline = trampoline, i = 1; i < funsOrNames.length; ++i) {
+        stub = funsOrNames[i];
+        if (typeof stub == "string") {
+          stub0 = container[stub];
+          stubName = stub;
+          stub = stub0;
+        } else
+          stubName = "";
+        stubCallName = callNames[i];
+        if (stubCallName != null) {
+          if (t2)
+            stub = A.Closure_forwardCallTo(stubName, stub, isIntercepted, needsDirectAccess);
+          $prototype[stubCallName] = stub;
+        }
+        if (i === applyTrampolineIndex)
+          applyTrampoline = stub;
+      }
+      $prototype["call*"] = applyTrampoline;
+      $prototype.$requiredArgCount = parameters.rC;
+      $prototype.$defaultValues = parameters.dV;
+      return $constructor;
+    },
+    Closure__computeSignatureFunctionNewRti(functionType, isStatic, isIntercepted) {
+      if (typeof functionType == "number")
+        return functionType;
+      if (typeof functionType == "string") {
+        if (isStatic)
+          throw A.wrapException("Cannot compute signature for static tearoff.");
+        return function(recipe, evalOnReceiver) {
+          return function() {
+            return evalOnReceiver(this, recipe);
+          };
+        }(functionType, A.BoundClosure_evalRecipe);
+      }
+      throw A.wrapException("Error in functionType of tearoff");
+    },
+    Closure_cspForwardCall(arity, needsDirectAccess, stubName, $function) {
+      var getReceiver = A.BoundClosure_receiverOf;
+      switch (needsDirectAccess ? -1 : arity) {
+        case 0:
+          return function(entry, receiverOf) {
+            return function() {
+              return receiverOf(this)[entry]();
+            };
+          }(stubName, getReceiver);
+        case 1:
+          return function(entry, receiverOf) {
+            return function(a) {
+              return receiverOf(this)[entry](a);
+            };
+          }(stubName, getReceiver);
+        case 2:
+          return function(entry, receiverOf) {
+            return function(a, b) {
+              return receiverOf(this)[entry](a, b);
+            };
+          }(stubName, getReceiver);
+        case 3:
+          return function(entry, receiverOf) {
+            return function(a, b, c) {
+              return receiverOf(this)[entry](a, b, c);
+            };
+          }(stubName, getReceiver);
+        case 4:
+          return function(entry, receiverOf) {
+            return function(a, b, c, d) {
+              return receiverOf(this)[entry](a, b, c, d);
+            };
+          }(stubName, getReceiver);
+        case 5:
+          return function(entry, receiverOf) {
+            return function(a, b, c, d, e) {
+              return receiverOf(this)[entry](a, b, c, d, e);
+            };
+          }(stubName, getReceiver);
+        default:
+          return function(f, receiverOf) {
+            return function() {
+              return f.apply(receiverOf(this), arguments);
+            };
+          }($function, getReceiver);
+      }
+    },
+    Closure_forwardCallTo(stubName, $function, isIntercepted, needsDirectAccess) {
+      var arity, t1;
+      if (isIntercepted)
+        return A.Closure_forwardInterceptedCallTo(stubName, $function, needsDirectAccess);
+      arity = $function.length;
+      t1 = A.Closure_cspForwardCall(arity, needsDirectAccess, stubName, $function);
+      return t1;
+    },
+    Closure_cspForwardInterceptedCall(arity, needsDirectAccess, stubName, $function) {
+      var getReceiver = A.BoundClosure_receiverOf,
+        getInterceptor = A.BoundClosure_interceptorOf;
+      switch (needsDirectAccess ? -1 : arity) {
+        case 0:
+          throw A.wrapException(new A.RuntimeError("Intercepted function with no arguments."));
+        case 1:
+          return function(entry, interceptorOf, receiverOf) {
+            return function() {
+              return interceptorOf(this)[entry](receiverOf(this));
+            };
+          }(stubName, getInterceptor, getReceiver);
+        case 2:
+          return function(entry, interceptorOf, receiverOf) {
+            return function(a) {
+              return interceptorOf(this)[entry](receiverOf(this), a);
+            };
+          }(stubName, getInterceptor, getReceiver);
+        case 3:
+          return function(entry, interceptorOf, receiverOf) {
+            return function(a, b) {
+              return interceptorOf(this)[entry](receiverOf(this), a, b);
+            };
+          }(stubName, getInterceptor, getReceiver);
+        case 4:
+          return function(entry, interceptorOf, receiverOf) {
+            return function(a, b, c) {
+              return interceptorOf(this)[entry](receiverOf(this), a, b, c);
+            };
+          }(stubName, getInterceptor, getReceiver);
+        case 5:
+          return function(entry, interceptorOf, receiverOf) {
+            return function(a, b, c, d) {
+              return interceptorOf(this)[entry](receiverOf(this), a, b, c, d);
+            };
+          }(stubName, getInterceptor, getReceiver);
+        case 6:
+          return function(entry, interceptorOf, receiverOf) {
+            return function(a, b, c, d, e) {
+              return interceptorOf(this)[entry](receiverOf(this), a, b, c, d, e);
+            };
+          }(stubName, getInterceptor, getReceiver);
+        default:
+          return function(f, interceptorOf, receiverOf) {
+            return function() {
+              var a = [receiverOf(this)];
+              Array.prototype.push.apply(a, arguments);
+              return f.apply(interceptorOf(this), a);
+            };
+          }($function, getInterceptor, getReceiver);
+      }
+    },
+    Closure_forwardInterceptedCallTo(stubName, $function, needsDirectAccess) {
+      var arity, t1;
+      if ($.BoundClosure__interceptorFieldNameCache == null)
+        $.BoundClosure__interceptorFieldNameCache = A.BoundClosure__computeFieldNamed("interceptor");
+      if ($.BoundClosure__receiverFieldNameCache == null)
+        $.BoundClosure__receiverFieldNameCache = A.BoundClosure__computeFieldNamed("receiver");
+      arity = $function.length;
+      t1 = A.Closure_cspForwardInterceptedCall(arity, needsDirectAccess, stubName, $function);
+      return t1;
+    },
+    closureFromTearOff(parameters) {
+      return A.Closure_fromTearOff(parameters);
+    },
+    BoundClosure_evalRecipe(closure, recipe) {
+      return A._Universe_evalInEnvironment(init.typeUniverse, A.instanceType(closure._receiver), recipe);
+    },
+    BoundClosure_receiverOf(closure) {
+      return closure._receiver;
+    },
+    BoundClosure_interceptorOf(closure) {
+      return closure._interceptor;
+    },
+    BoundClosure__computeFieldNamed(fieldName) {
+      var names, i, $name,
+        template = new A.BoundClosure("receiver", "interceptor"),
+        t1 = Object.getOwnPropertyNames(template);
+      t1.fixed$length = Array;
+      names = t1;
+      for (t1 = names.length, i = 0; i < t1; ++i) {
+        $name = names[i];
+        if (template[$name] === fieldName)
+          return $name;
+      }
+      throw A.wrapException(new A.ArgumentError(false, null, null, "Field name " + fieldName + " not found."));
+    },
+    throwCyclicInit(staticName) {
+      throw A.wrapException(new A._CyclicInitializationError(staticName));
+    },
+    getIsolateAffinityTag($name) {
+      return init.getIsolateTag($name);
+    },
+    lookupAndCacheInterceptor(obj) {
+      var interceptor, interceptorClass, altTag, mark, t1,
+        tag = A._asString($.getTagFunction.call$1(obj)),
+        record = $.dispatchRecordsForInstanceTags[tag];
+      if (record != null) {
+        Object.defineProperty(obj, init.dispatchPropertyName, {value: record, enumerable: false, writable: true, configurable: true});
+        return record.i;
+      }
+      interceptor = $.interceptorsForUncacheableTags[tag];
+      if (interceptor != null)
+        return interceptor;
+      interceptorClass = init.interceptorsByTag[tag];
+      if (interceptorClass == null) {
+        altTag = A._asStringQ($.alternateTagFunction.call$2(obj, tag));
+        if (altTag != null) {
+          record = $.dispatchRecordsForInstanceTags[altTag];
+          if (record != null) {
+            Object.defineProperty(obj, init.dispatchPropertyName, {value: record, enumerable: false, writable: true, configurable: true});
+            return record.i;
+          }
+          interceptor = $.interceptorsForUncacheableTags[altTag];
+          if (interceptor != null)
+            return interceptor;
+          interceptorClass = init.interceptorsByTag[altTag];
+          tag = altTag;
+        }
+      }
+      if (interceptorClass == null)
+        return null;
+      interceptor = interceptorClass.prototype;
+      mark = tag[0];
+      if (mark === "!") {
+        record = A.makeLeafDispatchRecord(interceptor);
+        $.dispatchRecordsForInstanceTags[tag] = record;
+        Object.defineProperty(obj, init.dispatchPropertyName, {value: record, enumerable: false, writable: true, configurable: true});
+        return record.i;
+      }
+      if (mark === "~") {
+        $.interceptorsForUncacheableTags[tag] = interceptor;
+        return interceptor;
+      }
+      if (mark === "-") {
+        t1 = A.makeLeafDispatchRecord(interceptor);
+        Object.defineProperty(Object.getPrototypeOf(obj), init.dispatchPropertyName, {value: t1, enumerable: false, writable: true, configurable: true});
+        return t1.i;
+      }
+      if (mark === "+")
+        return A.patchInteriorProto(obj, interceptor);
+      if (mark === "*")
+        throw A.wrapException(A.UnimplementedError$(tag));
+      if (init.leafTags[tag] === true) {
+        t1 = A.makeLeafDispatchRecord(interceptor);
+        Object.defineProperty(Object.getPrototypeOf(obj), init.dispatchPropertyName, {value: t1, enumerable: false, writable: true, configurable: true});
+        return t1.i;
+      } else
+        return A.patchInteriorProto(obj, interceptor);
+    },
+    patchInteriorProto(obj, interceptor) {
+      var proto = Object.getPrototypeOf(obj);
+      Object.defineProperty(proto, init.dispatchPropertyName, {value: J.makeDispatchRecord(interceptor, proto, null, null), enumerable: false, writable: true, configurable: true});
+      return interceptor;
+    },
+    makeLeafDispatchRecord(interceptor) {
+      return J.makeDispatchRecord(interceptor, false, null, !!interceptor.$isJavaScriptIndexingBehavior);
+    },
+    makeDefaultDispatchRecord(tag, interceptorClass, proto) {
+      var interceptor = interceptorClass.prototype;
+      if (init.leafTags[tag] === true)
+        return A.makeLeafDispatchRecord(interceptor);
+      else
+        return J.makeDispatchRecord(interceptor, proto, null, null);
+    },
+    initNativeDispatch() {
+      if (true === $.initNativeDispatchFlag)
+        return;
+      $.initNativeDispatchFlag = true;
+      A.initNativeDispatchContinue();
+    },
+    initNativeDispatchContinue() {
+      var map, tags, fun, i, tag, proto, record, interceptorClass;
+      $.dispatchRecordsForInstanceTags = Object.create(null);
+      $.interceptorsForUncacheableTags = Object.create(null);
+      A.initHooks();
+      map = init.interceptorsByTag;
+      tags = Object.getOwnPropertyNames(map);
+      if (typeof window != "undefined") {
+        window;
+        fun = function() {
+        };
+        for (i = 0; i < tags.length; ++i) {
+          tag = tags[i];
+          proto = $.prototypeForTagFunction.call$1(tag);
+          if (proto != null) {
+            record = A.makeDefaultDispatchRecord(tag, map[tag], proto);
+            if (record != null) {
+              Object.defineProperty(proto, init.dispatchPropertyName, {value: record, enumerable: false, writable: true, configurable: true});
+              fun.prototype = proto;
+            }
+          }
+        }
+      }
+      for (i = 0; i < tags.length; ++i) {
+        tag = tags[i];
+        if (/^[A-Za-z_]/.test(tag)) {
+          interceptorClass = map[tag];
+          map["!" + tag] = interceptorClass;
+          map["~" + tag] = interceptorClass;
+          map["-" + tag] = interceptorClass;
+          map["+" + tag] = interceptorClass;
+          map["*" + tag] = interceptorClass;
+        }
+      }
+    },
+    initHooks() {
+      var transformers, i, transformer, getTag, getUnknownTag, prototypeForTag,
+        hooks = B.C_JS_CONST0();
+      hooks = A.applyHooksTransformer(B.C_JS_CONST1, A.applyHooksTransformer(B.C_JS_CONST2, A.applyHooksTransformer(B.C_JS_CONST3, A.applyHooksTransformer(B.C_JS_CONST3, A.applyHooksTransformer(B.C_JS_CONST4, A.applyHooksTransformer(B.C_JS_CONST5, A.applyHooksTransformer(B.C_JS_CONST6(B.C_JS_CONST), hooks)))))));
+      if (typeof dartNativeDispatchHooksTransformer != "undefined") {
+        transformers = dartNativeDispatchHooksTransformer;
+        if (typeof transformers == "function")
+          transformers = [transformers];
+        if (transformers.constructor == Array)
+          for (i = 0; i < transformers.length; ++i) {
+            transformer = transformers[i];
+            if (typeof transformer == "function")
+              hooks = transformer(hooks) || hooks;
+          }
+      }
+      getTag = hooks.getTag;
+      getUnknownTag = hooks.getUnknownTag;
+      prototypeForTag = hooks.prototypeForTag;
+      $.getTagFunction = new A.initHooks_closure(getTag);
+      $.alternateTagFunction = new A.initHooks_closure0(getUnknownTag);
+      $.prototypeForTagFunction = new A.initHooks_closure1(prototypeForTag);
+    },
+    applyHooksTransformer(transformer, hooks) {
+      return transformer(hooks) || hooks;
+    },
+    createRecordTypePredicate(shape, fieldRtis) {
+      var $length = fieldRtis.length,
+        $function = init.rttc["" + $length + ";" + shape];
+      if ($function == null)
+        return null;
+      if ($length === 0)
+        return $function;
+      if ($length === $function.length)
+        return $function.apply(null, fieldRtis);
+      return $function(fieldRtis);
+    },
+    Closure: function Closure() {
+    },
+    Closure2Args: function Closure2Args() {
+    },
+    TearOffClosure: function TearOffClosure() {
+    },
+    StaticClosure: function StaticClosure() {
+    },
+    BoundClosure: function BoundClosure(t0, t1) {
+      this._receiver = t0;
+      this._interceptor = t1;
+    },
+    _CyclicInitializationError: function _CyclicInitializationError(t0) {
+      this.variableName = t0;
+    },
+    RuntimeError: function RuntimeError(t0) {
+      this.message = t0;
+    },
+    initHooks_closure: function initHooks_closure(t0) {
+      this.getTag = t0;
+    },
+    initHooks_closure0: function initHooks_closure0(t0) {
+      this.getUnknownTag = t0;
+    },
+    initHooks_closure1: function initHooks_closure1(t0) {
+      this.prototypeForTag = t0;
+    },
+    _checkValidIndex(index, list, $length) {
+      if (index >>> 0 !== index || index >= $length)
+        throw A.wrapException(A.diagnoseIndexError(list, index));
+    },
+    NativeTypedData: function NativeTypedData() {
+    },
+    NativeTypedArray: function NativeTypedArray() {
+    },
+    NativeTypedArrayOfDouble: function NativeTypedArrayOfDouble() {
+    },
+    NativeTypedArrayOfInt: function NativeTypedArrayOfInt() {
+    },
+    NativeInt16List: function NativeInt16List() {
+    },
+    NativeInt32List: function NativeInt32List() {
+    },
+    NativeInt8List: function NativeInt8List() {
+    },
+    NativeUint16List: function NativeUint16List() {
+    },
+    NativeUint32List: function NativeUint32List() {
+    },
+    NativeUint8ClampedList: function NativeUint8ClampedList() {
+    },
+    NativeUint8List: function NativeUint8List() {
+    },
+    _NativeTypedArrayOfDouble_NativeTypedArray_ListMixin: function _NativeTypedArrayOfDouble_NativeTypedArray_ListMixin() {
+    },
+    _NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin: function _NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin() {
+    },
+    _NativeTypedArrayOfInt_NativeTypedArray_ListMixin: function _NativeTypedArrayOfInt_NativeTypedArray_ListMixin() {
+    },
+    _NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin: function _NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin() {
+    },
+    Rti__getQuestionFromStar(universe, rti) {
+      var question = rti._precomputed1;
+      return question == null ? rti._precomputed1 = A._Universe__lookupQuestionRti(universe, rti._primary, true) : question;
+    },
+    Rti__getFutureFromFutureOr(universe, rti) {
+      var future = rti._precomputed1;
+      return future == null ? rti._precomputed1 = A._Universe__lookupInterfaceRti(universe, "Future", [rti._primary]) : future;
+    },
+    Rti__isUnionOfFunctionType(rti) {
+      var kind = rti._kind;
+      if (kind === 6 || kind === 7 || kind === 8)
+        return A.Rti__isUnionOfFunctionType(rti._primary);
+      return kind === 12 || kind === 13;
+    },
+    Rti__getCanonicalRecipe(rti) {
+      return rti._canonicalRecipe;
+    },
+    findType(recipe) {
+      return A._Universe_eval(init.typeUniverse, recipe, false);
+    },
+    _substitute(universe, rti, typeArguments, depth) {
+      var baseType, substitutedBaseType, interfaceTypeArguments, substitutedInterfaceTypeArguments, base, substitutedBase, $arguments, substitutedArguments, returnType, substitutedReturnType, functionParameters, substitutedFunctionParameters, bounds, substitutedBounds, index, argument,
+        kind = rti._kind;
+      switch (kind) {
+        case 5:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+          return rti;
+        case 6:
+          baseType = rti._primary;
+          substitutedBaseType = A._substitute(universe, baseType, typeArguments, depth);
+          if (substitutedBaseType === baseType)
+            return rti;
+          return A._Universe__lookupStarRti(universe, substitutedBaseType, true);
+        case 7:
+          baseType = rti._primary;
+          substitutedBaseType = A._substitute(universe, baseType, typeArguments, depth);
+          if (substitutedBaseType === baseType)
+            return rti;
+          return A._Universe__lookupQuestionRti(universe, substitutedBaseType, true);
+        case 8:
+          baseType = rti._primary;
+          substitutedBaseType = A._substitute(universe, baseType, typeArguments, depth);
+          if (substitutedBaseType === baseType)
+            return rti;
+          return A._Universe__lookupFutureOrRti(universe, substitutedBaseType, true);
+        case 9:
+          interfaceTypeArguments = rti._rest;
+          substitutedInterfaceTypeArguments = A._substituteArray(universe, interfaceTypeArguments, typeArguments, depth);
+          if (substitutedInterfaceTypeArguments === interfaceTypeArguments)
+            return rti;
+          return A._Universe__lookupInterfaceRti(universe, rti._primary, substitutedInterfaceTypeArguments);
+        case 10:
+          base = rti._primary;
+          substitutedBase = A._substitute(universe, base, typeArguments, depth);
+          $arguments = rti._rest;
+          substitutedArguments = A._substituteArray(universe, $arguments, typeArguments, depth);
+          if (substitutedBase === base && substitutedArguments === $arguments)
+            return rti;
+          return A._Universe__lookupBindingRti(universe, substitutedBase, substitutedArguments);
+        case 12:
+          returnType = rti._primary;
+          substitutedReturnType = A._substitute(universe, returnType, typeArguments, depth);
+          functionParameters = rti._rest;
+          substitutedFunctionParameters = A._substituteFunctionParameters(universe, functionParameters, typeArguments, depth);
+          if (substitutedReturnType === returnType && substitutedFunctionParameters === functionParameters)
+            return rti;
+          return A._Universe__lookupFunctionRti(universe, substitutedReturnType, substitutedFunctionParameters);
+        case 13:
+          bounds = rti._rest;
+          depth += bounds.length;
+          substitutedBounds = A._substituteArray(universe, bounds, typeArguments, depth);
+          base = rti._primary;
+          substitutedBase = A._substitute(universe, base, typeArguments, depth);
+          if (substitutedBounds === bounds && substitutedBase === base)
+            return rti;
+          return A._Universe__lookupGenericFunctionRti(universe, substitutedBase, substitutedBounds, true);
+        case 14:
+          index = rti._primary;
+          if (index < depth)
+            return rti;
+          argument = typeArguments[index - depth];
+          if (argument == null)
+            return rti;
+          return argument;
+        default:
+          throw A.wrapException(A.AssertionError$("Attempted to substitute unexpected RTI kind " + kind));
+      }
+    },
+    _substituteArray(universe, rtiArray, typeArguments, depth) {
+      var changed, i, rti, substitutedRti,
+        $length = rtiArray.length,
+        result = A._Utils_newArrayOrEmpty($length);
+      for (changed = false, i = 0; i < $length; ++i) {
+        rti = rtiArray[i];
+        substitutedRti = A._substitute(universe, rti, typeArguments, depth);
+        if (substitutedRti !== rti)
+          changed = true;
+        result[i] = substitutedRti;
+      }
+      return changed ? result : rtiArray;
+    },
+    _substituteNamed(universe, namedArray, typeArguments, depth) {
+      var changed, i, t1, t2, rti, substitutedRti,
+        $length = namedArray.length,
+        result = A._Utils_newArrayOrEmpty($length);
+      for (changed = false, i = 0; i < $length; i += 3) {
+        t1 = namedArray[i];
+        t2 = namedArray[i + 1];
+        rti = namedArray[i + 2];
+        substitutedRti = A._substitute(universe, rti, typeArguments, depth);
+        if (substitutedRti !== rti)
+          changed = true;
+        result.splice(i, 3, t1, t2, substitutedRti);
+      }
+      return changed ? result : namedArray;
+    },
+    _substituteFunctionParameters(universe, functionParameters, typeArguments, depth) {
+      var result,
+        requiredPositional = functionParameters._requiredPositional,
+        substitutedRequiredPositional = A._substituteArray(universe, requiredPositional, typeArguments, depth),
+        optionalPositional = functionParameters._optionalPositional,
+        substitutedOptionalPositional = A._substituteArray(universe, optionalPositional, typeArguments, depth),
+        named = functionParameters._named,
+        substitutedNamed = A._substituteNamed(universe, named, typeArguments, depth);
+      if (substitutedRequiredPositional === requiredPositional && substitutedOptionalPositional === optionalPositional && substitutedNamed === named)
+        return functionParameters;
+      result = new A._FunctionParameters();
+      result._requiredPositional = substitutedRequiredPositional;
+      result._optionalPositional = substitutedOptionalPositional;
+      result._named = substitutedNamed;
+      return result;
+    },
+    _setArrayType(target, rti) {
+      target[init.arrayRti] = rti;
+      return target;
+    },
+    closureFunctionType(closure) {
+      var t1,
+        signature = closure.$signature;
+      if (signature != null) {
+        if (typeof signature == "number")
+          return A.getTypeFromTypesTable(signature);
+        t1 = closure.$signature();
+        return t1;
+      }
+      return null;
+    },
+    instanceOrFunctionType(object, testRti) {
+      var rti;
+      if (A.Rti__isUnionOfFunctionType(testRti))
+        if (object instanceof A.Closure) {
+          rti = A.closureFunctionType(object);
+          if (rti != null)
+            return rti;
+        }
+      return A.instanceType(object);
+    },
+    instanceType(object) {
+      var rti;
+      if (object instanceof A.Object) {
+        rti = object.$ti;
+        return rti != null ? rti : A._instanceTypeFromConstructor(object);
+      }
+      if (Array.isArray(object))
+        return A._arrayInstanceType(object);
+      return A._instanceTypeFromConstructor(J.getInterceptor$(object));
+    },
+    _arrayInstanceType(object) {
+      var rti = object[init.arrayRti],
+        defaultRti = type$.JSArray_dynamic;
+      if (rti == null)
+        return defaultRti;
+      if (rti.constructor !== defaultRti.constructor)
+        return defaultRti;
+      return rti;
+    },
+    _instanceType(object) {
+      var rti = object.$ti;
+      return rti != null ? rti : A._instanceTypeFromConstructor(object);
+    },
+    _instanceTypeFromConstructor(instance) {
+      var $constructor = instance.constructor,
+        probe = $constructor.$ccache;
+      if (probe != null)
+        return probe;
+      return A._instanceTypeFromConstructorMiss(instance, $constructor);
+    },
+    _instanceTypeFromConstructorMiss(instance, $constructor) {
+      var effectiveConstructor = instance instanceof A.Closure ? instance.__proto__.__proto__.constructor : $constructor,
+        rti = A._Universe_findErasedType(init.typeUniverse, effectiveConstructor.name);
+      $constructor.$ccache = rti;
+      return rti;
+    },
+    getTypeFromTypesTable(index) {
+      var rti,
+        table = init.types,
+        type = table[index];
+      if (typeof type == "string") {
+        rti = A._Universe_eval(init.typeUniverse, type, false);
+        table[index] = rti;
+        return rti;
+      }
+      return type;
+    },
+    _installSpecializedIsTest(object) {
+      var t1, unstarred, isFn, t2, $name, predicate, testRti = this;
+      if (testRti === type$.Object)
+        return A._finishIsFn(testRti, object, A._isObject);
+      if (!A.isStrongTopType(testRti))
+        if (!(testRti === type$.legacy_Object))
+          t1 = false;
+        else
+          t1 = true;
+      else
+        t1 = true;
+      if (t1)
+        return A._finishIsFn(testRti, object, A._isTop);
+      t1 = testRti._kind;
+      if (t1 === 1)
+        return A._finishIsFn(testRti, object, A._isNever);
+      unstarred = t1 === 6 ? testRti._primary : testRti;
+      if (unstarred === type$.int)
+        isFn = A._isInt;
+      else if (unstarred === type$.double || unstarred === type$.num)
+        isFn = A._isNum;
+      else if (unstarred === type$.String)
+        isFn = A._isString;
+      else
+        isFn = unstarred === type$.bool ? A._isBool : null;
+      if (isFn != null)
+        return A._finishIsFn(testRti, object, isFn);
+      t2 = unstarred._kind;
+      if (t2 === 9) {
+        $name = unstarred._primary;
+        if (unstarred._rest.every(A.isTopType)) {
+          testRti._specializedTestResource = "$is" + $name;
+          if ($name === "List")
+            return A._finishIsFn(testRti, object, A._isListTestViaProperty);
+          return A._finishIsFn(testRti, object, A._isTestViaProperty);
+        }
+      } else if (t1 === 7)
+        return A._finishIsFn(testRti, object, A._generalNullableIsTestImplementation);
+      else if (t2 === 11) {
+        predicate = A.createRecordTypePredicate(unstarred._primary, unstarred._rest);
+        return A._finishIsFn(testRti, object, predicate == null ? A._isNever : predicate);
+      }
+      return A._finishIsFn(testRti, object, A._generalIsTestImplementation);
+    },
+    _finishIsFn(testRti, object, isFn) {
+      testRti._is = isFn;
+      return testRti._is(object);
+    },
+    _installSpecializedAsCheck(object) {
+      var t1, testRti = this,
+        asFn = A._generalAsCheckImplementation;
+      if (!A.isStrongTopType(testRti))
+        if (!(testRti === type$.legacy_Object))
+          t1 = false;
+        else
+          t1 = true;
+      else
+        t1 = true;
+      if (t1)
+        asFn = A._asTop;
+      else if (testRti === type$.Object)
+        asFn = A._asObject;
+      else {
+        t1 = A.isNullable(testRti);
+        if (t1)
+          asFn = A._generalNullableAsCheckImplementation;
+      }
+      testRti._as = asFn;
+      return testRti._as(object);
+    },
+    _nullIs(testRti) {
+      var t1,
+        kind = testRti._kind;
+      if (!A.isStrongTopType(testRti))
+        if (!(testRti === type$.legacy_Object))
+          if (!(testRti === type$.legacy_Never))
+            if (kind !== 7)
+              if (!(kind === 6 && A._nullIs(testRti._primary)))
+                t1 = kind === 8 && A._nullIs(testRti._primary) || testRti === type$.Null || testRti === type$.JSNull;
+              else
+                t1 = true;
+            else
+              t1 = true;
+          else
+            t1 = true;
+        else
+          t1 = true;
+      else
+        t1 = true;
+      return t1;
+    },
+    _generalIsTestImplementation(object) {
+      var testRti = this;
+      if (object == null)
+        return A._nullIs(testRti);
+      return A._isSubtype(init.typeUniverse, A.instanceOrFunctionType(object, testRti), null, testRti, null);
+    },
+    _generalNullableIsTestImplementation(object) {
+      if (object == null)
+        return true;
+      return this._primary._is(object);
+    },
+    _isTestViaProperty(object) {
+      var tag, testRti = this;
+      if (object == null)
+        return A._nullIs(testRti);
+      tag = testRti._specializedTestResource;
+      if (object instanceof A.Object)
+        return !!object[tag];
+      return !!J.getInterceptor$(object)[tag];
+    },
+    _isListTestViaProperty(object) {
+      var tag, testRti = this;
+      if (object == null)
+        return A._nullIs(testRti);
+      if (typeof object != "object")
+        return false;
+      if (Array.isArray(object))
+        return true;
+      tag = testRti._specializedTestResource;
+      if (object instanceof A.Object)
+        return !!object[tag];
+      return !!J.getInterceptor$(object)[tag];
+    },
+    _generalAsCheckImplementation(object) {
+      var t1, testRti = this;
+      if (object == null) {
+        t1 = A.isNullable(testRti);
+        if (t1)
+          return object;
+      } else if (testRti._is(object))
+        return object;
+      A._failedAsCheck(object, testRti);
+    },
+    _generalNullableAsCheckImplementation(object) {
+      var testRti = this;
+      if (object == null)
+        return object;
+      else if (testRti._is(object))
+        return object;
+      A._failedAsCheck(object, testRti);
+    },
+    _failedAsCheck(object, testRti) {
+      throw A.wrapException(A._TypeError$fromMessage(A._Error_compose(object, A.instanceOrFunctionType(object, testRti), A._rtiToString(testRti, null))));
+    },
+    _Error_compose(object, objectRti, checkedTypeDescription) {
+      var objectDescription = A.Error_safeToString(object);
+      return objectDescription + ": type '" + A._rtiToString(objectRti == null ? A.instanceType(object) : objectRti, null) + "' is not a subtype of type '" + checkedTypeDescription + "'";
+    },
+    _TypeError$fromMessage(message) {
+      return new A._TypeError("TypeError: " + message);
+    },
+    _TypeError__TypeError$forType(object, type) {
+      return new A._TypeError("TypeError: " + A._Error_compose(object, null, type));
+    },
+    _isObject(object) {
+      return object != null;
+    },
+    _asObject(object) {
+      if (object != null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "Object"));
+    },
+    _isTop(object) {
+      return true;
+    },
+    _asTop(object) {
+      return object;
+    },
+    _isNever(object) {
+      return false;
+    },
+    _isBool(object) {
+      return true === object || false === object;
+    },
+    _asBool(object) {
+      if (true === object)
+        return true;
+      if (false === object)
+        return false;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "bool"));
+    },
+    _asBoolS(object) {
+      if (true === object)
+        return true;
+      if (false === object)
+        return false;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "bool"));
+    },
+    _asBoolQ(object) {
+      if (true === object)
+        return true;
+      if (false === object)
+        return false;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "bool?"));
+    },
+    _asDouble(object) {
+      if (typeof object == "number")
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "double"));
+    },
+    _asDoubleS(object) {
+      if (typeof object == "number")
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "double"));
+    },
+    _asDoubleQ(object) {
+      if (typeof object == "number")
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "double?"));
+    },
+    _isInt(object) {
+      return typeof object == "number" && Math.floor(object) === object;
+    },
+    _asInt(object) {
+      if (typeof object == "number" && Math.floor(object) === object)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "int"));
+    },
+    _asIntS(object) {
+      if (typeof object == "number" && Math.floor(object) === object)
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "int"));
+    },
+    _asIntQ(object) {
+      if (typeof object == "number" && Math.floor(object) === object)
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "int?"));
+    },
+    _isNum(object) {
+      return typeof object == "number";
+    },
+    _asNum(object) {
+      if (typeof object == "number")
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "num"));
+    },
+    _asNumS(object) {
+      if (typeof object == "number")
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "num"));
+    },
+    _asNumQ(object) {
+      if (typeof object == "number")
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "num?"));
+    },
+    _isString(object) {
+      return typeof object == "string";
+    },
+    _asString(object) {
+      if (typeof object == "string")
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "String"));
+    },
+    _asStringS(object) {
+      if (typeof object == "string")
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "String"));
+    },
+    _asStringQ(object) {
+      if (typeof object == "string")
+        return object;
+      if (object == null)
+        return object;
+      throw A.wrapException(A._TypeError__TypeError$forType(object, "String?"));
+    },
+    _rtiArrayToString(array, genericContext) {
+      var s, sep, i;
+      for (s = "", sep = "", i = 0; i < array.length; ++i, sep = ", ")
+        s += sep + A._rtiToString(array[i], genericContext);
+      return s;
+    },
+    _recordRtiToString(recordType, genericContext) {
+      var fieldCount, names, namesIndex, s, comma, i,
+        partialShape = recordType._primary,
+        fields = recordType._rest;
+      if ("" === partialShape)
+        return "(" + A._rtiArrayToString(fields, genericContext) + ")";
+      fieldCount = fields.length;
+      names = partialShape.split(",");
+      namesIndex = names.length - fieldCount;
+      for (s = "(", comma = "", i = 0; i < fieldCount; ++i, comma = ", ") {
+        s += comma;
+        if (namesIndex === 0)
+          s += "{";
+        s += A._rtiToString(fields[i], genericContext);
+        if (namesIndex >= 0)
+          s += " " + names[namesIndex];
+        ++namesIndex;
+      }
+      return s + "})";
+    },
+    _functionRtiToString(functionType, genericContext, bounds) {
+      var boundsLength, outerContextLength, offset, i, t1, t2, typeParametersText, typeSep, t3, t4, boundRti, kind, parameters, requiredPositional, requiredPositionalLength, optionalPositional, optionalPositionalLength, named, namedLength, returnTypeText, argumentsText, sep, _s2_ = ", ";
+      if (bounds != null) {
+        boundsLength = bounds.length;
+        if (genericContext == null) {
+          genericContext = A._setArrayType([], type$.JSArray_String);
+          outerContextLength = null;
+        } else
+          outerContextLength = genericContext.length;
+        offset = genericContext.length;
+        for (i = boundsLength; i > 0; --i)
+          B.JSArray_methods.add$1(genericContext, "T" + (offset + i));
+        for (t1 = type$.nullable_Object, t2 = type$.legacy_Object, typeParametersText = "<", typeSep = "", i = 0; i < boundsLength; ++i, typeSep = _s2_) {
+          t3 = genericContext.length;
+          t4 = t3 - 1 - i;
+          if (!(t4 >= 0))
+            return A.ioore(genericContext, t4);
+          typeParametersText = B.JSString_methods.$add(typeParametersText + typeSep, genericContext[t4]);
+          boundRti = bounds[i];
+          kind = boundRti._kind;
+          if (!(kind === 2 || kind === 3 || kind === 4 || kind === 5 || boundRti === t1))
+            if (!(boundRti === t2))
+              t3 = false;
+            else
+              t3 = true;
+          else
+            t3 = true;
+          if (!t3)
+            typeParametersText += " extends " + A._rtiToString(boundRti, genericContext);
+        }
+        typeParametersText += ">";
+      } else {
+        typeParametersText = "";
+        outerContextLength = null;
+      }
+      t1 = functionType._primary;
+      parameters = functionType._rest;
+      requiredPositional = parameters._requiredPositional;
+      requiredPositionalLength = requiredPositional.length;
+      optionalPositional = parameters._optionalPositional;
+      optionalPositionalLength = optionalPositional.length;
+      named = parameters._named;
+      namedLength = named.length;
+      returnTypeText = A._rtiToString(t1, genericContext);
+      for (argumentsText = "", sep = "", i = 0; i < requiredPositionalLength; ++i, sep = _s2_)
+        argumentsText += sep + A._rtiToString(requiredPositional[i], genericContext);
+      if (optionalPositionalLength > 0) {
+        argumentsText += sep + "[";
+        for (sep = "", i = 0; i < optionalPositionalLength; ++i, sep = _s2_)
+          argumentsText += sep + A._rtiToString(optionalPositional[i], genericContext);
+        argumentsText += "]";
+      }
+      if (namedLength > 0) {
+        argumentsText += sep + "{";
+        for (sep = "", i = 0; i < namedLength; i += 3, sep = _s2_) {
+          argumentsText += sep;
+          if (named[i + 1])
+            argumentsText += "required ";
+          argumentsText += A._rtiToString(named[i + 2], genericContext) + " " + named[i];
+        }
+        argumentsText += "}";
+      }
+      if (outerContextLength != null) {
+        genericContext.toString;
+        genericContext.length = outerContextLength;
+      }
+      return typeParametersText + "(" + argumentsText + ") => " + returnTypeText;
+    },
+    _rtiToString(rti, genericContext) {
+      var s, questionArgument, argumentKind, $name, $arguments, t1, t2,
+        kind = rti._kind;
+      if (kind === 5)
+        return "erased";
+      if (kind === 2)
+        return "dynamic";
+      if (kind === 3)
+        return "void";
+      if (kind === 1)
+        return "Never";
+      if (kind === 4)
+        return "any";
+      if (kind === 6) {
+        s = A._rtiToString(rti._primary, genericContext);
+        return s;
+      }
+      if (kind === 7) {
+        questionArgument = rti._primary;
+        s = A._rtiToString(questionArgument, genericContext);
+        argumentKind = questionArgument._kind;
+        return (argumentKind === 12 || argumentKind === 13 ? "(" + s + ")" : s) + "?";
+      }
+      if (kind === 8)
+        return "FutureOr<" + A._rtiToString(rti._primary, genericContext) + ">";
+      if (kind === 9) {
+        $name = A._unminifyOrTag(rti._primary);
+        $arguments = rti._rest;
+        return $arguments.length > 0 ? $name + ("<" + A._rtiArrayToString($arguments, genericContext) + ">") : $name;
+      }
+      if (kind === 11)
+        return A._recordRtiToString(rti, genericContext);
+      if (kind === 12)
+        return A._functionRtiToString(rti, genericContext, null);
+      if (kind === 13)
+        return A._functionRtiToString(rti._primary, genericContext, rti._rest);
+      if (kind === 14) {
+        t1 = rti._primary;
+        t2 = genericContext.length;
+        t1 = t2 - 1 - t1;
+        if (!(t1 >= 0 && t1 < t2))
+          return A.ioore(genericContext, t1);
+        return genericContext[t1];
+      }
+      return "?";
+    },
+    _unminifyOrTag(rawClassName) {
+      var preserved = init.mangledGlobalNames[rawClassName];
+      if (preserved != null)
+        return preserved;
+      return rawClassName;
+    },
+    _Universe_findRule(universe, targetType) {
+      var rule = universe.tR[targetType];
+      for (; typeof rule == "string";)
+        rule = universe.tR[rule];
+      return rule;
+    },
+    _Universe_findErasedType(universe, cls) {
+      var $length, erased, $arguments, i, $interface,
+        t1 = universe.eT,
+        probe = t1[cls];
+      if (probe == null)
+        return A._Universe_eval(universe, cls, false);
+      else if (typeof probe == "number") {
+        $length = probe;
+        erased = A._Universe__lookupTerminalRti(universe, 5, "#");
+        $arguments = A._Utils_newArrayOrEmpty($length);
+        for (i = 0; i < $length; ++i)
+          $arguments[i] = erased;
+        $interface = A._Universe__lookupInterfaceRti(universe, cls, $arguments);
+        t1[cls] = $interface;
+        return $interface;
+      } else
+        return probe;
     },
     _Universe_addRules(universe, rules) {
       return A._Utils_objectAssign(universe.tR, rules);
     },
     _Universe_addErasedTypes(universe, types) {
       return A._Utils_objectAssign(universe.eT, types);
+    },
+    _Universe_eval(universe, recipe, normalize) {
+      var rti,
+        t1 = universe.eC,
+        probe = t1.get(recipe);
+      if (probe != null)
+        return probe;
+      rti = A._Parser_parse(A._Parser_create(universe, null, recipe, normalize));
+      t1.set(recipe, rti);
+      return rti;
+    },
+    _Universe_evalInEnvironment(universe, environment, recipe) {
+      var probe, rti,
+        cache = environment._evalCache;
+      if (cache == null)
+        cache = environment._evalCache = new Map();
+      probe = cache.get(recipe);
+      if (probe != null)
+        return probe;
+      rti = A._Parser_parse(A._Parser_create(universe, environment, recipe, true));
+      cache.set(recipe, rti);
+      return rti;
+    },
+    _Universe_bind(universe, environment, argumentsRti) {
+      var argumentsRecipe, probe, rti,
+        cache = environment._bindCache;
+      if (cache == null)
+        cache = environment._bindCache = new Map();
+      argumentsRecipe = argumentsRti._canonicalRecipe;
+      probe = cache.get(argumentsRecipe);
+      if (probe != null)
+        return probe;
+      rti = A._Universe__lookupBindingRti(universe, environment, argumentsRti._kind === 10 ? argumentsRti._rest : [argumentsRti]);
+      cache.set(argumentsRecipe, rti);
+      return rti;
+    },
+    _Universe__installTypeTests(universe, rti) {
+      rti._as = A._installSpecializedAsCheck;
+      rti._is = A._installSpecializedIsTest;
+      return rti;
+    },
+    _Universe__lookupTerminalRti(universe, kind, key) {
+      var rti, t1,
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      rti = new A.Rti(null, null);
+      rti._kind = kind;
+      rti._canonicalRecipe = key;
+      t1 = A._Universe__installTypeTests(universe, rti);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__lookupStarRti(universe, baseType, normalize) {
+      var t1,
+        key = baseType._canonicalRecipe + "*",
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      t1 = A._Universe__createStarRti(universe, baseType, key, normalize);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__createStarRti(universe, baseType, key, normalize) {
+      var baseKind, t1, rti;
+      if (normalize) {
+        baseKind = baseType._kind;
+        if (!A.isStrongTopType(baseType))
+          t1 = baseType === type$.Null || baseType === type$.JSNull || baseKind === 7 || baseKind === 6;
+        else
+          t1 = true;
+        if (t1)
+          return baseType;
+      }
+      rti = new A.Rti(null, null);
+      rti._kind = 6;
+      rti._primary = baseType;
+      rti._canonicalRecipe = key;
+      return A._Universe__installTypeTests(universe, rti);
+    },
+    _Universe__lookupQuestionRti(universe, baseType, normalize) {
+      var t1,
+        key = baseType._canonicalRecipe + "?",
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      t1 = A._Universe__createQuestionRti(universe, baseType, key, normalize);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__createQuestionRti(universe, baseType, key, normalize) {
+      var baseKind, t1, starArgument, rti;
+      if (normalize) {
+        baseKind = baseType._kind;
+        if (!A.isStrongTopType(baseType))
+          if (!(baseType === type$.Null || baseType === type$.JSNull))
+            if (baseKind !== 7)
+              t1 = baseKind === 8 && A.isNullable(baseType._primary);
+            else
+              t1 = true;
+          else
+            t1 = true;
+        else
+          t1 = true;
+        if (t1)
+          return baseType;
+        else if (baseKind === 1 || baseType === type$.legacy_Never)
+          return type$.Null;
+        else if (baseKind === 6) {
+          starArgument = baseType._primary;
+          if (starArgument._kind === 8 && A.isNullable(starArgument._primary))
+            return starArgument;
+          else
+            return A.Rti__getQuestionFromStar(universe, baseType);
+        }
+      }
+      rti = new A.Rti(null, null);
+      rti._kind = 7;
+      rti._primary = baseType;
+      rti._canonicalRecipe = key;
+      return A._Universe__installTypeTests(universe, rti);
+    },
+    _Universe__lookupFutureOrRti(universe, baseType, normalize) {
+      var t1,
+        key = baseType._canonicalRecipe + "/",
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      t1 = A._Universe__createFutureOrRti(universe, baseType, key, normalize);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__createFutureOrRti(universe, baseType, key, normalize) {
+      var t1, t2, rti;
+      if (normalize) {
+        t1 = baseType._kind;
+        if (!A.isStrongTopType(baseType))
+          if (!(baseType === type$.legacy_Object))
+            t2 = false;
+          else
+            t2 = true;
+        else
+          t2 = true;
+        if (t2 || baseType === type$.Object)
+          return baseType;
+        else if (t1 === 1)
+          return A._Universe__lookupInterfaceRti(universe, "Future", [baseType]);
+        else if (baseType === type$.Null || baseType === type$.JSNull)
+          return type$.nullable_Future_Null;
+      }
+      rti = new A.Rti(null, null);
+      rti._kind = 8;
+      rti._primary = baseType;
+      rti._canonicalRecipe = key;
+      return A._Universe__installTypeTests(universe, rti);
+    },
+    _Universe__lookupGenericFunctionParameterRti(universe, index) {
+      var rti, t1,
+        key = "" + index + "^",
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      rti = new A.Rti(null, null);
+      rti._kind = 14;
+      rti._primary = index;
+      rti._canonicalRecipe = key;
+      t1 = A._Universe__installTypeTests(universe, rti);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__canonicalRecipeJoin($arguments) {
+      var s, sep, i,
+        $length = $arguments.length;
+      for (s = "", sep = "", i = 0; i < $length; ++i, sep = ",")
+        s += sep + $arguments[i]._canonicalRecipe;
+      return s;
+    },
+    _Universe__canonicalRecipeJoinNamed($arguments) {
+      var s, sep, i, t1, nameSep,
+        $length = $arguments.length;
+      for (s = "", sep = "", i = 0; i < $length; i += 3, sep = ",") {
+        t1 = $arguments[i];
+        nameSep = $arguments[i + 1] ? "!" : ":";
+        s += sep + t1 + nameSep + $arguments[i + 2]._canonicalRecipe;
+      }
+      return s;
+    },
+    _Universe__lookupInterfaceRti(universe, $name, $arguments) {
+      var probe, rti, t1,
+        s = $name;
+      if ($arguments.length > 0)
+        s += "<" + A._Universe__canonicalRecipeJoin($arguments) + ">";
+      probe = universe.eC.get(s);
+      if (probe != null)
+        return probe;
+      rti = new A.Rti(null, null);
+      rti._kind = 9;
+      rti._primary = $name;
+      rti._rest = $arguments;
+      if ($arguments.length > 0)
+        rti._precomputed1 = $arguments[0];
+      rti._canonicalRecipe = s;
+      t1 = A._Universe__installTypeTests(universe, rti);
+      universe.eC.set(s, t1);
+      return t1;
+    },
+    _Universe__lookupBindingRti(universe, base, $arguments) {
+      var newBase, newArguments, key, probe, rti, t1;
+      if (base._kind === 10) {
+        newBase = base._primary;
+        newArguments = base._rest.concat($arguments);
+      } else {
+        newArguments = $arguments;
+        newBase = base;
+      }
+      key = newBase._canonicalRecipe + (";<" + A._Universe__canonicalRecipeJoin(newArguments) + ">");
+      probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      rti = new A.Rti(null, null);
+      rti._kind = 10;
+      rti._primary = newBase;
+      rti._rest = newArguments;
+      rti._canonicalRecipe = key;
+      t1 = A._Universe__installTypeTests(universe, rti);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__lookupRecordRti(universe, partialShapeTag, fields) {
+      var rti, t1,
+        key = "+" + (partialShapeTag + "(" + A._Universe__canonicalRecipeJoin(fields) + ")"),
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      rti = new A.Rti(null, null);
+      rti._kind = 11;
+      rti._primary = partialShapeTag;
+      rti._rest = fields;
+      rti._canonicalRecipe = key;
+      t1 = A._Universe__installTypeTests(universe, rti);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__lookupFunctionRti(universe, returnType, parameters) {
+      var sep, key, probe, rti, t1,
+        s = returnType._canonicalRecipe,
+        requiredPositional = parameters._requiredPositional,
+        requiredPositionalLength = requiredPositional.length,
+        optionalPositional = parameters._optionalPositional,
+        optionalPositionalLength = optionalPositional.length,
+        named = parameters._named,
+        namedLength = named.length,
+        recipe = "(" + A._Universe__canonicalRecipeJoin(requiredPositional);
+      if (optionalPositionalLength > 0) {
+        sep = requiredPositionalLength > 0 ? "," : "";
+        recipe += sep + "[" + A._Universe__canonicalRecipeJoin(optionalPositional) + "]";
+      }
+      if (namedLength > 0) {
+        sep = requiredPositionalLength > 0 ? "," : "";
+        recipe += sep + "{" + A._Universe__canonicalRecipeJoinNamed(named) + "}";
+      }
+      key = s + (recipe + ")");
+      probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      rti = new A.Rti(null, null);
+      rti._kind = 12;
+      rti._primary = returnType;
+      rti._rest = parameters;
+      rti._canonicalRecipe = key;
+      t1 = A._Universe__installTypeTests(universe, rti);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__lookupGenericFunctionRti(universe, baseFunctionType, bounds, normalize) {
+      var t1,
+        key = baseFunctionType._canonicalRecipe + ("<" + A._Universe__canonicalRecipeJoin(bounds) + ">"),
+        probe = universe.eC.get(key);
+      if (probe != null)
+        return probe;
+      t1 = A._Universe__createGenericFunctionRti(universe, baseFunctionType, bounds, key, normalize);
+      universe.eC.set(key, t1);
+      return t1;
+    },
+    _Universe__createGenericFunctionRti(universe, baseFunctionType, bounds, key, normalize) {
+      var $length, typeArguments, count, i, bound, substitutedBase, substitutedBounds, rti;
+      if (normalize) {
+        $length = bounds.length;
+        typeArguments = A._Utils_newArrayOrEmpty($length);
+        for (count = 0, i = 0; i < $length; ++i) {
+          bound = bounds[i];
+          if (bound._kind === 1) {
+            typeArguments[i] = bound;
+            ++count;
+          }
+        }
+        if (count > 0) {
+          substitutedBase = A._substitute(universe, baseFunctionType, typeArguments, 0);
+          substitutedBounds = A._substituteArray(universe, bounds, typeArguments, 0);
+          return A._Universe__lookupGenericFunctionRti(universe, substitutedBase, substitutedBounds, bounds !== substitutedBounds);
+        }
+      }
+      rti = new A.Rti(null, null);
+      rti._kind = 13;
+      rti._primary = baseFunctionType;
+      rti._rest = bounds;
+      rti._canonicalRecipe = key;
+      return A._Universe__installTypeTests(universe, rti);
+    },
+    _Parser_create(universe, environment, recipe, normalize) {
+      return {u: universe, e: environment, r: recipe, s: [], p: 0, n: normalize};
+    },
+    _Parser_parse(parser) {
+      var t2, i, ch, t3, array, head, base, end, item,
+        source = parser.r,
+        t1 = parser.s;
+      for (t2 = source.length, i = 0; i < t2;) {
+        ch = source.charCodeAt(i);
+        if (ch >= 48 && ch <= 57)
+          i = A._Parser_handleDigit(i + 1, ch, source, t1);
+        else if ((((ch | 32) >>> 0) - 97 & 65535) < 26 || ch === 95 || ch === 36 || ch === 124)
+          i = A._Parser_handleIdentifier(parser, i, source, t1, false);
+        else if (ch === 46)
+          i = A._Parser_handleIdentifier(parser, i, source, t1, true);
+        else {
+          ++i;
+          switch (ch) {
+            case 44:
+              break;
+            case 58:
+              t1.push(false);
+              break;
+            case 33:
+              t1.push(true);
+              break;
+            case 59:
+              t1.push(A._Parser_toType(parser.u, parser.e, t1.pop()));
+              break;
+            case 94:
+              t1.push(A._Universe__lookupGenericFunctionParameterRti(parser.u, t1.pop()));
+              break;
+            case 35:
+              t1.push(A._Universe__lookupTerminalRti(parser.u, 5, "#"));
+              break;
+            case 64:
+              t1.push(A._Universe__lookupTerminalRti(parser.u, 2, "@"));
+              break;
+            case 126:
+              t1.push(A._Universe__lookupTerminalRti(parser.u, 3, "~"));
+              break;
+            case 60:
+              t1.push(parser.p);
+              parser.p = t1.length;
+              break;
+            case 62:
+              t3 = parser.u;
+              array = t1.splice(parser.p);
+              A._Parser_toTypes(parser.u, parser.e, array);
+              parser.p = t1.pop();
+              head = t1.pop();
+              if (typeof head == "string")
+                t1.push(A._Universe__lookupInterfaceRti(t3, head, array));
+              else {
+                base = A._Parser_toType(t3, parser.e, head);
+                switch (base._kind) {
+                  case 12:
+                    t1.push(A._Universe__lookupGenericFunctionRti(t3, base, array, parser.n));
+                    break;
+                  default:
+                    t1.push(A._Universe__lookupBindingRti(t3, base, array));
+                    break;
+                }
+              }
+              break;
+            case 38:
+              A._Parser_handleExtendedOperations(parser, t1);
+              break;
+            case 42:
+              t3 = parser.u;
+              t1.push(A._Universe__lookupStarRti(t3, A._Parser_toType(t3, parser.e, t1.pop()), parser.n));
+              break;
+            case 63:
+              t3 = parser.u;
+              t1.push(A._Universe__lookupQuestionRti(t3, A._Parser_toType(t3, parser.e, t1.pop()), parser.n));
+              break;
+            case 47:
+              t3 = parser.u;
+              t1.push(A._Universe__lookupFutureOrRti(t3, A._Parser_toType(t3, parser.e, t1.pop()), parser.n));
+              break;
+            case 40:
+              t1.push(-3);
+              t1.push(parser.p);
+              parser.p = t1.length;
+              break;
+            case 41:
+              A._Parser_handleArguments(parser, t1);
+              break;
+            case 91:
+              t1.push(parser.p);
+              parser.p = t1.length;
+              break;
+            case 93:
+              array = t1.splice(parser.p);
+              A._Parser_toTypes(parser.u, parser.e, array);
+              parser.p = t1.pop();
+              t1.push(array);
+              t1.push(-1);
+              break;
+            case 123:
+              t1.push(parser.p);
+              parser.p = t1.length;
+              break;
+            case 125:
+              array = t1.splice(parser.p);
+              A._Parser_toTypesNamed(parser.u, parser.e, array);
+              parser.p = t1.pop();
+              t1.push(array);
+              t1.push(-2);
+              break;
+            case 43:
+              end = source.indexOf("(", i);
+              t1.push(source.substring(i, end));
+              t1.push(-4);
+              t1.push(parser.p);
+              parser.p = t1.length;
+              i = end + 1;
+              break;
+            default:
+              throw "Bad character " + ch;
+          }
+        }
+      }
+      item = t1.pop();
+      return A._Parser_toType(parser.u, parser.e, item);
+    },
+    _Parser_handleDigit(i, digit, source, stack) {
+      var t1, ch,
+        value = digit - 48;
+      for (t1 = source.length; i < t1; ++i) {
+        ch = source.charCodeAt(i);
+        if (!(ch >= 48 && ch <= 57))
+          break;
+        value = value * 10 + (ch - 48);
+      }
+      stack.push(value);
+      return i;
+    },
+    _Parser_handleIdentifier(parser, start, source, stack, hasPeriod) {
+      var t1, ch, t2, string, environment, recipe,
+        i = start + 1;
+      for (t1 = source.length; i < t1; ++i) {
+        ch = source.charCodeAt(i);
+        if (ch === 46) {
+          if (hasPeriod)
+            break;
+          hasPeriod = true;
+        } else {
+          if (!((((ch | 32) >>> 0) - 97 & 65535) < 26 || ch === 95 || ch === 36 || ch === 124))
+            t2 = ch >= 48 && ch <= 57;
+          else
+            t2 = true;
+          if (!t2)
+            break;
+        }
+      }
+      string = source.substring(start, i);
+      if (hasPeriod) {
+        t1 = parser.u;
+        environment = parser.e;
+        if (environment._kind === 10)
+          environment = environment._primary;
+        recipe = A._Universe_findRule(t1, environment._primary)[string];
+        if (recipe == null)
+          A.throwExpression('No "' + string + '" in "' + A.Rti__getCanonicalRecipe(environment) + '"');
+        stack.push(A._Universe_evalInEnvironment(t1, environment, recipe));
+      } else
+        stack.push(string);
+      return i;
+    },
+    _Parser_handleArguments(parser, stack) {
+      var optionalPositional, named, requiredPositional, returnType, parameters, _null = null,
+        t1 = parser.u,
+        head = stack.pop();
+      if (typeof head == "number")
+        switch (head) {
+          case -1:
+            optionalPositional = stack.pop();
+            named = _null;
+            break;
+          case -2:
+            named = stack.pop();
+            optionalPositional = _null;
+            break;
+          default:
+            stack.push(head);
+            named = _null;
+            optionalPositional = named;
+            break;
+        }
+      else {
+        stack.push(head);
+        named = _null;
+        optionalPositional = named;
+      }
+      requiredPositional = A._Parser_collectArray(parser, stack);
+      head = stack.pop();
+      switch (head) {
+        case -3:
+          head = stack.pop();
+          if (optionalPositional == null)
+            optionalPositional = t1.sEA;
+          if (named == null)
+            named = t1.sEA;
+          returnType = A._Parser_toType(t1, parser.e, head);
+          parameters = new A._FunctionParameters();
+          parameters._requiredPositional = requiredPositional;
+          parameters._optionalPositional = optionalPositional;
+          parameters._named = named;
+          stack.push(A._Universe__lookupFunctionRti(t1, returnType, parameters));
+          return;
+        case -4:
+          stack.push(A._Universe__lookupRecordRti(t1, stack.pop(), requiredPositional));
+          return;
+        default:
+          throw A.wrapException(A.AssertionError$("Unexpected state under `()`: " + A.S(head)));
+      }
+    },
+    _Parser_handleExtendedOperations(parser, stack) {
+      var $top = stack.pop();
+      if (0 === $top) {
+        stack.push(A._Universe__lookupTerminalRti(parser.u, 1, "0&"));
+        return;
+      }
+      if (1 === $top) {
+        stack.push(A._Universe__lookupTerminalRti(parser.u, 4, "1&"));
+        return;
+      }
+      throw A.wrapException(A.AssertionError$("Unexpected extended operation " + A.S($top)));
+    },
+    _Parser_collectArray(parser, stack) {
+      var array = stack.splice(parser.p);
+      A._Parser_toTypes(parser.u, parser.e, array);
+      parser.p = stack.pop();
+      return array;
+    },
+    _Parser_toType(universe, environment, item) {
+      if (typeof item == "string")
+        return A._Universe__lookupInterfaceRti(universe, item, universe.sEA);
+      else if (typeof item == "number") {
+        environment.toString;
+        return A._Parser_indexToType(universe, environment, item);
+      } else
+        return item;
+    },
+    _Parser_toTypes(universe, environment, items) {
+      var i,
+        $length = items.length;
+      for (i = 0; i < $length; ++i)
+        items[i] = A._Parser_toType(universe, environment, items[i]);
+    },
+    _Parser_toTypesNamed(universe, environment, items) {
+      var i,
+        $length = items.length;
+      for (i = 2; i < $length; i += 3)
+        items[i] = A._Parser_toType(universe, environment, items[i]);
+    },
+    _Parser_indexToType(universe, environment, index) {
+      var typeArguments, len,
+        kind = environment._kind;
+      if (kind === 10) {
+        if (index === 0)
+          return environment._primary;
+        typeArguments = environment._rest;
+        len = typeArguments.length;
+        if (index <= len)
+          return typeArguments[index - 1];
+        index -= len;
+        environment = environment._primary;
+        kind = environment._kind;
+      } else if (index === 0)
+        return environment;
+      if (kind !== 9)
+        throw A.wrapException(A.AssertionError$("Indexed base must be an interface type"));
+      typeArguments = environment._rest;
+      if (index <= typeArguments.length)
+        return typeArguments[index - 1];
+      throw A.wrapException(A.AssertionError$("Bad index " + index + " for " + environment.toString$0(0)));
+    },
+    _isSubtype(universe, s, sEnv, t, tEnv) {
+      var t1, sKind, leftTypeVariable, tKind, sBounds, tBounds, sLength, i, sBound, tBound;
+      if (s === t)
+        return true;
+      if (!A.isStrongTopType(t))
+        if (!(t === type$.legacy_Object))
+          t1 = false;
+        else
+          t1 = true;
+      else
+        t1 = true;
+      if (t1)
+        return true;
+      sKind = s._kind;
+      if (sKind === 4)
+        return true;
+      if (A.isStrongTopType(s))
+        return false;
+      if (s._kind !== 1)
+        t1 = false;
+      else
+        t1 = true;
+      if (t1)
+        return true;
+      leftTypeVariable = sKind === 14;
+      if (leftTypeVariable)
+        if (A._isSubtype(universe, sEnv[s._primary], sEnv, t, tEnv))
+          return true;
+      tKind = t._kind;
+      t1 = s === type$.Null || s === type$.JSNull;
+      if (t1) {
+        if (tKind === 8)
+          return A._isSubtype(universe, s, sEnv, t._primary, tEnv);
+        return t === type$.Null || t === type$.JSNull || tKind === 7 || tKind === 6;
+      }
+      if (t === type$.Object) {
+        if (sKind === 8)
+          return A._isSubtype(universe, s._primary, sEnv, t, tEnv);
+        if (sKind === 6)
+          return A._isSubtype(universe, s._primary, sEnv, t, tEnv);
+        return sKind !== 7;
+      }
+      if (sKind === 6)
+        return A._isSubtype(universe, s._primary, sEnv, t, tEnv);
+      if (tKind === 6) {
+        t1 = A.Rti__getQuestionFromStar(universe, t);
+        return A._isSubtype(universe, s, sEnv, t1, tEnv);
+      }
+      if (sKind === 8) {
+        if (!A._isSubtype(universe, s._primary, sEnv, t, tEnv))
+          return false;
+        return A._isSubtype(universe, A.Rti__getFutureFromFutureOr(universe, s), sEnv, t, tEnv);
+      }
+      if (sKind === 7) {
+        t1 = A._isSubtype(universe, type$.Null, sEnv, t, tEnv);
+        return t1 && A._isSubtype(universe, s._primary, sEnv, t, tEnv);
+      }
+      if (tKind === 8) {
+        if (A._isSubtype(universe, s, sEnv, t._primary, tEnv))
+          return true;
+        return A._isSubtype(universe, s, sEnv, A.Rti__getFutureFromFutureOr(universe, t), tEnv);
+      }
+      if (tKind === 7) {
+        t1 = A._isSubtype(universe, s, sEnv, type$.Null, tEnv);
+        return t1 || A._isSubtype(universe, s, sEnv, t._primary, tEnv);
+      }
+      if (leftTypeVariable)
+        return false;
+      t1 = sKind !== 12;
+      if ((!t1 || sKind === 13) && t === type$.Function)
+        return true;
+      if (tKind === 13) {
+        if (s === type$.JavaScriptFunction)
+          return true;
+        if (sKind !== 13)
+          return false;
+        sBounds = s._rest;
+        tBounds = t._rest;
+        sLength = sBounds.length;
+        if (sLength !== tBounds.length)
+          return false;
+        sEnv = sEnv == null ? sBounds : sBounds.concat(sEnv);
+        tEnv = tEnv == null ? tBounds : tBounds.concat(tEnv);
+        for (i = 0; i < sLength; ++i) {
+          sBound = sBounds[i];
+          tBound = tBounds[i];
+          if (!A._isSubtype(universe, sBound, sEnv, tBound, tEnv) || !A._isSubtype(universe, tBound, tEnv, sBound, sEnv))
+            return false;
+        }
+        return A._isFunctionSubtype(universe, s._primary, sEnv, t._primary, tEnv);
+      }
+      if (tKind === 12) {
+        if (s === type$.JavaScriptFunction)
+          return true;
+        if (t1)
+          return false;
+        return A._isFunctionSubtype(universe, s, sEnv, t, tEnv);
+      }
+      if (sKind === 9) {
+        if (tKind !== 9)
+          return false;
+        return A._isInterfaceSubtype(universe, s, sEnv, t, tEnv);
+      }
+      t1 = sKind === 11;
+      if (t1 && t === type$.Record)
+        return true;
+      if (t1 && tKind === 11)
+        return A._isRecordSubtype(universe, s, sEnv, t, tEnv);
+      return false;
+    },
+    _isFunctionSubtype(universe, s, sEnv, t, tEnv) {
+      var sParameters, tParameters, sRequiredPositional, tRequiredPositional, sRequiredPositionalLength, tRequiredPositionalLength, requiredPositionalDelta, sOptionalPositional, tOptionalPositional, sOptionalPositionalLength, tOptionalPositionalLength, i, t1, sNamed, tNamed, sNamedLength, tNamedLength, sIndex, tIndex, tName, sName, sIsRequired;
+      if (!A._isSubtype(universe, s._primary, sEnv, t._primary, tEnv))
+        return false;
+      sParameters = s._rest;
+      tParameters = t._rest;
+      sRequiredPositional = sParameters._requiredPositional;
+      tRequiredPositional = tParameters._requiredPositional;
+      sRequiredPositionalLength = sRequiredPositional.length;
+      tRequiredPositionalLength = tRequiredPositional.length;
+      if (sRequiredPositionalLength > tRequiredPositionalLength)
+        return false;
+      requiredPositionalDelta = tRequiredPositionalLength - sRequiredPositionalLength;
+      sOptionalPositional = sParameters._optionalPositional;
+      tOptionalPositional = tParameters._optionalPositional;
+      sOptionalPositionalLength = sOptionalPositional.length;
+      tOptionalPositionalLength = tOptionalPositional.length;
+      if (sRequiredPositionalLength + sOptionalPositionalLength < tRequiredPositionalLength + tOptionalPositionalLength)
+        return false;
+      for (i = 0; i < sRequiredPositionalLength; ++i) {
+        t1 = sRequiredPositional[i];
+        if (!A._isSubtype(universe, tRequiredPositional[i], tEnv, t1, sEnv))
+          return false;
+      }
+      for (i = 0; i < requiredPositionalDelta; ++i) {
+        t1 = sOptionalPositional[i];
+        if (!A._isSubtype(universe, tRequiredPositional[sRequiredPositionalLength + i], tEnv, t1, sEnv))
+          return false;
+      }
+      for (i = 0; i < tOptionalPositionalLength; ++i) {
+        t1 = sOptionalPositional[requiredPositionalDelta + i];
+        if (!A._isSubtype(universe, tOptionalPositional[i], tEnv, t1, sEnv))
+          return false;
+      }
+      sNamed = sParameters._named;
+      tNamed = tParameters._named;
+      sNamedLength = sNamed.length;
+      tNamedLength = tNamed.length;
+      for (sIndex = 0, tIndex = 0; tIndex < tNamedLength; tIndex += 3) {
+        tName = tNamed[tIndex];
+        for (; true;) {
+          if (sIndex >= sNamedLength)
+            return false;
+          sName = sNamed[sIndex];
+          sIndex += 3;
+          if (tName < sName)
+            return false;
+          sIsRequired = sNamed[sIndex - 2];
+          if (sName < tName) {
+            if (sIsRequired)
+              return false;
+            continue;
+          }
+          t1 = tNamed[tIndex + 1];
+          if (sIsRequired && !t1)
+            return false;
+          t1 = sNamed[sIndex - 1];
+          if (!A._isSubtype(universe, tNamed[tIndex + 2], tEnv, t1, sEnv))
+            return false;
+          break;
+        }
+      }
+      for (; sIndex < sNamedLength;) {
+        if (sNamed[sIndex + 1])
+          return false;
+        sIndex += 3;
+      }
+      return true;
+    },
+    _isInterfaceSubtype(universe, s, sEnv, t, tEnv) {
+      var rule, recipes, $length, supertypeArgs, i, t1, t2,
+        sName = s._primary,
+        tName = t._primary;
+      for (; sName !== tName;) {
+        rule = universe.tR[sName];
+        if (rule == null)
+          return false;
+        if (typeof rule == "string") {
+          sName = rule;
+          continue;
+        }
+        recipes = rule[tName];
+        if (recipes == null)
+          return false;
+        $length = recipes.length;
+        supertypeArgs = $length > 0 ? new Array($length) : init.typeUniverse.sEA;
+        for (i = 0; i < $length; ++i)
+          supertypeArgs[i] = A._Universe_evalInEnvironment(universe, s, recipes[i]);
+        return A._areArgumentsSubtypes(universe, supertypeArgs, null, sEnv, t._rest, tEnv);
+      }
+      t1 = s._rest;
+      t2 = t._rest;
+      return A._areArgumentsSubtypes(universe, t1, null, sEnv, t2, tEnv);
+    },
+    _areArgumentsSubtypes(universe, sArgs, sVariances, sEnv, tArgs, tEnv) {
+      var i, t1, t2,
+        $length = sArgs.length;
+      for (i = 0; i < $length; ++i) {
+        t1 = sArgs[i];
+        t2 = tArgs[i];
+        if (!A._isSubtype(universe, t1, sEnv, t2, tEnv))
+          return false;
+      }
+      return true;
+    },
+    _isRecordSubtype(universe, s, sEnv, t, tEnv) {
+      var i,
+        sFields = s._rest,
+        tFields = t._rest,
+        sCount = sFields.length;
+      if (sCount !== tFields.length)
+        return false;
+      if (s._primary !== t._primary)
+        return false;
+      for (i = 0; i < sCount; ++i)
+        if (!A._isSubtype(universe, sFields[i], sEnv, tFields[i], tEnv))
+          return false;
+      return true;
+    },
+    isNullable(t) {
+      var t1,
+        kind = t._kind;
+      if (!(t === type$.Null || t === type$.JSNull))
+        if (!A.isStrongTopType(t))
+          if (kind !== 7)
+            if (!(kind === 6 && A.isNullable(t._primary)))
+              t1 = kind === 8 && A.isNullable(t._primary);
+            else
+              t1 = true;
+          else
+            t1 = true;
+        else
+          t1 = true;
+      else
+        t1 = true;
+      return t1;
+    },
+    isTopType(t) {
+      var t1;
+      if (!A.isStrongTopType(t))
+        if (!(t === type$.legacy_Object))
+          t1 = false;
+        else
+          t1 = true;
+      else
+        t1 = true;
+      return t1;
+    },
+    isStrongTopType(t) {
+      var kind = t._kind;
+      return kind === 2 || kind === 3 || kind === 4 || kind === 5 || t === type$.nullable_Object;
     },
     _Utils_objectAssign(o, other) {
       var i, key,
@@ -256,38 +2294,6621 @@
         o[key] = other[key];
       }
     },
+    _Utils_newArrayOrEmpty($length) {
+      return $length > 0 ? new Array($length) : init.typeUniverse.sEA;
+    },
+    Rti: function Rti(t0, t1) {
+      var _ = this;
+      _._as = t0;
+      _._is = t1;
+      _._cachedRuntimeType = _._specializedTestResource = _._precomputed1 = null;
+      _._kind = 0;
+      _._canonicalRecipe = _._bindCache = _._evalCache = _._rest = _._primary = null;
+    },
+    _FunctionParameters: function _FunctionParameters() {
+      this._named = this._optionalPositional = this._requiredPositional = null;
+    },
+    _Error: function _Error() {
+    },
+    _TypeError: function _TypeError(t0) {
+      this.__rti$_message = t0;
+    },
+    IterableBase_iterableToFullString(iterable, leftDelimiter, rightDelimiter) {
+      var buffer, t1;
+      if (A._isToStringVisiting(iterable))
+        return leftDelimiter + "..." + rightDelimiter;
+      buffer = new A.StringBuffer(leftDelimiter);
+      B.JSArray_methods.add$1($._toStringVisiting, iterable);
+      try {
+        t1 = buffer;
+        t1._contents = A.StringBuffer__writeAll(t1._contents, iterable, ", ");
+      } finally {
+        if (0 >= $._toStringVisiting.length)
+          return A.ioore($._toStringVisiting, -1);
+        $._toStringVisiting.pop();
+      }
+      buffer._contents += rightDelimiter;
+      t1 = buffer._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _isToStringVisiting(o) {
+      var t1, i;
+      for (t1 = $._toStringVisiting.length, i = 0; i < t1; ++i)
+        if (o === $._toStringVisiting[i])
+          return true;
+      return false;
+    },
+    ListMixin: function ListMixin() {
+    },
+    Error__objectToString(object) {
+      if (object instanceof A.Closure)
+        return object.toString$0(0);
+      return "Instance of '" + A.Primitives_objectTypeName(object) + "'";
+    },
+    StringBuffer__writeAll(string, objects, separator) {
+      var iterator = J.get$iterator$ax(objects);
+      if (!iterator.moveNext$0())
+        return string;
+      if (separator.length === 0) {
+        do
+          string += A.S(iterator.get$current());
+        while (iterator.moveNext$0());
+      } else {
+        string += A.S(iterator.get$current());
+        for (; iterator.moveNext$0();)
+          string = string + separator + A.S(iterator.get$current());
+      }
+      return string;
+    },
+    Error_safeToString(object) {
+      if (typeof object == "number" || A._isBool(object) || object == null)
+        return J.toString$0$(object);
+      if (typeof object == "string")
+        return JSON.stringify(object);
+      return A.Error__objectToString(object);
+    },
+    AssertionError$(message) {
+      return new A.AssertionError(message);
+    },
+    UnsupportedError$(message) {
+      return new A.UnsupportedError(message);
+    },
+    UnimplementedError$(message) {
+      return new A.UnimplementedError(message);
+    },
+    ConcurrentModificationError$(modifiedObject) {
+      return new A.ConcurrentModificationError(modifiedObject);
+    },
+    Error: function Error() {
+    },
+    AssertionError: function AssertionError(t0) {
+      this.message = t0;
+    },
+    TypeError: function TypeError() {
+    },
+    ArgumentError: function ArgumentError(t0, t1, t2, t3) {
+      var _ = this;
+      _._hasValue = t0;
+      _.invalidValue = t1;
+      _.name = t2;
+      _.message = t3;
+    },
+    RangeError: function RangeError(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.start = t0;
+      _.end = t1;
+      _._hasValue = t2;
+      _.invalidValue = t3;
+      _.name = t4;
+      _.message = t5;
+    },
+    IndexError: function IndexError(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.length = t0;
+      _._hasValue = t1;
+      _.invalidValue = t2;
+      _.name = t3;
+      _.message = t4;
+    },
+    UnsupportedError: function UnsupportedError(t0) {
+      this.message = t0;
+    },
+    UnimplementedError: function UnimplementedError(t0) {
+      this.message = t0;
+    },
+    ConcurrentModificationError: function ConcurrentModificationError(t0) {
+      this.modifiedObject = t0;
+    },
+    Null: function Null() {
+    },
+    Object: function Object() {
+    },
+    StringBuffer: function StringBuffer(t0) {
+      this._contents = t0;
+    },
+    ANGLE_instanced_arrays: function ANGLE_instanced_arrays() {
+    },
+    CSPViolationReportBody: function CSPViolationReportBody() {
+    },
+    SecurityPolicyViolationEvent: function SecurityPolicyViolationEvent() {
+    },
+    SecurityPolicyViolationEventInit: function SecurityPolicyViolationEventInit() {
+    },
+    XMLSerializer: function XMLSerializer() {
+    },
+    InnerHTML: function InnerHTML() {
+    },
+    Element: function Element() {
+    },
+    Range: function Range() {
+    },
+    EXT_blend_minmax: function EXT_blend_minmax() {
+    },
+    EXT_color_buffer_float: function EXT_color_buffer_float() {
+    },
+    EXT_color_buffer_half_float: function EXT_color_buffer_half_float() {
+    },
+    WebGLTimerQueryEXT: function WebGLTimerQueryEXT() {
+    },
+    EXT_disjoint_timer_query: function EXT_disjoint_timer_query() {
+    },
+    EXT_disjoint_timer_query_webgl2: function EXT_disjoint_timer_query_webgl2() {
+    },
+    EXT_float_blend: function EXT_float_blend() {
+    },
+    EXT_frag_depth: function EXT_frag_depth() {
+    },
+    EXT_sRGB: function EXT_sRGB() {
+    },
+    EXT_shader_texture_lod: function EXT_shader_texture_lod() {
+    },
+    EXT_texture_compression_bptc: function EXT_texture_compression_bptc() {
+    },
+    EXT_texture_compression_rgtc: function EXT_texture_compression_rgtc() {
+    },
+    EXT_texture_filter_anisotropic: function EXT_texture_filter_anisotropic() {
+    },
+    EXT_texture_norm16: function EXT_texture_norm16() {
+    },
+    IdentityProviderWellKnown: function IdentityProviderWellKnown() {
+    },
+    IdentityProviderIcon: function IdentityProviderIcon() {
+    },
+    IdentityProviderBranding: function IdentityProviderBranding() {
+    },
+    IdentityProviderAPIConfig: function IdentityProviderAPIConfig() {
+    },
+    IdentityProviderAccount: function IdentityProviderAccount() {
+    },
+    IdentityProviderAccountList: function IdentityProviderAccountList() {
+    },
+    IdentityProviderClientMetadata: function IdentityProviderClientMetadata() {
+    },
+    IdentityProviderToken: function IdentityProviderToken() {
+    },
+    IdentityCredential: function IdentityCredential() {
+    },
+    CredentialRequestOptions: function CredentialRequestOptions() {
+    },
+    IdentityCredentialRequestOptions: function IdentityCredentialRequestOptions() {
+    },
+    IdentityProviderConfig: function IdentityProviderConfig() {
+    },
+    IdentityCredentialLogoutRPsRequest: function IdentityCredentialLogoutRPsRequest() {
+    },
+    IdentityProvider: function IdentityProvider() {
+    },
+    Blob: function Blob() {
+    },
+    BlobPropertyBag: function BlobPropertyBag() {
+    },
+    File: function File() {
+    },
+    FilePropertyBag: function FilePropertyBag() {
+    },
+    FileList: function FileList() {
+    },
+    FileReader: function FileReader() {
+    },
+    FileReaderSync: function FileReaderSync() {
+    },
+    URL: function URL() {
+    },
+    IDBRequest: function IDBRequest() {
+    },
+    IDBOpenDBRequest: function IDBOpenDBRequest() {
+    },
+    IDBVersionChangeEvent: function IDBVersionChangeEvent() {
+    },
+    IDBVersionChangeEventInit: function IDBVersionChangeEventInit() {
+    },
+    WindowOrWorkerGlobalScope: function WindowOrWorkerGlobalScope() {
+    },
+    IDBFactory: function IDBFactory() {
+    },
+    IDBDatabaseInfo: function IDBDatabaseInfo() {
+    },
+    IDBDatabase: function IDBDatabase() {
+    },
+    IDBTransactionOptions: function IDBTransactionOptions() {
+    },
+    IDBObjectStoreParameters: function IDBObjectStoreParameters() {
+    },
+    IDBObjectStore: function IDBObjectStore() {
+    },
+    IDBIndexParameters: function IDBIndexParameters() {
+    },
+    IDBIndex: function IDBIndex() {
+    },
+    IDBKeyRange: function IDBKeyRange() {
+    },
+    IDBCursor: function IDBCursor() {
+    },
+    IDBCursorWithValue: function IDBCursorWithValue() {
+    },
+    IDBTransaction: function IDBTransaction() {
+    },
+    KHR_parallel_shader_compile: function KHR_parallel_shader_compile() {
+    },
+    OES_draw_buffers_indexed: function OES_draw_buffers_indexed() {
+    },
+    OES_element_index_uint: function OES_element_index_uint() {
+    },
+    OES_fbo_render_mipmap: function OES_fbo_render_mipmap() {
+    },
+    OES_standard_derivatives: function OES_standard_derivatives() {
+    },
+    OES_texture_float: function OES_texture_float() {
+    },
+    OES_texture_float_linear: function OES_texture_float_linear() {
+    },
+    OES_texture_half_float: function OES_texture_half_float() {
+    },
+    OES_texture_half_float_linear: function OES_texture_half_float_linear() {
+    },
+    WebGLVertexArrayObjectOES: function WebGLVertexArrayObjectOES() {
+    },
+    OES_vertex_array_object: function OES_vertex_array_object() {
+    },
+    OVR_multiview2: function OVR_multiview2() {
+    },
+    SVGElement: function SVGElement() {
+    },
+    SVGBoundingBoxOptions: function SVGBoundingBoxOptions() {
+    },
+    SVGGraphicsElement: function SVGGraphicsElement() {
+    },
+    SVGGeometryElement: function SVGGeometryElement() {
+    },
+    SVGNumber: function SVGNumber() {
+    },
+    SVGLength: function SVGLength() {
+    },
+    SVGAngle: function SVGAngle() {
+    },
+    SVGNumberList: function SVGNumberList() {
+    },
+    SVGLengthList: function SVGLengthList() {
+    },
+    SVGStringList: function SVGStringList() {
+    },
+    SVGAnimatedBoolean: function SVGAnimatedBoolean() {
+    },
+    SVGAnimatedEnumeration: function SVGAnimatedEnumeration() {
+    },
+    SVGAnimatedInteger: function SVGAnimatedInteger() {
+    },
+    SVGAnimatedNumber: function SVGAnimatedNumber() {
+    },
+    SVGAnimatedLength: function SVGAnimatedLength() {
+    },
+    SVGAnimatedAngle: function SVGAnimatedAngle() {
+    },
+    SVGAnimatedString: function SVGAnimatedString() {
+    },
+    SVGAnimatedRect: function SVGAnimatedRect() {
+    },
+    SVGAnimatedNumberList: function SVGAnimatedNumberList() {
+    },
+    SVGAnimatedLengthList: function SVGAnimatedLengthList() {
+    },
+    SVGUnitTypes: function SVGUnitTypes() {
+    },
+    SVGTests: function SVGTests() {
+    },
+    SVGFitToViewBox: function SVGFitToViewBox() {
+    },
+    SVGURIReference: function SVGURIReference() {
+    },
+    Document: function Document() {
+    },
+    SVGSVGElement: function SVGSVGElement() {
+    },
+    SVGGElement: function SVGGElement() {
+    },
+    SVGDefsElement: function SVGDefsElement() {
+    },
+    SVGDescElement: function SVGDescElement() {
+    },
+    SVGMetadataElement: function SVGMetadataElement() {
+    },
+    SVGTitleElement: function SVGTitleElement() {
+    },
+    SVGSymbolElement: function SVGSymbolElement() {
+    },
+    SVGUseElement: function SVGUseElement() {
+    },
+    SVGUseElementShadowRoot: function SVGUseElementShadowRoot() {
+    },
+    SVGElementInstance: function SVGElementInstance() {
+    },
+    ShadowAnimation: function ShadowAnimation() {
+    },
+    SVGSwitchElement: function SVGSwitchElement() {
+    },
+    GetSVGDocument: function GetSVGDocument() {
+    },
+    SVGStyleElement: function SVGStyleElement() {
+    },
+    SVGTransform: function SVGTransform() {
+    },
+    SVGTransformList: function SVGTransformList() {
+    },
+    SVGAnimatedTransformList: function SVGAnimatedTransformList() {
+    },
+    SVGPreserveAspectRatio: function SVGPreserveAspectRatio() {
+    },
+    SVGAnimatedPreserveAspectRatio: function SVGAnimatedPreserveAspectRatio() {
+    },
+    SVGPathElement: function SVGPathElement() {
+    },
+    SVGRectElement: function SVGRectElement() {
+    },
+    SVGCircleElement: function SVGCircleElement() {
+    },
+    SVGEllipseElement: function SVGEllipseElement() {
+    },
+    SVGLineElement: function SVGLineElement() {
+    },
+    SVGAnimatedPoints: function SVGAnimatedPoints() {
+    },
+    SVGPointList: function SVGPointList() {
+    },
+    SVGPolylineElement: function SVGPolylineElement() {
+    },
+    SVGPolygonElement: function SVGPolygonElement() {
+    },
+    SVGTextContentElement: function SVGTextContentElement() {
+    },
+    SVGTextPositioningElement: function SVGTextPositioningElement() {
+    },
+    SVGTextElement: function SVGTextElement() {
+    },
+    SVGTSpanElement: function SVGTSpanElement() {
+    },
+    SVGTextPathElement: function SVGTextPathElement() {
+    },
+    SVGImageElement: function SVGImageElement() {
+    },
+    SVGForeignObjectElement: function SVGForeignObjectElement() {
+    },
+    SVGMarkerElement: function SVGMarkerElement() {
+    },
+    SVGGradientElement: function SVGGradientElement() {
+    },
+    SVGLinearGradientElement: function SVGLinearGradientElement() {
+    },
+    SVGRadialGradientElement: function SVGRadialGradientElement() {
+    },
+    SVGStopElement: function SVGStopElement() {
+    },
+    SVGPatternElement: function SVGPatternElement() {
+    },
+    SVGScriptElement: function SVGScriptElement() {
+    },
+    SVGAElement: function SVGAElement() {
+    },
+    SVGViewElement: function SVGViewElement() {
+    },
+    WEBGL_blend_equation_advanced_coherent: function WEBGL_blend_equation_advanced_coherent() {
+    },
+    WEBGL_clip_cull_distance: function WEBGL_clip_cull_distance() {
+    },
+    WEBGL_color_buffer_float: function WEBGL_color_buffer_float() {
+    },
+    WEBGL_compressed_texture_astc: function WEBGL_compressed_texture_astc() {
+    },
+    WEBGL_compressed_texture_etc: function WEBGL_compressed_texture_etc() {
+    },
+    WEBGL_compressed_texture_etc1: function WEBGL_compressed_texture_etc1() {
+    },
+    WEBGL_compressed_texture_pvrtc: function WEBGL_compressed_texture_pvrtc() {
+    },
+    WEBGL_compressed_texture_s3tc: function WEBGL_compressed_texture_s3tc() {
+    },
+    WEBGL_compressed_texture_s3tc_srgb: function WEBGL_compressed_texture_s3tc_srgb() {
+    },
+    WEBGL_debug_renderer_info: function WEBGL_debug_renderer_info() {
+    },
+    WEBGL_debug_shaders: function WEBGL_debug_shaders() {
+    },
+    WEBGL_depth_texture: function WEBGL_depth_texture() {
+    },
+    WEBGL_draw_buffers: function WEBGL_draw_buffers() {
+    },
+    WEBGL_draw_instanced_base_vertex_base_instance: function WEBGL_draw_instanced_base_vertex_base_instance() {
+    },
+    WEBGL_lose_context: function WEBGL_lose_context() {
+    },
+    WEBGL_multi_draw: function WEBGL_multi_draw() {
+    },
+    WEBGL_multi_draw_instanced_base_vertex_base_instance: function WEBGL_multi_draw_instanced_base_vertex_base_instance() {
+    },
+    WEBGL_provoking_vertex: function WEBGL_provoking_vertex() {
+    },
+    Crypto: function Crypto() {
+    },
+    Algorithm: function Algorithm() {
+    },
+    KeyAlgorithm: function KeyAlgorithm() {
+    },
+    CryptoKey: function CryptoKey() {
+    },
+    SubtleCrypto: function SubtleCrypto() {
+    },
+    RsaOtherPrimesInfo: function RsaOtherPrimesInfo() {
+    },
+    JsonWebKey: function JsonWebKey() {
+    },
+    CryptoKeyPair: function CryptoKeyPair() {
+    },
+    RsaKeyGenParams: function RsaKeyGenParams() {
+    },
+    RsaHashedKeyGenParams: function RsaHashedKeyGenParams() {
+    },
+    RsaKeyAlgorithm: function RsaKeyAlgorithm() {
+    },
+    RsaHashedKeyAlgorithm: function RsaHashedKeyAlgorithm() {
+    },
+    RsaHashedImportParams: function RsaHashedImportParams() {
+    },
+    RsaPssParams: function RsaPssParams() {
+    },
+    RsaOaepParams: function RsaOaepParams() {
+    },
+    EcdsaParams: function EcdsaParams() {
+    },
+    EcKeyGenParams: function EcKeyGenParams() {
+    },
+    EcKeyAlgorithm: function EcKeyAlgorithm() {
+    },
+    EcKeyImportParams: function EcKeyImportParams() {
+    },
+    EcdhKeyDeriveParams: function EcdhKeyDeriveParams() {
+    },
+    AesCtrParams: function AesCtrParams() {
+    },
+    AesKeyAlgorithm: function AesKeyAlgorithm() {
+    },
+    AesKeyGenParams: function AesKeyGenParams() {
+    },
+    AesDerivedKeyParams: function AesDerivedKeyParams() {
+    },
+    AesCbcParams: function AesCbcParams() {
+    },
+    AesGcmParams: function AesGcmParams() {
+    },
+    HmacImportParams: function HmacImportParams() {
+    },
+    HmacKeyAlgorithm: function HmacKeyAlgorithm() {
+    },
+    HmacKeyGenParams: function HmacKeyGenParams() {
+    },
+    HkdfParams: function HkdfParams() {
+    },
+    Pbkdf2Params: function Pbkdf2Params() {
+    },
+    Accelerometer: function Accelerometer() {
+    },
+    AccelerometerSensorOptions: function AccelerometerSensorOptions() {
+    },
+    LinearAccelerationSensor: function LinearAccelerationSensor() {
+    },
+    GravitySensor: function GravitySensor() {
+    },
+    AccelerometerReadingValues: function AccelerometerReadingValues() {
+    },
+    LinearAccelerationReadingValues: function LinearAccelerationReadingValues() {
+    },
+    GravityReadingValues: function GravityReadingValues() {
+    },
+    AmbientLightSensor: function AmbientLightSensor() {
+    },
+    AmbientLightReadingValues: function AmbientLightReadingValues() {
+    },
+    XRAnchor: function XRAnchor() {
+    },
+    XRFrame: function XRFrame() {
+    },
+    XRSession: function XRSession() {
+    },
+    XRHitTestResult: function XRHitTestResult() {
+    },
+    XRAnchorSet: function XRAnchorSet() {
+    },
+    HTMLAttributionSrcElementUtils: function HTMLAttributionSrcElementUtils() {
+    },
+    HTMLMediaElement: function HTMLMediaElement() {
+    },
+    MediaDevices: function MediaDevices() {
+    },
+    AudioOutputOptions: function AudioOutputOptions() {
+    },
+    Navigator: function Navigator() {
+    },
+    ServiceWorkerGlobalScope: function ServiceWorkerGlobalScope() {
+    },
+    ServiceWorkerRegistration: function ServiceWorkerRegistration() {
+    },
+    BackgroundFetchManager: function BackgroundFetchManager() {
+    },
+    BackgroundFetchUIOptions: function BackgroundFetchUIOptions() {
+    },
+    BackgroundFetchOptions: function BackgroundFetchOptions() {
+    },
+    BackgroundFetchRegistration: function BackgroundFetchRegistration() {
+    },
+    BackgroundFetchRecord: function BackgroundFetchRecord() {
+    },
+    BackgroundFetchEvent: function BackgroundFetchEvent() {
+    },
+    BackgroundFetchEventInit: function BackgroundFetchEventInit() {
+    },
+    BackgroundFetchUpdateUIEvent: function BackgroundFetchUpdateUIEvent() {
+    },
+    SyncManager: function SyncManager() {
+    },
+    SyncEvent: function SyncEvent() {
+    },
+    SyncEventInit: function SyncEventInit() {
+    },
+    NavigatorBadge: function NavigatorBadge() {
+    },
+    BatteryManager: function BatteryManager() {
+    },
+    CaptureHandleConfig: function CaptureHandleConfig() {
+    },
+    CaptureHandle: function CaptureHandle() {
+    },
+    MediaStreamTrack: function MediaStreamTrack() {
+    },
+    ClipboardEventInit: function ClipboardEventInit() {
+    },
+    ClipboardEvent: function ClipboardEvent() {
+    },
+    ClipboardItem: function ClipboardItem() {
+    },
+    ClipboardItemOptions: function ClipboardItemOptions() {
+    },
+    Clipboard: function Clipboard() {
+    },
+    ClipboardPermissionDescriptor: function ClipboardPermissionDescriptor() {
+    },
+    CloseWatcher: function CloseWatcher() {
+    },
+    CloseWatcherOptions: function CloseWatcherOptions() {
+    },
+    Window: function Window() {
+    },
+    HTMLBodyElement: function HTMLBodyElement() {
+    },
+    CompressionStream: function CompressionStream() {
+    },
+    DecompressionStream: function DecompressionStream() {
+    },
+    PressureObserver: function PressureObserver() {
+    },
+    PressureRecord: function PressureRecord() {
+    },
+    PressureObserverOptions: function PressureObserverOptions() {
+    },
+    ConsoleType: function ConsoleType() {
+    },
+    ContactAddress: function ContactAddress() {
+    },
+    ContactInfo: function ContactInfo() {
+    },
+    ContactsSelectOptions: function ContactsSelectOptions() {
+    },
+    ContactsManager: function ContactsManager() {
+    },
+    ContentDescription: function ContentDescription() {
+    },
+    ContentIndex: function ContentIndex() {
+    },
+    ContentIndexEventInit: function ContentIndexEventInit() {
+    },
+    ContentIndexEvent: function ContentIndexEvent() {
+    },
+    CookieStore: function CookieStore() {
+    },
+    CookieStoreGetOptions: function CookieStoreGetOptions() {
+    },
+    CookieInit: function CookieInit() {
+    },
+    CookieStoreDeleteOptions: function CookieStoreDeleteOptions() {
+    },
+    CookieListItem: function CookieListItem() {
+    },
+    CookieStoreManager: function CookieStoreManager() {
+    },
+    CookieChangeEvent: function CookieChangeEvent() {
+    },
+    CookieChangeEventInit: function CookieChangeEventInit() {
+    },
+    ExtendableCookieChangeEvent: function ExtendableCookieChangeEvent() {
+    },
+    ExtendableCookieChangeEventInit: function ExtendableCookieChangeEventInit() {
+    },
+    CrashReportBody: function CrashReportBody() {
+    },
+    Credential: function Credential() {
+    },
+    CredentialUserData: function CredentialUserData() {
+    },
+    CredentialsContainer: function CredentialsContainer() {
+    },
+    CredentialData: function CredentialData() {
+    },
+    CredentialCreationOptions: function CredentialCreationOptions() {
+    },
+    PasswordCredential: function PasswordCredential() {
+    },
+    PasswordCredentialData: function PasswordCredentialData() {
+    },
+    FederatedCredential: function FederatedCredential() {
+    },
+    FederatedCredentialRequestOptions: function FederatedCredentialRequestOptions() {
+    },
+    FederatedCredentialInit: function FederatedCredentialInit() {
+    },
+    HTMLIFrameElement: function HTMLIFrameElement() {
+    },
+    ScriptingPolicyReportBody: function ScriptingPolicyReportBody() {
+    },
+    _CSS: function _CSS() {
+    },
+    AnimationWorkletGlobalScope: function AnimationWorkletGlobalScope() {
+    },
+    WorkletAnimationEffect: function WorkletAnimationEffect() {
+    },
+    WorkletAnimation: function WorkletAnimation() {
+    },
+    WorkletGroupEffect: function WorkletGroupEffect() {
+    },
+    CSSAnimation: function CSSAnimation() {
+    },
+    AnimationEvent: function AnimationEvent() {
+    },
+    AnimationEventInit: function AnimationEventInit() {
+    },
+    CSSRule: function CSSRule() {
+    },
+    CSSKeyframeRule: function CSSKeyframeRule() {
+    },
+    CSSKeyframesRule: function CSSKeyframesRule() {
+    },
+    GlobalEventHandlers: function GlobalEventHandlers() {
+    },
+    CSSImportRule: function CSSImportRule() {
+    },
+    CSSLayerBlockRule: function CSSLayerBlockRule() {
+    },
+    CSSLayerStatementRule: function CSSLayerStatementRule() {
+    },
+    CSSColorProfileRule: function CSSColorProfileRule() {
+    },
+    CSSConditionRule: function CSSConditionRule() {
+    },
+    CSSMediaRule: function CSSMediaRule() {
+    },
+    CSSSupportsRule: function CSSSupportsRule() {
+    },
+    CSSContainerRule: function CSSContainerRule() {
+    },
+    ContentVisibilityAutoStateChangedEvent: function ContentVisibilityAutoStateChangedEvent() {
+    },
+    ContentVisibilityAutoStateChangedEventInit: function ContentVisibilityAutoStateChangedEventInit() {
+    },
+    CSSCounterStyleRule: function CSSCounterStyleRule() {
+    },
+    FontFaceDescriptors: function FontFaceDescriptors() {
+    },
+    FontFace: function FontFace() {
+    },
+    FontFaceFeatures: function FontFaceFeatures() {
+    },
+    FontFaceVariationAxis: function FontFaceVariationAxis() {
+    },
+    FontFaceVariations: function FontFaceVariations() {
+    },
+    FontFacePalette: function FontFacePalette() {
+    },
+    FontFacePalettes: function FontFacePalettes() {
+    },
+    FontFaceSetLoadEventInit: function FontFaceSetLoadEventInit() {
+    },
+    FontFaceSetLoadEvent: function FontFaceSetLoadEvent() {
+    },
+    FontFaceSet: function FontFaceSet() {
+    },
+    FontFaceSource: function FontFaceSource() {
+    },
+    CSSFontFaceRule: function CSSFontFaceRule() {
+    },
+    CSSFontFeatureValuesRule: function CSSFontFeatureValuesRule() {
+    },
+    CSSFontFeatureValuesMap: function CSSFontFeatureValuesMap() {
+    },
+    CSSFontPaletteValuesRule: function CSSFontPaletteValuesRule() {
+    },
+    Highlight: function Highlight() {
+    },
+    HighlightRegistry: function HighlightRegistry() {
+    },
+    LayoutWorkletGlobalScope: function LayoutWorkletGlobalScope() {
+    },
+    LayoutOptions: function LayoutOptions() {
+    },
+    LayoutChild: function LayoutChild() {
+    },
+    LayoutFragment: function LayoutFragment() {
+    },
+    IntrinsicSizes: function IntrinsicSizes() {
+    },
+    LayoutConstraints: function LayoutConstraints() {
+    },
+    LayoutConstraintsOptions: function LayoutConstraintsOptions() {
+    },
+    ChildBreakToken: function ChildBreakToken() {
+    },
+    BreakToken: function BreakToken() {
+    },
+    BreakTokenOptions: function BreakTokenOptions() {
+    },
+    LayoutEdges: function LayoutEdges() {
+    },
+    FragmentResultOptions: function FragmentResultOptions() {
+    },
+    FragmentResult: function FragmentResult() {
+    },
+    IntrinsicSizesResultOptions: function IntrinsicSizesResultOptions() {
+    },
+    SVGClipPathElement: function SVGClipPathElement() {
+    },
+    SVGMaskElement: function SVGMaskElement() {
+    },
+    FocusableAreasOption: function FocusableAreasOption() {
+    },
+    SpatialNavigationSearchOptions: function SpatialNavigationSearchOptions() {
+    },
+    NavigationEvent: function NavigationEvent() {
+    },
+    NavigationEventInit: function NavigationEventInit() {
+    },
+    CSSStyleRule: function CSSStyleRule() {
+    },
+    PaintWorkletGlobalScope: function PaintWorkletGlobalScope() {
+    },
+    PaintRenderingContext2DSettings: function PaintRenderingContext2DSettings() {
+    },
+    PaintRenderingContext2D: function PaintRenderingContext2D() {
+    },
+    PaintSize: function PaintSize() {
+    },
+    CSSParserOptions: function CSSParserOptions() {
+    },
+    CSSParserRule: function CSSParserRule() {
+    },
+    CSSParserAtRule: function CSSParserAtRule() {
+    },
+    CSSParserQualifiedRule: function CSSParserQualifiedRule() {
+    },
+    CSSParserDeclaration: function CSSParserDeclaration() {
+    },
+    CSSParserValue: function CSSParserValue() {
+    },
+    CSSParserBlock: function CSSParserBlock() {
+    },
+    CSSParserFunction: function CSSParserFunction() {
+    },
+    PropertyDefinition: function PropertyDefinition() {
+    },
+    CSSPropertyRule: function CSSPropertyRule() {
+    },
+    CSSPseudoElement: function CSSPseudoElement() {
+    },
+    NamedFlowMap: function NamedFlowMap() {
+    },
+    NamedFlow: function NamedFlow() {
+    },
+    Region: function Region() {
+    },
+    CSSTransition: function CSSTransition() {
+    },
+    TransitionEvent: function TransitionEvent() {
+    },
+    TransitionEventInit: function TransitionEventInit() {
+    },
+    CSSStyleValue: function CSSStyleValue() {
+    },
+    StylePropertyMapReadOnly: function StylePropertyMapReadOnly() {
+    },
+    StylePropertyMap: function StylePropertyMap() {
+    },
+    ElementCSSInlineStyle: function ElementCSSInlineStyle() {
+    },
+    CSSUnparsedValue: function CSSUnparsedValue() {
+    },
+    CSSVariableReferenceValue: function CSSVariableReferenceValue() {
+    },
+    CSSKeywordValue: function CSSKeywordValue() {
+    },
+    CSSNumericType: function CSSNumericType() {
+    },
+    CSSNumericValue: function CSSNumericValue() {
+    },
+    CSSUnitValue: function CSSUnitValue() {
+    },
+    CSSMathValue: function CSSMathValue() {
+    },
+    CSSMathSum: function CSSMathSum() {
+    },
+    CSSMathProduct: function CSSMathProduct() {
+    },
+    CSSMathNegate: function CSSMathNegate() {
+    },
+    CSSMathInvert: function CSSMathInvert() {
+    },
+    CSSMathMin: function CSSMathMin() {
+    },
+    CSSMathMax: function CSSMathMax() {
+    },
+    CSSMathClamp: function CSSMathClamp() {
+    },
+    CSSNumericArray: function CSSNumericArray() {
+    },
+    CSSTransformValue: function CSSTransformValue() {
+    },
+    CSSTransformComponent: function CSSTransformComponent() {
+    },
+    CSSTranslate: function CSSTranslate() {
+    },
+    CSSRotate: function CSSRotate() {
+    },
+    CSSScale: function CSSScale() {
+    },
+    CSSSkew: function CSSSkew() {
+    },
+    CSSSkewX: function CSSSkewX() {
+    },
+    CSSSkewY: function CSSSkewY() {
+    },
+    CSSPerspective: function CSSPerspective() {
+    },
+    CSSMatrixComponent: function CSSMatrixComponent() {
+    },
+    CSSMatrixComponentOptions: function CSSMatrixComponentOptions() {
+    },
+    CSSImageValue: function CSSImageValue() {
+    },
+    CSSColorValue: function CSSColorValue() {
+    },
+    CSSRGB: function CSSRGB() {
+    },
+    CSSHSL: function CSSHSL() {
+    },
+    CSSHWB: function CSSHWB() {
+    },
+    CSSLab: function CSSLab() {
+    },
+    CSSLCH: function CSSLCH() {
+    },
+    CSSOKLab: function CSSOKLab() {
+    },
+    CSSOKLCH: function CSSOKLCH() {
+    },
+    CSSColor: function CSSColor() {
+    },
+    ViewTransition: function ViewTransition() {
+    },
+    ScrollOptions: function ScrollOptions() {
+    },
+    ScrollToOptions: function ScrollToOptions() {
+    },
+    MediaQueryList: function MediaQueryList() {
+    },
+    MediaQueryListEvent: function MediaQueryListEvent() {
+    },
+    MediaQueryListEventInit: function MediaQueryListEventInit() {
+    },
+    Screen: function Screen() {
+    },
+    CaretPosition: function CaretPosition() {
+    },
+    ScrollIntoViewOptions: function ScrollIntoViewOptions() {
+    },
+    CheckVisibilityOptions: function CheckVisibilityOptions() {
+    },
+    HTMLElement: function HTMLElement() {
+    },
+    HTMLImageElement: function HTMLImageElement() {
+    },
+    MouseEvent: function MouseEvent() {
+    },
+    BoxQuadOptions: function BoxQuadOptions() {
+    },
+    ConvertCoordinateOptions: function ConvertCoordinateOptions() {
+    },
+    GeometryUtils: function GeometryUtils() {
+    },
+    VisualViewport: function VisualViewport() {
+    },
+    MediaList: function MediaList() {
+    },
+    StyleSheet: function StyleSheet() {
+    },
+    CSSStyleSheet: function CSSStyleSheet() {
+    },
+    CSSStyleSheetInit: function CSSStyleSheetInit() {
+    },
+    StyleSheetList: function StyleSheetList() {
+    },
+    DocumentOrShadowRoot: function DocumentOrShadowRoot() {
+    },
+    LinkStyle: function LinkStyle() {
+    },
+    CSSRuleList: function CSSRuleList() {
+    },
+    CSSGroupingRule: function CSSGroupingRule() {
+    },
+    CSSPageRule: function CSSPageRule() {
+    },
+    CSSMarginRule: function CSSMarginRule() {
+    },
+    CSSNamespaceRule: function CSSNamespaceRule() {
+    },
+    CSSStyleDeclaration: function CSSStyleDeclaration() {
+    },
+    ElementInternals: function ElementInternals() {
+    },
+    CustomStateSet: function CustomStateSet() {
+    },
+    DataCue: function DataCue() {
+    },
+    DeprecationReportBody: function DeprecationReportBody() {
+    },
+    NavigatorDeviceMemory: function NavigatorDeviceMemory() {
+    },
+    DevicePosture: function DevicePosture() {
+    },
+    DigitalGoodsService: function DigitalGoodsService() {
+    },
+    ItemDetails: function ItemDetails() {
+    },
+    PurchaseDetails: function PurchaseDetails() {
+    },
+    Event: function Event() {
+    },
+    EventInit: function EventInit() {
+    },
+    CustomEvent: function CustomEvent() {
+    },
+    CustomEventInit: function CustomEventInit() {
+    },
+    EventTarget: function EventTarget() {
+    },
+    EventListenerOptions: function EventListenerOptions() {
+    },
+    AddEventListenerOptions: function AddEventListenerOptions() {
+    },
+    AbortController: function AbortController() {
+    },
+    AbortSignal: function AbortSignal() {
+    },
+    NonElementParentNode: function NonElementParentNode() {
+    },
+    ParentNode: function ParentNode() {
+    },
+    NonDocumentTypeChildNode: function NonDocumentTypeChildNode() {
+    },
+    ChildNode: function ChildNode() {
+    },
+    Slottable: function Slottable() {
+    },
+    NodeList: function NodeList() {
+    },
+    HTMLCollection: function HTMLCollection() {
+    },
+    MutationObserver: function MutationObserver() {
+    },
+    MutationObserverInit: function MutationObserverInit() {
+    },
+    MutationRecord: function MutationRecord() {
+    },
+    Node: function Node() {
+    },
+    GetRootNodeOptions: function GetRootNodeOptions() {
+    },
+    XMLDocument: function XMLDocument() {
+    },
+    ElementCreationOptions: function ElementCreationOptions() {
+    },
+    DOMImplementation: function DOMImplementation() {
+    },
+    DocumentType: function DocumentType() {
+    },
+    DocumentFragment: function DocumentFragment() {
+    },
+    ShadowRoot: function ShadowRoot() {
+    },
+    ShadowRootInit: function ShadowRootInit() {
+    },
+    NamedNodeMap: function NamedNodeMap() {
+    },
+    Attr: function Attr() {
+    },
+    CharacterData: function CharacterData() {
+    },
+    Text: function Text() {
+    },
+    CDATASection: function CDATASection() {
+    },
+    ProcessingInstruction: function ProcessingInstruction() {
+    },
+    Comment: function Comment() {
+    },
+    AbstractRange: function AbstractRange() {
+    },
+    StaticRangeInit: function StaticRangeInit() {
+    },
+    StaticRange: function StaticRange() {
+    },
+    NodeIterator: function NodeIterator() {
+    },
+    TreeWalker: function TreeWalker() {
+    },
+    DOMTokenList: function DOMTokenList() {
+    },
+    XPathResult: function XPathResult() {
+    },
+    XPathExpression: function XPathExpression() {
+    },
+    XPathEvaluatorBase: function XPathEvaluatorBase() {
+    },
+    XPathEvaluator: function XPathEvaluator() {
+    },
+    XSLTProcessor: function XSLTProcessor() {
+    },
+    EditContextInit: function EditContextInit() {
+    },
+    EditContext: function EditContext() {
+    },
+    TextUpdateEventInit: function TextUpdateEventInit() {
+    },
+    TextUpdateEvent: function TextUpdateEvent() {
+    },
+    TextFormatInit: function TextFormatInit() {
+    },
+    TextFormat: function TextFormat() {
+    },
+    TextFormatUpdateEventInit: function TextFormatUpdateEventInit() {
+    },
+    TextFormatUpdateEvent: function TextFormatUpdateEvent() {
+    },
+    CharacterBoundsUpdateEventInit: function CharacterBoundsUpdateEventInit() {
+    },
+    CharacterBoundsUpdateEvent: function CharacterBoundsUpdateEvent() {
+    },
+    PerformanceElementTiming: function PerformanceElementTiming() {
+    },
+    TextDecoderCommon: function TextDecoderCommon() {
+    },
+    TextDecoderOptions: function TextDecoderOptions() {
+    },
+    TextDecodeOptions: function TextDecodeOptions() {
+    },
+    TextDecoder: function TextDecoder() {
+    },
+    TextEncoderCommon: function TextEncoderCommon() {
+    },
+    TextEncoderEncodeIntoResult: function TextEncoderEncodeIntoResult() {
+    },
+    TextEncoder: function TextEncoder() {
+    },
+    TextDecoderStream: function TextDecoderStream() {
+    },
+    TextEncoderStream: function TextEncoderStream() {
+    },
+    MediaKeySystemConfiguration: function MediaKeySystemConfiguration() {
+    },
+    MediaKeySystemMediaCapability: function MediaKeySystemMediaCapability() {
+    },
+    MediaKeySystemAccess: function MediaKeySystemAccess() {
+    },
+    MediaKeys: function MediaKeys() {
+    },
+    MediaKeySession: function MediaKeySession() {
+    },
+    MediaKeyStatusMap: function MediaKeyStatusMap() {
+    },
+    MediaKeyMessageEvent: function MediaKeyMessageEvent() {
+    },
+    MediaKeyMessageEventInit: function MediaKeyMessageEventInit() {
+    },
+    MediaEncryptedEvent: function MediaEncryptedEvent() {
+    },
+    MediaEncryptedEventInit: function MediaEncryptedEventInit() {
+    },
+    HTMLInputElement: function HTMLInputElement() {
+    },
+    DataTransferItem: function DataTransferItem() {
+    },
+    FileSystemEntry: function FileSystemEntry() {
+    },
+    FileSystemDirectoryEntry: function FileSystemDirectoryEntry() {
+    },
+    FileSystemFlags: function FileSystemFlags() {
+    },
+    FileSystemDirectoryReader: function FileSystemDirectoryReader() {
+    },
+    FileSystemFileEntry: function FileSystemFileEntry() {
+    },
+    FileSystem: function FileSystem() {
+    },
+    PerformanceEventTiming: function PerformanceEventTiming() {
+    },
+    EventCounts: function EventCounts() {
+    },
+    Performance: function Performance() {
+    },
+    PerformanceObserverInit: function PerformanceObserverInit() {
+    },
+    ColorSelectionResult: function ColorSelectionResult() {
+    },
+    ColorSelectionOptions: function ColorSelectionOptions() {
+    },
+    EyeDropper: function EyeDropper() {
+    },
+    Headers: function Headers() {
+    },
+    Body: function Body() {
+    },
+    Request: function Request() {
+    },
+    RequestInit: function RequestInit() {
+    },
+    Response: function Response() {
+    },
+    ResponseInit: function ResponseInit() {
+    },
+    AuthenticationExtensionsClientInputs: function AuthenticationExtensionsClientInputs() {
+    },
+    HMACGetSecretInput: function HMACGetSecretInput() {
+    },
+    AuthenticationExtensionsClientOutputs: function AuthenticationExtensionsClientOutputs() {
+    },
+    HMACGetSecretOutput: function HMACGetSecretOutput() {
+    },
+    FileSystemPermissionDescriptor: function FileSystemPermissionDescriptor() {
+    },
+    FileSystemHandlePermissionDescriptor: function FileSystemHandlePermissionDescriptor() {
+    },
+    FileSystemHandle: function FileSystemHandle() {
+    },
+    FilePickerAcceptType: function FilePickerAcceptType() {
+    },
+    FilePickerOptions: function FilePickerOptions() {
+    },
+    OpenFilePickerOptions: function OpenFilePickerOptions() {
+    },
+    SaveFilePickerOptions: function SaveFilePickerOptions() {
+    },
+    DirectoryPickerOptions: function DirectoryPickerOptions() {
+    },
+    SVGFilterElement: function SVGFilterElement() {
+    },
+    SVGFilterPrimitiveStandardAttributes: function SVGFilterPrimitiveStandardAttributes() {
+    },
+    SVGFEBlendElement: function SVGFEBlendElement() {
+    },
+    SVGFEColorMatrixElement: function SVGFEColorMatrixElement() {
+    },
+    SVGFEComponentTransferElement: function SVGFEComponentTransferElement() {
+    },
+    SVGComponentTransferFunctionElement: function SVGComponentTransferFunctionElement() {
+    },
+    SVGFEFuncRElement: function SVGFEFuncRElement() {
+    },
+    SVGFEFuncGElement: function SVGFEFuncGElement() {
+    },
+    SVGFEFuncBElement: function SVGFEFuncBElement() {
+    },
+    SVGFEFuncAElement: function SVGFEFuncAElement() {
+    },
+    SVGFECompositeElement: function SVGFECompositeElement() {
+    },
+    SVGFEConvolveMatrixElement: function SVGFEConvolveMatrixElement() {
+    },
+    SVGFEDiffuseLightingElement: function SVGFEDiffuseLightingElement() {
+    },
+    SVGFEDistantLightElement: function SVGFEDistantLightElement() {
+    },
+    SVGFEPointLightElement: function SVGFEPointLightElement() {
+    },
+    SVGFESpotLightElement: function SVGFESpotLightElement() {
+    },
+    SVGFEDisplacementMapElement: function SVGFEDisplacementMapElement() {
+    },
+    SVGFEDropShadowElement: function SVGFEDropShadowElement() {
+    },
+    SVGFEFloodElement: function SVGFEFloodElement() {
+    },
+    SVGFEGaussianBlurElement: function SVGFEGaussianBlurElement() {
+    },
+    SVGFEImageElement: function SVGFEImageElement() {
+    },
+    SVGFEMergeElement: function SVGFEMergeElement() {
+    },
+    SVGFEMergeNodeElement: function SVGFEMergeNodeElement() {
+    },
+    SVGFEMorphologyElement: function SVGFEMorphologyElement() {
+    },
+    SVGFEOffsetElement: function SVGFEOffsetElement() {
+    },
+    SVGFESpecularLightingElement: function SVGFESpecularLightingElement() {
+    },
+    SVGFETileElement: function SVGFETileElement() {
+    },
+    SVGFETurbulenceElement: function SVGFETurbulenceElement() {
+    },
+    FontMetrics: function FontMetrics() {
+    },
+    Baseline: function Baseline() {
+    },
+    Font: function Font() {
+    },
+    FileSystemCreateWritableOptions: function FileSystemCreateWritableOptions() {
+    },
+    FileSystemFileHandle: function FileSystemFileHandle() {
+    },
+    FileSystemGetFileOptions: function FileSystemGetFileOptions() {
+    },
+    FileSystemGetDirectoryOptions: function FileSystemGetDirectoryOptions() {
+    },
+    FileSystemRemoveOptions: function FileSystemRemoveOptions() {
+    },
+    FileSystemDirectoryHandle: function FileSystemDirectoryHandle() {
+    },
+    WriteParams: function WriteParams() {
+    },
+    FileSystemWritableFileStream: function FileSystemWritableFileStream() {
+    },
+    FileSystemReadWriteOptions: function FileSystemReadWriteOptions() {
+    },
+    FileSystemSyncAccessHandle: function FileSystemSyncAccessHandle() {
+    },
+    StorageManager: function StorageManager() {
+    },
+    FullscreenOptions: function FullscreenOptions() {
+    },
+    GamepadHapticActuator: function GamepadHapticActuator() {
+    },
+    GamepadEffectParameters: function GamepadEffectParameters() {
+    },
+    GamepadPose: function GamepadPose() {
+    },
+    GamepadTouch: function GamepadTouch() {
+    },
+    Gamepad: function Gamepad() {
+    },
+    GamepadButton: function GamepadButton() {
+    },
+    GamepadEvent: function GamepadEvent() {
+    },
+    GamepadEventInit: function GamepadEventInit() {
+    },
+    WindowEventHandlers: function WindowEventHandlers() {
+    },
+    Sensor: function Sensor() {
+    },
+    SensorOptions: function SensorOptions() {
+    },
+    SensorErrorEvent: function SensorErrorEvent() {
+    },
+    SensorErrorEventInit: function SensorErrorEventInit() {
+    },
+    MockSensorConfiguration: function MockSensorConfiguration() {
+    },
+    MockSensor: function MockSensor() {
+    },
+    MockSensorReadingValues: function MockSensorReadingValues() {
+    },
+    GeolocationSensor: function GeolocationSensor() {
+    },
+    GeolocationSensorOptions: function GeolocationSensorOptions() {
+    },
+    ReadOptions: function ReadOptions() {
+    },
+    GeolocationSensorReading: function GeolocationSensorReading() {
+    },
+    GeolocationReadingValues: function GeolocationReadingValues() {
+    },
+    Geolocation: function Geolocation() {
+    },
+    PositionOptions: function PositionOptions() {
+    },
+    GeolocationPosition: function GeolocationPosition() {
+    },
+    GeolocationCoordinates: function GeolocationCoordinates() {
+    },
+    GeolocationPositionError: function GeolocationPositionError() {
+    },
+    DOMPointReadOnly: function DOMPointReadOnly() {
+    },
+    DOMPoint: function DOMPoint() {
+    },
+    DOMPointInit: function DOMPointInit() {
+    },
+    DOMRectReadOnly: function DOMRectReadOnly() {
+    },
+    DOMRect: function DOMRect() {
+    },
+    DOMRectInit: function DOMRectInit() {
+    },
+    DOMRectList: function DOMRectList() {
+    },
+    DOMQuad: function DOMQuad() {
+    },
+    DOMQuadInit: function DOMQuadInit() {
+    },
+    DOMMatrixReadOnly: function DOMMatrixReadOnly() {
+    },
+    DOMMatrix: function DOMMatrix() {
+    },
+    DOMMatrix2DInit: function DOMMatrix2DInit() {
+    },
+    DOMMatrixInit: function DOMMatrixInit() {
+    },
+    RelatedApplication: function RelatedApplication() {
+    },
+    GlobalPrivacyControl: function GlobalPrivacyControl() {
+    },
+    Gyroscope: function Gyroscope() {
+    },
+    GyroscopeSensorOptions: function GyroscopeSensorOptions() {
+    },
+    GyroscopeReadingValues: function GyroscopeReadingValues() {
+    },
+    HTMLAllCollection: function HTMLAllCollection() {
+    },
+    HTMLFormControlsCollection: function HTMLFormControlsCollection() {
+    },
+    RadioNodeList: function RadioNodeList() {
+    },
+    HTMLOptionsCollection: function HTMLOptionsCollection() {
+    },
+    DOMStringList: function DOMStringList() {
+    },
+    HTMLUnknownElement: function HTMLUnknownElement() {
+    },
+    HTMLOrSVGElement: function HTMLOrSVGElement() {
+    },
+    DOMStringMap: function DOMStringMap() {
+    },
+    HTMLHtmlElement: function HTMLHtmlElement() {
+    },
+    HTMLHeadElement: function HTMLHeadElement() {
+    },
+    HTMLTitleElement: function HTMLTitleElement() {
+    },
+    HTMLBaseElement: function HTMLBaseElement() {
+    },
+    HTMLLinkElement: function HTMLLinkElement() {
+    },
+    HTMLMetaElement: function HTMLMetaElement() {
+    },
+    HTMLStyleElement: function HTMLStyleElement() {
+    },
+    HTMLHeadingElement: function HTMLHeadingElement() {
+    },
+    HTMLParagraphElement: function HTMLParagraphElement() {
+    },
+    HTMLHRElement: function HTMLHRElement() {
+    },
+    HTMLPreElement: function HTMLPreElement() {
+    },
+    HTMLQuoteElement: function HTMLQuoteElement() {
+    },
+    HTMLOListElement: function HTMLOListElement() {
+    },
+    HTMLUListElement: function HTMLUListElement() {
+    },
+    HTMLMenuElement: function HTMLMenuElement() {
+    },
+    HTMLLIElement: function HTMLLIElement() {
+    },
+    HTMLDListElement: function HTMLDListElement() {
+    },
+    HTMLDivElement: function HTMLDivElement() {
+    },
+    HTMLAnchorElement: function HTMLAnchorElement() {
+    },
+    HTMLDataElement: function HTMLDataElement() {
+    },
+    HTMLTimeElement: function HTMLTimeElement() {
+    },
+    HTMLSpanElement: function HTMLSpanElement() {
+    },
+    HTMLBRElement: function HTMLBRElement() {
+    },
+    HTMLHyperlinkElementUtils: function HTMLHyperlinkElementUtils() {
+    },
+    HTMLModElement: function HTMLModElement() {
+    },
+    HTMLPictureElement: function HTMLPictureElement() {
+    },
+    HTMLSourceElement: function HTMLSourceElement() {
+    },
+    HTMLEmbedElement: function HTMLEmbedElement() {
+    },
+    HTMLObjectElement: function HTMLObjectElement() {
+    },
+    HTMLVideoElement: function HTMLVideoElement() {
+    },
+    HTMLAudioElement: function HTMLAudioElement() {
+    },
+    HTMLTrackElement: function HTMLTrackElement() {
+    },
+    MediaError: function MediaError() {
+    },
+    AudioTrackList: function AudioTrackList() {
+    },
+    AudioTrack: function AudioTrack() {
+    },
+    VideoTrackList: function VideoTrackList() {
+    },
+    VideoTrack: function VideoTrack() {
+    },
+    TextTrackList: function TextTrackList() {
+    },
+    TextTrack: function TextTrack() {
+    },
+    TextTrackCueList: function TextTrackCueList() {
+    },
+    TextTrackCue: function TextTrackCue() {
+    },
+    TimeRanges: function TimeRanges() {
+    },
+    TrackEvent: function TrackEvent() {
+    },
+    TrackEventInit: function TrackEventInit() {
+    },
+    HTMLMapElement: function HTMLMapElement() {
+    },
+    HTMLAreaElement: function HTMLAreaElement() {
+    },
+    HTMLTableElement: function HTMLTableElement() {
+    },
+    HTMLTableCaptionElement: function HTMLTableCaptionElement() {
+    },
+    HTMLTableColElement: function HTMLTableColElement() {
+    },
+    HTMLTableSectionElement: function HTMLTableSectionElement() {
+    },
+    HTMLTableRowElement: function HTMLTableRowElement() {
+    },
+    HTMLTableCellElement: function HTMLTableCellElement() {
+    },
+    HTMLFormElement: function HTMLFormElement() {
+    },
+    HTMLLabelElement: function HTMLLabelElement() {
+    },
+    HTMLButtonElement: function HTMLButtonElement() {
+    },
+    HTMLSelectElement: function HTMLSelectElement() {
+    },
+    HTMLDataListElement: function HTMLDataListElement() {
+    },
+    HTMLOptGroupElement: function HTMLOptGroupElement() {
+    },
+    HTMLOptionElement: function HTMLOptionElement() {
+    },
+    HTMLTextAreaElement: function HTMLTextAreaElement() {
+    },
+    HTMLOutputElement: function HTMLOutputElement() {
+    },
+    HTMLProgressElement: function HTMLProgressElement() {
+    },
+    HTMLMeterElement: function HTMLMeterElement() {
+    },
+    HTMLFieldSetElement: function HTMLFieldSetElement() {
+    },
+    HTMLLegendElement: function HTMLLegendElement() {
+    },
+    ValidityState: function ValidityState() {
+    },
+    SubmitEvent: function SubmitEvent() {
+    },
+    SubmitEventInit: function SubmitEventInit() {
+    },
+    FormDataEvent: function FormDataEvent() {
+    },
+    FormDataEventInit: function FormDataEventInit() {
+    },
+    HTMLDetailsElement: function HTMLDetailsElement() {
+    },
+    HTMLDialogElement: function HTMLDialogElement() {
+    },
+    HTMLScriptElement: function HTMLScriptElement() {
+    },
+    HTMLTemplateElement: function HTMLTemplateElement() {
+    },
+    HTMLSlotElement: function HTMLSlotElement() {
+    },
+    AssignedNodesOptions: function AssignedNodesOptions() {
+    },
+    HTMLCanvasElement: function HTMLCanvasElement() {
+    },
+    CanvasRenderingContext2DSettings: function CanvasRenderingContext2DSettings() {
+    },
+    CanvasRenderingContext2D: function CanvasRenderingContext2D() {
+    },
+    CanvasState: function CanvasState() {
+    },
+    CanvasTransform: function CanvasTransform() {
+    },
+    CanvasCompositing: function CanvasCompositing() {
+    },
+    CanvasImageSmoothing: function CanvasImageSmoothing() {
+    },
+    CanvasFillStrokeStyles: function CanvasFillStrokeStyles() {
+    },
+    CanvasShadowStyles: function CanvasShadowStyles() {
+    },
+    CanvasFilters: function CanvasFilters() {
+    },
+    CanvasRect: function CanvasRect() {
+    },
+    CanvasDrawPath: function CanvasDrawPath() {
+    },
+    CanvasUserInterface: function CanvasUserInterface() {
+    },
+    CanvasText: function CanvasText() {
+    },
+    CanvasDrawImage: function CanvasDrawImage() {
+    },
+    CanvasImageData: function CanvasImageData() {
+    },
+    CanvasPathDrawingStyles: function CanvasPathDrawingStyles() {
+    },
+    CanvasTextDrawingStyles: function CanvasTextDrawingStyles() {
+    },
+    CanvasPath: function CanvasPath() {
+    },
+    CanvasGradient: function CanvasGradient() {
+    },
+    CanvasPattern: function CanvasPattern() {
+    },
+    TextMetrics: function TextMetrics() {
+    },
+    ImageDataSettings: function ImageDataSettings() {
+    },
+    ImageData: function ImageData() {
+    },
+    Path2D: function Path2D() {
+    },
+    ImageBitmapRenderingContext: function ImageBitmapRenderingContext() {
+    },
+    ImageBitmapRenderingContextSettings: function ImageBitmapRenderingContextSettings() {
+    },
+    ImageEncodeOptions: function ImageEncodeOptions() {
+    },
+    OffscreenCanvas: function OffscreenCanvas() {
+    },
+    OffscreenCanvasRenderingContext2D: function OffscreenCanvasRenderingContext2D() {
+    },
+    CustomElementRegistry: function CustomElementRegistry() {
+    },
+    ElementDefinitionOptions: function ElementDefinitionOptions() {
+    },
+    ValidityStateFlags: function ValidityStateFlags() {
+    },
+    UserActivation: function UserActivation() {
+    },
+    FocusOptions: function FocusOptions() {
+    },
+    ElementContentEditable: function ElementContentEditable() {
+    },
+    DataTransfer: function DataTransfer() {
+    },
+    DataTransferItemList: function DataTransferItemList() {
+    },
+    DragEvent: function DragEvent() {
+    },
+    DragEventInit: function DragEventInit() {
+    },
+    PopoverTargetElement: function PopoverTargetElement() {
+    },
+    ToggleEvent: function ToggleEvent() {
+    },
+    ToggleEventInit: function ToggleEventInit() {
+    },
+    WindowPostMessageOptions: function WindowPostMessageOptions() {
+    },
+    BarProp: function BarProp() {
+    },
+    Location: function Location() {
+    },
+    History: function History() {
+    },
+    PopStateEvent: function PopStateEvent() {
+    },
+    PopStateEventInit: function PopStateEventInit() {
+    },
+    HashChangeEvent: function HashChangeEvent() {
+    },
+    HashChangeEventInit: function HashChangeEventInit() {
+    },
+    PageTransitionEvent: function PageTransitionEvent() {
+    },
+    PageTransitionEventInit: function PageTransitionEventInit() {
+    },
+    BeforeUnloadEvent: function BeforeUnloadEvent() {
+    },
+    ErrorEvent: function ErrorEvent() {
+    },
+    ErrorEventInit: function ErrorEventInit() {
+    },
+    PromiseRejectionEvent: function PromiseRejectionEvent() {
+    },
+    PromiseRejectionEventInit: function PromiseRejectionEventInit() {
+    },
+    DOMParser: function DOMParser() {
+    },
+    NavigatorID: function NavigatorID() {
+    },
+    NavigatorLanguage: function NavigatorLanguage() {
+    },
+    NavigatorOnLine: function NavigatorOnLine() {
+    },
+    NavigatorContentUtils: function NavigatorContentUtils() {
+    },
+    NavigatorCookies: function NavigatorCookies() {
+    },
+    NavigatorPlugins: function NavigatorPlugins() {
+    },
+    PluginArray: function PluginArray() {
+    },
+    MimeTypeArray: function MimeTypeArray() {
+    },
+    Plugin: function Plugin() {
+    },
+    MimeType: function MimeType() {
+    },
+    ImageBitmap: function ImageBitmap() {
+    },
+    ImageBitmapOptions: function ImageBitmapOptions() {
+    },
+    AnimationFrameProvider: function AnimationFrameProvider() {
+    },
+    MessageEvent: function MessageEvent() {
+    },
+    MessageEventInit: function MessageEventInit() {
+    },
+    EventSource: function EventSource() {
+    },
+    EventSourceInit: function EventSourceInit() {
+    },
+    MessageChannel: function MessageChannel() {
+    },
+    MessagePort: function MessagePort() {
+    },
+    StructuredSerializeOptions: function StructuredSerializeOptions() {
+    },
+    BroadcastChannel: function BroadcastChannel() {
+    },
+    WorkerGlobalScope: function WorkerGlobalScope() {
+    },
+    DedicatedWorkerGlobalScope: function DedicatedWorkerGlobalScope() {
+    },
+    SharedWorkerGlobalScope: function SharedWorkerGlobalScope() {
+    },
+    AbstractWorker: function AbstractWorker() {
+    },
+    Worker: function Worker() {
+    },
+    WorkerOptions: function WorkerOptions() {
+    },
+    SharedWorker: function SharedWorker() {
+    },
+    NavigatorConcurrentHardware: function NavigatorConcurrentHardware() {
+    },
+    WorkerNavigator: function WorkerNavigator() {
+    },
+    WorkerLocation: function WorkerLocation() {
+    },
+    WorkletGlobalScope: function WorkletGlobalScope() {
+    },
+    Worklet: function Worklet() {
+    },
+    WorkletOptions: function WorkletOptions() {
+    },
+    Storage: function Storage() {
+    },
+    WindowSessionStorage: function WindowSessionStorage() {
+    },
+    WindowLocalStorage: function WindowLocalStorage() {
+    },
+    StorageEvent: function StorageEvent() {
+    },
+    StorageEventInit: function StorageEventInit() {
+    },
+    HTMLMarqueeElement: function HTMLMarqueeElement() {
+    },
+    HTMLFrameSetElement: function HTMLFrameSetElement() {
+    },
+    HTMLFrameElement: function HTMLFrameElement() {
+    },
+    HTMLDirectoryElement: function HTMLDirectoryElement() {
+    },
+    HTMLFontElement: function HTMLFontElement() {
+    },
+    HTMLParamElement: function HTMLParamElement() {
+    },
+    External: function External() {
+    },
+    IdleOptions: function IdleOptions() {
+    },
+    IdleDetector: function IdleDetector() {
+    },
+    ImageCapture: function ImageCapture() {
+    },
+    PhotoCapabilities: function PhotoCapabilities() {
+    },
+    PhotoSettings: function PhotoSettings() {
+    },
+    MediaSettingsRange: function MediaSettingsRange() {
+    },
+    MediaTrackSupportedConstraints: function MediaTrackSupportedConstraints() {
+    },
+    MediaTrackCapabilities: function MediaTrackCapabilities() {
+    },
+    MediaTrackConstraintSet: function MediaTrackConstraintSet() {
+    },
+    MediaTrackSettings: function MediaTrackSettings() {
+    },
+    ConstrainPoint2DParameters: function ConstrainPoint2DParameters() {
+    },
+    Point2D: function Point2D() {
+    },
+    ImageResource: function ImageResource() {
+    },
+    Ink: function Ink() {
+    },
+    InkPresenterParam: function InkPresenterParam() {
+    },
+    InkPresenter: function InkPresenter() {
+    },
+    InkTrailStyle: function InkTrailStyle() {
+    },
+    InputDeviceCapabilities: function InputDeviceCapabilities() {
+    },
+    InputDeviceCapabilitiesInit: function InputDeviceCapabilitiesInit() {
+    },
+    UIEvent: function UIEvent() {
+    },
+    UIEventInit: function UIEventInit() {
+    },
+    InputEvent: function InputEvent() {
+    },
+    InputEventInit: function InputEventInit() {
+    },
+    IntersectionObserver: function IntersectionObserver() {
+    },
+    IntersectionObserverEntry: function IntersectionObserverEntry() {
+    },
+    IntersectionObserverEntryInit: function IntersectionObserverEntryInit() {
+    },
+    IntersectionObserverInit: function IntersectionObserverInit() {
+    },
+    InterventionReportBody: function InterventionReportBody() {
+    },
+    IsInputPendingOptions: function IsInputPendingOptions() {
+    },
+    Scheduling: function Scheduling() {
+    },
+    Profiler: function Profiler() {
+    },
+    ProfilerTrace: function ProfilerTrace() {
+    },
+    ProfilerSample: function ProfilerSample() {
+    },
+    ProfilerStack: function ProfilerStack() {
+    },
+    ProfilerFrame: function ProfilerFrame() {
+    },
+    ProfilerInitOptions: function ProfilerInitOptions() {
+    },
+    Keyboard: function Keyboard() {
+    },
+    KeyboardLayoutMap: function KeyboardLayoutMap() {
+    },
+    LargestContentfulPaint: function LargestContentfulPaint() {
+    },
+    LayoutShift: function LayoutShift() {
+    },
+    LayoutShiftAttribution: function LayoutShiftAttribution() {
+    },
+    QueryOptions: function QueryOptions() {
+    },
+    FontData: function FontData() {
+    },
+    PerformanceLongTaskTiming: function PerformanceLongTaskTiming() {
+    },
+    TaskAttributionTiming: function TaskAttributionTiming() {
+    },
+    Magnetometer: function Magnetometer() {
+    },
+    MagnetometerSensorOptions: function MagnetometerSensorOptions() {
+    },
+    UncalibratedMagnetometer: function UncalibratedMagnetometer() {
+    },
+    MagnetometerReadingValues: function MagnetometerReadingValues() {
+    },
+    UncalibratedMagnetometerReadingValues: function UncalibratedMagnetometerReadingValues() {
+    },
+    BeforeInstallPromptEvent: function BeforeInstallPromptEvent() {
+    },
+    PromptResponseObject: function PromptResponseObject() {
+    },
+    MathMLElement: function MathMLElement() {
+    },
+    MediaConfiguration: function MediaConfiguration() {
+    },
+    MediaDecodingConfiguration: function MediaDecodingConfiguration() {
+    },
+    MediaEncodingConfiguration: function MediaEncodingConfiguration() {
+    },
+    VideoConfiguration: function VideoConfiguration() {
+    },
+    AudioConfiguration: function AudioConfiguration() {
+    },
+    MediaCapabilitiesKeySystemConfiguration: function MediaCapabilitiesKeySystemConfiguration() {
+    },
+    KeySystemTrackConfiguration: function KeySystemTrackConfiguration() {
+    },
+    MediaCapabilitiesInfo: function MediaCapabilitiesInfo() {
+    },
+    MediaCapabilitiesDecodingInfo: function MediaCapabilitiesDecodingInfo() {
+    },
+    MediaCapabilitiesEncodingInfo: function MediaCapabilitiesEncodingInfo() {
+    },
+    MediaCapabilities: function MediaCapabilities() {
+    },
+    VideoPlaybackQuality: function VideoPlaybackQuality() {
+    },
+    MediaSource: function MediaSource() {
+    },
+    MediaSourceHandle: function MediaSourceHandle() {
+    },
+    SourceBuffer: function SourceBuffer() {
+    },
+    SourceBufferList: function SourceBufferList() {
+    },
+    MockCapturePromptResultConfiguration: function MockCapturePromptResultConfiguration() {
+    },
+    MockCaptureDeviceConfiguration: function MockCaptureDeviceConfiguration() {
+    },
+    MockCameraConfiguration: function MockCameraConfiguration() {
+    },
+    MockMicrophoneConfiguration: function MockMicrophoneConfiguration() {
+    },
+    CanvasCaptureMediaStreamTrack: function CanvasCaptureMediaStreamTrack() {
+    },
+    CaptureActionEvent: function CaptureActionEvent() {
+    },
+    CaptureActionEventInit: function CaptureActionEventInit() {
+    },
+    CropTarget: function CropTarget() {
+    },
+    BrowserCaptureMediaStreamTrack: function BrowserCaptureMediaStreamTrack() {
+    },
+    MediaStream: function MediaStream() {
+    },
+    MediaTrackConstraints: function MediaTrackConstraints() {
+    },
+    MediaStreamTrackEvent: function MediaStreamTrackEvent() {
+    },
+    MediaStreamTrackEventInit: function MediaStreamTrackEventInit() {
+    },
+    OverconstrainedError: function OverconstrainedError() {
+    },
+    MediaDeviceInfo: function MediaDeviceInfo() {
+    },
+    InputDeviceInfo: function InputDeviceInfo() {
+    },
+    MediaStreamConstraints: function MediaStreamConstraints() {
+    },
+    DoubleRange: function DoubleRange() {
+    },
+    ConstrainDoubleRange: function ConstrainDoubleRange() {
+    },
+    ULongRange: function ULongRange() {
+    },
+    ConstrainULongRange: function ConstrainULongRange() {
+    },
+    ConstrainBooleanParameters: function ConstrainBooleanParameters() {
+    },
+    ConstrainDOMStringParameters: function ConstrainDOMStringParameters() {
+    },
+    DevicePermissionDescriptor: function DevicePermissionDescriptor() {
+    },
+    CameraDevicePermissionDescriptor: function CameraDevicePermissionDescriptor() {
+    },
+    MediaStreamTrackProcessor: function MediaStreamTrackProcessor() {
+    },
+    MediaStreamTrackProcessorInit: function MediaStreamTrackProcessorInit() {
+    },
+    VideoTrackGenerator: function VideoTrackGenerator() {
+    },
+    ViewportMediaStreamConstraints: function ViewportMediaStreamConstraints() {
+    },
+    MediaSession: function MediaSession() {
+    },
+    MediaMetadata: function MediaMetadata() {
+    },
+    MediaMetadataInit: function MediaMetadataInit() {
+    },
+    MediaImage: function MediaImage() {
+    },
+    MediaPositionState: function MediaPositionState() {
+    },
+    MediaSessionActionDetails: function MediaSessionActionDetails() {
+    },
+    MediaRecorder: function MediaRecorder() {
+    },
+    MediaRecorderOptions: function MediaRecorderOptions() {
+    },
+    BlobEvent: function BlobEvent() {
+    },
+    BlobEventInit: function BlobEventInit() {
+    },
+    HTMLModelElement: function HTMLModelElement() {
+    },
+    RTCRtpSendParameters: function RTCRtpSendParameters() {
+    },
+    Navigation: function Navigation() {
+    },
+    NavigationUpdateCurrentEntryOptions: function NavigationUpdateCurrentEntryOptions() {
+    },
+    NavigationOptions: function NavigationOptions() {
+    },
+    NavigationNavigateOptions: function NavigationNavigateOptions() {
+    },
+    NavigationReloadOptions: function NavigationReloadOptions() {
+    },
+    NavigationResult: function NavigationResult() {
+    },
+    NavigationCurrentEntryChangeEvent: function NavigationCurrentEntryChangeEvent() {
+    },
+    NavigationCurrentEntryChangeEventInit: function NavigationCurrentEntryChangeEventInit() {
+    },
+    NavigationTransition: function NavigationTransition() {
+    },
+    NavigateEvent: function NavigateEvent() {
+    },
+    NavigateEventInit: function NavigateEventInit() {
+    },
+    NavigationInterceptOptions: function NavigationInterceptOptions() {
+    },
+    NavigationDestination: function NavigationDestination() {
+    },
+    NavigationHistoryEntry: function NavigationHistoryEntry() {
+    },
+    PerformanceNavigationTiming: function PerformanceNavigationTiming() {
+    },
+    PerformanceTiming: function PerformanceTiming() {
+    },
+    PerformanceNavigation: function PerformanceNavigation() {
+    },
+    NavigatorNetworkInformation: function NavigatorNetworkInformation() {
+    },
+    NetworkInformation: function NetworkInformation() {
+    },
+    Notification: function Notification() {
+    },
+    NotificationOptions: function NotificationOptions() {
+    },
+    NotificationAction: function NotificationAction() {
+    },
+    GetNotificationOptions: function GetNotificationOptions() {
+    },
+    NotificationEvent: function NotificationEvent() {
+    },
+    NotificationEventInit: function NotificationEventInit() {
+    },
+    DeviceOrientationEvent: function DeviceOrientationEvent() {
+    },
+    DeviceOrientationEventInit: function DeviceOrientationEventInit() {
+    },
+    DeviceMotionEventAcceleration: function DeviceMotionEventAcceleration() {
+    },
+    DeviceMotionEventRotationRate: function DeviceMotionEventRotationRate() {
+    },
+    DeviceMotionEvent: function DeviceMotionEvent() {
+    },
+    DeviceMotionEventAccelerationInit: function DeviceMotionEventAccelerationInit() {
+    },
+    DeviceMotionEventRotationRateInit: function DeviceMotionEventRotationRateInit() {
+    },
+    DeviceMotionEventInit: function DeviceMotionEventInit() {
+    },
+    OrientationSensor: function OrientationSensor() {
+    },
+    OrientationSensorOptions: function OrientationSensorOptions() {
+    },
+    AbsoluteOrientationSensor: function AbsoluteOrientationSensor() {
+    },
+    RelativeOrientationSensor: function RelativeOrientationSensor() {
+    },
+    AbsoluteOrientationReadingValues: function AbsoluteOrientationReadingValues() {
+    },
+    RelativeOrientationReadingValues: function RelativeOrientationReadingValues() {
+    },
+    Client: function Client() {
+    },
+    PerformancePaintTiming: function PerformancePaintTiming() {
+    },
+    PaymentManager: function PaymentManager() {
+    },
+    CanMakePaymentEvent: function CanMakePaymentEvent() {
+    },
+    PaymentRequestDetailsUpdate: function PaymentRequestDetailsUpdate() {
+    },
+    PaymentRequestEvent: function PaymentRequestEvent() {
+    },
+    PaymentRequestEventInit: function PaymentRequestEventInit() {
+    },
+    PaymentHandlerResponse: function PaymentHandlerResponse() {
+    },
+    AddressInit: function AddressInit() {
+    },
+    PaymentOptions: function PaymentOptions() {
+    },
+    PaymentShippingOption: function PaymentShippingOption() {
+    },
+    AddressErrors: function AddressErrors() {
+    },
+    PaymentRequest: function PaymentRequest() {
+    },
+    PaymentMethodData: function PaymentMethodData() {
+    },
+    PaymentCurrencyAmount: function PaymentCurrencyAmount() {
+    },
+    PaymentDetailsBase: function PaymentDetailsBase() {
+    },
+    PaymentDetailsInit: function PaymentDetailsInit() {
+    },
+    PaymentDetailsUpdate: function PaymentDetailsUpdate() {
+    },
+    PaymentDetailsModifier: function PaymentDetailsModifier() {
+    },
+    PaymentItem: function PaymentItem() {
+    },
+    PaymentCompleteDetails: function PaymentCompleteDetails() {
+    },
+    PaymentResponse: function PaymentResponse() {
+    },
+    PaymentValidationErrors: function PaymentValidationErrors() {
+    },
+    PaymentMethodChangeEvent: function PaymentMethodChangeEvent() {
+    },
+    PaymentMethodChangeEventInit: function PaymentMethodChangeEventInit() {
+    },
+    PaymentRequestUpdateEvent: function PaymentRequestUpdateEvent() {
+    },
+    PaymentRequestUpdateEventInit: function PaymentRequestUpdateEventInit() {
+    },
+    MemoryMeasurement: function MemoryMeasurement() {
+    },
+    MemoryBreakdownEntry: function MemoryBreakdownEntry() {
+    },
+    MemoryAttribution: function MemoryAttribution() {
+    },
+    MemoryAttributionContainer: function MemoryAttributionContainer() {
+    },
+    PerformanceEntry: function PerformanceEntry() {
+    },
+    PerformanceObserver: function PerformanceObserver() {
+    },
+    PerformanceObserverCallbackOptions: function PerformanceObserverCallbackOptions() {
+    },
+    PerformanceObserverEntryList: function PerformanceObserverEntryList() {
+    },
+    PeriodicSyncManager: function PeriodicSyncManager() {
+    },
+    BackgroundSyncOptions: function BackgroundSyncOptions() {
+    },
+    PeriodicSyncEventInit: function PeriodicSyncEventInit() {
+    },
+    PeriodicSyncEvent: function PeriodicSyncEvent() {
+    },
+    PermissionsPolicy: function PermissionsPolicy() {
+    },
+    PermissionsPolicyViolationReportBody: function PermissionsPolicyViolationReportBody() {
+    },
+    Permissions: function Permissions() {
+    },
+    PermissionDescriptor: function PermissionDescriptor() {
+    },
+    PermissionStatus: function PermissionStatus() {
+    },
+    PermissionSetParameters: function PermissionSetParameters() {
+    },
+    PictureInPictureWindow: function PictureInPictureWindow() {
+    },
+    PictureInPictureEvent: function PictureInPictureEvent() {
+    },
+    PictureInPictureEventInit: function PictureInPictureEventInit() {
+    },
+    PointerEventInit: function PointerEventInit() {
+    },
+    PointerEvent: function PointerEvent() {
+    },
+    MouseEventInit: function MouseEventInit() {
+    },
+    HTMLPortalElement: function HTMLPortalElement() {
+    },
+    PortalActivateOptions: function PortalActivateOptions() {
+    },
+    PortalHost: function PortalHost() {
+    },
+    PortalActivateEvent: function PortalActivateEvent() {
+    },
+    PortalActivateEventInit: function PortalActivateEventInit() {
+    },
+    Presentation: function Presentation() {
+    },
+    PresentationRequest: function PresentationRequest() {
+    },
+    PresentationAvailability: function PresentationAvailability() {
+    },
+    PresentationConnectionAvailableEvent: function PresentationConnectionAvailableEvent() {
+    },
+    PresentationConnectionAvailableEventInit: function PresentationConnectionAvailableEventInit() {
+    },
+    PresentationConnection: function PresentationConnection() {
+    },
+    PresentationConnectionCloseEvent: function PresentationConnectionCloseEvent() {
+    },
+    PresentationConnectionCloseEventInit: function PresentationConnectionCloseEventInit() {
+    },
+    PresentationReceiver: function PresentationReceiver() {
+    },
+    PresentationConnectionList: function PresentationConnectionList() {
+    },
+    ProximitySensor: function ProximitySensor() {
+    },
+    ProximityReadingValues: function ProximityReadingValues() {
+    },
+    PushPermissionDescriptor: function PushPermissionDescriptor() {
+    },
+    PushManager: function PushManager() {
+    },
+    PushSubscriptionOptions: function PushSubscriptionOptions() {
+    },
+    PushSubscriptionOptionsInit: function PushSubscriptionOptionsInit() {
+    },
+    PushSubscription: function PushSubscription() {
+    },
+    PushSubscriptionJSON: function PushSubscriptionJSON() {
+    },
+    PushMessageData: function PushMessageData() {
+    },
+    PushEvent: function PushEvent() {
+    },
+    PushEventInit: function PushEventInit() {
+    },
+    PushSubscriptionChangeEvent: function PushSubscriptionChangeEvent() {
+    },
+    PushSubscriptionChangeEventInit: function PushSubscriptionChangeEventInit() {
+    },
+    XRView: function XRView() {
+    },
+    XRCamera: function XRCamera() {
+    },
+    XRWebGLBinding: function XRWebGLBinding() {
+    },
+    RemotePlayback: function RemotePlayback() {
+    },
+    ReportBody: function ReportBody() {
+    },
+    Report: function Report() {
+    },
+    ReportingObserver: function ReportingObserver() {
+    },
+    ReportingObserverOptions: function ReportingObserverOptions() {
+    },
+    GenerateTestReportParameters: function GenerateTestReportParameters() {
+    },
+    TopLevelStorageAccessPermissionDescriptor: function TopLevelStorageAccessPermissionDescriptor() {
+    },
+    IdleRequestOptions: function IdleRequestOptions() {
+    },
+    IdleDeadline: function IdleDeadline() {
+    },
+    ResizeObserverOptions: function ResizeObserverOptions() {
+    },
+    ResizeObserver: function ResizeObserver() {
+    },
+    ResizeObserverEntry: function ResizeObserverEntry() {
+    },
+    ResizeObserverSize: function ResizeObserverSize() {
+    },
+    PerformanceResourceTiming: function PerformanceResourceTiming() {
+    },
+    Sanitizer: function Sanitizer() {
+    },
+    SetHTMLOptions: function SetHTMLOptions() {
+    },
+    SanitizerConfig: function SanitizerConfig() {
+    },
+    NetworkInformationSaveData: function NetworkInformationSaveData() {
+    },
+    SchedulerPostTaskOptions: function SchedulerPostTaskOptions() {
+    },
+    Scheduler: function Scheduler() {
+    },
+    TaskPriorityChangeEvent: function TaskPriorityChangeEvent() {
+    },
+    TaskPriorityChangeEventInit: function TaskPriorityChangeEventInit() {
+    },
+    TaskControllerInit: function TaskControllerInit() {
+    },
+    TaskController: function TaskController() {
+    },
+    TaskSignal: function TaskSignal() {
+    },
+    CaptureController: function CaptureController() {
+    },
+    DisplayMediaStreamOptions: function DisplayMediaStreamOptions() {
+    },
+    ScreenOrientation: function ScreenOrientation() {
+    },
+    WakeLock: function WakeLock() {
+    },
+    WakeLockSentinel: function WakeLockSentinel() {
+    },
+    ScrollTimelineOptions: function ScrollTimelineOptions() {
+    },
+    ScrollTimeline: function ScrollTimeline() {
+    },
+    ViewTimelineOptions: function ViewTimelineOptions() {
+    },
+    ViewTimeline: function ViewTimeline() {
+    },
+    AnimationTimeline: function AnimationTimeline() {
+    },
+    FragmentDirective: function FragmentDirective() {
+    },
+    SecurePaymentConfirmationRequest: function SecurePaymentConfirmationRequest() {
+    },
+    AuthenticationExtensionsPaymentInputs: function AuthenticationExtensionsPaymentInputs() {
+    },
+    CollectedClientPaymentData: function CollectedClientPaymentData() {
+    },
+    CollectedClientAdditionalPaymentData: function CollectedClientAdditionalPaymentData() {
+    },
+    PaymentCredentialInstrument: function PaymentCredentialInstrument() {
+    },
+    Selection: function Selection() {
+    },
+    Serial: function Serial() {
+    },
+    SerialPortRequestOptions: function SerialPortRequestOptions() {
+    },
+    SerialPortFilter: function SerialPortFilter() {
+    },
+    SerialPort: function SerialPort() {
+    },
+    SerialPortInfo: function SerialPortInfo() {
+    },
+    SerialOptions: function SerialOptions() {
+    },
+    SerialOutputSignals: function SerialOutputSignals() {
+    },
+    SerialInputSignals: function SerialInputSignals() {
+    },
+    PerformanceServerTiming: function PerformanceServerTiming() {
+    },
+    ServiceWorker: function ServiceWorker() {
+    },
+    ServiceWorkerContainer: function ServiceWorkerContainer() {
+    },
+    RegistrationOptions: function RegistrationOptions() {
+    },
+    NavigationPreloadManager: function NavigationPreloadManager() {
+    },
+    NavigationPreloadState: function NavigationPreloadState() {
+    },
+    WindowClient: function WindowClient() {
+    },
+    Clients: function Clients() {
+    },
+    ClientQueryOptions: function ClientQueryOptions() {
+    },
+    ExtendableEvent: function ExtendableEvent() {
+    },
+    ExtendableEventInit: function ExtendableEventInit() {
+    },
+    FetchEvent: function FetchEvent() {
+    },
+    FetchEventInit: function FetchEventInit() {
+    },
+    ExtendableMessageEvent: function ExtendableMessageEvent() {
+    },
+    ExtendableMessageEventInit: function ExtendableMessageEventInit() {
+    },
+    Cache: function Cache() {
+    },
+    CacheQueryOptions: function CacheQueryOptions() {
+    },
+    CacheStorage: function CacheStorage() {
+    },
+    MultiCacheQueryOptions: function MultiCacheQueryOptions() {
+    },
+    FaceDetector: function FaceDetector() {
+    },
+    FaceDetectorOptions: function FaceDetectorOptions() {
+    },
+    DetectedFace: function DetectedFace() {
+    },
+    Landmark: function Landmark() {
+    },
+    BarcodeDetector: function BarcodeDetector() {
+    },
+    BarcodeDetectorOptions: function BarcodeDetectorOptions() {
+    },
+    DetectedBarcode: function DetectedBarcode() {
+    },
+    SpeechRecognition: function SpeechRecognition() {
+    },
+    SpeechRecognitionErrorEvent: function SpeechRecognitionErrorEvent() {
+    },
+    SpeechRecognitionErrorEventInit: function SpeechRecognitionErrorEventInit() {
+    },
+    SpeechRecognitionAlternative: function SpeechRecognitionAlternative() {
+    },
+    SpeechRecognitionResult: function SpeechRecognitionResult() {
+    },
+    SpeechRecognitionResultList: function SpeechRecognitionResultList() {
+    },
+    SpeechRecognitionEvent: function SpeechRecognitionEvent() {
+    },
+    SpeechRecognitionEventInit: function SpeechRecognitionEventInit() {
+    },
+    SpeechGrammar: function SpeechGrammar() {
+    },
+    SpeechGrammarList: function SpeechGrammarList() {
+    },
+    SpeechSynthesis: function SpeechSynthesis() {
+    },
+    SpeechSynthesisUtterance: function SpeechSynthesisUtterance() {
+    },
+    SpeechSynthesisEvent: function SpeechSynthesisEvent() {
+    },
+    SpeechSynthesisEventInit: function SpeechSynthesisEventInit() {
+    },
+    SpeechSynthesisErrorEvent: function SpeechSynthesisErrorEvent() {
+    },
+    SpeechSynthesisErrorEventInit: function SpeechSynthesisErrorEventInit() {
+    },
+    SpeechSynthesisVoice: function SpeechSynthesisVoice() {
+    },
+    NavigatorStorage: function NavigatorStorage() {
+    },
+    StorageEstimate: function StorageEstimate() {
+    },
+    ReadableStream: function ReadableStream() {
+    },
+    ReadableStreamGetReaderOptions: function ReadableStreamGetReaderOptions() {
+    },
+    ReadableStreamIteratorOptions: function ReadableStreamIteratorOptions() {
+    },
+    ReadableWritablePair: function ReadableWritablePair() {
+    },
+    StreamPipeOptions: function StreamPipeOptions() {
+    },
+    UnderlyingSource: function UnderlyingSource() {
+    },
+    ReadableStreamGenericReader: function ReadableStreamGenericReader() {
+    },
+    ReadableStreamDefaultReader: function ReadableStreamDefaultReader() {
+    },
+    ReadableStreamReadResult: function ReadableStreamReadResult() {
+    },
+    ReadableStreamBYOBReader: function ReadableStreamBYOBReader() {
+    },
+    ReadableStreamDefaultController: function ReadableStreamDefaultController() {
+    },
+    ReadableByteStreamController: function ReadableByteStreamController() {
+    },
+    ReadableStreamBYOBRequest: function ReadableStreamBYOBRequest() {
+    },
+    WritableStream: function WritableStream() {
+    },
+    UnderlyingSink: function UnderlyingSink() {
+    },
+    WritableStreamDefaultWriter: function WritableStreamDefaultWriter() {
+    },
+    WritableStreamDefaultController: function WritableStreamDefaultController() {
+    },
+    TransformStream: function TransformStream() {
+    },
+    Transformer: function Transformer() {
+    },
+    TransformStreamDefaultController: function TransformStreamDefaultController() {
+    },
+    QueuingStrategy: function QueuingStrategy() {
+    },
+    QueuingStrategyInit: function QueuingStrategyInit() {
+    },
+    ByteLengthQueuingStrategy: function ByteLengthQueuingStrategy() {
+    },
+    CountQueuingStrategy: function CountQueuingStrategy() {
+    },
+    GenericTransformStream: function GenericTransformStream() {
+    },
+    TimeEvent: function TimeEvent() {
+    },
+    SVGAnimationElement: function SVGAnimationElement() {
+    },
+    SVGAnimateElement: function SVGAnimateElement() {
+    },
+    SVGSetElement: function SVGSetElement() {
+    },
+    SVGAnimateMotionElement: function SVGAnimateMotionElement() {
+    },
+    SVGMPathElement: function SVGMPathElement() {
+    },
+    SVGAnimateTransformElement: function SVGAnimateTransformElement() {
+    },
+    SVGDiscardElement: function SVGDiscardElement() {
+    },
+    _TestUtils: function _TestUtils() {
+    },
+    TextDetector: function TextDetector() {
+    },
+    DetectedText: function DetectedText() {
+    },
+    TouchInit: function TouchInit() {
+    },
+    Touch: function Touch() {
+    },
+    TouchList: function TouchList() {
+    },
+    TouchEventInit: function TouchEventInit() {
+    },
+    TouchEvent: function TouchEvent() {
+    },
+    TrustedHTML: function TrustedHTML() {
+    },
+    TrustedScript: function TrustedScript() {
+    },
+    TrustedScriptURL: function TrustedScriptURL() {
+    },
+    TrustedTypePolicyFactory: function TrustedTypePolicyFactory() {
+    },
+    TrustedTypePolicy: function TrustedTypePolicy() {
+    },
+    TrustedTypePolicyOptions: function TrustedTypePolicyOptions() {
+    },
+    NavigatorUABrandVersion: function NavigatorUABrandVersion() {
+    },
+    UADataValues: function UADataValues() {
+    },
+    UALowEntropyJSON: function UALowEntropyJSON() {
+    },
+    NavigatorUAData: function NavigatorUAData() {
+    },
+    NavigatorUA: function NavigatorUA() {
+    },
+    FocusEvent: function FocusEvent() {
+    },
+    FocusEventInit: function FocusEventInit() {
+    },
+    EventModifierInit: function EventModifierInit() {
+    },
+    WheelEvent: function WheelEvent() {
+    },
+    WheelEventInit: function WheelEventInit() {
+    },
+    KeyboardEvent: function KeyboardEvent() {
+    },
+    KeyboardEventInit: function KeyboardEventInit() {
+    },
+    CompositionEvent: function CompositionEvent() {
+    },
+    CompositionEventInit: function CompositionEventInit() {
+    },
+    MutationEvent: function MutationEvent() {
+    },
+    URLSearchParams: function URLSearchParams() {
+    },
+    URLPattern: function URLPattern() {
+    },
+    URLPatternInit: function URLPatternInit() {
+    },
+    URLPatternOptions: function URLPatternOptions() {
+    },
+    URLPatternResult: function URLPatternResult() {
+    },
+    URLPatternComponentResult: function URLPatternComponentResult() {
+    },
+    PerformanceMarkOptions: function PerformanceMarkOptions() {
+    },
+    PerformanceMeasureOptions: function PerformanceMeasureOptions() {
+    },
+    PerformanceMark: function PerformanceMark() {
+    },
+    PerformanceMeasure: function PerformanceMeasure() {
+    },
+    VideoFrameCallbackMetadata: function VideoFrameCallbackMetadata() {
+    },
+    VirtualKeyboard: function VirtualKeyboard() {
+    },
+    ARIAMixin: function ARIAMixin() {
+    },
+    WebAssemblyInstantiatedSource: function WebAssemblyInstantiatedSource() {
+    },
+    _WebAssembly: function _WebAssembly() {
+    },
+    ModuleExportDescriptor: function ModuleExportDescriptor() {
+    },
+    ModuleImportDescriptor: function ModuleImportDescriptor() {
+    },
+    Module: function Module() {
+    },
+    Instance: function Instance() {
+    },
+    MemoryDescriptor: function MemoryDescriptor() {
+    },
+    Memory: function Memory() {
+    },
+    TableDescriptor: function TableDescriptor() {
+    },
+    Table: function Table() {
+    },
+    GlobalDescriptor: function GlobalDescriptor() {
+    },
+    Global: function Global() {
+    },
+    Animation: function Animation() {
+    },
+    AnimationEffect: function AnimationEffect() {
+    },
+    EffectTiming: function EffectTiming() {
+    },
+    OptionalEffectTiming: function OptionalEffectTiming() {
+    },
+    ComputedEffectTiming: function ComputedEffectTiming() {
+    },
+    GroupEffect: function GroupEffect() {
+    },
+    AnimationNodeList: function AnimationNodeList() {
+    },
+    SequenceEffect: function SequenceEffect() {
+    },
+    KeyframeEffect: function KeyframeEffect() {
+    },
+    KeyframeEffectOptions: function KeyframeEffectOptions() {
+    },
+    AnimationPlaybackEvent: function AnimationPlaybackEvent() {
+    },
+    AnimationPlaybackEventInit: function AnimationPlaybackEventInit() {
+    },
+    DocumentTimelineOptions: function DocumentTimelineOptions() {
+    },
+    DocumentTimeline: function DocumentTimeline() {
+    },
+    BaseComputedKeyframe: function BaseComputedKeyframe() {
+    },
+    BasePropertyIndexedKeyframe: function BasePropertyIndexedKeyframe() {
+    },
+    BaseKeyframe: function BaseKeyframe() {
+    },
+    Animatable: function Animatable() {
+    },
+    KeyframeAnimationOptions: function KeyframeAnimationOptions() {
+    },
+    GetAnimationsOptions: function GetAnimationsOptions() {
+    },
+    LaunchParams: function LaunchParams() {
+    },
+    LaunchQueue: function LaunchQueue() {
+    },
+    BluetoothDataFilterInit: function BluetoothDataFilterInit() {
+    },
+    BluetoothManufacturerDataFilterInit: function BluetoothManufacturerDataFilterInit() {
+    },
+    BluetoothServiceDataFilterInit: function BluetoothServiceDataFilterInit() {
+    },
+    BluetoothLEScanFilterInit: function BluetoothLEScanFilterInit() {
+    },
+    RequestDeviceOptions: function RequestDeviceOptions() {
+    },
+    Bluetooth: function Bluetooth() {
+    },
+    BluetoothPermissionDescriptor: function BluetoothPermissionDescriptor() {
+    },
+    AllowedBluetoothDevice: function AllowedBluetoothDevice() {
+    },
+    BluetoothPermissionStorage: function BluetoothPermissionStorage() {
+    },
+    BluetoothPermissionResult: function BluetoothPermissionResult() {
+    },
+    ValueEvent: function ValueEvent() {
+    },
+    ValueEventInit: function ValueEventInit() {
+    },
+    BluetoothDevice: function BluetoothDevice() {
+    },
+    WatchAdvertisementsOptions: function WatchAdvertisementsOptions() {
+    },
+    BluetoothManufacturerDataMap: function BluetoothManufacturerDataMap() {
+    },
+    BluetoothServiceDataMap: function BluetoothServiceDataMap() {
+    },
+    BluetoothAdvertisingEvent: function BluetoothAdvertisingEvent() {
+    },
+    BluetoothAdvertisingEventInit: function BluetoothAdvertisingEventInit() {
+    },
+    BluetoothRemoteGATTServer: function BluetoothRemoteGATTServer() {
+    },
+    BluetoothRemoteGATTService: function BluetoothRemoteGATTService() {
+    },
+    BluetoothRemoteGATTCharacteristic: function BluetoothRemoteGATTCharacteristic() {
+    },
+    BluetoothCharacteristicProperties: function BluetoothCharacteristicProperties() {
+    },
+    BluetoothRemoteGATTDescriptor: function BluetoothRemoteGATTDescriptor() {
+    },
+    CharacteristicEventHandlers: function CharacteristicEventHandlers() {
+    },
+    BluetoothDeviceEventHandlers: function BluetoothDeviceEventHandlers() {
+    },
+    ServiceEventHandlers: function ServiceEventHandlers() {
+    },
+    BluetoothUUID: function BluetoothUUID() {
+    },
+    NavigatorLocks: function NavigatorLocks() {
+    },
+    LockManager: function LockManager() {
+    },
+    LockOptions: function LockOptions() {
+    },
+    LockManagerSnapshot: function LockManagerSnapshot() {
+    },
+    LockInfo: function LockInfo() {
+    },
+    Lock: function Lock() {
+    },
+    NDEFMessage: function NDEFMessage() {
+    },
+    NDEFMessageInit: function NDEFMessageInit() {
+    },
+    NDEFRecord: function NDEFRecord() {
+    },
+    NDEFRecordInit: function NDEFRecordInit() {
+    },
+    NDEFReader: function NDEFReader() {
+    },
+    NDEFReadingEvent: function NDEFReadingEvent() {
+    },
+    NDEFReadingEventInit: function NDEFReadingEventInit() {
+    },
+    NDEFWriteOptions: function NDEFWriteOptions() {
+    },
+    NDEFMakeReadOnlyOptions: function NDEFMakeReadOnlyOptions() {
+    },
+    NDEFScanOptions: function NDEFScanOptions() {
+    },
+    OTPCredential: function OTPCredential() {
+    },
+    OTPCredentialRequestOptions: function OTPCredentialRequestOptions() {
+    },
+    ShareData: function ShareData() {
+    },
+    BaseAudioContext: function BaseAudioContext() {
+    },
+    AudioContext: function AudioContext() {
+    },
+    AudioContextOptions: function AudioContextOptions() {
+    },
+    AudioSinkOptions: function AudioSinkOptions() {
+    },
+    AudioSinkInfo: function AudioSinkInfo() {
+    },
+    AudioTimestamp: function AudioTimestamp() {
+    },
+    AudioRenderCapacity: function AudioRenderCapacity() {
+    },
+    AudioRenderCapacityOptions: function AudioRenderCapacityOptions() {
+    },
+    AudioRenderCapacityEvent: function AudioRenderCapacityEvent() {
+    },
+    AudioRenderCapacityEventInit: function AudioRenderCapacityEventInit() {
+    },
+    OfflineAudioContext: function OfflineAudioContext() {
+    },
+    OfflineAudioContextOptions: function OfflineAudioContextOptions() {
+    },
+    OfflineAudioCompletionEvent: function OfflineAudioCompletionEvent() {
+    },
+    OfflineAudioCompletionEventInit: function OfflineAudioCompletionEventInit() {
+    },
+    AudioBuffer: function AudioBuffer() {
+    },
+    AudioBufferOptions: function AudioBufferOptions() {
+    },
+    AudioNode: function AudioNode() {
+    },
+    AudioNodeOptions: function AudioNodeOptions() {
+    },
+    AudioParam: function AudioParam() {
+    },
+    AudioScheduledSourceNode: function AudioScheduledSourceNode() {
+    },
+    AnalyserNode: function AnalyserNode() {
+    },
+    AnalyserOptions: function AnalyserOptions() {
+    },
+    AudioBufferSourceNode: function AudioBufferSourceNode() {
+    },
+    AudioBufferSourceOptions: function AudioBufferSourceOptions() {
+    },
+    AudioDestinationNode: function AudioDestinationNode() {
+    },
+    AudioListener: function AudioListener() {
+    },
+    AudioProcessingEvent: function AudioProcessingEvent() {
+    },
+    AudioProcessingEventInit: function AudioProcessingEventInit() {
+    },
+    BiquadFilterNode: function BiquadFilterNode() {
+    },
+    BiquadFilterOptions: function BiquadFilterOptions() {
+    },
+    ChannelMergerNode: function ChannelMergerNode() {
+    },
+    ChannelMergerOptions: function ChannelMergerOptions() {
+    },
+    ChannelSplitterNode: function ChannelSplitterNode() {
+    },
+    ChannelSplitterOptions: function ChannelSplitterOptions() {
+    },
+    ConstantSourceNode: function ConstantSourceNode() {
+    },
+    ConstantSourceOptions: function ConstantSourceOptions() {
+    },
+    ConvolverNode: function ConvolverNode() {
+    },
+    ConvolverOptions: function ConvolverOptions() {
+    },
+    DelayNode: function DelayNode() {
+    },
+    DelayOptions: function DelayOptions() {
+    },
+    DynamicsCompressorNode: function DynamicsCompressorNode() {
+    },
+    DynamicsCompressorOptions: function DynamicsCompressorOptions() {
+    },
+    GainNode: function GainNode() {
+    },
+    GainOptions: function GainOptions() {
+    },
+    IIRFilterNode: function IIRFilterNode() {
+    },
+    IIRFilterOptions: function IIRFilterOptions() {
+    },
+    MediaElementAudioSourceNode: function MediaElementAudioSourceNode() {
+    },
+    MediaElementAudioSourceOptions: function MediaElementAudioSourceOptions() {
+    },
+    MediaStreamAudioDestinationNode: function MediaStreamAudioDestinationNode() {
+    },
+    MediaStreamAudioSourceNode: function MediaStreamAudioSourceNode() {
+    },
+    MediaStreamAudioSourceOptions: function MediaStreamAudioSourceOptions() {
+    },
+    MediaStreamTrackAudioSourceNode: function MediaStreamTrackAudioSourceNode() {
+    },
+    MediaStreamTrackAudioSourceOptions: function MediaStreamTrackAudioSourceOptions() {
+    },
+    OscillatorNode: function OscillatorNode() {
+    },
+    OscillatorOptions: function OscillatorOptions() {
+    },
+    PannerNode: function PannerNode() {
+    },
+    PannerOptions: function PannerOptions() {
+    },
+    PeriodicWave: function PeriodicWave() {
+    },
+    PeriodicWaveConstraints: function PeriodicWaveConstraints() {
+    },
+    PeriodicWaveOptions: function PeriodicWaveOptions() {
+    },
+    ScriptProcessorNode: function ScriptProcessorNode() {
+    },
+    StereoPannerNode: function StereoPannerNode() {
+    },
+    StereoPannerOptions: function StereoPannerOptions() {
+    },
+    WaveShaperNode: function WaveShaperNode() {
+    },
+    WaveShaperOptions: function WaveShaperOptions() {
+    },
+    AudioWorklet: function AudioWorklet() {
+    },
+    AudioWorkletGlobalScope: function AudioWorkletGlobalScope() {
+    },
+    AudioParamMap: function AudioParamMap() {
+    },
+    AudioWorkletNode: function AudioWorkletNode() {
+    },
+    AudioWorkletNodeOptions: function AudioWorkletNodeOptions() {
+    },
+    AudioWorkletProcessor: function AudioWorkletProcessor() {
+    },
+    AudioParamDescriptor: function AudioParamDescriptor() {
+    },
+    PublicKeyCredential: function PublicKeyCredential() {
+    },
+    RegistrationResponseJSON: function RegistrationResponseJSON() {
+    },
+    AuthenticatorAttestationResponseJSON: function AuthenticatorAttestationResponseJSON() {
+    },
+    AuthenticationResponseJSON: function AuthenticationResponseJSON() {
+    },
+    AuthenticatorAssertionResponseJSON: function AuthenticatorAssertionResponseJSON() {
+    },
+    AuthenticationExtensionsClientOutputsJSON: function AuthenticationExtensionsClientOutputsJSON() {
+    },
+    PublicKeyCredentialCreationOptionsJSON: function PublicKeyCredentialCreationOptionsJSON() {
+    },
+    PublicKeyCredentialUserEntityJSON: function PublicKeyCredentialUserEntityJSON() {
+    },
+    PublicKeyCredentialDescriptorJSON: function PublicKeyCredentialDescriptorJSON() {
+    },
+    AuthenticationExtensionsClientInputsJSON: function AuthenticationExtensionsClientInputsJSON() {
+    },
+    PublicKeyCredentialRequestOptionsJSON: function PublicKeyCredentialRequestOptionsJSON() {
+    },
+    AuthenticatorResponse: function AuthenticatorResponse() {
+    },
+    AuthenticatorAttestationResponse: function AuthenticatorAttestationResponse() {
+    },
+    AuthenticatorAssertionResponse: function AuthenticatorAssertionResponse() {
+    },
+    PublicKeyCredentialParameters: function PublicKeyCredentialParameters() {
+    },
+    PublicKeyCredentialCreationOptions: function PublicKeyCredentialCreationOptions() {
+    },
+    PublicKeyCredentialEntity: function PublicKeyCredentialEntity() {
+    },
+    PublicKeyCredentialRpEntity: function PublicKeyCredentialRpEntity() {
+    },
+    PublicKeyCredentialUserEntity: function PublicKeyCredentialUserEntity() {
+    },
+    AuthenticatorSelectionCriteria: function AuthenticatorSelectionCriteria() {
+    },
+    PublicKeyCredentialRequestOptions: function PublicKeyCredentialRequestOptions() {
+    },
+    CollectedClientData: function CollectedClientData() {
+    },
+    TokenBinding: function TokenBinding() {
+    },
+    PublicKeyCredentialDescriptor: function PublicKeyCredentialDescriptor() {
+    },
+    CredentialPropertiesOutput: function CredentialPropertiesOutput() {
+    },
+    AuthenticationExtensionsPRFValues: function AuthenticationExtensionsPRFValues() {
+    },
+    AuthenticationExtensionsPRFInputs: function AuthenticationExtensionsPRFInputs() {
+    },
+    AuthenticationExtensionsPRFOutputs: function AuthenticationExtensionsPRFOutputs() {
+    },
+    AuthenticationExtensionsLargeBlobInputs: function AuthenticationExtensionsLargeBlobInputs() {
+    },
+    AuthenticationExtensionsLargeBlobOutputs: function AuthenticationExtensionsLargeBlobOutputs() {
+    },
+    AuthenticationExtensionsDevicePublicKeyInputs: function AuthenticationExtensionsDevicePublicKeyInputs() {
+    },
+    AuthenticationExtensionsDevicePublicKeyOutputs: function AuthenticationExtensionsDevicePublicKeyOutputs() {
+    },
+    AudioEncoderConfig: function AudioEncoderConfig() {
+    },
+    AacEncoderConfig: function AacEncoderConfig() {
+    },
+    VideoEncoderConfig: function VideoEncoderConfig() {
+    },
+    AvcEncoderConfig: function AvcEncoderConfig() {
+    },
+    FlacEncoderConfig: function FlacEncoderConfig() {
+    },
+    HevcEncoderConfig: function HevcEncoderConfig() {
+    },
+    OpusEncoderConfig: function OpusEncoderConfig() {
+    },
+    AudioDecoder: function AudioDecoder() {
+    },
+    AudioDecoderInit: function AudioDecoderInit() {
+    },
+    VideoDecoder: function VideoDecoder() {
+    },
+    VideoDecoderInit: function VideoDecoderInit() {
+    },
+    AudioEncoder: function AudioEncoder() {
+    },
+    AudioEncoderInit: function AudioEncoderInit() {
+    },
+    EncodedAudioChunkMetadata: function EncodedAudioChunkMetadata() {
+    },
+    VideoEncoder: function VideoEncoder() {
+    },
+    VideoEncoderInit: function VideoEncoderInit() {
+    },
+    EncodedVideoChunkMetadata: function EncodedVideoChunkMetadata() {
+    },
+    SvcOutputMetadata: function SvcOutputMetadata() {
+    },
+    AudioDecoderSupport: function AudioDecoderSupport() {
+    },
+    VideoDecoderSupport: function VideoDecoderSupport() {
+    },
+    AudioEncoderSupport: function AudioEncoderSupport() {
+    },
+    VideoEncoderSupport: function VideoEncoderSupport() {
+    },
+    AudioDecoderConfig: function AudioDecoderConfig() {
+    },
+    VideoDecoderConfig: function VideoDecoderConfig() {
+    },
+    VideoEncoderEncodeOptions: function VideoEncoderEncodeOptions() {
+    },
+    EncodedAudioChunk: function EncodedAudioChunk() {
+    },
+    EncodedAudioChunkInit: function EncodedAudioChunkInit() {
+    },
+    EncodedVideoChunk: function EncodedVideoChunk() {
+    },
+    EncodedVideoChunkInit: function EncodedVideoChunkInit() {
+    },
+    AudioData: function AudioData() {
+    },
+    AudioDataInit: function AudioDataInit() {
+    },
+    AudioDataCopyToOptions: function AudioDataCopyToOptions() {
+    },
+    VideoFrame: function VideoFrame() {
+    },
+    VideoFrameInit: function VideoFrameInit() {
+    },
+    VideoFrameBufferInit: function VideoFrameBufferInit() {
+    },
+    VideoFrameMetadata: function VideoFrameMetadata() {
+    },
+    VideoFrameCopyToOptions: function VideoFrameCopyToOptions() {
+    },
+    PlaneLayout: function PlaneLayout() {
+    },
+    VideoColorSpace: function VideoColorSpace() {
+    },
+    VideoColorSpaceInit: function VideoColorSpaceInit() {
+    },
+    ImageDecoder: function ImageDecoder() {
+    },
+    ImageDecoderInit: function ImageDecoderInit() {
+    },
+    ImageDecodeOptions: function ImageDecodeOptions() {
+    },
+    ImageDecodeResult: function ImageDecodeResult() {
+    },
+    ImageTrackList: function ImageTrackList() {
+    },
+    ImageTrack: function ImageTrack() {
+    },
+    Ed448Params: function Ed448Params() {
+    },
+    NavigatorAutomationInformation: function NavigatorAutomationInformation() {
+    },
+    WebGLContextAttributes: function WebGLContextAttributes() {
+    },
+    WebGLObject: function WebGLObject() {
+    },
+    WebGLBuffer: function WebGLBuffer() {
+    },
+    WebGLFramebuffer: function WebGLFramebuffer() {
+    },
+    WebGLProgram: function WebGLProgram() {
+    },
+    WebGLRenderbuffer: function WebGLRenderbuffer() {
+    },
+    WebGLShader: function WebGLShader() {
+    },
+    WebGLTexture: function WebGLTexture() {
+    },
+    WebGLUniformLocation: function WebGLUniformLocation() {
+    },
+    WebGLActiveInfo: function WebGLActiveInfo() {
+    },
+    WebGLShaderPrecisionFormat: function WebGLShaderPrecisionFormat() {
+    },
+    WebGLRenderingContextBase: function WebGLRenderingContextBase() {
+    },
+    WebGLRenderingContextOverloads: function WebGLRenderingContextOverloads() {
+    },
+    WebGLRenderingContext: function WebGLRenderingContext() {
+    },
+    WebGLContextEvent: function WebGLContextEvent() {
+    },
+    WebGLContextEventInit: function WebGLContextEventInit() {
+    },
+    WebGLQuery: function WebGLQuery() {
+    },
+    WebGLSampler: function WebGLSampler() {
+    },
+    WebGLSync: function WebGLSync() {
+    },
+    WebGLTransformFeedback: function WebGLTransformFeedback() {
+    },
+    WebGLVertexArrayObject: function WebGLVertexArrayObject() {
+    },
+    WebGL2RenderingContextBase: function WebGL2RenderingContextBase() {
+    },
+    WebGL2RenderingContextOverloads: function WebGL2RenderingContextOverloads() {
+    },
+    WebGL2RenderingContext: function WebGL2RenderingContext() {
+    },
+    GPUObjectBase: function GPUObjectBase() {
+    },
+    GPUObjectDescriptorBase: function GPUObjectDescriptorBase() {
+    },
+    GPUSupportedLimits: function GPUSupportedLimits() {
+    },
+    GPUSupportedFeatures: function GPUSupportedFeatures() {
+    },
+    GPUAdapterInfo: function GPUAdapterInfo() {
+    },
+    NavigatorGPU: function NavigatorGPU() {
+    },
+    GPU: function GPU() {
+    },
+    GPURequestAdapterOptions: function GPURequestAdapterOptions() {
+    },
+    GPUAdapter: function GPUAdapter() {
+    },
+    GPUDeviceDescriptor: function GPUDeviceDescriptor() {
+    },
+    GPUDevice: function GPUDevice() {
+    },
+    GPUBuffer: function GPUBuffer() {
+    },
+    GPUBufferDescriptor: function GPUBufferDescriptor() {
+    },
+    _GPUBufferUsage: function _GPUBufferUsage() {
+    },
+    _GPUMapMode: function _GPUMapMode() {
+    },
+    GPUTexture: function GPUTexture() {
+    },
+    GPUTextureDescriptor: function GPUTextureDescriptor() {
+    },
+    _GPUTextureUsage: function _GPUTextureUsage() {
+    },
+    GPUTextureView: function GPUTextureView() {
+    },
+    GPUTextureViewDescriptor: function GPUTextureViewDescriptor() {
+    },
+    GPUExternalTexture: function GPUExternalTexture() {
+    },
+    GPUExternalTextureDescriptor: function GPUExternalTextureDescriptor() {
+    },
+    GPUSampler: function GPUSampler() {
+    },
+    GPUSamplerDescriptor: function GPUSamplerDescriptor() {
+    },
+    GPUBindGroupLayout: function GPUBindGroupLayout() {
+    },
+    GPUBindGroupLayoutDescriptor: function GPUBindGroupLayoutDescriptor() {
+    },
+    GPUBindGroupLayoutEntry: function GPUBindGroupLayoutEntry() {
+    },
+    _GPUShaderStage: function _GPUShaderStage() {
+    },
+    GPUBufferBindingLayout: function GPUBufferBindingLayout() {
+    },
+    GPUSamplerBindingLayout: function GPUSamplerBindingLayout() {
+    },
+    GPUTextureBindingLayout: function GPUTextureBindingLayout() {
+    },
+    GPUStorageTextureBindingLayout: function GPUStorageTextureBindingLayout() {
+    },
+    GPUExternalTextureBindingLayout: function GPUExternalTextureBindingLayout() {
+    },
+    GPUBindGroup: function GPUBindGroup() {
+    },
+    GPUBindGroupDescriptor: function GPUBindGroupDescriptor() {
+    },
+    GPUBindGroupEntry: function GPUBindGroupEntry() {
+    },
+    GPUBufferBinding: function GPUBufferBinding() {
+    },
+    GPUPipelineLayout: function GPUPipelineLayout() {
+    },
+    GPUPipelineLayoutDescriptor: function GPUPipelineLayoutDescriptor() {
+    },
+    GPUShaderModule: function GPUShaderModule() {
+    },
+    GPUShaderModuleDescriptor: function GPUShaderModuleDescriptor() {
+    },
+    GPUShaderModuleCompilationHint: function GPUShaderModuleCompilationHint() {
+    },
+    GPUCompilationMessage: function GPUCompilationMessage() {
+    },
+    GPUCompilationInfo: function GPUCompilationInfo() {
+    },
+    GPUPipelineError: function GPUPipelineError() {
+    },
+    GPUPipelineErrorInit: function GPUPipelineErrorInit() {
+    },
+    GPUPipelineDescriptorBase: function GPUPipelineDescriptorBase() {
+    },
+    GPUPipelineBase: function GPUPipelineBase() {
+    },
+    GPUProgrammableStage: function GPUProgrammableStage() {
+    },
+    GPUComputePipeline: function GPUComputePipeline() {
+    },
+    GPUComputePipelineDescriptor: function GPUComputePipelineDescriptor() {
+    },
+    GPURenderPipeline: function GPURenderPipeline() {
+    },
+    GPURenderPipelineDescriptor: function GPURenderPipelineDescriptor() {
+    },
+    GPUPrimitiveState: function GPUPrimitiveState() {
+    },
+    GPUMultisampleState: function GPUMultisampleState() {
+    },
+    GPUFragmentState: function GPUFragmentState() {
+    },
+    GPUColorTargetState: function GPUColorTargetState() {
+    },
+    GPUBlendState: function GPUBlendState() {
+    },
+    _GPUColorWrite: function _GPUColorWrite() {
+    },
+    GPUBlendComponent: function GPUBlendComponent() {
+    },
+    GPUDepthStencilState: function GPUDepthStencilState() {
+    },
+    GPUStencilFaceState: function GPUStencilFaceState() {
+    },
+    GPUVertexState: function GPUVertexState() {
+    },
+    GPUVertexBufferLayout: function GPUVertexBufferLayout() {
+    },
+    GPUVertexAttribute: function GPUVertexAttribute() {
+    },
+    GPUImageDataLayout: function GPUImageDataLayout() {
+    },
+    GPUImageCopyBuffer: function GPUImageCopyBuffer() {
+    },
+    GPUImageCopyTexture: function GPUImageCopyTexture() {
+    },
+    GPUImageCopyTextureTagged: function GPUImageCopyTextureTagged() {
+    },
+    GPUImageCopyExternalImage: function GPUImageCopyExternalImage() {
+    },
+    GPUCommandBuffer: function GPUCommandBuffer() {
+    },
+    GPUCommandBufferDescriptor: function GPUCommandBufferDescriptor() {
+    },
+    GPUCommandsMixin: function GPUCommandsMixin() {
+    },
+    GPUCommandEncoder: function GPUCommandEncoder() {
+    },
+    GPUCommandEncoderDescriptor: function GPUCommandEncoderDescriptor() {
+    },
+    GPUBindingCommandsMixin: function GPUBindingCommandsMixin() {
+    },
+    GPUDebugCommandsMixin: function GPUDebugCommandsMixin() {
+    },
+    GPUComputePassEncoder: function GPUComputePassEncoder() {
+    },
+    GPUComputePassTimestampWrite: function GPUComputePassTimestampWrite() {
+    },
+    GPUComputePassDescriptor: function GPUComputePassDescriptor() {
+    },
+    GPURenderPassEncoder: function GPURenderPassEncoder() {
+    },
+    GPURenderPassTimestampWrite: function GPURenderPassTimestampWrite() {
+    },
+    GPURenderPassDescriptor: function GPURenderPassDescriptor() {
+    },
+    GPURenderPassColorAttachment: function GPURenderPassColorAttachment() {
+    },
+    GPURenderPassDepthStencilAttachment: function GPURenderPassDepthStencilAttachment() {
+    },
+    GPURenderPassLayout: function GPURenderPassLayout() {
+    },
+    GPURenderCommandsMixin: function GPURenderCommandsMixin() {
+    },
+    GPURenderBundle: function GPURenderBundle() {
+    },
+    GPURenderBundleDescriptor: function GPURenderBundleDescriptor() {
+    },
+    GPURenderBundleEncoder: function GPURenderBundleEncoder() {
+    },
+    GPURenderBundleEncoderDescriptor: function GPURenderBundleEncoderDescriptor() {
+    },
+    GPUQueueDescriptor: function GPUQueueDescriptor() {
+    },
+    GPUQueue: function GPUQueue() {
+    },
+    GPUQuerySet: function GPUQuerySet() {
+    },
+    GPUQuerySetDescriptor: function GPUQuerySetDescriptor() {
+    },
+    GPUCanvasContext: function GPUCanvasContext() {
+    },
+    GPUCanvasConfiguration: function GPUCanvasConfiguration() {
+    },
+    GPUDeviceLostInfo: function GPUDeviceLostInfo() {
+    },
+    GPUError: function GPUError() {
+    },
+    GPUValidationError: function GPUValidationError() {
+    },
+    GPUOutOfMemoryError: function GPUOutOfMemoryError() {
+    },
+    GPUInternalError: function GPUInternalError() {
+    },
+    GPUUncapturedErrorEvent: function GPUUncapturedErrorEvent() {
+    },
+    GPUUncapturedErrorEventInit: function GPUUncapturedErrorEventInit() {
+    },
+    GPUColorDict: function GPUColorDict() {
+    },
+    GPUOrigin2DDict: function GPUOrigin2DDict() {
+    },
+    GPUOrigin3DDict: function GPUOrigin3DDict() {
+    },
+    GPUExtent3DDict: function GPUExtent3DDict() {
+    },
+    HID: function HID() {
+    },
+    HIDDeviceRequestOptions: function HIDDeviceRequestOptions() {
+    },
+    HIDDeviceFilter: function HIDDeviceFilter() {
+    },
+    HIDDevice: function HIDDevice() {
+    },
+    HIDConnectionEvent: function HIDConnectionEvent() {
+    },
+    HIDConnectionEventInit: function HIDConnectionEventInit() {
+    },
+    HIDInputReportEvent: function HIDInputReportEvent() {
+    },
+    HIDInputReportEventInit: function HIDInputReportEventInit() {
+    },
+    HIDCollectionInfo: function HIDCollectionInfo() {
+    },
+    HIDReportInfo: function HIDReportInfo() {
+    },
+    HIDReportItem: function HIDReportItem() {
+    },
+    DOMException: function DOMException() {
+    },
+    MidiPermissionDescriptor: function MidiPermissionDescriptor() {
+    },
+    MIDIOptions: function MIDIOptions() {
+    },
+    MIDIInputMap: function MIDIInputMap() {
+    },
+    MIDIOutputMap: function MIDIOutputMap() {
+    },
+    MIDIAccess: function MIDIAccess() {
+    },
+    MIDIPort: function MIDIPort() {
+    },
+    MIDIInput: function MIDIInput() {
+    },
+    MIDIOutput: function MIDIOutput() {
+    },
+    MIDIMessageEvent: function MIDIMessageEvent() {
+    },
+    MIDIMessageEventInit: function MIDIMessageEventInit() {
+    },
+    MIDIConnectionEvent: function MIDIConnectionEvent() {
+    },
+    MIDIConnectionEventInit: function MIDIConnectionEventInit() {
+    },
+    NavigatorML: function NavigatorML() {
+    },
+    MLContextOptions: function MLContextOptions() {
+    },
+    ML: function ML() {
+    },
+    MLGraph: function MLGraph() {
+    },
+    MLOperandDescriptor: function MLOperandDescriptor() {
+    },
+    MLOperand: function MLOperand() {
+    },
+    MLActivation: function MLActivation() {
+    },
+    MLContext: function MLContext() {
+    },
+    MLComputeResult: function MLComputeResult() {
+    },
+    MLCommandEncoder: function MLCommandEncoder() {
+    },
+    MLBufferResourceView: function MLBufferResourceView() {
+    },
+    MLGraphBuilder: function MLGraphBuilder() {
+    },
+    MLBatchNormalizationOptions: function MLBatchNormalizationOptions() {
+    },
+    MLClampOptions: function MLClampOptions() {
+    },
+    MLConv2dOptions: function MLConv2dOptions() {
+    },
+    MLConvTranspose2dOptions: function MLConvTranspose2dOptions() {
+    },
+    MLEluOptions: function MLEluOptions() {
+    },
+    MLGemmOptions: function MLGemmOptions() {
+    },
+    MLGruOptions: function MLGruOptions() {
+    },
+    MLGruCellOptions: function MLGruCellOptions() {
+    },
+    MLHardSigmoidOptions: function MLHardSigmoidOptions() {
+    },
+    MLInstanceNormalizationOptions: function MLInstanceNormalizationOptions() {
+    },
+    MLLeakyReluOptions: function MLLeakyReluOptions() {
+    },
+    MLLinearOptions: function MLLinearOptions() {
+    },
+    MLLstmOptions: function MLLstmOptions() {
+    },
+    MLLstmCellOptions: function MLLstmCellOptions() {
+    },
+    MLPadOptions: function MLPadOptions() {
+    },
+    MLPool2dOptions: function MLPool2dOptions() {
+    },
+    MLReduceOptions: function MLReduceOptions() {
+    },
+    MLResample2dOptions: function MLResample2dOptions() {
+    },
+    MLSliceOptions: function MLSliceOptions() {
+    },
+    MLSoftplusOptions: function MLSoftplusOptions() {
+    },
+    MLSplitOptions: function MLSplitOptions() {
+    },
+    MLSqueezeOptions: function MLSqueezeOptions() {
+    },
+    MLTransposeOptions: function MLTransposeOptions() {
+    },
+    RTCRtpSender: function RTCRtpSender() {
+    },
+    RTCRtpReceiver: function RTCRtpReceiver() {
+    },
+    SFrameTransformOptions: function SFrameTransformOptions() {
+    },
+    SFrameTransform: function SFrameTransform() {
+    },
+    SFrameTransformErrorEvent: function SFrameTransformErrorEvent() {
+    },
+    SFrameTransformErrorEventInit: function SFrameTransformErrorEventInit() {
+    },
+    RTCEncodedVideoFrameMetadata: function RTCEncodedVideoFrameMetadata() {
+    },
+    RTCEncodedVideoFrame: function RTCEncodedVideoFrame() {
+    },
+    RTCEncodedAudioFrameMetadata: function RTCEncodedAudioFrameMetadata() {
+    },
+    RTCEncodedAudioFrame: function RTCEncodedAudioFrame() {
+    },
+    RTCTransformEvent: function RTCTransformEvent() {
+    },
+    RTCRtpScriptTransformer: function RTCRtpScriptTransformer() {
+    },
+    RTCRtpScriptTransform: function RTCRtpScriptTransform() {
+    },
+    RTCIceParameters: function RTCIceParameters() {
+    },
+    RTCIceGatherOptions: function RTCIceGatherOptions() {
+    },
+    RTCIceTransport: function RTCIceTransport() {
+    },
+    RTCIdentityProviderGlobalScope: function RTCIdentityProviderGlobalScope() {
+    },
+    RTCIdentityProviderRegistrar: function RTCIdentityProviderRegistrar() {
+    },
+    RTCIdentityProvider: function RTCIdentityProvider() {
+    },
+    RTCIdentityAssertionResult: function RTCIdentityAssertionResult() {
+    },
+    RTCIdentityProviderDetails: function RTCIdentityProviderDetails() {
+    },
+    RTCIdentityValidationResult: function RTCIdentityValidationResult() {
+    },
+    RTCPeerConnection: function RTCPeerConnection() {
+    },
+    RTCConfiguration: function RTCConfiguration() {
+    },
+    RTCIdentityProviderOptions: function RTCIdentityProviderOptions() {
+    },
+    RTCIdentityAssertion: function RTCIdentityAssertion() {
+    },
+    RTCError: function RTCError() {
+    },
+    RTCErrorInit: function RTCErrorInit() {
+    },
+    RTCRtpEncodingParameters: function RTCRtpEncodingParameters() {
+    },
+    RTCDataChannel: function RTCDataChannel() {
+    },
+    RTCDataChannelInit: function RTCDataChannelInit() {
+    },
+    RTCRtpStreamStats: function RTCRtpStreamStats() {
+    },
+    RTCCodecStats: function RTCCodecStats() {
+    },
+    RTCReceivedRtpStreamStats: function RTCReceivedRtpStreamStats() {
+    },
+    RTCInboundRtpStreamStats: function RTCInboundRtpStreamStats() {
+    },
+    RTCRemoteInboundRtpStreamStats: function RTCRemoteInboundRtpStreamStats() {
+    },
+    RTCSentRtpStreamStats: function RTCSentRtpStreamStats() {
+    },
+    RTCOutboundRtpStreamStats: function RTCOutboundRtpStreamStats() {
+    },
+    RTCRemoteOutboundRtpStreamStats: function RTCRemoteOutboundRtpStreamStats() {
+    },
+    RTCMediaSourceStats: function RTCMediaSourceStats() {
+    },
+    RTCAudioSourceStats: function RTCAudioSourceStats() {
+    },
+    RTCVideoSourceStats: function RTCVideoSourceStats() {
+    },
+    RTCAudioPlayoutStats: function RTCAudioPlayoutStats() {
+    },
+    RTCPeerConnectionStats: function RTCPeerConnectionStats() {
+    },
+    RTCDataChannelStats: function RTCDataChannelStats() {
+    },
+    RTCTransportStats: function RTCTransportStats() {
+    },
+    RTCIceCandidateStats: function RTCIceCandidateStats() {
+    },
+    RTCIceCandidatePairStats: function RTCIceCandidatePairStats() {
+    },
+    RTCCertificateStats: function RTCCertificateStats() {
+    },
+    RTCIceServer: function RTCIceServer() {
+    },
+    RTCOfferAnswerOptions: function RTCOfferAnswerOptions() {
+    },
+    RTCOfferOptions: function RTCOfferOptions() {
+    },
+    RTCAnswerOptions: function RTCAnswerOptions() {
+    },
+    RTCSessionDescription: function RTCSessionDescription() {
+    },
+    RTCSessionDescriptionInit: function RTCSessionDescriptionInit() {
+    },
+    RTCLocalSessionDescriptionInit: function RTCLocalSessionDescriptionInit() {
+    },
+    RTCIceCandidate: function RTCIceCandidate() {
+    },
+    RTCIceCandidateInit: function RTCIceCandidateInit() {
+    },
+    RTCPeerConnectionIceEvent: function RTCPeerConnectionIceEvent() {
+    },
+    RTCPeerConnectionIceEventInit: function RTCPeerConnectionIceEventInit() {
+    },
+    RTCPeerConnectionIceErrorEvent: function RTCPeerConnectionIceErrorEvent() {
+    },
+    RTCPeerConnectionIceErrorEventInit: function RTCPeerConnectionIceErrorEventInit() {
+    },
+    RTCCertificateExpiration: function RTCCertificateExpiration() {
+    },
+    RTCCertificate: function RTCCertificate() {
+    },
+    RTCRtpTransceiverInit: function RTCRtpTransceiverInit() {
+    },
+    RTCRtpParameters: function RTCRtpParameters() {
+    },
+    RTCRtpReceiveParameters: function RTCRtpReceiveParameters() {
+    },
+    RTCRtpCodingParameters: function RTCRtpCodingParameters() {
+    },
+    RTCRtcpParameters: function RTCRtcpParameters() {
+    },
+    RTCRtpHeaderExtensionParameters: function RTCRtpHeaderExtensionParameters() {
+    },
+    RTCRtpCodecParameters: function RTCRtpCodecParameters() {
+    },
+    RTCRtpCapabilities: function RTCRtpCapabilities() {
+    },
+    RTCRtpCodecCapability: function RTCRtpCodecCapability() {
+    },
+    RTCRtpHeaderExtensionCapability: function RTCRtpHeaderExtensionCapability() {
+    },
+    RTCRtpContributingSource: function RTCRtpContributingSource() {
+    },
+    RTCRtpSynchronizationSource: function RTCRtpSynchronizationSource() {
+    },
+    RTCRtpTransceiver: function RTCRtpTransceiver() {
+    },
+    RTCDtlsTransport: function RTCDtlsTransport() {
+    },
+    RTCDtlsFingerprint: function RTCDtlsFingerprint() {
+    },
+    RTCIceCandidatePair: function RTCIceCandidatePair() {
+    },
+    RTCTrackEvent: function RTCTrackEvent() {
+    },
+    RTCTrackEventInit: function RTCTrackEventInit() {
+    },
+    RTCSctpTransport: function RTCSctpTransport() {
+    },
+    RTCDataChannelEvent: function RTCDataChannelEvent() {
+    },
+    RTCDataChannelEventInit: function RTCDataChannelEventInit() {
+    },
+    RTCDTMFSender: function RTCDTMFSender() {
+    },
+    RTCDTMFToneChangeEvent: function RTCDTMFToneChangeEvent() {
+    },
+    RTCDTMFToneChangeEventInit: function RTCDTMFToneChangeEventInit() {
+    },
+    RTCStatsReport: function RTCStatsReport() {
+    },
+    RTCStats: function RTCStats() {
+    },
+    RTCErrorEvent: function RTCErrorEvent() {
+    },
+    RTCErrorEventInit: function RTCErrorEventInit() {
+    },
+    WebSocket: function WebSocket() {
+    },
+    CloseEvent: function CloseEvent() {
+    },
+    CloseEventInit: function CloseEventInit() {
+    },
+    WebTransportDatagramDuplexStream: function WebTransportDatagramDuplexStream() {
+    },
+    WebTransport: function WebTransport() {
+    },
+    WebTransportHash: function WebTransportHash() {
+    },
+    WebTransportOptions: function WebTransportOptions() {
+    },
+    WebTransportCloseInfo: function WebTransportCloseInfo() {
+    },
+    WebTransportSendStreamOptions: function WebTransportSendStreamOptions() {
+    },
+    WebTransportStats: function WebTransportStats() {
+    },
+    WebTransportDatagramStats: function WebTransportDatagramStats() {
+    },
+    WebTransportSendStream: function WebTransportSendStream() {
+    },
+    WebTransportSendStreamStats: function WebTransportSendStreamStats() {
+    },
+    WebTransportReceiveStream: function WebTransportReceiveStream() {
+    },
+    WebTransportReceiveStreamStats: function WebTransportReceiveStreamStats() {
+    },
+    WebTransportBidirectionalStream: function WebTransportBidirectionalStream() {
+    },
+    WebTransportError: function WebTransportError() {
+    },
+    WebTransportErrorInit: function WebTransportErrorInit() {
+    },
+    USBDeviceFilter: function USBDeviceFilter() {
+    },
+    USBDeviceRequestOptions: function USBDeviceRequestOptions() {
+    },
+    USB: function USB() {
+    },
+    USBConnectionEventInit: function USBConnectionEventInit() {
+    },
+    USBConnectionEvent: function USBConnectionEvent() {
+    },
+    USBInTransferResult: function USBInTransferResult() {
+    },
+    USBOutTransferResult: function USBOutTransferResult() {
+    },
+    USBIsochronousInTransferPacket: function USBIsochronousInTransferPacket() {
+    },
+    USBIsochronousInTransferResult: function USBIsochronousInTransferResult() {
+    },
+    USBIsochronousOutTransferPacket: function USBIsochronousOutTransferPacket() {
+    },
+    USBIsochronousOutTransferResult: function USBIsochronousOutTransferResult() {
+    },
+    USBDevice: function USBDevice() {
+    },
+    USBControlTransferParameters: function USBControlTransferParameters() {
+    },
+    USBConfiguration: function USBConfiguration() {
+    },
+    USBInterface: function USBInterface() {
+    },
+    USBAlternateInterface: function USBAlternateInterface() {
+    },
+    USBEndpoint: function USBEndpoint() {
+    },
+    USBPermissionDescriptor: function USBPermissionDescriptor() {
+    },
+    AllowedUSBDevice: function AllowedUSBDevice() {
+    },
+    USBPermissionStorage: function USBPermissionStorage() {
+    },
+    USBPermissionResult: function USBPermissionResult() {
+    },
+    VTTCue: function VTTCue() {
+    },
+    VTTRegion: function VTTRegion() {
+    },
+    XRDepthStateInit: function XRDepthStateInit() {
+    },
+    XRSessionInit: function XRSessionInit() {
+    },
+    XRDepthInformation: function XRDepthInformation() {
+    },
+    XRCPUDepthInformation: function XRCPUDepthInformation() {
+    },
+    XRWebGLDepthInformation: function XRWebGLDepthInformation() {
+    },
+    XRDOMOverlayInit: function XRDOMOverlayInit() {
+    },
+    XRDOMOverlayState: function XRDOMOverlayState() {
+    },
+    XRInputSource: function XRInputSource() {
+    },
+    XRHand: function XRHand() {
+    },
+    XRJointSpace: function XRJointSpace() {
+    },
+    XRJointPose: function XRJointPose() {
+    },
+    XRHitTestOptionsInit: function XRHitTestOptionsInit() {
+    },
+    XRTransientInputHitTestOptionsInit: function XRTransientInputHitTestOptionsInit() {
+    },
+    XRHitTestSource: function XRHitTestSource() {
+    },
+    XRTransientInputHitTestSource: function XRTransientInputHitTestSource() {
+    },
+    XRTransientInputHitTestResult: function XRTransientInputHitTestResult() {
+    },
+    XRRayDirectionInit: function XRRayDirectionInit() {
+    },
+    XRRay: function XRRay() {
+    },
+    XRLightProbe: function XRLightProbe() {
+    },
+    XRLightEstimate: function XRLightEstimate() {
+    },
+    XRLightProbeInit: function XRLightProbeInit() {
+    },
+    XRSystem: function XRSystem() {
+    },
+    XRRenderStateInit: function XRRenderStateInit() {
+    },
+    XRRenderState: function XRRenderState() {
+    },
+    XRSpace: function XRSpace() {
+    },
+    XRReferenceSpace: function XRReferenceSpace() {
+    },
+    XRBoundedReferenceSpace: function XRBoundedReferenceSpace() {
+    },
+    XRViewport: function XRViewport() {
+    },
+    XRRigidTransform: function XRRigidTransform() {
+    },
+    XRPose: function XRPose() {
+    },
+    XRViewerPose: function XRViewerPose() {
+    },
+    XRInputSourceArray: function XRInputSourceArray() {
+    },
+    XRLayer: function XRLayer() {
+    },
+    XRWebGLLayerInit: function XRWebGLLayerInit() {
+    },
+    XRWebGLLayer: function XRWebGLLayer() {
+    },
+    XRSessionEvent: function XRSessionEvent() {
+    },
+    XRSessionEventInit: function XRSessionEventInit() {
+    },
+    XRInputSourceEvent: function XRInputSourceEvent() {
+    },
+    XRInputSourceEventInit: function XRInputSourceEventInit() {
+    },
+    XRInputSourcesChangeEvent: function XRInputSourcesChangeEvent() {
+    },
+    XRInputSourcesChangeEventInit: function XRInputSourcesChangeEventInit() {
+    },
+    XRReferenceSpaceEvent: function XRReferenceSpaceEvent() {
+    },
+    XRReferenceSpaceEventInit: function XRReferenceSpaceEventInit() {
+    },
+    XRSessionSupportedPermissionDescriptor: function XRSessionSupportedPermissionDescriptor() {
+    },
+    XRPermissionDescriptor: function XRPermissionDescriptor() {
+    },
+    XRPermissionStatus: function XRPermissionStatus() {
+    },
+    XRCompositionLayer: function XRCompositionLayer() {
+    },
+    XRProjectionLayer: function XRProjectionLayer() {
+    },
+    XRQuadLayer: function XRQuadLayer() {
+    },
+    XRCylinderLayer: function XRCylinderLayer() {
+    },
+    XREquirectLayer: function XREquirectLayer() {
+    },
+    XRCubeLayer: function XRCubeLayer() {
+    },
+    XRSubImage: function XRSubImage() {
+    },
+    XRWebGLSubImage: function XRWebGLSubImage() {
+    },
+    XRProjectionLayerInit: function XRProjectionLayerInit() {
+    },
+    XRLayerInit: function XRLayerInit() {
+    },
+    XRQuadLayerInit: function XRQuadLayerInit() {
+    },
+    XRCylinderLayerInit: function XRCylinderLayerInit() {
+    },
+    XREquirectLayerInit: function XREquirectLayerInit() {
+    },
+    XRCubeLayerInit: function XRCubeLayerInit() {
+    },
+    XRMediaLayerInit: function XRMediaLayerInit() {
+    },
+    XRMediaQuadLayerInit: function XRMediaQuadLayerInit() {
+    },
+    XRMediaCylinderLayerInit: function XRMediaCylinderLayerInit() {
+    },
+    XRMediaEquirectLayerInit: function XRMediaEquirectLayerInit() {
+    },
+    XRMediaBinding: function XRMediaBinding() {
+    },
+    XRLayerEvent: function XRLayerEvent() {
+    },
+    XRLayerEventInit: function XRLayerEventInit() {
+    },
+    WindowControlsOverlay: function WindowControlsOverlay() {
+    },
+    WindowControlsOverlayGeometryChangeEvent: function WindowControlsOverlayGeometryChangeEvent() {
+    },
+    WindowControlsOverlayGeometryChangeEventInit: function WindowControlsOverlayGeometryChangeEventInit() {
+    },
+    ScreenDetails: function ScreenDetails() {
+    },
+    ScreenDetailed: function ScreenDetailed() {
+    },
+    XMLHttpRequestEventTarget: function XMLHttpRequestEventTarget() {
+    },
+    XMLHttpRequestUpload: function XMLHttpRequestUpload() {
+    },
+    XMLHttpRequest: function XMLHttpRequest() {
+    },
+    FormData: function FormData() {
+    },
+    ProgressEvent: function ProgressEvent() {
+    },
+    ProgressEventInit: function ProgressEventInit() {
+    },
+    throwLateFieldADI(fieldName) {
+      return A.throwExpression(new A.LateError("Field '" + fieldName + "' has been assigned during initialization."));
+    },
     main() {
-      window.toString;
-      var t1 = typeof console != "undefined";
-      t1.toString;
-      if (t1)
-        window.console.log("hello, world!");
+      var t1 = self.console;
+      t1.log.apply(t1, ["hello, world!"]);
+    }
+  },
+  J = {
+    makeDispatchRecord(interceptor, proto, extension, indexability) {
+      return {i: interceptor, p: proto, e: extension, x: indexability};
+    },
+    getNativeInterceptor(object) {
+      var proto, objectProto, $constructor, interceptor, t1,
+        record = object[init.dispatchPropertyName];
+      if (record == null)
+        if ($.initNativeDispatchFlag == null) {
+          A.initNativeDispatch();
+          record = object[init.dispatchPropertyName];
+        }
+      if (record != null) {
+        proto = record.p;
+        if (false === proto)
+          return record.i;
+        if (true === proto)
+          return object;
+        objectProto = Object.getPrototypeOf(object);
+        if (proto === objectProto)
+          return record.i;
+        if (record.e === objectProto)
+          throw A.wrapException(A.UnimplementedError$("Return interceptor for " + A.S(proto(object, record))));
+      }
+      $constructor = object.constructor;
+      if ($constructor == null)
+        interceptor = null;
+      else {
+        t1 = $._JS_INTEROP_INTERCEPTOR_TAG;
+        if (t1 == null)
+          t1 = $._JS_INTEROP_INTERCEPTOR_TAG = init.getIsolateTag("_$dart_js");
+        interceptor = $constructor[t1];
+      }
+      if (interceptor != null)
+        return interceptor;
+      interceptor = A.lookupAndCacheInterceptor(object);
+      if (interceptor != null)
+        return interceptor;
+      if (typeof object == "function")
+        return B.JavaScriptFunction_methods;
+      proto = Object.getPrototypeOf(object);
+      if (proto == null)
+        return B.PlainJavaScriptObject_methods;
+      if (proto === Object.prototype)
+        return B.PlainJavaScriptObject_methods;
+      if (typeof $constructor == "function") {
+        t1 = $._JS_INTEROP_INTERCEPTOR_TAG;
+        if (t1 == null)
+          t1 = $._JS_INTEROP_INTERCEPTOR_TAG = init.getIsolateTag("_$dart_js");
+        Object.defineProperty($constructor, t1, {value: B.UnknownJavaScriptObject_methods, enumerable: false, writable: true, configurable: true});
+        return B.UnknownJavaScriptObject_methods;
+      }
+      return B.UnknownJavaScriptObject_methods;
+    },
+    getInterceptor$(receiver) {
+      if (typeof receiver == "number") {
+        if (Math.floor(receiver) == receiver)
+          return J.JSInt.prototype;
+        return J.JSNumNotInt.prototype;
+      }
+      if (typeof receiver == "string")
+        return J.JSString.prototype;
+      if (receiver == null)
+        return J.JSNull.prototype;
+      if (typeof receiver == "boolean")
+        return J.JSBool.prototype;
+      if (receiver.constructor == Array)
+        return J.JSArray.prototype;
+      if (typeof receiver != "object") {
+        if (typeof receiver == "function")
+          return J.JavaScriptFunction.prototype;
+        return receiver;
+      }
+      if (receiver instanceof A.Object)
+        return receiver;
+      return J.getNativeInterceptor(receiver);
+    },
+    getInterceptor$asx(receiver) {
+      if (typeof receiver == "string")
+        return J.JSString.prototype;
+      if (receiver == null)
+        return receiver;
+      if (receiver.constructor == Array)
+        return J.JSArray.prototype;
+      if (typeof receiver != "object") {
+        if (typeof receiver == "function")
+          return J.JavaScriptFunction.prototype;
+        return receiver;
+      }
+      if (receiver instanceof A.Object)
+        return receiver;
+      return J.getNativeInterceptor(receiver);
+    },
+    getInterceptor$ax(receiver) {
+      if (receiver == null)
+        return receiver;
+      if (receiver.constructor == Array)
+        return J.JSArray.prototype;
+      if (typeof receiver != "object") {
+        if (typeof receiver == "function")
+          return J.JavaScriptFunction.prototype;
+        return receiver;
+      }
+      if (receiver instanceof A.Object)
+        return receiver;
+      return J.getNativeInterceptor(receiver);
+    },
+    get$iterator$ax(receiver) {
+      return J.getInterceptor$ax(receiver).get$iterator(receiver);
+    },
+    get$length$asx(receiver) {
+      return J.getInterceptor$asx(receiver).get$length(receiver);
+    },
+    toString$0$(receiver) {
+      return J.getInterceptor$(receiver).toString$0(receiver);
+    },
+    Interceptor: function Interceptor() {
+    },
+    JSBool: function JSBool() {
+    },
+    JSNull: function JSNull() {
+    },
+    JavaScriptObject: function JavaScriptObject() {
+    },
+    LegacyJavaScriptObject: function LegacyJavaScriptObject() {
+    },
+    PlainJavaScriptObject: function PlainJavaScriptObject() {
+    },
+    UnknownJavaScriptObject: function UnknownJavaScriptObject() {
+    },
+    JavaScriptFunction: function JavaScriptFunction() {
+    },
+    JSArray: function JSArray(t0) {
+      this.$ti = t0;
+    },
+    JSUnmodifiableArray: function JSUnmodifiableArray(t0) {
+      this.$ti = t0;
+    },
+    ArrayIterator: function ArrayIterator(t0, t1, t2) {
+      var _ = this;
+      _._iterable = t0;
+      _._length = t1;
+      _._index = 0;
+      _._current = null;
+      _.$ti = t2;
+    },
+    JSNumber: function JSNumber() {
+    },
+    JSInt: function JSInt() {
+    },
+    JSNumNotInt: function JSNumNotInt() {
+    },
+    JSString: function JSString() {
+    }
+  },
+  B = {};
+  var holders = [A, J, B];
+  var $ = {};
+  A.JS_CONST.prototype = {};
+  J.Interceptor.prototype = {
+    toString$0(receiver) {
+      return "Instance of '" + A.Primitives_objectTypeName(receiver) + "'";
     }
   };
-  var holders = [J, A];
-  var $ = {};
-  J.Interceptor.prototype = {};
+  J.JSBool.prototype = {
+    toString$0(receiver) {
+      return String(receiver);
+    },
+    $isbool: 1
+  };
+  J.JSNull.prototype = {
+    toString$0(receiver) {
+      return "null";
+    }
+  };
   J.JavaScriptObject.prototype = {};
+  J.LegacyJavaScriptObject.prototype = {
+    toString$0(receiver) {
+      return String(receiver);
+    }
+  };
+  J.PlainJavaScriptObject.prototype = {};
+  J.UnknownJavaScriptObject.prototype = {};
+  J.JavaScriptFunction.prototype = {
+    toString$0(receiver) {
+      var dartClosure = receiver[$.$get$DART_CLOSURE_PROPERTY_NAME()];
+      if (dartClosure == null)
+        return this.super$LegacyJavaScriptObject$toString(receiver);
+      return "JavaScript function for " + J.toString$0$(dartClosure);
+    }
+  };
+  J.JSArray.prototype = {
+    add$1(receiver, value) {
+      A._arrayInstanceType(receiver)._precomputed1._as(value);
+      if (!!receiver.fixed$length)
+        A.throwExpression(A.UnsupportedError$("add"));
+      receiver.push(value);
+    },
+    toString$0(receiver) {
+      return A.IterableBase_iterableToFullString(receiver, "[", "]");
+    },
+    get$iterator(receiver) {
+      return new J.ArrayIterator(receiver, receiver.length, A._arrayInstanceType(receiver)._eval$1("ArrayIterator<1>"));
+    },
+    get$length(receiver) {
+      return receiver.length;
+    },
+    $isIterable: 1
+  };
+  J.JSUnmodifiableArray.prototype = {};
+  J.ArrayIterator.prototype = {
+    get$current() {
+      var t1 = this._current;
+      return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
+    },
+    moveNext$0() {
+      var t2, _this = this,
+        t1 = _this._iterable,
+        $length = t1.length;
+      if (_this._length !== $length) {
+        t1 = A.throwConcurrentModificationError(t1);
+        throw A.wrapException(t1);
+      }
+      t2 = _this._index;
+      if (t2 >= $length) {
+        _this.set$_current(null);
+        return false;
+      }
+      _this.set$_current(t1[t2]);
+      ++_this._index;
+      return true;
+    },
+    set$_current(_current) {
+      this._current = this.$ti._eval$1("1?")._as(_current);
+    }
+  };
+  J.JSNumber.prototype = {
+    toString$0(receiver) {
+      if (receiver === 0 && 1 / receiver < 0)
+        return "-0.0";
+      else
+        return "" + receiver;
+    },
+    $isdouble: 1,
+    $isnum: 1
+  };
+  J.JSInt.prototype = {$isint: 1};
+  J.JSNumNotInt.prototype = {};
+  J.JSString.prototype = {
+    $add(receiver, other) {
+      return receiver + other;
+    },
+    toString$0(receiver) {
+      return receiver;
+    },
+    get$length(receiver) {
+      return receiver.length;
+    },
+    $isString: 1
+  };
+  A.LateError.prototype = {
+    toString$0(_) {
+      return "LateInitializationError: " + this._message;
+    }
+  };
+  A.ListIterator.prototype = {
+    get$current() {
+      var t1 = this.__internal$_current;
+      return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
+    },
+    moveNext$0() {
+      var t3, _this = this,
+        t1 = _this.__internal$_iterable,
+        t2 = J.getInterceptor$asx(t1),
+        $length = t2.get$length(t1);
+      if (_this.__internal$_length !== $length)
+        throw A.wrapException(A.ConcurrentModificationError$(t1));
+      t3 = _this.__internal$_index;
+      if (t3 >= $length) {
+        _this.set$__internal$_current(null);
+        return false;
+      }
+      _this.set$__internal$_current(t2.$index(t1, t3));
+      ++_this.__internal$_index;
+      return true;
+    },
+    set$__internal$_current(_current) {
+      this.__internal$_current = this.$ti._eval$1("1?")._as(_current);
+    }
+  };
+  A.FixedLengthListMixin.prototype = {};
+  A.Closure.prototype = {
+    toString$0(_) {
+      var $constructor = this.constructor,
+        $name = $constructor == null ? null : $constructor.name;
+      return "Closure '" + A.unminifyOrTag($name == null ? "unknown" : $name) + "'";
+    },
+    get$$call() {
+      return this;
+    },
+    "call*": "call$1",
+    $requiredArgCount: 1,
+    $defaultValues: null
+  };
+  A.Closure2Args.prototype = {"call*": "call$2", $requiredArgCount: 2};
+  A.TearOffClosure.prototype = {};
+  A.StaticClosure.prototype = {
+    toString$0(_) {
+      var $name = this.$static_name;
+      if ($name == null)
+        return "Closure of unknown static method";
+      return "Closure '" + A.unminifyOrTag($name) + "'";
+    }
+  };
+  A.BoundClosure.prototype = {
+    toString$0(_) {
+      return "Closure '" + this.$_name + "' of " + ("Instance of '" + A.Primitives_objectTypeName(this._receiver) + "'");
+    }
+  };
+  A._CyclicInitializationError.prototype = {
+    toString$0(_) {
+      return "Reading static variable '" + this.variableName + "' during its initialization";
+    }
+  };
+  A.RuntimeError.prototype = {
+    toString$0(_) {
+      return "RuntimeError: " + this.message;
+    }
+  };
+  A.initHooks_closure.prototype = {
+    call$1(o) {
+      return this.getTag(o);
+    },
+    $signature: 0
+  };
+  A.initHooks_closure0.prototype = {
+    call$2(o, tag) {
+      return this.getUnknownTag(o, tag);
+    },
+    $signature: 1
+  };
+  A.initHooks_closure1.prototype = {
+    call$1(tag) {
+      return this.prototypeForTag(A._asString(tag));
+    },
+    $signature: 2
+  };
+  A.NativeTypedData.prototype = {};
+  A.NativeTypedArray.prototype = {
+    get$length(receiver) {
+      return receiver.length;
+    },
+    $isJavaScriptIndexingBehavior: 1
+  };
+  A.NativeTypedArrayOfDouble.prototype = {
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    },
+    $isIterable: 1
+  };
+  A.NativeTypedArrayOfInt.prototype = {$isIterable: 1};
+  A.NativeInt16List.prototype = {
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A.NativeInt32List.prototype = {
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A.NativeInt8List.prototype = {
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A.NativeUint16List.prototype = {
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A.NativeUint32List.prototype = {
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A.NativeUint8ClampedList.prototype = {
+    get$length(receiver) {
+      return receiver.length;
+    },
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A.NativeUint8List.prototype = {
+    get$length(receiver) {
+      return receiver.length;
+    },
+    $index(receiver, index) {
+      A._checkValidIndex(index, receiver, receiver.length);
+      return receiver[index];
+    }
+  };
+  A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin.prototype = {};
+  A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin.prototype = {};
+  A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin.prototype = {};
+  A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin.prototype = {};
+  A.Rti.prototype = {
+    _eval$1(recipe) {
+      return A._Universe_evalInEnvironment(init.typeUniverse, this, recipe);
+    },
+    _bind$1(typeOrTuple) {
+      return A._Universe_bind(init.typeUniverse, this, typeOrTuple);
+    }
+  };
+  A._FunctionParameters.prototype = {};
+  A._Error.prototype = {
+    toString$0(_) {
+      return this.__rti$_message;
+    }
+  };
+  A._TypeError.prototype = {};
+  A.ListMixin.prototype = {
+    get$iterator(receiver) {
+      return new A.ListIterator(receiver, this.get$length(receiver), A.instanceType(receiver)._eval$1("ListIterator<ListMixin.E>"));
+    },
+    toString$0(receiver) {
+      return A.IterableBase_iterableToFullString(receiver, "[", "]");
+    }
+  };
+  A.Error.prototype = {};
+  A.AssertionError.prototype = {
+    toString$0(_) {
+      var t1 = this.message;
+      if (t1 != null)
+        return "Assertion failed: " + A.Error_safeToString(t1);
+      return "Assertion failed";
+    }
+  };
+  A.TypeError.prototype = {};
+  A.ArgumentError.prototype = {
+    get$_errorName() {
+      return "Invalid argument" + (!this._hasValue ? "(s)" : "");
+    },
+    get$_errorExplanation() {
+      return "";
+    },
+    toString$0(_) {
+      var _this = this,
+        $name = _this.name,
+        nameString = $name == null ? "" : " (" + $name + ")",
+        message = _this.message,
+        messageString = message == null ? "" : ": " + message,
+        prefix = _this.get$_errorName() + nameString + messageString;
+      if (!_this._hasValue)
+        return prefix;
+      return prefix + _this.get$_errorExplanation() + ": " + A.Error_safeToString(_this.get$invalidValue());
+    },
+    get$invalidValue() {
+      return this.invalidValue;
+    }
+  };
+  A.RangeError.prototype = {
+    get$invalidValue() {
+      return A._asNumQ(this.invalidValue);
+    },
+    get$_errorName() {
+      return "RangeError";
+    },
+    get$_errorExplanation() {
+      var explanation,
+        start = this.start,
+        end = this.end;
+      if (start == null)
+        explanation = end != null ? ": Not less than or equal to " + A.S(end) : "";
+      else if (end == null)
+        explanation = ": Not greater than or equal to " + A.S(start);
+      else if (end > start)
+        explanation = ": Not in inclusive range " + A.S(start) + ".." + A.S(end);
+      else
+        explanation = end < start ? ": Valid value range is empty" : ": Only valid value is " + A.S(start);
+      return explanation;
+    }
+  };
+  A.IndexError.prototype = {
+    get$invalidValue() {
+      return A._asInt(this.invalidValue);
+    },
+    get$_errorName() {
+      return "RangeError";
+    },
+    get$_errorExplanation() {
+      if (A._asInt(this.invalidValue) < 0)
+        return ": index must not be negative";
+      var t1 = this.length;
+      if (t1 === 0)
+        return ": no indices are valid";
+      return ": index should be less than " + t1;
+    },
+    get$length(receiver) {
+      return this.length;
+    }
+  };
+  A.UnsupportedError.prototype = {
+    toString$0(_) {
+      return "Unsupported operation: " + this.message;
+    }
+  };
+  A.UnimplementedError.prototype = {
+    toString$0(_) {
+      return "UnimplementedError: " + this.message;
+    }
+  };
+  A.ConcurrentModificationError.prototype = {
+    toString$0(_) {
+      return "Concurrent modification during iteration: " + A.Error_safeToString(this.modifiedObject) + ".";
+    }
+  };
+  A.Null.prototype = {
+    toString$0(_) {
+      return "null";
+    }
+  };
   A.Object.prototype = {$isObject: 1,
+    toString$0(_) {
+      return "Instance of '" + A.Primitives_objectTypeName(this) + "'";
+    },
     toString() {
       return this.toString$0(this);
     }
   };
+  A.StringBuffer.prototype = {
+    get$length(_) {
+      return this._contents.length;
+    },
+    toString$0(_) {
+      var t1 = this._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    }
+  };
+  A.ANGLE_instanced_arrays.prototype = {};
+  A.CSPViolationReportBody.prototype = {};
+  A.SecurityPolicyViolationEvent.prototype = {};
+  A.SecurityPolicyViolationEventInit.prototype = {};
+  A.XMLSerializer.prototype = {};
+  A.InnerHTML.prototype = {};
+  A.Element.prototype = {};
+  A.Range.prototype = {};
+  A.EXT_blend_minmax.prototype = {};
+  A.EXT_color_buffer_float.prototype = {};
+  A.EXT_color_buffer_half_float.prototype = {};
+  A.WebGLTimerQueryEXT.prototype = {};
+  A.EXT_disjoint_timer_query.prototype = {};
+  A.EXT_disjoint_timer_query_webgl2.prototype = {};
+  A.EXT_float_blend.prototype = {};
+  A.EXT_frag_depth.prototype = {};
+  A.EXT_sRGB.prototype = {};
+  A.EXT_shader_texture_lod.prototype = {};
+  A.EXT_texture_compression_bptc.prototype = {};
+  A.EXT_texture_compression_rgtc.prototype = {};
+  A.EXT_texture_filter_anisotropic.prototype = {};
+  A.EXT_texture_norm16.prototype = {};
+  A.IdentityProviderWellKnown.prototype = {};
+  A.IdentityProviderIcon.prototype = {};
+  A.IdentityProviderBranding.prototype = {};
+  A.IdentityProviderAPIConfig.prototype = {};
+  A.IdentityProviderAccount.prototype = {};
+  A.IdentityProviderAccountList.prototype = {};
+  A.IdentityProviderClientMetadata.prototype = {};
+  A.IdentityProviderToken.prototype = {};
+  A.IdentityCredential.prototype = {};
+  A.CredentialRequestOptions.prototype = {};
+  A.IdentityCredentialRequestOptions.prototype = {};
+  A.IdentityProviderConfig.prototype = {};
+  A.IdentityCredentialLogoutRPsRequest.prototype = {};
+  A.IdentityProvider.prototype = {};
+  A.Blob.prototype = {};
+  A.BlobPropertyBag.prototype = {};
+  A.File.prototype = {};
+  A.FilePropertyBag.prototype = {};
+  A.FileList.prototype = {};
+  A.FileReader.prototype = {};
+  A.FileReaderSync.prototype = {};
+  A.URL.prototype = {};
+  A.IDBRequest.prototype = {};
+  A.IDBOpenDBRequest.prototype = {};
+  A.IDBVersionChangeEvent.prototype = {};
+  A.IDBVersionChangeEventInit.prototype = {};
+  A.WindowOrWorkerGlobalScope.prototype = {};
+  A.IDBFactory.prototype = {};
+  A.IDBDatabaseInfo.prototype = {};
+  A.IDBDatabase.prototype = {};
+  A.IDBTransactionOptions.prototype = {};
+  A.IDBObjectStoreParameters.prototype = {};
+  A.IDBObjectStore.prototype = {};
+  A.IDBIndexParameters.prototype = {};
+  A.IDBIndex.prototype = {};
+  A.IDBKeyRange.prototype = {};
+  A.IDBCursor.prototype = {};
+  A.IDBCursorWithValue.prototype = {};
+  A.IDBTransaction.prototype = {};
+  A.KHR_parallel_shader_compile.prototype = {};
+  A.OES_draw_buffers_indexed.prototype = {};
+  A.OES_element_index_uint.prototype = {};
+  A.OES_fbo_render_mipmap.prototype = {};
+  A.OES_standard_derivatives.prototype = {};
+  A.OES_texture_float.prototype = {};
+  A.OES_texture_float_linear.prototype = {};
+  A.OES_texture_half_float.prototype = {};
+  A.OES_texture_half_float_linear.prototype = {};
+  A.WebGLVertexArrayObjectOES.prototype = {};
+  A.OES_vertex_array_object.prototype = {};
+  A.OVR_multiview2.prototype = {};
+  A.SVGElement.prototype = {};
+  A.SVGBoundingBoxOptions.prototype = {};
+  A.SVGGraphicsElement.prototype = {};
+  A.SVGGeometryElement.prototype = {};
+  A.SVGNumber.prototype = {};
+  A.SVGLength.prototype = {};
+  A.SVGAngle.prototype = {};
+  A.SVGNumberList.prototype = {};
+  A.SVGLengthList.prototype = {};
+  A.SVGStringList.prototype = {};
+  A.SVGAnimatedBoolean.prototype = {};
+  A.SVGAnimatedEnumeration.prototype = {};
+  A.SVGAnimatedInteger.prototype = {};
+  A.SVGAnimatedNumber.prototype = {};
+  A.SVGAnimatedLength.prototype = {};
+  A.SVGAnimatedAngle.prototype = {};
+  A.SVGAnimatedString.prototype = {};
+  A.SVGAnimatedRect.prototype = {};
+  A.SVGAnimatedNumberList.prototype = {};
+  A.SVGAnimatedLengthList.prototype = {};
+  A.SVGUnitTypes.prototype = {};
+  A.SVGTests.prototype = {};
+  A.SVGFitToViewBox.prototype = {};
+  A.SVGURIReference.prototype = {};
+  A.Document.prototype = {};
+  A.SVGSVGElement.prototype = {};
+  A.SVGGElement.prototype = {};
+  A.SVGDefsElement.prototype = {};
+  A.SVGDescElement.prototype = {};
+  A.SVGMetadataElement.prototype = {};
+  A.SVGTitleElement.prototype = {};
+  A.SVGSymbolElement.prototype = {};
+  A.SVGUseElement.prototype = {};
+  A.SVGUseElementShadowRoot.prototype = {};
+  A.SVGElementInstance.prototype = {};
+  A.ShadowAnimation.prototype = {};
+  A.SVGSwitchElement.prototype = {};
+  A.GetSVGDocument.prototype = {};
+  A.SVGStyleElement.prototype = {};
+  A.SVGTransform.prototype = {};
+  A.SVGTransformList.prototype = {};
+  A.SVGAnimatedTransformList.prototype = {};
+  A.SVGPreserveAspectRatio.prototype = {};
+  A.SVGAnimatedPreserveAspectRatio.prototype = {};
+  A.SVGPathElement.prototype = {};
+  A.SVGRectElement.prototype = {};
+  A.SVGCircleElement.prototype = {};
+  A.SVGEllipseElement.prototype = {};
+  A.SVGLineElement.prototype = {};
+  A.SVGAnimatedPoints.prototype = {};
+  A.SVGPointList.prototype = {};
+  A.SVGPolylineElement.prototype = {};
+  A.SVGPolygonElement.prototype = {};
+  A.SVGTextContentElement.prototype = {};
+  A.SVGTextPositioningElement.prototype = {};
+  A.SVGTextElement.prototype = {};
+  A.SVGTSpanElement.prototype = {};
+  A.SVGTextPathElement.prototype = {};
+  A.SVGImageElement.prototype = {};
+  A.SVGForeignObjectElement.prototype = {};
+  A.SVGMarkerElement.prototype = {};
+  A.SVGGradientElement.prototype = {};
+  A.SVGLinearGradientElement.prototype = {};
+  A.SVGRadialGradientElement.prototype = {};
+  A.SVGStopElement.prototype = {};
+  A.SVGPatternElement.prototype = {};
+  A.SVGScriptElement.prototype = {};
+  A.SVGAElement.prototype = {};
+  A.SVGViewElement.prototype = {};
+  A.WEBGL_blend_equation_advanced_coherent.prototype = {};
+  A.WEBGL_clip_cull_distance.prototype = {};
+  A.WEBGL_color_buffer_float.prototype = {};
+  A.WEBGL_compressed_texture_astc.prototype = {};
+  A.WEBGL_compressed_texture_etc.prototype = {};
+  A.WEBGL_compressed_texture_etc1.prototype = {};
+  A.WEBGL_compressed_texture_pvrtc.prototype = {};
+  A.WEBGL_compressed_texture_s3tc.prototype = {};
+  A.WEBGL_compressed_texture_s3tc_srgb.prototype = {};
+  A.WEBGL_debug_renderer_info.prototype = {};
+  A.WEBGL_debug_shaders.prototype = {};
+  A.WEBGL_depth_texture.prototype = {};
+  A.WEBGL_draw_buffers.prototype = {};
+  A.WEBGL_draw_instanced_base_vertex_base_instance.prototype = {};
+  A.WEBGL_lose_context.prototype = {};
+  A.WEBGL_multi_draw.prototype = {};
+  A.WEBGL_multi_draw_instanced_base_vertex_base_instance.prototype = {};
+  A.WEBGL_provoking_vertex.prototype = {};
+  A.Crypto.prototype = {};
+  A.Algorithm.prototype = {};
+  A.KeyAlgorithm.prototype = {};
+  A.CryptoKey.prototype = {};
+  A.SubtleCrypto.prototype = {};
+  A.RsaOtherPrimesInfo.prototype = {};
+  A.JsonWebKey.prototype = {};
+  A.CryptoKeyPair.prototype = {};
+  A.RsaKeyGenParams.prototype = {};
+  A.RsaHashedKeyGenParams.prototype = {};
+  A.RsaKeyAlgorithm.prototype = {};
+  A.RsaHashedKeyAlgorithm.prototype = {};
+  A.RsaHashedImportParams.prototype = {};
+  A.RsaPssParams.prototype = {};
+  A.RsaOaepParams.prototype = {};
+  A.EcdsaParams.prototype = {};
+  A.EcKeyGenParams.prototype = {};
+  A.EcKeyAlgorithm.prototype = {};
+  A.EcKeyImportParams.prototype = {};
+  A.EcdhKeyDeriveParams.prototype = {};
+  A.AesCtrParams.prototype = {};
+  A.AesKeyAlgorithm.prototype = {};
+  A.AesKeyGenParams.prototype = {};
+  A.AesDerivedKeyParams.prototype = {};
+  A.AesCbcParams.prototype = {};
+  A.AesGcmParams.prototype = {};
+  A.HmacImportParams.prototype = {};
+  A.HmacKeyAlgorithm.prototype = {};
+  A.HmacKeyGenParams.prototype = {};
+  A.HkdfParams.prototype = {};
+  A.Pbkdf2Params.prototype = {};
+  A.Accelerometer.prototype = {};
+  A.AccelerometerSensorOptions.prototype = {};
+  A.LinearAccelerationSensor.prototype = {};
+  A.GravitySensor.prototype = {};
+  A.AccelerometerReadingValues.prototype = {};
+  A.LinearAccelerationReadingValues.prototype = {};
+  A.GravityReadingValues.prototype = {};
+  A.AmbientLightSensor.prototype = {};
+  A.AmbientLightReadingValues.prototype = {};
+  A.XRAnchor.prototype = {};
+  A.XRFrame.prototype = {};
+  A.XRSession.prototype = {};
+  A.XRHitTestResult.prototype = {};
+  A.XRAnchorSet.prototype = {};
+  A.HTMLAttributionSrcElementUtils.prototype = {};
+  A.HTMLMediaElement.prototype = {};
+  A.MediaDevices.prototype = {};
+  A.AudioOutputOptions.prototype = {};
+  A.Navigator.prototype = {};
+  A.ServiceWorkerGlobalScope.prototype = {};
+  A.ServiceWorkerRegistration.prototype = {};
+  A.BackgroundFetchManager.prototype = {};
+  A.BackgroundFetchUIOptions.prototype = {};
+  A.BackgroundFetchOptions.prototype = {};
+  A.BackgroundFetchRegistration.prototype = {};
+  A.BackgroundFetchRecord.prototype = {};
+  A.BackgroundFetchEvent.prototype = {};
+  A.BackgroundFetchEventInit.prototype = {};
+  A.BackgroundFetchUpdateUIEvent.prototype = {};
+  A.SyncManager.prototype = {};
+  A.SyncEvent.prototype = {};
+  A.SyncEventInit.prototype = {};
+  A.NavigatorBadge.prototype = {};
+  A.BatteryManager.prototype = {};
+  A.CaptureHandleConfig.prototype = {};
+  A.CaptureHandle.prototype = {};
+  A.MediaStreamTrack.prototype = {};
+  A.ClipboardEventInit.prototype = {};
+  A.ClipboardEvent.prototype = {};
+  A.ClipboardItem.prototype = {};
+  A.ClipboardItemOptions.prototype = {};
+  A.Clipboard.prototype = {};
+  A.ClipboardPermissionDescriptor.prototype = {};
+  A.CloseWatcher.prototype = {};
+  A.CloseWatcherOptions.prototype = {};
+  A.Window.prototype = {};
+  A.HTMLBodyElement.prototype = {};
+  A.CompressionStream.prototype = {};
+  A.DecompressionStream.prototype = {};
+  A.PressureObserver.prototype = {};
+  A.PressureRecord.prototype = {};
+  A.PressureObserverOptions.prototype = {};
+  A.ConsoleType.prototype = {};
+  A.ContactAddress.prototype = {};
+  A.ContactInfo.prototype = {};
+  A.ContactsSelectOptions.prototype = {};
+  A.ContactsManager.prototype = {};
+  A.ContentDescription.prototype = {};
+  A.ContentIndex.prototype = {};
+  A.ContentIndexEventInit.prototype = {};
+  A.ContentIndexEvent.prototype = {};
+  A.CookieStore.prototype = {};
+  A.CookieStoreGetOptions.prototype = {};
+  A.CookieInit.prototype = {};
+  A.CookieStoreDeleteOptions.prototype = {};
+  A.CookieListItem.prototype = {};
+  A.CookieStoreManager.prototype = {};
+  A.CookieChangeEvent.prototype = {};
+  A.CookieChangeEventInit.prototype = {};
+  A.ExtendableCookieChangeEvent.prototype = {};
+  A.ExtendableCookieChangeEventInit.prototype = {};
+  A.CrashReportBody.prototype = {};
+  A.Credential.prototype = {};
+  A.CredentialUserData.prototype = {};
+  A.CredentialsContainer.prototype = {};
+  A.CredentialData.prototype = {};
+  A.CredentialCreationOptions.prototype = {};
+  A.PasswordCredential.prototype = {};
+  A.PasswordCredentialData.prototype = {};
+  A.FederatedCredential.prototype = {};
+  A.FederatedCredentialRequestOptions.prototype = {};
+  A.FederatedCredentialInit.prototype = {};
+  A.HTMLIFrameElement.prototype = {};
+  A.ScriptingPolicyReportBody.prototype = {};
+  A._CSS.prototype = {};
+  A.AnimationWorkletGlobalScope.prototype = {};
+  A.WorkletAnimationEffect.prototype = {};
+  A.WorkletAnimation.prototype = {};
+  A.WorkletGroupEffect.prototype = {};
+  A.CSSAnimation.prototype = {};
+  A.AnimationEvent.prototype = {};
+  A.AnimationEventInit.prototype = {};
+  A.CSSRule.prototype = {};
+  A.CSSKeyframeRule.prototype = {};
+  A.CSSKeyframesRule.prototype = {};
+  A.GlobalEventHandlers.prototype = {};
+  A.CSSImportRule.prototype = {};
+  A.CSSLayerBlockRule.prototype = {};
+  A.CSSLayerStatementRule.prototype = {};
+  A.CSSColorProfileRule.prototype = {};
+  A.CSSConditionRule.prototype = {};
+  A.CSSMediaRule.prototype = {};
+  A.CSSSupportsRule.prototype = {};
+  A.CSSContainerRule.prototype = {};
+  A.ContentVisibilityAutoStateChangedEvent.prototype = {};
+  A.ContentVisibilityAutoStateChangedEventInit.prototype = {};
+  A.CSSCounterStyleRule.prototype = {};
+  A.FontFaceDescriptors.prototype = {};
+  A.FontFace.prototype = {};
+  A.FontFaceFeatures.prototype = {};
+  A.FontFaceVariationAxis.prototype = {};
+  A.FontFaceVariations.prototype = {};
+  A.FontFacePalette.prototype = {};
+  A.FontFacePalettes.prototype = {};
+  A.FontFaceSetLoadEventInit.prototype = {};
+  A.FontFaceSetLoadEvent.prototype = {};
+  A.FontFaceSet.prototype = {};
+  A.FontFaceSource.prototype = {};
+  A.CSSFontFaceRule.prototype = {};
+  A.CSSFontFeatureValuesRule.prototype = {};
+  A.CSSFontFeatureValuesMap.prototype = {};
+  A.CSSFontPaletteValuesRule.prototype = {};
+  A.Highlight.prototype = {};
+  A.HighlightRegistry.prototype = {};
+  A.LayoutWorkletGlobalScope.prototype = {};
+  A.LayoutOptions.prototype = {};
+  A.LayoutChild.prototype = {};
+  A.LayoutFragment.prototype = {};
+  A.IntrinsicSizes.prototype = {};
+  A.LayoutConstraints.prototype = {};
+  A.LayoutConstraintsOptions.prototype = {};
+  A.ChildBreakToken.prototype = {};
+  A.BreakToken.prototype = {};
+  A.BreakTokenOptions.prototype = {};
+  A.LayoutEdges.prototype = {};
+  A.FragmentResultOptions.prototype = {};
+  A.FragmentResult.prototype = {};
+  A.IntrinsicSizesResultOptions.prototype = {};
+  A.SVGClipPathElement.prototype = {};
+  A.SVGMaskElement.prototype = {};
+  A.FocusableAreasOption.prototype = {};
+  A.SpatialNavigationSearchOptions.prototype = {};
+  A.NavigationEvent.prototype = {};
+  A.NavigationEventInit.prototype = {};
+  A.CSSStyleRule.prototype = {};
+  A.PaintWorkletGlobalScope.prototype = {};
+  A.PaintRenderingContext2DSettings.prototype = {};
+  A.PaintRenderingContext2D.prototype = {};
+  A.PaintSize.prototype = {};
+  A.CSSParserOptions.prototype = {};
+  A.CSSParserRule.prototype = {};
+  A.CSSParserAtRule.prototype = {};
+  A.CSSParserQualifiedRule.prototype = {};
+  A.CSSParserDeclaration.prototype = {};
+  A.CSSParserValue.prototype = {};
+  A.CSSParserBlock.prototype = {};
+  A.CSSParserFunction.prototype = {};
+  A.PropertyDefinition.prototype = {};
+  A.CSSPropertyRule.prototype = {};
+  A.CSSPseudoElement.prototype = {};
+  A.NamedFlowMap.prototype = {};
+  A.NamedFlow.prototype = {};
+  A.Region.prototype = {};
+  A.CSSTransition.prototype = {};
+  A.TransitionEvent.prototype = {};
+  A.TransitionEventInit.prototype = {};
+  A.CSSStyleValue.prototype = {};
+  A.StylePropertyMapReadOnly.prototype = {};
+  A.StylePropertyMap.prototype = {};
+  A.ElementCSSInlineStyle.prototype = {};
+  A.CSSUnparsedValue.prototype = {};
+  A.CSSVariableReferenceValue.prototype = {};
+  A.CSSKeywordValue.prototype = {};
+  A.CSSNumericType.prototype = {};
+  A.CSSNumericValue.prototype = {};
+  A.CSSUnitValue.prototype = {};
+  A.CSSMathValue.prototype = {};
+  A.CSSMathSum.prototype = {};
+  A.CSSMathProduct.prototype = {};
+  A.CSSMathNegate.prototype = {};
+  A.CSSMathInvert.prototype = {};
+  A.CSSMathMin.prototype = {};
+  A.CSSMathMax.prototype = {};
+  A.CSSMathClamp.prototype = {};
+  A.CSSNumericArray.prototype = {};
+  A.CSSTransformValue.prototype = {};
+  A.CSSTransformComponent.prototype = {};
+  A.CSSTranslate.prototype = {};
+  A.CSSRotate.prototype = {};
+  A.CSSScale.prototype = {};
+  A.CSSSkew.prototype = {};
+  A.CSSSkewX.prototype = {};
+  A.CSSSkewY.prototype = {};
+  A.CSSPerspective.prototype = {};
+  A.CSSMatrixComponent.prototype = {};
+  A.CSSMatrixComponentOptions.prototype = {};
+  A.CSSImageValue.prototype = {};
+  A.CSSColorValue.prototype = {};
+  A.CSSRGB.prototype = {};
+  A.CSSHSL.prototype = {};
+  A.CSSHWB.prototype = {};
+  A.CSSLab.prototype = {};
+  A.CSSLCH.prototype = {};
+  A.CSSOKLab.prototype = {};
+  A.CSSOKLCH.prototype = {};
+  A.CSSColor.prototype = {};
+  A.ViewTransition.prototype = {};
+  A.ScrollOptions.prototype = {};
+  A.ScrollToOptions.prototype = {};
+  A.MediaQueryList.prototype = {};
+  A.MediaQueryListEvent.prototype = {};
+  A.MediaQueryListEventInit.prototype = {};
+  A.Screen.prototype = {};
+  A.CaretPosition.prototype = {};
+  A.ScrollIntoViewOptions.prototype = {};
+  A.CheckVisibilityOptions.prototype = {};
+  A.HTMLElement.prototype = {};
+  A.HTMLImageElement.prototype = {};
+  A.MouseEvent.prototype = {};
+  A.BoxQuadOptions.prototype = {};
+  A.ConvertCoordinateOptions.prototype = {};
+  A.GeometryUtils.prototype = {};
+  A.VisualViewport.prototype = {};
+  A.MediaList.prototype = {};
+  A.StyleSheet.prototype = {};
+  A.CSSStyleSheet.prototype = {};
+  A.CSSStyleSheetInit.prototype = {};
+  A.StyleSheetList.prototype = {};
+  A.DocumentOrShadowRoot.prototype = {};
+  A.LinkStyle.prototype = {};
+  A.CSSRuleList.prototype = {};
+  A.CSSGroupingRule.prototype = {};
+  A.CSSPageRule.prototype = {};
+  A.CSSMarginRule.prototype = {};
+  A.CSSNamespaceRule.prototype = {};
+  A.CSSStyleDeclaration.prototype = {};
+  A.ElementInternals.prototype = {};
+  A.CustomStateSet.prototype = {};
+  A.DataCue.prototype = {};
+  A.DeprecationReportBody.prototype = {};
+  A.NavigatorDeviceMemory.prototype = {};
+  A.DevicePosture.prototype = {};
+  A.DigitalGoodsService.prototype = {};
+  A.ItemDetails.prototype = {};
+  A.PurchaseDetails.prototype = {};
+  A.Event.prototype = {};
+  A.EventInit.prototype = {};
+  A.CustomEvent.prototype = {};
+  A.CustomEventInit.prototype = {};
+  A.EventTarget.prototype = {};
+  A.EventListenerOptions.prototype = {};
+  A.AddEventListenerOptions.prototype = {};
+  A.AbortController.prototype = {};
+  A.AbortSignal.prototype = {};
+  A.NonElementParentNode.prototype = {};
+  A.ParentNode.prototype = {};
+  A.NonDocumentTypeChildNode.prototype = {};
+  A.ChildNode.prototype = {};
+  A.Slottable.prototype = {};
+  A.NodeList.prototype = {};
+  A.HTMLCollection.prototype = {};
+  A.MutationObserver.prototype = {};
+  A.MutationObserverInit.prototype = {};
+  A.MutationRecord.prototype = {};
+  A.Node.prototype = {};
+  A.GetRootNodeOptions.prototype = {};
+  A.XMLDocument.prototype = {};
+  A.ElementCreationOptions.prototype = {};
+  A.DOMImplementation.prototype = {};
+  A.DocumentType.prototype = {};
+  A.DocumentFragment.prototype = {};
+  A.ShadowRoot.prototype = {};
+  A.ShadowRootInit.prototype = {};
+  A.NamedNodeMap.prototype = {};
+  A.Attr.prototype = {};
+  A.CharacterData.prototype = {};
+  A.Text.prototype = {};
+  A.CDATASection.prototype = {};
+  A.ProcessingInstruction.prototype = {};
+  A.Comment.prototype = {};
+  A.AbstractRange.prototype = {};
+  A.StaticRangeInit.prototype = {};
+  A.StaticRange.prototype = {};
+  A.NodeIterator.prototype = {};
+  A.TreeWalker.prototype = {};
+  A.DOMTokenList.prototype = {};
+  A.XPathResult.prototype = {};
+  A.XPathExpression.prototype = {};
+  A.XPathEvaluatorBase.prototype = {};
+  A.XPathEvaluator.prototype = {};
+  A.XSLTProcessor.prototype = {};
+  A.EditContextInit.prototype = {};
+  A.EditContext.prototype = {};
+  A.TextUpdateEventInit.prototype = {};
+  A.TextUpdateEvent.prototype = {};
+  A.TextFormatInit.prototype = {};
+  A.TextFormat.prototype = {};
+  A.TextFormatUpdateEventInit.prototype = {};
+  A.TextFormatUpdateEvent.prototype = {};
+  A.CharacterBoundsUpdateEventInit.prototype = {};
+  A.CharacterBoundsUpdateEvent.prototype = {};
+  A.PerformanceElementTiming.prototype = {};
+  A.TextDecoderCommon.prototype = {};
+  A.TextDecoderOptions.prototype = {};
+  A.TextDecodeOptions.prototype = {};
+  A.TextDecoder.prototype = {};
+  A.TextEncoderCommon.prototype = {};
+  A.TextEncoderEncodeIntoResult.prototype = {};
+  A.TextEncoder.prototype = {};
+  A.TextDecoderStream.prototype = {};
+  A.TextEncoderStream.prototype = {};
+  A.MediaKeySystemConfiguration.prototype = {};
+  A.MediaKeySystemMediaCapability.prototype = {};
+  A.MediaKeySystemAccess.prototype = {};
+  A.MediaKeys.prototype = {};
+  A.MediaKeySession.prototype = {};
+  A.MediaKeyStatusMap.prototype = {};
+  A.MediaKeyMessageEvent.prototype = {};
+  A.MediaKeyMessageEventInit.prototype = {};
+  A.MediaEncryptedEvent.prototype = {};
+  A.MediaEncryptedEventInit.prototype = {};
+  A.HTMLInputElement.prototype = {};
+  A.DataTransferItem.prototype = {};
+  A.FileSystemEntry.prototype = {};
+  A.FileSystemDirectoryEntry.prototype = {};
+  A.FileSystemFlags.prototype = {};
+  A.FileSystemDirectoryReader.prototype = {};
+  A.FileSystemFileEntry.prototype = {};
+  A.FileSystem.prototype = {};
+  A.PerformanceEventTiming.prototype = {};
+  A.EventCounts.prototype = {};
+  A.Performance.prototype = {};
+  A.PerformanceObserverInit.prototype = {};
+  A.ColorSelectionResult.prototype = {};
+  A.ColorSelectionOptions.prototype = {};
+  A.EyeDropper.prototype = {};
+  A.Headers.prototype = {};
+  A.Body.prototype = {};
+  A.Request.prototype = {};
+  A.RequestInit.prototype = {};
+  A.Response.prototype = {};
+  A.ResponseInit.prototype = {};
+  A.AuthenticationExtensionsClientInputs.prototype = {};
+  A.HMACGetSecretInput.prototype = {};
+  A.AuthenticationExtensionsClientOutputs.prototype = {};
+  A.HMACGetSecretOutput.prototype = {};
+  A.FileSystemPermissionDescriptor.prototype = {};
+  A.FileSystemHandlePermissionDescriptor.prototype = {};
+  A.FileSystemHandle.prototype = {};
+  A.FilePickerAcceptType.prototype = {};
+  A.FilePickerOptions.prototype = {};
+  A.OpenFilePickerOptions.prototype = {};
+  A.SaveFilePickerOptions.prototype = {};
+  A.DirectoryPickerOptions.prototype = {};
+  A.SVGFilterElement.prototype = {};
+  A.SVGFilterPrimitiveStandardAttributes.prototype = {};
+  A.SVGFEBlendElement.prototype = {};
+  A.SVGFEColorMatrixElement.prototype = {};
+  A.SVGFEComponentTransferElement.prototype = {};
+  A.SVGComponentTransferFunctionElement.prototype = {};
+  A.SVGFEFuncRElement.prototype = {};
+  A.SVGFEFuncGElement.prototype = {};
+  A.SVGFEFuncBElement.prototype = {};
+  A.SVGFEFuncAElement.prototype = {};
+  A.SVGFECompositeElement.prototype = {};
+  A.SVGFEConvolveMatrixElement.prototype = {};
+  A.SVGFEDiffuseLightingElement.prototype = {};
+  A.SVGFEDistantLightElement.prototype = {};
+  A.SVGFEPointLightElement.prototype = {};
+  A.SVGFESpotLightElement.prototype = {};
+  A.SVGFEDisplacementMapElement.prototype = {};
+  A.SVGFEDropShadowElement.prototype = {};
+  A.SVGFEFloodElement.prototype = {};
+  A.SVGFEGaussianBlurElement.prototype = {};
+  A.SVGFEImageElement.prototype = {};
+  A.SVGFEMergeElement.prototype = {};
+  A.SVGFEMergeNodeElement.prototype = {};
+  A.SVGFEMorphologyElement.prototype = {};
+  A.SVGFEOffsetElement.prototype = {};
+  A.SVGFESpecularLightingElement.prototype = {};
+  A.SVGFETileElement.prototype = {};
+  A.SVGFETurbulenceElement.prototype = {};
+  A.FontMetrics.prototype = {};
+  A.Baseline.prototype = {};
+  A.Font.prototype = {};
+  A.FileSystemCreateWritableOptions.prototype = {};
+  A.FileSystemFileHandle.prototype = {};
+  A.FileSystemGetFileOptions.prototype = {};
+  A.FileSystemGetDirectoryOptions.prototype = {};
+  A.FileSystemRemoveOptions.prototype = {};
+  A.FileSystemDirectoryHandle.prototype = {};
+  A.WriteParams.prototype = {};
+  A.FileSystemWritableFileStream.prototype = {};
+  A.FileSystemReadWriteOptions.prototype = {};
+  A.FileSystemSyncAccessHandle.prototype = {};
+  A.StorageManager.prototype = {};
+  A.FullscreenOptions.prototype = {};
+  A.GamepadHapticActuator.prototype = {};
+  A.GamepadEffectParameters.prototype = {};
+  A.GamepadPose.prototype = {};
+  A.GamepadTouch.prototype = {};
+  A.Gamepad.prototype = {};
+  A.GamepadButton.prototype = {};
+  A.GamepadEvent.prototype = {};
+  A.GamepadEventInit.prototype = {};
+  A.WindowEventHandlers.prototype = {};
+  A.Sensor.prototype = {};
+  A.SensorOptions.prototype = {};
+  A.SensorErrorEvent.prototype = {};
+  A.SensorErrorEventInit.prototype = {};
+  A.MockSensorConfiguration.prototype = {};
+  A.MockSensor.prototype = {};
+  A.MockSensorReadingValues.prototype = {};
+  A.GeolocationSensor.prototype = {};
+  A.GeolocationSensorOptions.prototype = {};
+  A.ReadOptions.prototype = {};
+  A.GeolocationSensorReading.prototype = {};
+  A.GeolocationReadingValues.prototype = {};
+  A.Geolocation.prototype = {};
+  A.PositionOptions.prototype = {};
+  A.GeolocationPosition.prototype = {};
+  A.GeolocationCoordinates.prototype = {};
+  A.GeolocationPositionError.prototype = {};
+  A.DOMPointReadOnly.prototype = {};
+  A.DOMPoint.prototype = {};
+  A.DOMPointInit.prototype = {};
+  A.DOMRectReadOnly.prototype = {};
+  A.DOMRect.prototype = {};
+  A.DOMRectInit.prototype = {};
+  A.DOMRectList.prototype = {};
+  A.DOMQuad.prototype = {};
+  A.DOMQuadInit.prototype = {};
+  A.DOMMatrixReadOnly.prototype = {};
+  A.DOMMatrix.prototype = {};
+  A.DOMMatrix2DInit.prototype = {};
+  A.DOMMatrixInit.prototype = {};
+  A.RelatedApplication.prototype = {};
+  A.GlobalPrivacyControl.prototype = {};
+  A.Gyroscope.prototype = {};
+  A.GyroscopeSensorOptions.prototype = {};
+  A.GyroscopeReadingValues.prototype = {};
+  A.HTMLAllCollection.prototype = {};
+  A.HTMLFormControlsCollection.prototype = {};
+  A.RadioNodeList.prototype = {};
+  A.HTMLOptionsCollection.prototype = {};
+  A.DOMStringList.prototype = {};
+  A.HTMLUnknownElement.prototype = {};
+  A.HTMLOrSVGElement.prototype = {};
+  A.DOMStringMap.prototype = {};
+  A.HTMLHtmlElement.prototype = {};
+  A.HTMLHeadElement.prototype = {};
+  A.HTMLTitleElement.prototype = {};
+  A.HTMLBaseElement.prototype = {};
+  A.HTMLLinkElement.prototype = {};
+  A.HTMLMetaElement.prototype = {};
+  A.HTMLStyleElement.prototype = {};
+  A.HTMLHeadingElement.prototype = {};
+  A.HTMLParagraphElement.prototype = {};
+  A.HTMLHRElement.prototype = {};
+  A.HTMLPreElement.prototype = {};
+  A.HTMLQuoteElement.prototype = {};
+  A.HTMLOListElement.prototype = {};
+  A.HTMLUListElement.prototype = {};
+  A.HTMLMenuElement.prototype = {};
+  A.HTMLLIElement.prototype = {};
+  A.HTMLDListElement.prototype = {};
+  A.HTMLDivElement.prototype = {};
+  A.HTMLAnchorElement.prototype = {};
+  A.HTMLDataElement.prototype = {};
+  A.HTMLTimeElement.prototype = {};
+  A.HTMLSpanElement.prototype = {};
+  A.HTMLBRElement.prototype = {};
+  A.HTMLHyperlinkElementUtils.prototype = {};
+  A.HTMLModElement.prototype = {};
+  A.HTMLPictureElement.prototype = {};
+  A.HTMLSourceElement.prototype = {};
+  A.HTMLEmbedElement.prototype = {};
+  A.HTMLObjectElement.prototype = {};
+  A.HTMLVideoElement.prototype = {};
+  A.HTMLAudioElement.prototype = {};
+  A.HTMLTrackElement.prototype = {};
+  A.MediaError.prototype = {};
+  A.AudioTrackList.prototype = {};
+  A.AudioTrack.prototype = {};
+  A.VideoTrackList.prototype = {};
+  A.VideoTrack.prototype = {};
+  A.TextTrackList.prototype = {};
+  A.TextTrack.prototype = {};
+  A.TextTrackCueList.prototype = {};
+  A.TextTrackCue.prototype = {};
+  A.TimeRanges.prototype = {};
+  A.TrackEvent.prototype = {};
+  A.TrackEventInit.prototype = {};
+  A.HTMLMapElement.prototype = {};
+  A.HTMLAreaElement.prototype = {};
+  A.HTMLTableElement.prototype = {};
+  A.HTMLTableCaptionElement.prototype = {};
+  A.HTMLTableColElement.prototype = {};
+  A.HTMLTableSectionElement.prototype = {};
+  A.HTMLTableRowElement.prototype = {};
+  A.HTMLTableCellElement.prototype = {};
+  A.HTMLFormElement.prototype = {};
+  A.HTMLLabelElement.prototype = {};
+  A.HTMLButtonElement.prototype = {};
+  A.HTMLSelectElement.prototype = {};
+  A.HTMLDataListElement.prototype = {};
+  A.HTMLOptGroupElement.prototype = {};
+  A.HTMLOptionElement.prototype = {};
+  A.HTMLTextAreaElement.prototype = {};
+  A.HTMLOutputElement.prototype = {};
+  A.HTMLProgressElement.prototype = {};
+  A.HTMLMeterElement.prototype = {};
+  A.HTMLFieldSetElement.prototype = {};
+  A.HTMLLegendElement.prototype = {};
+  A.ValidityState.prototype = {};
+  A.SubmitEvent.prototype = {};
+  A.SubmitEventInit.prototype = {};
+  A.FormDataEvent.prototype = {};
+  A.FormDataEventInit.prototype = {};
+  A.HTMLDetailsElement.prototype = {};
+  A.HTMLDialogElement.prototype = {};
+  A.HTMLScriptElement.prototype = {};
+  A.HTMLTemplateElement.prototype = {};
+  A.HTMLSlotElement.prototype = {};
+  A.AssignedNodesOptions.prototype = {};
+  A.HTMLCanvasElement.prototype = {};
+  A.CanvasRenderingContext2DSettings.prototype = {};
+  A.CanvasRenderingContext2D.prototype = {};
+  A.CanvasState.prototype = {};
+  A.CanvasTransform.prototype = {};
+  A.CanvasCompositing.prototype = {};
+  A.CanvasImageSmoothing.prototype = {};
+  A.CanvasFillStrokeStyles.prototype = {};
+  A.CanvasShadowStyles.prototype = {};
+  A.CanvasFilters.prototype = {};
+  A.CanvasRect.prototype = {};
+  A.CanvasDrawPath.prototype = {};
+  A.CanvasUserInterface.prototype = {};
+  A.CanvasText.prototype = {};
+  A.CanvasDrawImage.prototype = {};
+  A.CanvasImageData.prototype = {};
+  A.CanvasPathDrawingStyles.prototype = {};
+  A.CanvasTextDrawingStyles.prototype = {};
+  A.CanvasPath.prototype = {};
+  A.CanvasGradient.prototype = {};
+  A.CanvasPattern.prototype = {};
+  A.TextMetrics.prototype = {};
+  A.ImageDataSettings.prototype = {};
+  A.ImageData.prototype = {};
+  A.Path2D.prototype = {};
+  A.ImageBitmapRenderingContext.prototype = {};
+  A.ImageBitmapRenderingContextSettings.prototype = {};
+  A.ImageEncodeOptions.prototype = {};
+  A.OffscreenCanvas.prototype = {};
+  A.OffscreenCanvasRenderingContext2D.prototype = {};
+  A.CustomElementRegistry.prototype = {};
+  A.ElementDefinitionOptions.prototype = {};
+  A.ValidityStateFlags.prototype = {};
+  A.UserActivation.prototype = {};
+  A.FocusOptions.prototype = {};
+  A.ElementContentEditable.prototype = {};
+  A.DataTransfer.prototype = {};
+  A.DataTransferItemList.prototype = {};
+  A.DragEvent.prototype = {};
+  A.DragEventInit.prototype = {};
+  A.PopoverTargetElement.prototype = {};
+  A.ToggleEvent.prototype = {};
+  A.ToggleEventInit.prototype = {};
+  A.WindowPostMessageOptions.prototype = {};
+  A.BarProp.prototype = {};
+  A.Location.prototype = {};
+  A.History.prototype = {};
+  A.PopStateEvent.prototype = {};
+  A.PopStateEventInit.prototype = {};
+  A.HashChangeEvent.prototype = {};
+  A.HashChangeEventInit.prototype = {};
+  A.PageTransitionEvent.prototype = {};
+  A.PageTransitionEventInit.prototype = {};
+  A.BeforeUnloadEvent.prototype = {};
+  A.ErrorEvent.prototype = {};
+  A.ErrorEventInit.prototype = {};
+  A.PromiseRejectionEvent.prototype = {};
+  A.PromiseRejectionEventInit.prototype = {};
+  A.DOMParser.prototype = {};
+  A.NavigatorID.prototype = {};
+  A.NavigatorLanguage.prototype = {};
+  A.NavigatorOnLine.prototype = {};
+  A.NavigatorContentUtils.prototype = {};
+  A.NavigatorCookies.prototype = {};
+  A.NavigatorPlugins.prototype = {};
+  A.PluginArray.prototype = {};
+  A.MimeTypeArray.prototype = {};
+  A.Plugin.prototype = {};
+  A.MimeType.prototype = {};
+  A.ImageBitmap.prototype = {};
+  A.ImageBitmapOptions.prototype = {};
+  A.AnimationFrameProvider.prototype = {};
+  A.MessageEvent.prototype = {};
+  A.MessageEventInit.prototype = {};
+  A.EventSource.prototype = {};
+  A.EventSourceInit.prototype = {};
+  A.MessageChannel.prototype = {};
+  A.MessagePort.prototype = {};
+  A.StructuredSerializeOptions.prototype = {};
+  A.BroadcastChannel.prototype = {};
+  A.WorkerGlobalScope.prototype = {};
+  A.DedicatedWorkerGlobalScope.prototype = {};
+  A.SharedWorkerGlobalScope.prototype = {};
+  A.AbstractWorker.prototype = {};
+  A.Worker.prototype = {};
+  A.WorkerOptions.prototype = {};
+  A.SharedWorker.prototype = {};
+  A.NavigatorConcurrentHardware.prototype = {};
+  A.WorkerNavigator.prototype = {};
+  A.WorkerLocation.prototype = {};
+  A.WorkletGlobalScope.prototype = {};
+  A.Worklet.prototype = {};
+  A.WorkletOptions.prototype = {};
+  A.Storage.prototype = {};
+  A.WindowSessionStorage.prototype = {};
+  A.WindowLocalStorage.prototype = {};
+  A.StorageEvent.prototype = {};
+  A.StorageEventInit.prototype = {};
+  A.HTMLMarqueeElement.prototype = {};
+  A.HTMLFrameSetElement.prototype = {};
+  A.HTMLFrameElement.prototype = {};
+  A.HTMLDirectoryElement.prototype = {};
+  A.HTMLFontElement.prototype = {};
+  A.HTMLParamElement.prototype = {};
+  A.External.prototype = {};
+  A.IdleOptions.prototype = {};
+  A.IdleDetector.prototype = {};
+  A.ImageCapture.prototype = {};
+  A.PhotoCapabilities.prototype = {};
+  A.PhotoSettings.prototype = {};
+  A.MediaSettingsRange.prototype = {};
+  A.MediaTrackSupportedConstraints.prototype = {};
+  A.MediaTrackCapabilities.prototype = {};
+  A.MediaTrackConstraintSet.prototype = {};
+  A.MediaTrackSettings.prototype = {};
+  A.ConstrainPoint2DParameters.prototype = {};
+  A.Point2D.prototype = {};
+  A.ImageResource.prototype = {};
+  A.Ink.prototype = {};
+  A.InkPresenterParam.prototype = {};
+  A.InkPresenter.prototype = {};
+  A.InkTrailStyle.prototype = {};
+  A.InputDeviceCapabilities.prototype = {};
+  A.InputDeviceCapabilitiesInit.prototype = {};
+  A.UIEvent.prototype = {};
+  A.UIEventInit.prototype = {};
+  A.InputEvent.prototype = {};
+  A.InputEventInit.prototype = {};
+  A.IntersectionObserver.prototype = {};
+  A.IntersectionObserverEntry.prototype = {};
+  A.IntersectionObserverEntryInit.prototype = {};
+  A.IntersectionObserverInit.prototype = {};
+  A.InterventionReportBody.prototype = {};
+  A.IsInputPendingOptions.prototype = {};
+  A.Scheduling.prototype = {};
+  A.Profiler.prototype = {};
+  A.ProfilerTrace.prototype = {};
+  A.ProfilerSample.prototype = {};
+  A.ProfilerStack.prototype = {};
+  A.ProfilerFrame.prototype = {};
+  A.ProfilerInitOptions.prototype = {};
+  A.Keyboard.prototype = {};
+  A.KeyboardLayoutMap.prototype = {};
+  A.LargestContentfulPaint.prototype = {};
+  A.LayoutShift.prototype = {};
+  A.LayoutShiftAttribution.prototype = {};
+  A.QueryOptions.prototype = {};
+  A.FontData.prototype = {};
+  A.PerformanceLongTaskTiming.prototype = {};
+  A.TaskAttributionTiming.prototype = {};
+  A.Magnetometer.prototype = {};
+  A.MagnetometerSensorOptions.prototype = {};
+  A.UncalibratedMagnetometer.prototype = {};
+  A.MagnetometerReadingValues.prototype = {};
+  A.UncalibratedMagnetometerReadingValues.prototype = {};
+  A.BeforeInstallPromptEvent.prototype = {};
+  A.PromptResponseObject.prototype = {};
+  A.MathMLElement.prototype = {};
+  A.MediaConfiguration.prototype = {};
+  A.MediaDecodingConfiguration.prototype = {};
+  A.MediaEncodingConfiguration.prototype = {};
+  A.VideoConfiguration.prototype = {};
+  A.AudioConfiguration.prototype = {};
+  A.MediaCapabilitiesKeySystemConfiguration.prototype = {};
+  A.KeySystemTrackConfiguration.prototype = {};
+  A.MediaCapabilitiesInfo.prototype = {};
+  A.MediaCapabilitiesDecodingInfo.prototype = {};
+  A.MediaCapabilitiesEncodingInfo.prototype = {};
+  A.MediaCapabilities.prototype = {};
+  A.VideoPlaybackQuality.prototype = {};
+  A.MediaSource.prototype = {};
+  A.MediaSourceHandle.prototype = {};
+  A.SourceBuffer.prototype = {};
+  A.SourceBufferList.prototype = {};
+  A.MockCapturePromptResultConfiguration.prototype = {};
+  A.MockCaptureDeviceConfiguration.prototype = {};
+  A.MockCameraConfiguration.prototype = {};
+  A.MockMicrophoneConfiguration.prototype = {};
+  A.CanvasCaptureMediaStreamTrack.prototype = {};
+  A.CaptureActionEvent.prototype = {};
+  A.CaptureActionEventInit.prototype = {};
+  A.CropTarget.prototype = {};
+  A.BrowserCaptureMediaStreamTrack.prototype = {};
+  A.MediaStream.prototype = {};
+  A.MediaTrackConstraints.prototype = {};
+  A.MediaStreamTrackEvent.prototype = {};
+  A.MediaStreamTrackEventInit.prototype = {};
+  A.OverconstrainedError.prototype = {};
+  A.MediaDeviceInfo.prototype = {};
+  A.InputDeviceInfo.prototype = {};
+  A.MediaStreamConstraints.prototype = {};
+  A.DoubleRange.prototype = {};
+  A.ConstrainDoubleRange.prototype = {};
+  A.ULongRange.prototype = {};
+  A.ConstrainULongRange.prototype = {};
+  A.ConstrainBooleanParameters.prototype = {};
+  A.ConstrainDOMStringParameters.prototype = {};
+  A.DevicePermissionDescriptor.prototype = {};
+  A.CameraDevicePermissionDescriptor.prototype = {};
+  A.MediaStreamTrackProcessor.prototype = {};
+  A.MediaStreamTrackProcessorInit.prototype = {};
+  A.VideoTrackGenerator.prototype = {};
+  A.ViewportMediaStreamConstraints.prototype = {};
+  A.MediaSession.prototype = {};
+  A.MediaMetadata.prototype = {};
+  A.MediaMetadataInit.prototype = {};
+  A.MediaImage.prototype = {};
+  A.MediaPositionState.prototype = {};
+  A.MediaSessionActionDetails.prototype = {};
+  A.MediaRecorder.prototype = {};
+  A.MediaRecorderOptions.prototype = {};
+  A.BlobEvent.prototype = {};
+  A.BlobEventInit.prototype = {};
+  A.HTMLModelElement.prototype = {};
+  A.RTCRtpSendParameters.prototype = {};
+  A.Navigation.prototype = {};
+  A.NavigationUpdateCurrentEntryOptions.prototype = {};
+  A.NavigationOptions.prototype = {};
+  A.NavigationNavigateOptions.prototype = {};
+  A.NavigationReloadOptions.prototype = {};
+  A.NavigationResult.prototype = {};
+  A.NavigationCurrentEntryChangeEvent.prototype = {};
+  A.NavigationCurrentEntryChangeEventInit.prototype = {};
+  A.NavigationTransition.prototype = {};
+  A.NavigateEvent.prototype = {};
+  A.NavigateEventInit.prototype = {};
+  A.NavigationInterceptOptions.prototype = {};
+  A.NavigationDestination.prototype = {};
+  A.NavigationHistoryEntry.prototype = {};
+  A.PerformanceNavigationTiming.prototype = {};
+  A.PerformanceTiming.prototype = {};
+  A.PerformanceNavigation.prototype = {};
+  A.NavigatorNetworkInformation.prototype = {};
+  A.NetworkInformation.prototype = {};
+  A.Notification.prototype = {};
+  A.NotificationOptions.prototype = {};
+  A.NotificationAction.prototype = {};
+  A.GetNotificationOptions.prototype = {};
+  A.NotificationEvent.prototype = {};
+  A.NotificationEventInit.prototype = {};
+  A.DeviceOrientationEvent.prototype = {};
+  A.DeviceOrientationEventInit.prototype = {};
+  A.DeviceMotionEventAcceleration.prototype = {};
+  A.DeviceMotionEventRotationRate.prototype = {};
+  A.DeviceMotionEvent.prototype = {};
+  A.DeviceMotionEventAccelerationInit.prototype = {};
+  A.DeviceMotionEventRotationRateInit.prototype = {};
+  A.DeviceMotionEventInit.prototype = {};
+  A.OrientationSensor.prototype = {};
+  A.OrientationSensorOptions.prototype = {};
+  A.AbsoluteOrientationSensor.prototype = {};
+  A.RelativeOrientationSensor.prototype = {};
+  A.AbsoluteOrientationReadingValues.prototype = {};
+  A.RelativeOrientationReadingValues.prototype = {};
+  A.Client.prototype = {};
+  A.PerformancePaintTiming.prototype = {};
+  A.PaymentManager.prototype = {};
+  A.CanMakePaymentEvent.prototype = {};
+  A.PaymentRequestDetailsUpdate.prototype = {};
+  A.PaymentRequestEvent.prototype = {};
+  A.PaymentRequestEventInit.prototype = {};
+  A.PaymentHandlerResponse.prototype = {};
+  A.AddressInit.prototype = {};
+  A.PaymentOptions.prototype = {};
+  A.PaymentShippingOption.prototype = {};
+  A.AddressErrors.prototype = {};
+  A.PaymentRequest.prototype = {};
+  A.PaymentMethodData.prototype = {};
+  A.PaymentCurrencyAmount.prototype = {};
+  A.PaymentDetailsBase.prototype = {};
+  A.PaymentDetailsInit.prototype = {};
+  A.PaymentDetailsUpdate.prototype = {};
+  A.PaymentDetailsModifier.prototype = {};
+  A.PaymentItem.prototype = {};
+  A.PaymentCompleteDetails.prototype = {};
+  A.PaymentResponse.prototype = {};
+  A.PaymentValidationErrors.prototype = {};
+  A.PaymentMethodChangeEvent.prototype = {};
+  A.PaymentMethodChangeEventInit.prototype = {};
+  A.PaymentRequestUpdateEvent.prototype = {};
+  A.PaymentRequestUpdateEventInit.prototype = {};
+  A.MemoryMeasurement.prototype = {};
+  A.MemoryBreakdownEntry.prototype = {};
+  A.MemoryAttribution.prototype = {};
+  A.MemoryAttributionContainer.prototype = {};
+  A.PerformanceEntry.prototype = {};
+  A.PerformanceObserver.prototype = {};
+  A.PerformanceObserverCallbackOptions.prototype = {};
+  A.PerformanceObserverEntryList.prototype = {};
+  A.PeriodicSyncManager.prototype = {};
+  A.BackgroundSyncOptions.prototype = {};
+  A.PeriodicSyncEventInit.prototype = {};
+  A.PeriodicSyncEvent.prototype = {};
+  A.PermissionsPolicy.prototype = {};
+  A.PermissionsPolicyViolationReportBody.prototype = {};
+  A.Permissions.prototype = {};
+  A.PermissionDescriptor.prototype = {};
+  A.PermissionStatus.prototype = {};
+  A.PermissionSetParameters.prototype = {};
+  A.PictureInPictureWindow.prototype = {};
+  A.PictureInPictureEvent.prototype = {};
+  A.PictureInPictureEventInit.prototype = {};
+  A.PointerEventInit.prototype = {};
+  A.PointerEvent.prototype = {};
+  A.MouseEventInit.prototype = {};
+  A.HTMLPortalElement.prototype = {};
+  A.PortalActivateOptions.prototype = {};
+  A.PortalHost.prototype = {};
+  A.PortalActivateEvent.prototype = {};
+  A.PortalActivateEventInit.prototype = {};
+  A.Presentation.prototype = {};
+  A.PresentationRequest.prototype = {};
+  A.PresentationAvailability.prototype = {};
+  A.PresentationConnectionAvailableEvent.prototype = {};
+  A.PresentationConnectionAvailableEventInit.prototype = {};
+  A.PresentationConnection.prototype = {};
+  A.PresentationConnectionCloseEvent.prototype = {};
+  A.PresentationConnectionCloseEventInit.prototype = {};
+  A.PresentationReceiver.prototype = {};
+  A.PresentationConnectionList.prototype = {};
+  A.ProximitySensor.prototype = {};
+  A.ProximityReadingValues.prototype = {};
+  A.PushPermissionDescriptor.prototype = {};
+  A.PushManager.prototype = {};
+  A.PushSubscriptionOptions.prototype = {};
+  A.PushSubscriptionOptionsInit.prototype = {};
+  A.PushSubscription.prototype = {};
+  A.PushSubscriptionJSON.prototype = {};
+  A.PushMessageData.prototype = {};
+  A.PushEvent.prototype = {};
+  A.PushEventInit.prototype = {};
+  A.PushSubscriptionChangeEvent.prototype = {};
+  A.PushSubscriptionChangeEventInit.prototype = {};
+  A.XRView.prototype = {};
+  A.XRCamera.prototype = {};
+  A.XRWebGLBinding.prototype = {};
+  A.RemotePlayback.prototype = {};
+  A.ReportBody.prototype = {};
+  A.Report.prototype = {};
+  A.ReportingObserver.prototype = {};
+  A.ReportingObserverOptions.prototype = {};
+  A.GenerateTestReportParameters.prototype = {};
+  A.TopLevelStorageAccessPermissionDescriptor.prototype = {};
+  A.IdleRequestOptions.prototype = {};
+  A.IdleDeadline.prototype = {};
+  A.ResizeObserverOptions.prototype = {};
+  A.ResizeObserver.prototype = {};
+  A.ResizeObserverEntry.prototype = {};
+  A.ResizeObserverSize.prototype = {};
+  A.PerformanceResourceTiming.prototype = {};
+  A.Sanitizer.prototype = {};
+  A.SetHTMLOptions.prototype = {};
+  A.SanitizerConfig.prototype = {};
+  A.NetworkInformationSaveData.prototype = {};
+  A.SchedulerPostTaskOptions.prototype = {};
+  A.Scheduler.prototype = {};
+  A.TaskPriorityChangeEvent.prototype = {};
+  A.TaskPriorityChangeEventInit.prototype = {};
+  A.TaskControllerInit.prototype = {};
+  A.TaskController.prototype = {};
+  A.TaskSignal.prototype = {};
+  A.CaptureController.prototype = {};
+  A.DisplayMediaStreamOptions.prototype = {};
+  A.ScreenOrientation.prototype = {};
+  A.WakeLock.prototype = {};
+  A.WakeLockSentinel.prototype = {};
+  A.ScrollTimelineOptions.prototype = {};
+  A.ScrollTimeline.prototype = {};
+  A.ViewTimelineOptions.prototype = {};
+  A.ViewTimeline.prototype = {};
+  A.AnimationTimeline.prototype = {};
+  A.FragmentDirective.prototype = {};
+  A.SecurePaymentConfirmationRequest.prototype = {};
+  A.AuthenticationExtensionsPaymentInputs.prototype = {};
+  A.CollectedClientPaymentData.prototype = {};
+  A.CollectedClientAdditionalPaymentData.prototype = {};
+  A.PaymentCredentialInstrument.prototype = {};
+  A.Selection.prototype = {};
+  A.Serial.prototype = {};
+  A.SerialPortRequestOptions.prototype = {};
+  A.SerialPortFilter.prototype = {};
+  A.SerialPort.prototype = {};
+  A.SerialPortInfo.prototype = {};
+  A.SerialOptions.prototype = {};
+  A.SerialOutputSignals.prototype = {};
+  A.SerialInputSignals.prototype = {};
+  A.PerformanceServerTiming.prototype = {};
+  A.ServiceWorker.prototype = {};
+  A.ServiceWorkerContainer.prototype = {};
+  A.RegistrationOptions.prototype = {};
+  A.NavigationPreloadManager.prototype = {};
+  A.NavigationPreloadState.prototype = {};
+  A.WindowClient.prototype = {};
+  A.Clients.prototype = {};
+  A.ClientQueryOptions.prototype = {};
+  A.ExtendableEvent.prototype = {};
+  A.ExtendableEventInit.prototype = {};
+  A.FetchEvent.prototype = {};
+  A.FetchEventInit.prototype = {};
+  A.ExtendableMessageEvent.prototype = {};
+  A.ExtendableMessageEventInit.prototype = {};
+  A.Cache.prototype = {};
+  A.CacheQueryOptions.prototype = {};
+  A.CacheStorage.prototype = {};
+  A.MultiCacheQueryOptions.prototype = {};
+  A.FaceDetector.prototype = {};
+  A.FaceDetectorOptions.prototype = {};
+  A.DetectedFace.prototype = {};
+  A.Landmark.prototype = {};
+  A.BarcodeDetector.prototype = {};
+  A.BarcodeDetectorOptions.prototype = {};
+  A.DetectedBarcode.prototype = {};
+  A.SpeechRecognition.prototype = {};
+  A.SpeechRecognitionErrorEvent.prototype = {};
+  A.SpeechRecognitionErrorEventInit.prototype = {};
+  A.SpeechRecognitionAlternative.prototype = {};
+  A.SpeechRecognitionResult.prototype = {};
+  A.SpeechRecognitionResultList.prototype = {};
+  A.SpeechRecognitionEvent.prototype = {};
+  A.SpeechRecognitionEventInit.prototype = {};
+  A.SpeechGrammar.prototype = {};
+  A.SpeechGrammarList.prototype = {};
+  A.SpeechSynthesis.prototype = {};
+  A.SpeechSynthesisUtterance.prototype = {};
+  A.SpeechSynthesisEvent.prototype = {};
+  A.SpeechSynthesisEventInit.prototype = {};
+  A.SpeechSynthesisErrorEvent.prototype = {};
+  A.SpeechSynthesisErrorEventInit.prototype = {};
+  A.SpeechSynthesisVoice.prototype = {};
+  A.NavigatorStorage.prototype = {};
+  A.StorageEstimate.prototype = {};
+  A.ReadableStream.prototype = {};
+  A.ReadableStreamGetReaderOptions.prototype = {};
+  A.ReadableStreamIteratorOptions.prototype = {};
+  A.ReadableWritablePair.prototype = {};
+  A.StreamPipeOptions.prototype = {};
+  A.UnderlyingSource.prototype = {};
+  A.ReadableStreamGenericReader.prototype = {};
+  A.ReadableStreamDefaultReader.prototype = {};
+  A.ReadableStreamReadResult.prototype = {};
+  A.ReadableStreamBYOBReader.prototype = {};
+  A.ReadableStreamDefaultController.prototype = {};
+  A.ReadableByteStreamController.prototype = {};
+  A.ReadableStreamBYOBRequest.prototype = {};
+  A.WritableStream.prototype = {};
+  A.UnderlyingSink.prototype = {};
+  A.WritableStreamDefaultWriter.prototype = {};
+  A.WritableStreamDefaultController.prototype = {};
+  A.TransformStream.prototype = {};
+  A.Transformer.prototype = {};
+  A.TransformStreamDefaultController.prototype = {};
+  A.QueuingStrategy.prototype = {};
+  A.QueuingStrategyInit.prototype = {};
+  A.ByteLengthQueuingStrategy.prototype = {};
+  A.CountQueuingStrategy.prototype = {};
+  A.GenericTransformStream.prototype = {};
+  A.TimeEvent.prototype = {};
+  A.SVGAnimationElement.prototype = {};
+  A.SVGAnimateElement.prototype = {};
+  A.SVGSetElement.prototype = {};
+  A.SVGAnimateMotionElement.prototype = {};
+  A.SVGMPathElement.prototype = {};
+  A.SVGAnimateTransformElement.prototype = {};
+  A.SVGDiscardElement.prototype = {};
+  A._TestUtils.prototype = {};
+  A.TextDetector.prototype = {};
+  A.DetectedText.prototype = {};
+  A.TouchInit.prototype = {};
+  A.Touch.prototype = {};
+  A.TouchList.prototype = {};
+  A.TouchEventInit.prototype = {};
+  A.TouchEvent.prototype = {};
+  A.TrustedHTML.prototype = {};
+  A.TrustedScript.prototype = {};
+  A.TrustedScriptURL.prototype = {};
+  A.TrustedTypePolicyFactory.prototype = {};
+  A.TrustedTypePolicy.prototype = {};
+  A.TrustedTypePolicyOptions.prototype = {};
+  A.NavigatorUABrandVersion.prototype = {};
+  A.UADataValues.prototype = {};
+  A.UALowEntropyJSON.prototype = {};
+  A.NavigatorUAData.prototype = {};
+  A.NavigatorUA.prototype = {};
+  A.FocusEvent.prototype = {};
+  A.FocusEventInit.prototype = {};
+  A.EventModifierInit.prototype = {};
+  A.WheelEvent.prototype = {};
+  A.WheelEventInit.prototype = {};
+  A.KeyboardEvent.prototype = {};
+  A.KeyboardEventInit.prototype = {};
+  A.CompositionEvent.prototype = {};
+  A.CompositionEventInit.prototype = {};
+  A.MutationEvent.prototype = {};
+  A.URLSearchParams.prototype = {};
+  A.URLPattern.prototype = {};
+  A.URLPatternInit.prototype = {};
+  A.URLPatternOptions.prototype = {};
+  A.URLPatternResult.prototype = {};
+  A.URLPatternComponentResult.prototype = {};
+  A.PerformanceMarkOptions.prototype = {};
+  A.PerformanceMeasureOptions.prototype = {};
+  A.PerformanceMark.prototype = {};
+  A.PerformanceMeasure.prototype = {};
+  A.VideoFrameCallbackMetadata.prototype = {};
+  A.VirtualKeyboard.prototype = {};
+  A.ARIAMixin.prototype = {};
+  A.WebAssemblyInstantiatedSource.prototype = {};
+  A._WebAssembly.prototype = {};
+  A.ModuleExportDescriptor.prototype = {};
+  A.ModuleImportDescriptor.prototype = {};
+  A.Module.prototype = {};
+  A.Instance.prototype = {};
+  A.MemoryDescriptor.prototype = {};
+  A.Memory.prototype = {};
+  A.TableDescriptor.prototype = {};
+  A.Table.prototype = {};
+  A.GlobalDescriptor.prototype = {};
+  A.Global.prototype = {};
+  A.Animation.prototype = {};
+  A.AnimationEffect.prototype = {};
+  A.EffectTiming.prototype = {};
+  A.OptionalEffectTiming.prototype = {};
+  A.ComputedEffectTiming.prototype = {};
+  A.GroupEffect.prototype = {};
+  A.AnimationNodeList.prototype = {};
+  A.SequenceEffect.prototype = {};
+  A.KeyframeEffect.prototype = {};
+  A.KeyframeEffectOptions.prototype = {};
+  A.AnimationPlaybackEvent.prototype = {};
+  A.AnimationPlaybackEventInit.prototype = {};
+  A.DocumentTimelineOptions.prototype = {};
+  A.DocumentTimeline.prototype = {};
+  A.BaseComputedKeyframe.prototype = {};
+  A.BasePropertyIndexedKeyframe.prototype = {};
+  A.BaseKeyframe.prototype = {};
+  A.Animatable.prototype = {};
+  A.KeyframeAnimationOptions.prototype = {};
+  A.GetAnimationsOptions.prototype = {};
+  A.LaunchParams.prototype = {};
+  A.LaunchQueue.prototype = {};
+  A.BluetoothDataFilterInit.prototype = {};
+  A.BluetoothManufacturerDataFilterInit.prototype = {};
+  A.BluetoothServiceDataFilterInit.prototype = {};
+  A.BluetoothLEScanFilterInit.prototype = {};
+  A.RequestDeviceOptions.prototype = {};
+  A.Bluetooth.prototype = {};
+  A.BluetoothPermissionDescriptor.prototype = {};
+  A.AllowedBluetoothDevice.prototype = {};
+  A.BluetoothPermissionStorage.prototype = {};
+  A.BluetoothPermissionResult.prototype = {};
+  A.ValueEvent.prototype = {};
+  A.ValueEventInit.prototype = {};
+  A.BluetoothDevice.prototype = {};
+  A.WatchAdvertisementsOptions.prototype = {};
+  A.BluetoothManufacturerDataMap.prototype = {};
+  A.BluetoothServiceDataMap.prototype = {};
+  A.BluetoothAdvertisingEvent.prototype = {};
+  A.BluetoothAdvertisingEventInit.prototype = {};
+  A.BluetoothRemoteGATTServer.prototype = {};
+  A.BluetoothRemoteGATTService.prototype = {};
+  A.BluetoothRemoteGATTCharacteristic.prototype = {};
+  A.BluetoothCharacteristicProperties.prototype = {};
+  A.BluetoothRemoteGATTDescriptor.prototype = {};
+  A.CharacteristicEventHandlers.prototype = {};
+  A.BluetoothDeviceEventHandlers.prototype = {};
+  A.ServiceEventHandlers.prototype = {};
+  A.BluetoothUUID.prototype = {};
+  A.NavigatorLocks.prototype = {};
+  A.LockManager.prototype = {};
+  A.LockOptions.prototype = {};
+  A.LockManagerSnapshot.prototype = {};
+  A.LockInfo.prototype = {};
+  A.Lock.prototype = {};
+  A.NDEFMessage.prototype = {};
+  A.NDEFMessageInit.prototype = {};
+  A.NDEFRecord.prototype = {};
+  A.NDEFRecordInit.prototype = {};
+  A.NDEFReader.prototype = {};
+  A.NDEFReadingEvent.prototype = {};
+  A.NDEFReadingEventInit.prototype = {};
+  A.NDEFWriteOptions.prototype = {};
+  A.NDEFMakeReadOnlyOptions.prototype = {};
+  A.NDEFScanOptions.prototype = {};
+  A.OTPCredential.prototype = {};
+  A.OTPCredentialRequestOptions.prototype = {};
+  A.ShareData.prototype = {};
+  A.BaseAudioContext.prototype = {};
+  A.AudioContext.prototype = {};
+  A.AudioContextOptions.prototype = {};
+  A.AudioSinkOptions.prototype = {};
+  A.AudioSinkInfo.prototype = {};
+  A.AudioTimestamp.prototype = {};
+  A.AudioRenderCapacity.prototype = {};
+  A.AudioRenderCapacityOptions.prototype = {};
+  A.AudioRenderCapacityEvent.prototype = {};
+  A.AudioRenderCapacityEventInit.prototype = {};
+  A.OfflineAudioContext.prototype = {};
+  A.OfflineAudioContextOptions.prototype = {};
+  A.OfflineAudioCompletionEvent.prototype = {};
+  A.OfflineAudioCompletionEventInit.prototype = {};
+  A.AudioBuffer.prototype = {};
+  A.AudioBufferOptions.prototype = {};
+  A.AudioNode.prototype = {};
+  A.AudioNodeOptions.prototype = {};
+  A.AudioParam.prototype = {};
+  A.AudioScheduledSourceNode.prototype = {};
+  A.AnalyserNode.prototype = {};
+  A.AnalyserOptions.prototype = {};
+  A.AudioBufferSourceNode.prototype = {};
+  A.AudioBufferSourceOptions.prototype = {};
+  A.AudioDestinationNode.prototype = {};
+  A.AudioListener.prototype = {};
+  A.AudioProcessingEvent.prototype = {};
+  A.AudioProcessingEventInit.prototype = {};
+  A.BiquadFilterNode.prototype = {};
+  A.BiquadFilterOptions.prototype = {};
+  A.ChannelMergerNode.prototype = {};
+  A.ChannelMergerOptions.prototype = {};
+  A.ChannelSplitterNode.prototype = {};
+  A.ChannelSplitterOptions.prototype = {};
+  A.ConstantSourceNode.prototype = {};
+  A.ConstantSourceOptions.prototype = {};
+  A.ConvolverNode.prototype = {};
+  A.ConvolverOptions.prototype = {};
+  A.DelayNode.prototype = {};
+  A.DelayOptions.prototype = {};
+  A.DynamicsCompressorNode.prototype = {};
+  A.DynamicsCompressorOptions.prototype = {};
+  A.GainNode.prototype = {};
+  A.GainOptions.prototype = {};
+  A.IIRFilterNode.prototype = {};
+  A.IIRFilterOptions.prototype = {};
+  A.MediaElementAudioSourceNode.prototype = {};
+  A.MediaElementAudioSourceOptions.prototype = {};
+  A.MediaStreamAudioDestinationNode.prototype = {};
+  A.MediaStreamAudioSourceNode.prototype = {};
+  A.MediaStreamAudioSourceOptions.prototype = {};
+  A.MediaStreamTrackAudioSourceNode.prototype = {};
+  A.MediaStreamTrackAudioSourceOptions.prototype = {};
+  A.OscillatorNode.prototype = {};
+  A.OscillatorOptions.prototype = {};
+  A.PannerNode.prototype = {};
+  A.PannerOptions.prototype = {};
+  A.PeriodicWave.prototype = {};
+  A.PeriodicWaveConstraints.prototype = {};
+  A.PeriodicWaveOptions.prototype = {};
+  A.ScriptProcessorNode.prototype = {};
+  A.StereoPannerNode.prototype = {};
+  A.StereoPannerOptions.prototype = {};
+  A.WaveShaperNode.prototype = {};
+  A.WaveShaperOptions.prototype = {};
+  A.AudioWorklet.prototype = {};
+  A.AudioWorkletGlobalScope.prototype = {};
+  A.AudioParamMap.prototype = {};
+  A.AudioWorkletNode.prototype = {};
+  A.AudioWorkletNodeOptions.prototype = {};
+  A.AudioWorkletProcessor.prototype = {};
+  A.AudioParamDescriptor.prototype = {};
+  A.PublicKeyCredential.prototype = {};
+  A.RegistrationResponseJSON.prototype = {};
+  A.AuthenticatorAttestationResponseJSON.prototype = {};
+  A.AuthenticationResponseJSON.prototype = {};
+  A.AuthenticatorAssertionResponseJSON.prototype = {};
+  A.AuthenticationExtensionsClientOutputsJSON.prototype = {};
+  A.PublicKeyCredentialCreationOptionsJSON.prototype = {};
+  A.PublicKeyCredentialUserEntityJSON.prototype = {};
+  A.PublicKeyCredentialDescriptorJSON.prototype = {};
+  A.AuthenticationExtensionsClientInputsJSON.prototype = {};
+  A.PublicKeyCredentialRequestOptionsJSON.prototype = {};
+  A.AuthenticatorResponse.prototype = {};
+  A.AuthenticatorAttestationResponse.prototype = {};
+  A.AuthenticatorAssertionResponse.prototype = {};
+  A.PublicKeyCredentialParameters.prototype = {};
+  A.PublicKeyCredentialCreationOptions.prototype = {};
+  A.PublicKeyCredentialEntity.prototype = {};
+  A.PublicKeyCredentialRpEntity.prototype = {};
+  A.PublicKeyCredentialUserEntity.prototype = {};
+  A.AuthenticatorSelectionCriteria.prototype = {};
+  A.PublicKeyCredentialRequestOptions.prototype = {};
+  A.CollectedClientData.prototype = {};
+  A.TokenBinding.prototype = {};
+  A.PublicKeyCredentialDescriptor.prototype = {};
+  A.CredentialPropertiesOutput.prototype = {};
+  A.AuthenticationExtensionsPRFValues.prototype = {};
+  A.AuthenticationExtensionsPRFInputs.prototype = {};
+  A.AuthenticationExtensionsPRFOutputs.prototype = {};
+  A.AuthenticationExtensionsLargeBlobInputs.prototype = {};
+  A.AuthenticationExtensionsLargeBlobOutputs.prototype = {};
+  A.AuthenticationExtensionsDevicePublicKeyInputs.prototype = {};
+  A.AuthenticationExtensionsDevicePublicKeyOutputs.prototype = {};
+  A.AudioEncoderConfig.prototype = {};
+  A.AacEncoderConfig.prototype = {};
+  A.VideoEncoderConfig.prototype = {};
+  A.AvcEncoderConfig.prototype = {};
+  A.FlacEncoderConfig.prototype = {};
+  A.HevcEncoderConfig.prototype = {};
+  A.OpusEncoderConfig.prototype = {};
+  A.AudioDecoder.prototype = {};
+  A.AudioDecoderInit.prototype = {};
+  A.VideoDecoder.prototype = {};
+  A.VideoDecoderInit.prototype = {};
+  A.AudioEncoder.prototype = {};
+  A.AudioEncoderInit.prototype = {};
+  A.EncodedAudioChunkMetadata.prototype = {};
+  A.VideoEncoder.prototype = {};
+  A.VideoEncoderInit.prototype = {};
+  A.EncodedVideoChunkMetadata.prototype = {};
+  A.SvcOutputMetadata.prototype = {};
+  A.AudioDecoderSupport.prototype = {};
+  A.VideoDecoderSupport.prototype = {};
+  A.AudioEncoderSupport.prototype = {};
+  A.VideoEncoderSupport.prototype = {};
+  A.AudioDecoderConfig.prototype = {};
+  A.VideoDecoderConfig.prototype = {};
+  A.VideoEncoderEncodeOptions.prototype = {};
+  A.EncodedAudioChunk.prototype = {};
+  A.EncodedAudioChunkInit.prototype = {};
+  A.EncodedVideoChunk.prototype = {};
+  A.EncodedVideoChunkInit.prototype = {};
+  A.AudioData.prototype = {};
+  A.AudioDataInit.prototype = {};
+  A.AudioDataCopyToOptions.prototype = {};
+  A.VideoFrame.prototype = {};
+  A.VideoFrameInit.prototype = {};
+  A.VideoFrameBufferInit.prototype = {};
+  A.VideoFrameMetadata.prototype = {};
+  A.VideoFrameCopyToOptions.prototype = {};
+  A.PlaneLayout.prototype = {};
+  A.VideoColorSpace.prototype = {};
+  A.VideoColorSpaceInit.prototype = {};
+  A.ImageDecoder.prototype = {};
+  A.ImageDecoderInit.prototype = {};
+  A.ImageDecodeOptions.prototype = {};
+  A.ImageDecodeResult.prototype = {};
+  A.ImageTrackList.prototype = {};
+  A.ImageTrack.prototype = {};
+  A.Ed448Params.prototype = {};
+  A.NavigatorAutomationInformation.prototype = {};
+  A.WebGLContextAttributes.prototype = {};
+  A.WebGLObject.prototype = {};
+  A.WebGLBuffer.prototype = {};
+  A.WebGLFramebuffer.prototype = {};
+  A.WebGLProgram.prototype = {};
+  A.WebGLRenderbuffer.prototype = {};
+  A.WebGLShader.prototype = {};
+  A.WebGLTexture.prototype = {};
+  A.WebGLUniformLocation.prototype = {};
+  A.WebGLActiveInfo.prototype = {};
+  A.WebGLShaderPrecisionFormat.prototype = {};
+  A.WebGLRenderingContextBase.prototype = {};
+  A.WebGLRenderingContextOverloads.prototype = {};
+  A.WebGLRenderingContext.prototype = {};
+  A.WebGLContextEvent.prototype = {};
+  A.WebGLContextEventInit.prototype = {};
+  A.WebGLQuery.prototype = {};
+  A.WebGLSampler.prototype = {};
+  A.WebGLSync.prototype = {};
+  A.WebGLTransformFeedback.prototype = {};
+  A.WebGLVertexArrayObject.prototype = {};
+  A.WebGL2RenderingContextBase.prototype = {};
+  A.WebGL2RenderingContextOverloads.prototype = {};
+  A.WebGL2RenderingContext.prototype = {};
+  A.GPUObjectBase.prototype = {};
+  A.GPUObjectDescriptorBase.prototype = {};
+  A.GPUSupportedLimits.prototype = {};
+  A.GPUSupportedFeatures.prototype = {};
+  A.GPUAdapterInfo.prototype = {};
+  A.NavigatorGPU.prototype = {};
+  A.GPU.prototype = {};
+  A.GPURequestAdapterOptions.prototype = {};
+  A.GPUAdapter.prototype = {};
+  A.GPUDeviceDescriptor.prototype = {};
+  A.GPUDevice.prototype = {};
+  A.GPUBuffer.prototype = {};
+  A.GPUBufferDescriptor.prototype = {};
+  A._GPUBufferUsage.prototype = {};
+  A._GPUMapMode.prototype = {};
+  A.GPUTexture.prototype = {};
+  A.GPUTextureDescriptor.prototype = {};
+  A._GPUTextureUsage.prototype = {};
+  A.GPUTextureView.prototype = {};
+  A.GPUTextureViewDescriptor.prototype = {};
+  A.GPUExternalTexture.prototype = {};
+  A.GPUExternalTextureDescriptor.prototype = {};
+  A.GPUSampler.prototype = {};
+  A.GPUSamplerDescriptor.prototype = {};
+  A.GPUBindGroupLayout.prototype = {};
+  A.GPUBindGroupLayoutDescriptor.prototype = {};
+  A.GPUBindGroupLayoutEntry.prototype = {};
+  A._GPUShaderStage.prototype = {};
+  A.GPUBufferBindingLayout.prototype = {};
+  A.GPUSamplerBindingLayout.prototype = {};
+  A.GPUTextureBindingLayout.prototype = {};
+  A.GPUStorageTextureBindingLayout.prototype = {};
+  A.GPUExternalTextureBindingLayout.prototype = {};
+  A.GPUBindGroup.prototype = {};
+  A.GPUBindGroupDescriptor.prototype = {};
+  A.GPUBindGroupEntry.prototype = {};
+  A.GPUBufferBinding.prototype = {};
+  A.GPUPipelineLayout.prototype = {};
+  A.GPUPipelineLayoutDescriptor.prototype = {};
+  A.GPUShaderModule.prototype = {};
+  A.GPUShaderModuleDescriptor.prototype = {};
+  A.GPUShaderModuleCompilationHint.prototype = {};
+  A.GPUCompilationMessage.prototype = {};
+  A.GPUCompilationInfo.prototype = {};
+  A.GPUPipelineError.prototype = {};
+  A.GPUPipelineErrorInit.prototype = {};
+  A.GPUPipelineDescriptorBase.prototype = {};
+  A.GPUPipelineBase.prototype = {};
+  A.GPUProgrammableStage.prototype = {};
+  A.GPUComputePipeline.prototype = {};
+  A.GPUComputePipelineDescriptor.prototype = {};
+  A.GPURenderPipeline.prototype = {};
+  A.GPURenderPipelineDescriptor.prototype = {};
+  A.GPUPrimitiveState.prototype = {};
+  A.GPUMultisampleState.prototype = {};
+  A.GPUFragmentState.prototype = {};
+  A.GPUColorTargetState.prototype = {};
+  A.GPUBlendState.prototype = {};
+  A._GPUColorWrite.prototype = {};
+  A.GPUBlendComponent.prototype = {};
+  A.GPUDepthStencilState.prototype = {};
+  A.GPUStencilFaceState.prototype = {};
+  A.GPUVertexState.prototype = {};
+  A.GPUVertexBufferLayout.prototype = {};
+  A.GPUVertexAttribute.prototype = {};
+  A.GPUImageDataLayout.prototype = {};
+  A.GPUImageCopyBuffer.prototype = {};
+  A.GPUImageCopyTexture.prototype = {};
+  A.GPUImageCopyTextureTagged.prototype = {};
+  A.GPUImageCopyExternalImage.prototype = {};
+  A.GPUCommandBuffer.prototype = {};
+  A.GPUCommandBufferDescriptor.prototype = {};
+  A.GPUCommandsMixin.prototype = {};
+  A.GPUCommandEncoder.prototype = {};
+  A.GPUCommandEncoderDescriptor.prototype = {};
+  A.GPUBindingCommandsMixin.prototype = {};
+  A.GPUDebugCommandsMixin.prototype = {};
+  A.GPUComputePassEncoder.prototype = {};
+  A.GPUComputePassTimestampWrite.prototype = {};
+  A.GPUComputePassDescriptor.prototype = {};
+  A.GPURenderPassEncoder.prototype = {};
+  A.GPURenderPassTimestampWrite.prototype = {};
+  A.GPURenderPassDescriptor.prototype = {};
+  A.GPURenderPassColorAttachment.prototype = {};
+  A.GPURenderPassDepthStencilAttachment.prototype = {};
+  A.GPURenderPassLayout.prototype = {};
+  A.GPURenderCommandsMixin.prototype = {};
+  A.GPURenderBundle.prototype = {};
+  A.GPURenderBundleDescriptor.prototype = {};
+  A.GPURenderBundleEncoder.prototype = {};
+  A.GPURenderBundleEncoderDescriptor.prototype = {};
+  A.GPUQueueDescriptor.prototype = {};
+  A.GPUQueue.prototype = {};
+  A.GPUQuerySet.prototype = {};
+  A.GPUQuerySetDescriptor.prototype = {};
+  A.GPUCanvasContext.prototype = {};
+  A.GPUCanvasConfiguration.prototype = {};
+  A.GPUDeviceLostInfo.prototype = {};
+  A.GPUError.prototype = {};
+  A.GPUValidationError.prototype = {};
+  A.GPUOutOfMemoryError.prototype = {};
+  A.GPUInternalError.prototype = {};
+  A.GPUUncapturedErrorEvent.prototype = {};
+  A.GPUUncapturedErrorEventInit.prototype = {};
+  A.GPUColorDict.prototype = {};
+  A.GPUOrigin2DDict.prototype = {};
+  A.GPUOrigin3DDict.prototype = {};
+  A.GPUExtent3DDict.prototype = {};
+  A.HID.prototype = {};
+  A.HIDDeviceRequestOptions.prototype = {};
+  A.HIDDeviceFilter.prototype = {};
+  A.HIDDevice.prototype = {};
+  A.HIDConnectionEvent.prototype = {};
+  A.HIDConnectionEventInit.prototype = {};
+  A.HIDInputReportEvent.prototype = {};
+  A.HIDInputReportEventInit.prototype = {};
+  A.HIDCollectionInfo.prototype = {};
+  A.HIDReportInfo.prototype = {};
+  A.HIDReportItem.prototype = {};
+  A.DOMException.prototype = {};
+  A.MidiPermissionDescriptor.prototype = {};
+  A.MIDIOptions.prototype = {};
+  A.MIDIInputMap.prototype = {};
+  A.MIDIOutputMap.prototype = {};
+  A.MIDIAccess.prototype = {};
+  A.MIDIPort.prototype = {};
+  A.MIDIInput.prototype = {};
+  A.MIDIOutput.prototype = {};
+  A.MIDIMessageEvent.prototype = {};
+  A.MIDIMessageEventInit.prototype = {};
+  A.MIDIConnectionEvent.prototype = {};
+  A.MIDIConnectionEventInit.prototype = {};
+  A.NavigatorML.prototype = {};
+  A.MLContextOptions.prototype = {};
+  A.ML.prototype = {};
+  A.MLGraph.prototype = {};
+  A.MLOperandDescriptor.prototype = {};
+  A.MLOperand.prototype = {};
+  A.MLActivation.prototype = {};
+  A.MLContext.prototype = {};
+  A.MLComputeResult.prototype = {};
+  A.MLCommandEncoder.prototype = {};
+  A.MLBufferResourceView.prototype = {};
+  A.MLGraphBuilder.prototype = {};
+  A.MLBatchNormalizationOptions.prototype = {};
+  A.MLClampOptions.prototype = {};
+  A.MLConv2dOptions.prototype = {};
+  A.MLConvTranspose2dOptions.prototype = {};
+  A.MLEluOptions.prototype = {};
+  A.MLGemmOptions.prototype = {};
+  A.MLGruOptions.prototype = {};
+  A.MLGruCellOptions.prototype = {};
+  A.MLHardSigmoidOptions.prototype = {};
+  A.MLInstanceNormalizationOptions.prototype = {};
+  A.MLLeakyReluOptions.prototype = {};
+  A.MLLinearOptions.prototype = {};
+  A.MLLstmOptions.prototype = {};
+  A.MLLstmCellOptions.prototype = {};
+  A.MLPadOptions.prototype = {};
+  A.MLPool2dOptions.prototype = {};
+  A.MLReduceOptions.prototype = {};
+  A.MLResample2dOptions.prototype = {};
+  A.MLSliceOptions.prototype = {};
+  A.MLSoftplusOptions.prototype = {};
+  A.MLSplitOptions.prototype = {};
+  A.MLSqueezeOptions.prototype = {};
+  A.MLTransposeOptions.prototype = {};
+  A.RTCRtpSender.prototype = {};
+  A.RTCRtpReceiver.prototype = {};
+  A.SFrameTransformOptions.prototype = {};
+  A.SFrameTransform.prototype = {};
+  A.SFrameTransformErrorEvent.prototype = {};
+  A.SFrameTransformErrorEventInit.prototype = {};
+  A.RTCEncodedVideoFrameMetadata.prototype = {};
+  A.RTCEncodedVideoFrame.prototype = {};
+  A.RTCEncodedAudioFrameMetadata.prototype = {};
+  A.RTCEncodedAudioFrame.prototype = {};
+  A.RTCTransformEvent.prototype = {};
+  A.RTCRtpScriptTransformer.prototype = {};
+  A.RTCRtpScriptTransform.prototype = {};
+  A.RTCIceParameters.prototype = {};
+  A.RTCIceGatherOptions.prototype = {};
+  A.RTCIceTransport.prototype = {};
+  A.RTCIdentityProviderGlobalScope.prototype = {};
+  A.RTCIdentityProviderRegistrar.prototype = {};
+  A.RTCIdentityProvider.prototype = {};
+  A.RTCIdentityAssertionResult.prototype = {};
+  A.RTCIdentityProviderDetails.prototype = {};
+  A.RTCIdentityValidationResult.prototype = {};
+  A.RTCPeerConnection.prototype = {};
+  A.RTCConfiguration.prototype = {};
+  A.RTCIdentityProviderOptions.prototype = {};
+  A.RTCIdentityAssertion.prototype = {};
+  A.RTCError.prototype = {};
+  A.RTCErrorInit.prototype = {};
+  A.RTCRtpEncodingParameters.prototype = {};
+  A.RTCDataChannel.prototype = {};
+  A.RTCDataChannelInit.prototype = {};
+  A.RTCRtpStreamStats.prototype = {};
+  A.RTCCodecStats.prototype = {};
+  A.RTCReceivedRtpStreamStats.prototype = {};
+  A.RTCInboundRtpStreamStats.prototype = {};
+  A.RTCRemoteInboundRtpStreamStats.prototype = {};
+  A.RTCSentRtpStreamStats.prototype = {};
+  A.RTCOutboundRtpStreamStats.prototype = {};
+  A.RTCRemoteOutboundRtpStreamStats.prototype = {};
+  A.RTCMediaSourceStats.prototype = {};
+  A.RTCAudioSourceStats.prototype = {};
+  A.RTCVideoSourceStats.prototype = {};
+  A.RTCAudioPlayoutStats.prototype = {};
+  A.RTCPeerConnectionStats.prototype = {};
+  A.RTCDataChannelStats.prototype = {};
+  A.RTCTransportStats.prototype = {};
+  A.RTCIceCandidateStats.prototype = {};
+  A.RTCIceCandidatePairStats.prototype = {};
+  A.RTCCertificateStats.prototype = {};
+  A.RTCIceServer.prototype = {};
+  A.RTCOfferAnswerOptions.prototype = {};
+  A.RTCOfferOptions.prototype = {};
+  A.RTCAnswerOptions.prototype = {};
+  A.RTCSessionDescription.prototype = {};
+  A.RTCSessionDescriptionInit.prototype = {};
+  A.RTCLocalSessionDescriptionInit.prototype = {};
+  A.RTCIceCandidate.prototype = {};
+  A.RTCIceCandidateInit.prototype = {};
+  A.RTCPeerConnectionIceEvent.prototype = {};
+  A.RTCPeerConnectionIceEventInit.prototype = {};
+  A.RTCPeerConnectionIceErrorEvent.prototype = {};
+  A.RTCPeerConnectionIceErrorEventInit.prototype = {};
+  A.RTCCertificateExpiration.prototype = {};
+  A.RTCCertificate.prototype = {};
+  A.RTCRtpTransceiverInit.prototype = {};
+  A.RTCRtpParameters.prototype = {};
+  A.RTCRtpReceiveParameters.prototype = {};
+  A.RTCRtpCodingParameters.prototype = {};
+  A.RTCRtcpParameters.prototype = {};
+  A.RTCRtpHeaderExtensionParameters.prototype = {};
+  A.RTCRtpCodecParameters.prototype = {};
+  A.RTCRtpCapabilities.prototype = {};
+  A.RTCRtpCodecCapability.prototype = {};
+  A.RTCRtpHeaderExtensionCapability.prototype = {};
+  A.RTCRtpContributingSource.prototype = {};
+  A.RTCRtpSynchronizationSource.prototype = {};
+  A.RTCRtpTransceiver.prototype = {};
+  A.RTCDtlsTransport.prototype = {};
+  A.RTCDtlsFingerprint.prototype = {};
+  A.RTCIceCandidatePair.prototype = {};
+  A.RTCTrackEvent.prototype = {};
+  A.RTCTrackEventInit.prototype = {};
+  A.RTCSctpTransport.prototype = {};
+  A.RTCDataChannelEvent.prototype = {};
+  A.RTCDataChannelEventInit.prototype = {};
+  A.RTCDTMFSender.prototype = {};
+  A.RTCDTMFToneChangeEvent.prototype = {};
+  A.RTCDTMFToneChangeEventInit.prototype = {};
+  A.RTCStatsReport.prototype = {};
+  A.RTCStats.prototype = {};
+  A.RTCErrorEvent.prototype = {};
+  A.RTCErrorEventInit.prototype = {};
+  A.WebSocket.prototype = {};
+  A.CloseEvent.prototype = {};
+  A.CloseEventInit.prototype = {};
+  A.WebTransportDatagramDuplexStream.prototype = {};
+  A.WebTransport.prototype = {};
+  A.WebTransportHash.prototype = {};
+  A.WebTransportOptions.prototype = {};
+  A.WebTransportCloseInfo.prototype = {};
+  A.WebTransportSendStreamOptions.prototype = {};
+  A.WebTransportStats.prototype = {};
+  A.WebTransportDatagramStats.prototype = {};
+  A.WebTransportSendStream.prototype = {};
+  A.WebTransportSendStreamStats.prototype = {};
+  A.WebTransportReceiveStream.prototype = {};
+  A.WebTransportReceiveStreamStats.prototype = {};
+  A.WebTransportBidirectionalStream.prototype = {};
+  A.WebTransportError.prototype = {};
+  A.WebTransportErrorInit.prototype = {};
+  A.USBDeviceFilter.prototype = {};
+  A.USBDeviceRequestOptions.prototype = {};
+  A.USB.prototype = {};
+  A.USBConnectionEventInit.prototype = {};
+  A.USBConnectionEvent.prototype = {};
+  A.USBInTransferResult.prototype = {};
+  A.USBOutTransferResult.prototype = {};
+  A.USBIsochronousInTransferPacket.prototype = {};
+  A.USBIsochronousInTransferResult.prototype = {};
+  A.USBIsochronousOutTransferPacket.prototype = {};
+  A.USBIsochronousOutTransferResult.prototype = {};
+  A.USBDevice.prototype = {};
+  A.USBControlTransferParameters.prototype = {};
+  A.USBConfiguration.prototype = {};
+  A.USBInterface.prototype = {};
+  A.USBAlternateInterface.prototype = {};
+  A.USBEndpoint.prototype = {};
+  A.USBPermissionDescriptor.prototype = {};
+  A.AllowedUSBDevice.prototype = {};
+  A.USBPermissionStorage.prototype = {};
+  A.USBPermissionResult.prototype = {};
+  A.VTTCue.prototype = {};
+  A.VTTRegion.prototype = {};
+  A.XRDepthStateInit.prototype = {};
+  A.XRSessionInit.prototype = {};
+  A.XRDepthInformation.prototype = {};
+  A.XRCPUDepthInformation.prototype = {};
+  A.XRWebGLDepthInformation.prototype = {};
+  A.XRDOMOverlayInit.prototype = {};
+  A.XRDOMOverlayState.prototype = {};
+  A.XRInputSource.prototype = {};
+  A.XRHand.prototype = {};
+  A.XRJointSpace.prototype = {};
+  A.XRJointPose.prototype = {};
+  A.XRHitTestOptionsInit.prototype = {};
+  A.XRTransientInputHitTestOptionsInit.prototype = {};
+  A.XRHitTestSource.prototype = {};
+  A.XRTransientInputHitTestSource.prototype = {};
+  A.XRTransientInputHitTestResult.prototype = {};
+  A.XRRayDirectionInit.prototype = {};
+  A.XRRay.prototype = {};
+  A.XRLightProbe.prototype = {};
+  A.XRLightEstimate.prototype = {};
+  A.XRLightProbeInit.prototype = {};
+  A.XRSystem.prototype = {};
+  A.XRRenderStateInit.prototype = {};
+  A.XRRenderState.prototype = {};
+  A.XRSpace.prototype = {};
+  A.XRReferenceSpace.prototype = {};
+  A.XRBoundedReferenceSpace.prototype = {};
+  A.XRViewport.prototype = {};
+  A.XRRigidTransform.prototype = {};
+  A.XRPose.prototype = {};
+  A.XRViewerPose.prototype = {};
+  A.XRInputSourceArray.prototype = {};
+  A.XRLayer.prototype = {};
+  A.XRWebGLLayerInit.prototype = {};
+  A.XRWebGLLayer.prototype = {};
+  A.XRSessionEvent.prototype = {};
+  A.XRSessionEventInit.prototype = {};
+  A.XRInputSourceEvent.prototype = {};
+  A.XRInputSourceEventInit.prototype = {};
+  A.XRInputSourcesChangeEvent.prototype = {};
+  A.XRInputSourcesChangeEventInit.prototype = {};
+  A.XRReferenceSpaceEvent.prototype = {};
+  A.XRReferenceSpaceEventInit.prototype = {};
+  A.XRSessionSupportedPermissionDescriptor.prototype = {};
+  A.XRPermissionDescriptor.prototype = {};
+  A.XRPermissionStatus.prototype = {};
+  A.XRCompositionLayer.prototype = {};
+  A.XRProjectionLayer.prototype = {};
+  A.XRQuadLayer.prototype = {};
+  A.XRCylinderLayer.prototype = {};
+  A.XREquirectLayer.prototype = {};
+  A.XRCubeLayer.prototype = {};
+  A.XRSubImage.prototype = {};
+  A.XRWebGLSubImage.prototype = {};
+  A.XRProjectionLayerInit.prototype = {};
+  A.XRLayerInit.prototype = {};
+  A.XRQuadLayerInit.prototype = {};
+  A.XRCylinderLayerInit.prototype = {};
+  A.XREquirectLayerInit.prototype = {};
+  A.XRCubeLayerInit.prototype = {};
+  A.XRMediaLayerInit.prototype = {};
+  A.XRMediaQuadLayerInit.prototype = {};
+  A.XRMediaCylinderLayerInit.prototype = {};
+  A.XRMediaEquirectLayerInit.prototype = {};
+  A.XRMediaBinding.prototype = {};
+  A.XRLayerEvent.prototype = {};
+  A.XRLayerEventInit.prototype = {};
+  A.WindowControlsOverlay.prototype = {};
+  A.WindowControlsOverlayGeometryChangeEvent.prototype = {};
+  A.WindowControlsOverlayGeometryChangeEventInit.prototype = {};
+  A.ScreenDetails.prototype = {};
+  A.ScreenDetailed.prototype = {};
+  A.XMLHttpRequestEventTarget.prototype = {};
+  A.XMLHttpRequestUpload.prototype = {};
+  A.XMLHttpRequest.prototype = {};
+  A.FormData.prototype = {};
+  A.ProgressEvent.prototype = {};
+  A.ProgressEventInit.prototype = {};
+  (function aliases() {
+    var _ = J.LegacyJavaScriptObject.prototype;
+    _.super$LegacyJavaScriptObject$toString = _.toString$0;
+  })();
   (function inheritance() {
-    var _inherit = hunkHelpers.inherit;
+    var _mixin = hunkHelpers.mixin,
+      _inherit = hunkHelpers.inherit,
+      _inheritMany = hunkHelpers.inheritMany;
     _inherit(A.Object, null);
-    _inherit(J.Interceptor, A.Object);
-    _inherit(J.JavaScriptObject, J.Interceptor);
+    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, J.ArrayIterator, A.Error, A.ListIterator, A.FixedLengthListMixin, A.Closure, A.Rti, A._FunctionParameters, A.ListMixin, A.Null, A.StringBuffer]);
+    _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, A.NativeTypedData]);
+    _inherit(J.LegacyJavaScriptObject, J.JavaScriptObject);
+    _inheritMany(J.LegacyJavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, A.ANGLE_instanced_arrays, A.ReportBody, A.Event, A.EventInit, A.XMLSerializer, A.InnerHTML, A.EventTarget, A.AbstractRange, A.EXT_blend_minmax, A.EXT_color_buffer_float, A.EXT_color_buffer_half_float, A.WebGLObject, A.EXT_disjoint_timer_query, A.EXT_disjoint_timer_query_webgl2, A.EXT_float_blend, A.EXT_frag_depth, A.EXT_sRGB, A.EXT_shader_texture_lod, A.EXT_texture_compression_bptc, A.EXT_texture_compression_rgtc, A.EXT_texture_filter_anisotropic, A.EXT_texture_norm16, A.IdentityProviderWellKnown, A.IdentityProviderIcon, A.IdentityProviderBranding, A.IdentityProviderAPIConfig, A.IdentityProviderAccount, A.IdentityProviderAccountList, A.IdentityProviderClientMetadata, A.IdentityProviderToken, A.Credential, A.CredentialRequestOptions, A.IdentityCredentialRequestOptions, A.IdentityProviderConfig, A.IdentityCredentialLogoutRPsRequest, A.IdentityProvider, A.Blob, A.BlobPropertyBag, A.FileList, A.FileReaderSync, A.URL, A.WindowOrWorkerGlobalScope, A.IDBFactory, A.IDBDatabaseInfo, A.IDBTransactionOptions, A.IDBObjectStoreParameters, A.IDBObjectStore, A.IDBIndexParameters, A.IDBIndex, A.IDBKeyRange, A.IDBCursor, A.KHR_parallel_shader_compile, A.OES_draw_buffers_indexed, A.OES_element_index_uint, A.OES_fbo_render_mipmap, A.OES_standard_derivatives, A.OES_texture_float, A.OES_texture_float_linear, A.OES_texture_half_float, A.OES_texture_half_float_linear, A.OES_vertex_array_object, A.OVR_multiview2, A.SVGBoundingBoxOptions, A.SVGNumber, A.SVGLength, A.SVGAngle, A.SVGNumberList, A.SVGLengthList, A.SVGStringList, A.SVGAnimatedBoolean, A.SVGAnimatedEnumeration, A.SVGAnimatedInteger, A.SVGAnimatedNumber, A.SVGAnimatedLength, A.SVGAnimatedAngle, A.SVGAnimatedString, A.SVGAnimatedRect, A.SVGAnimatedNumberList, A.SVGAnimatedLengthList, A.SVGUnitTypes, A.SVGTests, A.SVGFitToViewBox, A.SVGURIReference, A.SVGElementInstance, A.GetSVGDocument, A.SVGTransform, A.SVGTransformList, A.SVGAnimatedTransformList, A.SVGPreserveAspectRatio, A.SVGAnimatedPreserveAspectRatio, A.SVGAnimatedPoints, A.SVGPointList, A.WEBGL_blend_equation_advanced_coherent, A.WEBGL_clip_cull_distance, A.WEBGL_color_buffer_float, A.WEBGL_compressed_texture_astc, A.WEBGL_compressed_texture_etc, A.WEBGL_compressed_texture_etc1, A.WEBGL_compressed_texture_pvrtc, A.WEBGL_compressed_texture_s3tc, A.WEBGL_compressed_texture_s3tc_srgb, A.WEBGL_debug_renderer_info, A.WEBGL_debug_shaders, A.WEBGL_depth_texture, A.WEBGL_draw_buffers, A.WEBGL_draw_instanced_base_vertex_base_instance, A.WEBGL_lose_context, A.WEBGL_multi_draw, A.WEBGL_multi_draw_instanced_base_vertex_base_instance, A.WEBGL_provoking_vertex, A.Crypto, A.Algorithm, A.KeyAlgorithm, A.CryptoKey, A.SubtleCrypto, A.RsaOtherPrimesInfo, A.JsonWebKey, A.CryptoKeyPair, A.SensorOptions, A.AccelerometerReadingValues, A.AmbientLightReadingValues, A.XRAnchor, A.XRFrame, A.XRHitTestResult, A.XRAnchorSet, A.HTMLAttributionSrcElementUtils, A.AudioOutputOptions, A.Navigator, A.BackgroundFetchManager, A.BackgroundFetchUIOptions, A.BackgroundFetchRecord, A.SyncManager, A.NavigatorBadge, A.CaptureHandleConfig, A.CaptureHandle, A.ClipboardItem, A.ClipboardItemOptions, A.PermissionDescriptor, A.CloseWatcherOptions, A.CompressionStream, A.DecompressionStream, A.PressureObserver, A.PressureRecord, A.PressureObserverOptions, A.ConsoleType, A.ContactAddress, A.ContactInfo, A.ContactsSelectOptions, A.ContactsManager, A.ContentDescription, A.ContentIndex, A.CookieStoreGetOptions, A.CookieInit, A.CookieStoreDeleteOptions, A.CookieListItem, A.CookieStoreManager, A.CredentialUserData, A.CredentialsContainer, A.CredentialData, A.CredentialCreationOptions, A.FederatedCredentialRequestOptions, A._CSS, A.WorkletGlobalScope, A.WorkletAnimationEffect, A.WorkletGroupEffect, A.CSSRule, A.GlobalEventHandlers, A.FontFaceDescriptors, A.FontFace, A.FontFaceFeatures, A.FontFaceVariationAxis, A.FontFaceVariations, A.FontFacePalette, A.FontFacePalettes, A.FontFaceSource, A.CSSFontFeatureValuesMap, A.Highlight, A.HighlightRegistry, A.LayoutOptions, A.LayoutChild, A.LayoutFragment, A.IntrinsicSizes, A.LayoutConstraints, A.LayoutConstraintsOptions, A.ChildBreakToken, A.BreakToken, A.BreakTokenOptions, A.LayoutEdges, A.FragmentResultOptions, A.FragmentResult, A.IntrinsicSizesResultOptions, A.FocusableAreasOption, A.SpatialNavigationSearchOptions, A.PaintRenderingContext2DSettings, A.PaintRenderingContext2D, A.PaintSize, A.CSSParserOptions, A.CSSParserRule, A.CSSParserValue, A.PropertyDefinition, A.NamedFlowMap, A.Region, A.CSSStyleValue, A.StylePropertyMapReadOnly, A.ElementCSSInlineStyle, A.CSSVariableReferenceValue, A.CSSNumericType, A.CSSNumericArray, A.CSSTransformComponent, A.CSSMatrixComponentOptions, A.ViewTransition, A.ScrollOptions, A.Screen, A.CaretPosition, A.CheckVisibilityOptions, A.BoxQuadOptions, A.ConvertCoordinateOptions, A.GeometryUtils, A.MediaList, A.StyleSheet, A.CSSStyleSheetInit, A.StyleSheetList, A.DocumentOrShadowRoot, A.LinkStyle, A.CSSRuleList, A.CSSStyleDeclaration, A.ElementInternals, A.CustomStateSet, A.NavigatorDeviceMemory, A.DigitalGoodsService, A.ItemDetails, A.PurchaseDetails, A.EventListenerOptions, A.AbortController, A.NonElementParentNode, A.ParentNode, A.NonDocumentTypeChildNode, A.ChildNode, A.Slottable, A.NodeList, A.HTMLCollection, A.MutationObserver, A.MutationObserverInit, A.MutationRecord, A.GetRootNodeOptions, A.ElementCreationOptions, A.DOMImplementation, A.ShadowRootInit, A.NamedNodeMap, A.StaticRangeInit, A.NodeIterator, A.TreeWalker, A.DOMTokenList, A.XPathResult, A.XPathExpression, A.XPathEvaluatorBase, A.XPathEvaluator, A.XSLTProcessor, A.EditContextInit, A.TextUpdateEventInit, A.TextFormatInit, A.TextFormat, A.TextFormatUpdateEventInit, A.CharacterBoundsUpdateEventInit, A.PerformanceEntry, A.TextDecoderCommon, A.TextDecoderOptions, A.TextDecodeOptions, A.TextDecoder, A.TextEncoderCommon, A.TextEncoderEncodeIntoResult, A.TextEncoder, A.TextDecoderStream, A.TextEncoderStream, A.MediaKeySystemConfiguration, A.MediaKeySystemMediaCapability, A.MediaKeySystemAccess, A.MediaKeys, A.MediaKeyStatusMap, A.DataTransferItem, A.FileSystemEntry, A.FileSystemFlags, A.FileSystemDirectoryReader, A.FileSystem, A.EventCounts, A.PerformanceObserverInit, A.ColorSelectionResult, A.ColorSelectionOptions, A.EyeDropper, A.Headers, A.Body, A.Request, A.RequestInit, A.Response, A.ResponseInit, A.AuthenticationExtensionsClientInputs, A.HMACGetSecretInput, A.AuthenticationExtensionsClientOutputs, A.HMACGetSecretOutput, A.FileSystemHandlePermissionDescriptor, A.FileSystemHandle, A.FilePickerAcceptType, A.FilePickerOptions, A.DirectoryPickerOptions, A.SVGFilterPrimitiveStandardAttributes, A.FontMetrics, A.Baseline, A.Font, A.FileSystemCreateWritableOptions, A.FileSystemGetFileOptions, A.FileSystemGetDirectoryOptions, A.FileSystemRemoveOptions, A.WriteParams, A.WritableStream, A.FileSystemReadWriteOptions, A.FileSystemSyncAccessHandle, A.StorageManager, A.FullscreenOptions, A.GamepadHapticActuator, A.GamepadEffectParameters, A.GamepadPose, A.GamepadTouch, A.Gamepad, A.GamepadButton, A.WindowEventHandlers, A.MockSensorConfiguration, A.MockSensor, A.MockSensorReadingValues, A.GeolocationSensorReading, A.GeolocationReadingValues, A.Geolocation, A.PositionOptions, A.GeolocationPosition, A.GeolocationCoordinates, A.GeolocationPositionError, A.DOMPointReadOnly, A.DOMPointInit, A.DOMRectReadOnly, A.DOMRectInit, A.DOMRectList, A.DOMQuad, A.DOMQuadInit, A.DOMMatrixReadOnly, A.DOMMatrix2DInit, A.RelatedApplication, A.GlobalPrivacyControl, A.GyroscopeReadingValues, A.HTMLAllCollection, A.DOMStringList, A.HTMLOrSVGElement, A.DOMStringMap, A.HTMLHyperlinkElementUtils, A.MediaError, A.AudioTrack, A.VideoTrack, A.TextTrackCueList, A.TimeRanges, A.ValidityState, A.AssignedNodesOptions, A.CanvasRenderingContext2DSettings, A.CanvasRenderingContext2D, A.CanvasState, A.CanvasTransform, A.CanvasCompositing, A.CanvasImageSmoothing, A.CanvasFillStrokeStyles, A.CanvasShadowStyles, A.CanvasFilters, A.CanvasRect, A.CanvasDrawPath, A.CanvasUserInterface, A.CanvasText, A.CanvasDrawImage, A.CanvasImageData, A.CanvasPathDrawingStyles, A.CanvasTextDrawingStyles, A.CanvasPath, A.CanvasGradient, A.CanvasPattern, A.TextMetrics, A.ImageDataSettings, A.ImageData, A.Path2D, A.ImageBitmapRenderingContext, A.ImageBitmapRenderingContextSettings, A.ImageEncodeOptions, A.OffscreenCanvasRenderingContext2D, A.CustomElementRegistry, A.ElementDefinitionOptions, A.ValidityStateFlags, A.UserActivation, A.FocusOptions, A.ElementContentEditable, A.DataTransfer, A.DataTransferItemList, A.PopoverTargetElement, A.StructuredSerializeOptions, A.BarProp, A.Location, A.History, A.DOMParser, A.NavigatorID, A.NavigatorLanguage, A.NavigatorOnLine, A.NavigatorContentUtils, A.NavigatorCookies, A.NavigatorPlugins, A.PluginArray, A.MimeTypeArray, A.Plugin, A.MimeType, A.ImageBitmap, A.ImageBitmapOptions, A.AnimationFrameProvider, A.EventSourceInit, A.MessageChannel, A.AbstractWorker, A.WorkerOptions, A.NavigatorConcurrentHardware, A.WorkerNavigator, A.WorkerLocation, A.Worklet, A.WorkletOptions, A.Storage, A.WindowSessionStorage, A.WindowLocalStorage, A.External, A.IdleOptions, A.ImageCapture, A.PhotoCapabilities, A.PhotoSettings, A.MediaSettingsRange, A.MediaTrackSupportedConstraints, A.MediaTrackCapabilities, A.MediaTrackConstraintSet, A.MediaTrackSettings, A.ConstrainPoint2DParameters, A.Point2D, A.ImageResource, A.Ink, A.InkPresenterParam, A.InkPresenter, A.InkTrailStyle, A.InputDeviceCapabilities, A.InputDeviceCapabilitiesInit, A.IntersectionObserver, A.IntersectionObserverEntry, A.IntersectionObserverEntryInit, A.IntersectionObserverInit, A.IsInputPendingOptions, A.Scheduling, A.ProfilerTrace, A.ProfilerSample, A.ProfilerStack, A.ProfilerFrame, A.ProfilerInitOptions, A.KeyboardLayoutMap, A.LayoutShiftAttribution, A.QueryOptions, A.FontData, A.MagnetometerReadingValues, A.UncalibratedMagnetometerReadingValues, A.PromptResponseObject, A.MediaConfiguration, A.VideoConfiguration, A.AudioConfiguration, A.MediaCapabilitiesKeySystemConfiguration, A.KeySystemTrackConfiguration, A.MediaCapabilitiesInfo, A.MediaCapabilities, A.VideoPlaybackQuality, A.MediaSourceHandle, A.MockCapturePromptResultConfiguration, A.MockCaptureDeviceConfiguration, A.CropTarget, A.DOMException, A.MediaDeviceInfo, A.MediaStreamConstraints, A.DoubleRange, A.ULongRange, A.ConstrainBooleanParameters, A.ConstrainDOMStringParameters, A.MediaStreamTrackProcessor, A.MediaStreamTrackProcessorInit, A.VideoTrackGenerator, A.ViewportMediaStreamConstraints, A.MediaSession, A.MediaMetadata, A.MediaMetadataInit, A.MediaImage, A.MediaPositionState, A.MediaSessionActionDetails, A.MediaRecorderOptions, A.BlobEventInit, A.RTCRtpParameters, A.NavigationUpdateCurrentEntryOptions, A.NavigationOptions, A.NavigationResult, A.NavigationTransition, A.NavigationInterceptOptions, A.NavigationDestination, A.PerformanceTiming, A.PerformanceNavigation, A.NavigatorNetworkInformation, A.NotificationOptions, A.NotificationAction, A.GetNotificationOptions, A.DeviceMotionEventAcceleration, A.DeviceMotionEventRotationRate, A.DeviceMotionEventAccelerationInit, A.DeviceMotionEventRotationRateInit, A.AbsoluteOrientationReadingValues, A.Client, A.PaymentManager, A.PaymentRequestDetailsUpdate, A.PaymentHandlerResponse, A.AddressInit, A.PaymentOptions, A.PaymentShippingOption, A.AddressErrors, A.PaymentMethodData, A.PaymentCurrencyAmount, A.PaymentDetailsBase, A.PaymentDetailsModifier, A.PaymentItem, A.PaymentCompleteDetails, A.PaymentValidationErrors, A.MemoryMeasurement, A.MemoryBreakdownEntry, A.MemoryAttribution, A.MemoryAttributionContainer, A.PerformanceObserver, A.PerformanceObserverCallbackOptions, A.PerformanceObserverEntryList, A.PeriodicSyncManager, A.BackgroundSyncOptions, A.PermissionsPolicy, A.Permissions, A.PermissionSetParameters, A.Presentation, A.PresentationReceiver, A.ProximityReadingValues, A.PushManager, A.PushSubscriptionOptions, A.PushSubscriptionOptionsInit, A.PushSubscription, A.PushSubscriptionJSON, A.PushMessageData, A.XRView, A.XRCamera, A.XRWebGLBinding, A.Report, A.ReportingObserver, A.ReportingObserverOptions, A.GenerateTestReportParameters, A.IdleRequestOptions, A.IdleDeadline, A.ResizeObserverOptions, A.ResizeObserver, A.ResizeObserverEntry, A.ResizeObserverSize, A.Sanitizer, A.SetHTMLOptions, A.SanitizerConfig, A.NetworkInformationSaveData, A.SchedulerPostTaskOptions, A.Scheduler, A.TaskControllerInit, A.CaptureController, A.DisplayMediaStreamOptions, A.WakeLock, A.ScrollTimelineOptions, A.AnimationTimeline, A.ViewTimelineOptions, A.FragmentDirective, A.SecurePaymentConfirmationRequest, A.AuthenticationExtensionsPaymentInputs, A.CollectedClientData, A.CollectedClientAdditionalPaymentData, A.PaymentCredentialInstrument, A.Selection, A.SerialPortRequestOptions, A.SerialPortFilter, A.SerialPortInfo, A.SerialOptions, A.SerialOutputSignals, A.SerialInputSignals, A.PerformanceServerTiming, A.RegistrationOptions, A.NavigationPreloadManager, A.NavigationPreloadState, A.Clients, A.ClientQueryOptions, A.Cache, A.CacheQueryOptions, A.CacheStorage, A.FaceDetector, A.FaceDetectorOptions, A.DetectedFace, A.Landmark, A.BarcodeDetector, A.BarcodeDetectorOptions, A.DetectedBarcode, A.SpeechRecognitionAlternative, A.SpeechRecognitionResult, A.SpeechRecognitionResultList, A.SpeechGrammar, A.SpeechGrammarList, A.SpeechSynthesisVoice, A.NavigatorStorage, A.StorageEstimate, A.ReadableStream, A.ReadableStreamGetReaderOptions, A.ReadableStreamIteratorOptions, A.ReadableWritablePair, A.StreamPipeOptions, A.UnderlyingSource, A.ReadableStreamGenericReader, A.ReadableStreamDefaultReader, A.ReadableStreamReadResult, A.ReadableStreamBYOBReader, A.ReadableStreamDefaultController, A.ReadableByteStreamController, A.ReadableStreamBYOBRequest, A.UnderlyingSink, A.WritableStreamDefaultWriter, A.WritableStreamDefaultController, A.TransformStream, A.Transformer, A.TransformStreamDefaultController, A.QueuingStrategy, A.QueuingStrategyInit, A.ByteLengthQueuingStrategy, A.CountQueuingStrategy, A.GenericTransformStream, A._TestUtils, A.TextDetector, A.DetectedText, A.TouchInit, A.Touch, A.TouchList, A.TrustedHTML, A.TrustedScript, A.TrustedScriptURL, A.TrustedTypePolicyFactory, A.TrustedTypePolicy, A.TrustedTypePolicyOptions, A.NavigatorUABrandVersion, A.UADataValues, A.UALowEntropyJSON, A.NavigatorUAData, A.NavigatorUA, A.URLSearchParams, A.URLPattern, A.URLPatternInit, A.URLPatternOptions, A.URLPatternResult, A.URLPatternComponentResult, A.PerformanceMarkOptions, A.PerformanceMeasureOptions, A.VideoFrameCallbackMetadata, A.ARIAMixin, A.WebAssemblyInstantiatedSource, A._WebAssembly, A.ModuleExportDescriptor, A.ModuleImportDescriptor, A.Module, A.Instance, A.MemoryDescriptor, A.Memory, A.TableDescriptor, A.Table, A.GlobalDescriptor, A.Global, A.AnimationEffect, A.EffectTiming, A.OptionalEffectTiming, A.GroupEffect, A.AnimationNodeList, A.DocumentTimelineOptions, A.BaseComputedKeyframe, A.BasePropertyIndexedKeyframe, A.BaseKeyframe, A.Animatable, A.GetAnimationsOptions, A.LaunchParams, A.LaunchQueue, A.BluetoothDataFilterInit, A.BluetoothLEScanFilterInit, A.RequestDeviceOptions, A.AllowedBluetoothDevice, A.BluetoothPermissionStorage, A.WatchAdvertisementsOptions, A.BluetoothManufacturerDataMap, A.BluetoothServiceDataMap, A.BluetoothRemoteGATTServer, A.BluetoothCharacteristicProperties, A.BluetoothRemoteGATTDescriptor, A.CharacteristicEventHandlers, A.BluetoothDeviceEventHandlers, A.ServiceEventHandlers, A.BluetoothUUID, A.NavigatorLocks, A.LockManager, A.LockOptions, A.LockManagerSnapshot, A.LockInfo, A.Lock, A.NDEFMessage, A.NDEFMessageInit, A.NDEFRecord, A.NDEFRecordInit, A.NDEFWriteOptions, A.NDEFMakeReadOnlyOptions, A.NDEFScanOptions, A.OTPCredentialRequestOptions, A.ShareData, A.AudioContextOptions, A.AudioSinkOptions, A.AudioSinkInfo, A.AudioTimestamp, A.AudioRenderCapacityOptions, A.OfflineAudioContextOptions, A.AudioBuffer, A.AudioBufferOptions, A.AudioNodeOptions, A.AudioParam, A.AudioBufferSourceOptions, A.AudioListener, A.ConstantSourceOptions, A.MediaElementAudioSourceOptions, A.MediaStreamAudioSourceOptions, A.MediaStreamTrackAudioSourceOptions, A.PeriodicWave, A.PeriodicWaveConstraints, A.AudioParamMap, A.AudioWorkletProcessor, A.AudioParamDescriptor, A.RegistrationResponseJSON, A.AuthenticatorAttestationResponseJSON, A.AuthenticationResponseJSON, A.AuthenticatorAssertionResponseJSON, A.AuthenticationExtensionsClientOutputsJSON, A.PublicKeyCredentialCreationOptionsJSON, A.PublicKeyCredentialUserEntityJSON, A.PublicKeyCredentialDescriptorJSON, A.AuthenticationExtensionsClientInputsJSON, A.PublicKeyCredentialRequestOptionsJSON, A.AuthenticatorResponse, A.PublicKeyCredentialParameters, A.PublicKeyCredentialCreationOptions, A.PublicKeyCredentialEntity, A.AuthenticatorSelectionCriteria, A.PublicKeyCredentialRequestOptions, A.TokenBinding, A.PublicKeyCredentialDescriptor, A.CredentialPropertiesOutput, A.AuthenticationExtensionsPRFValues, A.AuthenticationExtensionsPRFInputs, A.AuthenticationExtensionsPRFOutputs, A.AuthenticationExtensionsLargeBlobInputs, A.AuthenticationExtensionsLargeBlobOutputs, A.AuthenticationExtensionsDevicePublicKeyInputs, A.AuthenticationExtensionsDevicePublicKeyOutputs, A.AudioEncoderConfig, A.AacEncoderConfig, A.VideoEncoderConfig, A.AvcEncoderConfig, A.FlacEncoderConfig, A.HevcEncoderConfig, A.OpusEncoderConfig, A.AudioDecoder, A.AudioDecoderInit, A.VideoDecoder, A.VideoDecoderInit, A.AudioEncoder, A.AudioEncoderInit, A.EncodedAudioChunkMetadata, A.VideoEncoder, A.VideoEncoderInit, A.EncodedVideoChunkMetadata, A.SvcOutputMetadata, A.AudioDecoderSupport, A.VideoDecoderSupport, A.AudioEncoderSupport, A.VideoEncoderSupport, A.AudioDecoderConfig, A.VideoDecoderConfig, A.VideoEncoderEncodeOptions, A.EncodedAudioChunk, A.EncodedAudioChunkInit, A.EncodedVideoChunk, A.EncodedVideoChunkInit, A.AudioData, A.AudioDataInit, A.AudioDataCopyToOptions, A.VideoFrame, A.VideoFrameInit, A.VideoFrameBufferInit, A.VideoFrameMetadata, A.VideoFrameCopyToOptions, A.PlaneLayout, A.VideoColorSpace, A.VideoColorSpaceInit, A.ImageDecoder, A.ImageDecoderInit, A.ImageDecodeOptions, A.ImageDecodeResult, A.ImageTrackList, A.ImageTrack, A.NavigatorAutomationInformation, A.WebGLContextAttributes, A.WebGLUniformLocation, A.WebGLActiveInfo, A.WebGLShaderPrecisionFormat, A.WebGLRenderingContextBase, A.WebGLRenderingContextOverloads, A.WebGLRenderingContext, A.WebGL2RenderingContextBase, A.WebGL2RenderingContextOverloads, A.WebGL2RenderingContext, A.GPUObjectBase, A.GPUObjectDescriptorBase, A.GPUSupportedLimits, A.GPUSupportedFeatures, A.GPUAdapterInfo, A.NavigatorGPU, A.GPU, A.GPURequestAdapterOptions, A.GPUAdapter, A.GPUBuffer, A._GPUBufferUsage, A._GPUMapMode, A.GPUTexture, A._GPUTextureUsage, A.GPUTextureView, A.GPUExternalTexture, A.GPUSampler, A.GPUBindGroupLayout, A.GPUBindGroupLayoutEntry, A._GPUShaderStage, A.GPUBufferBindingLayout, A.GPUSamplerBindingLayout, A.GPUTextureBindingLayout, A.GPUStorageTextureBindingLayout, A.GPUExternalTextureBindingLayout, A.GPUBindGroup, A.GPUBindGroupEntry, A.GPUBufferBinding, A.GPUPipelineLayout, A.GPUShaderModule, A.GPUShaderModuleCompilationHint, A.GPUCompilationMessage, A.GPUCompilationInfo, A.GPUPipelineErrorInit, A.GPUPipelineBase, A.GPUProgrammableStage, A.GPUComputePipeline, A.GPURenderPipeline, A.GPUPrimitiveState, A.GPUMultisampleState, A.GPUColorTargetState, A.GPUBlendState, A._GPUColorWrite, A.GPUBlendComponent, A.GPUDepthStencilState, A.GPUStencilFaceState, A.GPUVertexBufferLayout, A.GPUVertexAttribute, A.GPUImageDataLayout, A.GPUImageCopyTexture, A.GPUImageCopyExternalImage, A.GPUCommandBuffer, A.GPUCommandsMixin, A.GPUCommandEncoder, A.GPUBindingCommandsMixin, A.GPUDebugCommandsMixin, A.GPUComputePassEncoder, A.GPUComputePassTimestampWrite, A.GPURenderPassEncoder, A.GPURenderPassTimestampWrite, A.GPURenderPassColorAttachment, A.GPURenderPassDepthStencilAttachment, A.GPURenderCommandsMixin, A.GPURenderBundle, A.GPURenderBundleEncoder, A.GPUQueue, A.GPUQuerySet, A.GPUCanvasContext, A.GPUCanvasConfiguration, A.GPUDeviceLostInfo, A.GPUError, A.GPUColorDict, A.GPUOrigin2DDict, A.GPUOrigin3DDict, A.GPUExtent3DDict, A.HIDDeviceRequestOptions, A.HIDDeviceFilter, A.HIDCollectionInfo, A.HIDReportInfo, A.HIDReportItem, A.MIDIOptions, A.MIDIInputMap, A.MIDIOutputMap, A.NavigatorML, A.MLContextOptions, A.ML, A.MLGraph, A.MLOperandDescriptor, A.MLOperand, A.MLActivation, A.MLContext, A.MLComputeResult, A.MLCommandEncoder, A.MLBufferResourceView, A.MLGraphBuilder, A.MLBatchNormalizationOptions, A.MLClampOptions, A.MLConv2dOptions, A.MLConvTranspose2dOptions, A.MLEluOptions, A.MLGemmOptions, A.MLGruOptions, A.MLGruCellOptions, A.MLHardSigmoidOptions, A.MLInstanceNormalizationOptions, A.MLLeakyReluOptions, A.MLLinearOptions, A.MLLstmOptions, A.MLLstmCellOptions, A.MLPadOptions, A.MLPool2dOptions, A.MLReduceOptions, A.MLResample2dOptions, A.MLSliceOptions, A.MLSoftplusOptions, A.MLSplitOptions, A.MLSqueezeOptions, A.MLTransposeOptions, A.RTCRtpSender, A.RTCRtpReceiver, A.SFrameTransformOptions, A.SFrameTransform, A.RTCEncodedVideoFrameMetadata, A.RTCEncodedVideoFrame, A.RTCEncodedAudioFrameMetadata, A.RTCEncodedAudioFrame, A.RTCRtpScriptTransformer, A.RTCRtpScriptTransform, A.RTCIceParameters, A.RTCIceGatherOptions, A.RTCIdentityProviderRegistrar, A.RTCIdentityProvider, A.RTCIdentityAssertionResult, A.RTCIdentityProviderDetails, A.RTCIdentityValidationResult, A.RTCConfiguration, A.RTCIdentityProviderOptions, A.RTCIdentityAssertion, A.RTCErrorInit, A.RTCRtpCodingParameters, A.RTCDataChannelInit, A.RTCStats, A.RTCIceServer, A.RTCOfferAnswerOptions, A.RTCSessionDescription, A.RTCSessionDescriptionInit, A.RTCLocalSessionDescriptionInit, A.RTCIceCandidate, A.RTCIceCandidateInit, A.RTCCertificateExpiration, A.RTCCertificate, A.RTCRtpTransceiverInit, A.RTCRtcpParameters, A.RTCRtpHeaderExtensionParameters, A.RTCRtpCodecParameters, A.RTCRtpCapabilities, A.RTCRtpCodecCapability, A.RTCRtpHeaderExtensionCapability, A.RTCRtpContributingSource, A.RTCRtpTransceiver, A.RTCDtlsFingerprint, A.RTCIceCandidatePair, A.RTCStatsReport, A.WebTransportDatagramDuplexStream, A.WebTransport, A.WebTransportHash, A.WebTransportOptions, A.WebTransportCloseInfo, A.WebTransportSendStreamOptions, A.WebTransportStats, A.WebTransportDatagramStats, A.WebTransportSendStreamStats, A.WebTransportReceiveStreamStats, A.WebTransportBidirectionalStream, A.WebTransportErrorInit, A.USBDeviceFilter, A.USBDeviceRequestOptions, A.USBInTransferResult, A.USBOutTransferResult, A.USBIsochronousInTransferPacket, A.USBIsochronousInTransferResult, A.USBIsochronousOutTransferPacket, A.USBIsochronousOutTransferResult, A.USBDevice, A.USBControlTransferParameters, A.USBConfiguration, A.USBInterface, A.USBAlternateInterface, A.USBEndpoint, A.AllowedUSBDevice, A.USBPermissionStorage, A.VTTRegion, A.XRDepthStateInit, A.XRSessionInit, A.XRDepthInformation, A.XRDOMOverlayInit, A.XRDOMOverlayState, A.XRInputSource, A.XRHand, A.XRPose, A.XRHitTestOptionsInit, A.XRTransientInputHitTestOptionsInit, A.XRHitTestSource, A.XRTransientInputHitTestSource, A.XRTransientInputHitTestResult, A.XRRayDirectionInit, A.XRRay, A.XRLightEstimate, A.XRLightProbeInit, A.XRRenderStateInit, A.XRRenderState, A.XRViewport, A.XRRigidTransform, A.XRInputSourceArray, A.XRWebGLLayerInit, A.XRSubImage, A.XRProjectionLayerInit, A.XRLayerInit, A.XRMediaLayerInit, A.XRMediaBinding, A.FormData]);
+    _inherit(J.JSUnmodifiableArray, J.JSArray);
+    _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
+    _inheritMany(A.Error, [A.LateError, A._CyclicInitializationError, A.RuntimeError, A._Error, A.AssertionError, A.TypeError, A.ArgumentError, A.UnsupportedError, A.UnimplementedError, A.ConcurrentModificationError]);
+    _inheritMany(A.Closure, [A.Closure2Args, A.TearOffClosure, A.initHooks_closure, A.initHooks_closure1]);
+    _inheritMany(A.TearOffClosure, [A.StaticClosure, A.BoundClosure]);
+    _inherit(A.initHooks_closure0, A.Closure2Args);
+    _inherit(A.NativeTypedArray, A.NativeTypedData);
+    _inheritMany(A.NativeTypedArray, [A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
+    _inherit(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
+    _inherit(A.NativeTypedArrayOfDouble, A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin);
+    _inherit(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin, A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin);
+    _inherit(A.NativeTypedArrayOfInt, A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin);
+    _inheritMany(A.NativeTypedArrayOfInt, [A.NativeInt16List, A.NativeInt32List, A.NativeInt8List, A.NativeUint16List, A.NativeUint32List, A.NativeUint8ClampedList, A.NativeUint8List]);
+    _inherit(A._TypeError, A._Error);
+    _inheritMany(A.ArgumentError, [A.RangeError, A.IndexError]);
+    _inheritMany(A.ReportBody, [A.CSPViolationReportBody, A.CrashReportBody, A.ScriptingPolicyReportBody, A.DeprecationReportBody, A.InterventionReportBody, A.PermissionsPolicyViolationReportBody]);
+    _inheritMany(A.Event, [A.SecurityPolicyViolationEvent, A.IDBVersionChangeEvent, A.ExtendableEvent, A.ClipboardEvent, A.CookieChangeEvent, A.AnimationEvent, A.ContentVisibilityAutoStateChangedEvent, A.FontFaceSetLoadEvent, A.UIEvent, A.TransitionEvent, A.MediaQueryListEvent, A.CustomEvent, A.TextUpdateEvent, A.TextFormatUpdateEvent, A.CharacterBoundsUpdateEvent, A.MediaKeyMessageEvent, A.MediaEncryptedEvent, A.GamepadEvent, A.SensorErrorEvent, A.TrackEvent, A.SubmitEvent, A.FormDataEvent, A.ToggleEvent, A.PopStateEvent, A.HashChangeEvent, A.PageTransitionEvent, A.BeforeUnloadEvent, A.ErrorEvent, A.PromiseRejectionEvent, A.MessageEvent, A.StorageEvent, A.BeforeInstallPromptEvent, A.CaptureActionEvent, A.MediaStreamTrackEvent, A.BlobEvent, A.NavigationCurrentEntryChangeEvent, A.NavigateEvent, A.DeviceOrientationEvent, A.DeviceMotionEvent, A.PaymentRequestUpdateEvent, A.PictureInPictureEvent, A.PortalActivateEvent, A.PresentationConnectionAvailableEvent, A.PresentationConnectionCloseEvent, A.TaskPriorityChangeEvent, A.SpeechRecognitionErrorEvent, A.SpeechRecognitionEvent, A.SpeechSynthesisEvent, A.TimeEvent, A.MutationEvent, A.AnimationPlaybackEvent, A.ValueEvent, A.BluetoothAdvertisingEvent, A.NDEFReadingEvent, A.AudioRenderCapacityEvent, A.OfflineAudioCompletionEvent, A.AudioProcessingEvent, A.WebGLContextEvent, A.GPUUncapturedErrorEvent, A.HIDConnectionEvent, A.HIDInputReportEvent, A.MIDIMessageEvent, A.MIDIConnectionEvent, A.SFrameTransformErrorEvent, A.RTCTransformEvent, A.RTCPeerConnectionIceEvent, A.RTCPeerConnectionIceErrorEvent, A.RTCTrackEvent, A.RTCDataChannelEvent, A.RTCDTMFToneChangeEvent, A.RTCErrorEvent, A.CloseEvent, A.USBConnectionEvent, A.XRSessionEvent, A.XRInputSourceEvent, A.XRInputSourcesChangeEvent, A.XRReferenceSpaceEvent, A.XRLayerEvent, A.WindowControlsOverlayGeometryChangeEvent, A.ProgressEvent]);
+    _inheritMany(A.EventInit, [A.SecurityPolicyViolationEventInit, A.IDBVersionChangeEventInit, A.ExtendableEventInit, A.ClipboardEventInit, A.CookieChangeEventInit, A.AnimationEventInit, A.ContentVisibilityAutoStateChangedEventInit, A.FontFaceSetLoadEventInit, A.UIEventInit, A.TransitionEventInit, A.MediaQueryListEventInit, A.CustomEventInit, A.MediaKeyMessageEventInit, A.MediaEncryptedEventInit, A.GamepadEventInit, A.SensorErrorEventInit, A.TrackEventInit, A.SubmitEventInit, A.FormDataEventInit, A.ToggleEventInit, A.PopStateEventInit, A.HashChangeEventInit, A.PageTransitionEventInit, A.ErrorEventInit, A.PromiseRejectionEventInit, A.MessageEventInit, A.StorageEventInit, A.CaptureActionEventInit, A.MediaStreamTrackEventInit, A.NavigationCurrentEntryChangeEventInit, A.NavigateEventInit, A.DeviceOrientationEventInit, A.DeviceMotionEventInit, A.PaymentRequestUpdateEventInit, A.PictureInPictureEventInit, A.PortalActivateEventInit, A.PresentationConnectionAvailableEventInit, A.PresentationConnectionCloseEventInit, A.TaskPriorityChangeEventInit, A.SpeechRecognitionErrorEventInit, A.SpeechRecognitionEventInit, A.SpeechSynthesisEventInit, A.AnimationPlaybackEventInit, A.ValueEventInit, A.BluetoothAdvertisingEventInit, A.NDEFReadingEventInit, A.AudioRenderCapacityEventInit, A.OfflineAudioCompletionEventInit, A.AudioProcessingEventInit, A.WebGLContextEventInit, A.GPUUncapturedErrorEventInit, A.HIDConnectionEventInit, A.HIDInputReportEventInit, A.MIDIMessageEventInit, A.MIDIConnectionEventInit, A.SFrameTransformErrorEventInit, A.RTCPeerConnectionIceEventInit, A.RTCPeerConnectionIceErrorEventInit, A.RTCTrackEventInit, A.RTCDataChannelEventInit, A.RTCDTMFToneChangeEventInit, A.RTCErrorEventInit, A.CloseEventInit, A.USBConnectionEventInit, A.XRSessionEventInit, A.XRInputSourceEventInit, A.XRInputSourcesChangeEventInit, A.XRReferenceSpaceEventInit, A.XRLayerEventInit, A.WindowControlsOverlayGeometryChangeEventInit, A.ProgressEventInit]);
+    _inheritMany(A.EventTarget, [A.Node, A.FileReader, A.IDBRequest, A.IDBDatabase, A.IDBTransaction, A.Animation, A.Sensor, A.XRSession, A.MediaDevices, A.WorkerGlobalScope, A.ServiceWorkerRegistration, A.BackgroundFetchRegistration, A.BatteryManager, A.MediaStreamTrack, A.Clipboard, A.CloseWatcher, A.Window, A.CookieStore, A.FontFaceSet, A.CSSPseudoElement, A.NamedFlow, A.MediaQueryList, A.VisualViewport, A.TextTrackCue, A.DevicePosture, A.AbortSignal, A.EditContext, A.MediaKeySession, A.Performance, A.AudioTrackList, A.VideoTrackList, A.TextTrackList, A.TextTrack, A.OffscreenCanvas, A.EventSource, A.MessagePort, A.BroadcastChannel, A.Worker, A.SharedWorker, A.IdleDetector, A.Profiler, A.Keyboard, A.MediaSource, A.SourceBuffer, A.SourceBufferList, A.MediaStream, A.MediaRecorder, A.Navigation, A.NavigationHistoryEntry, A.NetworkInformation, A.Notification, A.PaymentRequest, A.PaymentResponse, A.PermissionStatus, A.PictureInPictureWindow, A.PortalHost, A.PresentationRequest, A.PresentationAvailability, A.PresentationConnection, A.PresentationConnectionList, A.RemotePlayback, A.ScreenOrientation, A.WakeLockSentinel, A.Serial, A.SerialPort, A.ServiceWorker, A.ServiceWorkerContainer, A.SpeechRecognition, A.SpeechSynthesis, A.SpeechSynthesisUtterance, A.VirtualKeyboard, A.Bluetooth, A.BluetoothDevice, A.BluetoothRemoteGATTService, A.BluetoothRemoteGATTCharacteristic, A.NDEFReader, A.BaseAudioContext, A.AudioRenderCapacity, A.AudioNode, A.GPUDevice, A.HID, A.HIDDevice, A.MIDIAccess, A.MIDIPort, A.RTCIceTransport, A.RTCPeerConnection, A.RTCDataChannel, A.RTCDtlsTransport, A.RTCSctpTransport, A.RTCDTMFSender, A.WebSocket, A.USB, A.XRSpace, A.XRLightProbe, A.XRSystem, A.XRLayer, A.WindowControlsOverlay, A.ScreenDetails, A.XMLHttpRequestEventTarget]);
+    _inheritMany(A.Node, [A.Element, A.Document, A.DocumentFragment, A.DocumentType, A.Attr, A.CharacterData]);
+    _inheritMany(A.AbstractRange, [A.Range, A.StaticRange]);
+    _inheritMany(A.WebGLObject, [A.WebGLTimerQueryEXT, A.WebGLVertexArrayObjectOES, A.WebGLBuffer, A.WebGLFramebuffer, A.WebGLProgram, A.WebGLRenderbuffer, A.WebGLShader, A.WebGLTexture, A.WebGLQuery, A.WebGLSampler, A.WebGLSync, A.WebGLTransformFeedback, A.WebGLVertexArrayObject]);
+    _inheritMany(A.Credential, [A.IdentityCredential, A.PasswordCredential, A.FederatedCredential, A.OTPCredential, A.PublicKeyCredential]);
+    _inherit(A.File, A.Blob);
+    _inherit(A.FilePropertyBag, A.BlobPropertyBag);
+    _inherit(A.IDBOpenDBRequest, A.IDBRequest);
+    _inherit(A.IDBCursorWithValue, A.IDBCursor);
+    _inheritMany(A.Element, [A.SVGElement, A.HTMLElement, A.MathMLElement]);
+    _inheritMany(A.SVGElement, [A.SVGGraphicsElement, A.SVGDescElement, A.SVGMetadataElement, A.SVGTitleElement, A.SVGStyleElement, A.SVGMarkerElement, A.SVGGradientElement, A.SVGStopElement, A.SVGPatternElement, A.SVGScriptElement, A.SVGViewElement, A.SVGClipPathElement, A.SVGMaskElement, A.SVGFilterElement, A.SVGFEBlendElement, A.SVGFEColorMatrixElement, A.SVGFEComponentTransferElement, A.SVGComponentTransferFunctionElement, A.SVGFECompositeElement, A.SVGFEConvolveMatrixElement, A.SVGFEDiffuseLightingElement, A.SVGFEDistantLightElement, A.SVGFEPointLightElement, A.SVGFESpotLightElement, A.SVGFEDisplacementMapElement, A.SVGFEDropShadowElement, A.SVGFEFloodElement, A.SVGFEGaussianBlurElement, A.SVGFEImageElement, A.SVGFEMergeElement, A.SVGFEMergeNodeElement, A.SVGFEMorphologyElement, A.SVGFEOffsetElement, A.SVGFESpecularLightingElement, A.SVGFETileElement, A.SVGFETurbulenceElement, A.SVGAnimationElement, A.SVGMPathElement]);
+    _inheritMany(A.SVGGraphicsElement, [A.SVGGeometryElement, A.SVGSVGElement, A.SVGGElement, A.SVGDefsElement, A.SVGSymbolElement, A.SVGUseElement, A.SVGSwitchElement, A.SVGTextContentElement, A.SVGImageElement, A.SVGForeignObjectElement, A.SVGAElement]);
+    _inherit(A.ShadowRoot, A.DocumentFragment);
+    _inherit(A.SVGUseElementShadowRoot, A.ShadowRoot);
+    _inheritMany(A.Animation, [A.ShadowAnimation, A.WorkletAnimation, A.CSSAnimation, A.CSSTransition]);
+    _inheritMany(A.SVGGeometryElement, [A.SVGPathElement, A.SVGRectElement, A.SVGCircleElement, A.SVGEllipseElement, A.SVGLineElement, A.SVGPolylineElement, A.SVGPolygonElement]);
+    _inheritMany(A.SVGTextContentElement, [A.SVGTextPositioningElement, A.SVGTextPathElement]);
+    _inheritMany(A.SVGTextPositioningElement, [A.SVGTextElement, A.SVGTSpanElement]);
+    _inheritMany(A.SVGGradientElement, [A.SVGLinearGradientElement, A.SVGRadialGradientElement]);
+    _inheritMany(A.Algorithm, [A.RsaKeyGenParams, A.RsaHashedImportParams, A.RsaPssParams, A.RsaOaepParams, A.EcdsaParams, A.EcKeyGenParams, A.EcKeyImportParams, A.EcdhKeyDeriveParams, A.AesCtrParams, A.AesKeyGenParams, A.AesDerivedKeyParams, A.AesCbcParams, A.AesGcmParams, A.HmacImportParams, A.HmacKeyGenParams, A.HkdfParams, A.Pbkdf2Params, A.Ed448Params]);
+    _inherit(A.RsaHashedKeyGenParams, A.RsaKeyGenParams);
+    _inheritMany(A.KeyAlgorithm, [A.RsaKeyAlgorithm, A.EcKeyAlgorithm, A.AesKeyAlgorithm, A.HmacKeyAlgorithm]);
+    _inherit(A.RsaHashedKeyAlgorithm, A.RsaKeyAlgorithm);
+    _inheritMany(A.Sensor, [A.Accelerometer, A.AmbientLightSensor, A.GeolocationSensor, A.Gyroscope, A.Magnetometer, A.UncalibratedMagnetometer, A.OrientationSensor, A.ProximitySensor]);
+    _inheritMany(A.SensorOptions, [A.AccelerometerSensorOptions, A.GeolocationSensorOptions, A.GyroscopeSensorOptions, A.MagnetometerSensorOptions, A.OrientationSensorOptions]);
+    _inheritMany(A.Accelerometer, [A.LinearAccelerationSensor, A.GravitySensor]);
+    _inheritMany(A.AccelerometerReadingValues, [A.LinearAccelerationReadingValues, A.GravityReadingValues]);
+    _inheritMany(A.HTMLElement, [A.HTMLMediaElement, A.HTMLBodyElement, A.HTMLIFrameElement, A.HTMLImageElement, A.HTMLInputElement, A.HTMLUnknownElement, A.HTMLHtmlElement, A.HTMLHeadElement, A.HTMLTitleElement, A.HTMLBaseElement, A.HTMLLinkElement, A.HTMLMetaElement, A.HTMLStyleElement, A.HTMLHeadingElement, A.HTMLParagraphElement, A.HTMLHRElement, A.HTMLPreElement, A.HTMLQuoteElement, A.HTMLOListElement, A.HTMLUListElement, A.HTMLMenuElement, A.HTMLLIElement, A.HTMLDListElement, A.HTMLDivElement, A.HTMLAnchorElement, A.HTMLDataElement, A.HTMLTimeElement, A.HTMLSpanElement, A.HTMLBRElement, A.HTMLModElement, A.HTMLPictureElement, A.HTMLSourceElement, A.HTMLEmbedElement, A.HTMLObjectElement, A.HTMLTrackElement, A.HTMLMapElement, A.HTMLAreaElement, A.HTMLTableElement, A.HTMLTableCaptionElement, A.HTMLTableColElement, A.HTMLTableSectionElement, A.HTMLTableRowElement, A.HTMLTableCellElement, A.HTMLFormElement, A.HTMLLabelElement, A.HTMLButtonElement, A.HTMLSelectElement, A.HTMLDataListElement, A.HTMLOptGroupElement, A.HTMLOptionElement, A.HTMLTextAreaElement, A.HTMLOutputElement, A.HTMLProgressElement, A.HTMLMeterElement, A.HTMLFieldSetElement, A.HTMLLegendElement, A.HTMLDetailsElement, A.HTMLDialogElement, A.HTMLScriptElement, A.HTMLTemplateElement, A.HTMLSlotElement, A.HTMLCanvasElement, A.HTMLMarqueeElement, A.HTMLFrameSetElement, A.HTMLFrameElement, A.HTMLDirectoryElement, A.HTMLFontElement, A.HTMLParamElement, A.HTMLModelElement, A.HTMLPortalElement]);
+    _inheritMany(A.WorkerGlobalScope, [A.ServiceWorkerGlobalScope, A.DedicatedWorkerGlobalScope, A.SharedWorkerGlobalScope, A.RTCIdentityProviderGlobalScope]);
+    _inherit(A.BackgroundFetchOptions, A.BackgroundFetchUIOptions);
+    _inheritMany(A.ExtendableEvent, [A.BackgroundFetchEvent, A.SyncEvent, A.ContentIndexEvent, A.ExtendableCookieChangeEvent, A.NotificationEvent, A.CanMakePaymentEvent, A.PaymentRequestEvent, A.PeriodicSyncEvent, A.PushEvent, A.PushSubscriptionChangeEvent, A.FetchEvent, A.ExtendableMessageEvent]);
+    _inheritMany(A.ExtendableEventInit, [A.BackgroundFetchEventInit, A.SyncEventInit, A.ContentIndexEventInit, A.ExtendableCookieChangeEventInit, A.NotificationEventInit, A.PaymentRequestEventInit, A.PeriodicSyncEventInit, A.PushEventInit, A.PushSubscriptionChangeEventInit, A.FetchEventInit, A.ExtendableMessageEventInit]);
+    _inherit(A.BackgroundFetchUpdateUIEvent, A.BackgroundFetchEvent);
+    _inheritMany(A.PermissionDescriptor, [A.ClipboardPermissionDescriptor, A.FileSystemPermissionDescriptor, A.DevicePermissionDescriptor, A.PushPermissionDescriptor, A.TopLevelStorageAccessPermissionDescriptor, A.BluetoothPermissionDescriptor, A.MidiPermissionDescriptor, A.USBPermissionDescriptor, A.XRSessionSupportedPermissionDescriptor, A.XRPermissionDescriptor]);
+    _inheritMany(A.CredentialData, [A.PasswordCredentialData, A.FederatedCredentialInit]);
+    _inheritMany(A.WorkletGlobalScope, [A.AnimationWorkletGlobalScope, A.LayoutWorkletGlobalScope, A.PaintWorkletGlobalScope, A.AudioWorkletGlobalScope]);
+    _inheritMany(A.CSSRule, [A.CSSKeyframeRule, A.CSSKeyframesRule, A.CSSImportRule, A.CSSGroupingRule, A.CSSLayerStatementRule, A.CSSColorProfileRule, A.CSSCounterStyleRule, A.CSSFontFaceRule, A.CSSFontFeatureValuesRule, A.CSSFontPaletteValuesRule, A.CSSStyleRule, A.CSSPropertyRule, A.CSSMarginRule, A.CSSNamespaceRule]);
+    _inheritMany(A.CSSGroupingRule, [A.CSSLayerBlockRule, A.CSSConditionRule, A.CSSPageRule]);
+    _inheritMany(A.CSSConditionRule, [A.CSSMediaRule, A.CSSSupportsRule, A.CSSContainerRule]);
+    _inheritMany(A.UIEvent, [A.NavigationEvent, A.MouseEvent, A.InputEvent, A.TouchEvent, A.FocusEvent, A.KeyboardEvent, A.CompositionEvent]);
+    _inheritMany(A.UIEventInit, [A.NavigationEventInit, A.EventModifierInit, A.InputEventInit, A.FocusEventInit, A.CompositionEventInit]);
+    _inheritMany(A.CSSParserRule, [A.CSSParserAtRule, A.CSSParserQualifiedRule, A.CSSParserDeclaration]);
+    _inheritMany(A.CSSParserValue, [A.CSSParserBlock, A.CSSParserFunction]);
+    _inherit(A.StylePropertyMap, A.StylePropertyMapReadOnly);
+    _inheritMany(A.CSSStyleValue, [A.CSSUnparsedValue, A.CSSKeywordValue, A.CSSNumericValue, A.CSSTransformValue, A.CSSImageValue, A.CSSColorValue]);
+    _inheritMany(A.CSSNumericValue, [A.CSSUnitValue, A.CSSMathValue]);
+    _inheritMany(A.CSSMathValue, [A.CSSMathSum, A.CSSMathProduct, A.CSSMathNegate, A.CSSMathInvert, A.CSSMathMin, A.CSSMathMax, A.CSSMathClamp]);
+    _inheritMany(A.CSSTransformComponent, [A.CSSTranslate, A.CSSRotate, A.CSSScale, A.CSSSkew, A.CSSSkewX, A.CSSSkewY, A.CSSPerspective, A.CSSMatrixComponent]);
+    _inheritMany(A.CSSColorValue, [A.CSSRGB, A.CSSHSL, A.CSSHWB, A.CSSLab, A.CSSLCH, A.CSSOKLab, A.CSSOKLCH, A.CSSColor]);
+    _inheritMany(A.ScrollOptions, [A.ScrollToOptions, A.ScrollIntoViewOptions]);
+    _inherit(A.CSSStyleSheet, A.StyleSheet);
+    _inheritMany(A.TextTrackCue, [A.DataCue, A.VTTCue]);
+    _inherit(A.AddEventListenerOptions, A.EventListenerOptions);
+    _inherit(A.XMLDocument, A.Document);
+    _inheritMany(A.CharacterData, [A.Text, A.ProcessingInstruction, A.Comment]);
+    _inherit(A.CDATASection, A.Text);
+    _inheritMany(A.PerformanceEntry, [A.PerformanceElementTiming, A.PerformanceEventTiming, A.LargestContentfulPaint, A.LayoutShift, A.PerformanceLongTaskTiming, A.TaskAttributionTiming, A.PerformanceResourceTiming, A.PerformancePaintTiming, A.PerformanceMark, A.PerformanceMeasure]);
+    _inheritMany(A.FileSystemEntry, [A.FileSystemDirectoryEntry, A.FileSystemFileEntry]);
+    _inheritMany(A.FilePickerOptions, [A.OpenFilePickerOptions, A.SaveFilePickerOptions]);
+    _inheritMany(A.SVGComponentTransferFunctionElement, [A.SVGFEFuncRElement, A.SVGFEFuncGElement, A.SVGFEFuncBElement, A.SVGFEFuncAElement]);
+    _inheritMany(A.FileSystemHandle, [A.FileSystemFileHandle, A.FileSystemDirectoryHandle]);
+    _inheritMany(A.WritableStream, [A.FileSystemWritableFileStream, A.WebTransportSendStream]);
+    _inherit(A.ReadOptions, A.GeolocationSensorOptions);
+    _inherit(A.DOMPoint, A.DOMPointReadOnly);
+    _inherit(A.DOMRect, A.DOMRectReadOnly);
+    _inherit(A.DOMMatrix, A.DOMMatrixReadOnly);
+    _inherit(A.DOMMatrixInit, A.DOMMatrix2DInit);
+    _inheritMany(A.HTMLCollection, [A.HTMLFormControlsCollection, A.HTMLOptionsCollection]);
+    _inherit(A.RadioNodeList, A.NodeList);
+    _inheritMany(A.HTMLMediaElement, [A.HTMLVideoElement, A.HTMLAudioElement]);
+    _inheritMany(A.MouseEvent, [A.DragEvent, A.PointerEvent, A.WheelEvent]);
+    _inheritMany(A.EventModifierInit, [A.MouseEventInit, A.TouchEventInit, A.KeyboardEventInit]);
+    _inheritMany(A.MouseEventInit, [A.DragEventInit, A.PointerEventInit, A.WheelEventInit]);
+    _inheritMany(A.StructuredSerializeOptions, [A.WindowPostMessageOptions, A.PortalActivateOptions]);
+    _inheritMany(A.MediaConfiguration, [A.MediaDecodingConfiguration, A.MediaEncodingConfiguration]);
+    _inheritMany(A.MediaCapabilitiesInfo, [A.MediaCapabilitiesDecodingInfo, A.MediaCapabilitiesEncodingInfo]);
+    _inheritMany(A.MockCaptureDeviceConfiguration, [A.MockCameraConfiguration, A.MockMicrophoneConfiguration]);
+    _inheritMany(A.MediaStreamTrack, [A.CanvasCaptureMediaStreamTrack, A.BrowserCaptureMediaStreamTrack]);
+    _inherit(A.MediaTrackConstraints, A.MediaTrackConstraintSet);
+    _inheritMany(A.DOMException, [A.OverconstrainedError, A.GPUPipelineError, A.RTCError, A.WebTransportError]);
+    _inherit(A.InputDeviceInfo, A.MediaDeviceInfo);
+    _inherit(A.ConstrainDoubleRange, A.DoubleRange);
+    _inherit(A.ConstrainULongRange, A.ULongRange);
+    _inherit(A.CameraDevicePermissionDescriptor, A.DevicePermissionDescriptor);
+    _inheritMany(A.RTCRtpParameters, [A.RTCRtpSendParameters, A.RTCRtpReceiveParameters]);
+    _inheritMany(A.NavigationOptions, [A.NavigationNavigateOptions, A.NavigationReloadOptions]);
+    _inherit(A.PerformanceNavigationTiming, A.PerformanceResourceTiming);
+    _inheritMany(A.OrientationSensor, [A.AbsoluteOrientationSensor, A.RelativeOrientationSensor]);
+    _inherit(A.RelativeOrientationReadingValues, A.AbsoluteOrientationReadingValues);
+    _inheritMany(A.PaymentDetailsBase, [A.PaymentDetailsInit, A.PaymentDetailsUpdate]);
+    _inherit(A.PaymentMethodChangeEvent, A.PaymentRequestUpdateEvent);
+    _inherit(A.PaymentMethodChangeEventInit, A.PaymentRequestUpdateEventInit);
+    _inherit(A.TaskController, A.AbortController);
+    _inherit(A.TaskSignal, A.AbortSignal);
+    _inheritMany(A.AnimationTimeline, [A.ScrollTimeline, A.DocumentTimeline]);
+    _inherit(A.ViewTimeline, A.ScrollTimeline);
+    _inherit(A.CollectedClientPaymentData, A.CollectedClientData);
+    _inherit(A.WindowClient, A.Client);
+    _inherit(A.MultiCacheQueryOptions, A.CacheQueryOptions);
+    _inherit(A.SpeechSynthesisErrorEvent, A.SpeechSynthesisEvent);
+    _inherit(A.SpeechSynthesisErrorEventInit, A.SpeechSynthesisEventInit);
+    _inheritMany(A.SVGAnimationElement, [A.SVGAnimateElement, A.SVGSetElement, A.SVGAnimateMotionElement, A.SVGAnimateTransformElement, A.SVGDiscardElement]);
+    _inheritMany(A.EffectTiming, [A.ComputedEffectTiming, A.KeyframeEffectOptions]);
+    _inherit(A.SequenceEffect, A.GroupEffect);
+    _inherit(A.KeyframeEffect, A.AnimationEffect);
+    _inherit(A.KeyframeAnimationOptions, A.KeyframeEffectOptions);
+    _inheritMany(A.BluetoothDataFilterInit, [A.BluetoothManufacturerDataFilterInit, A.BluetoothServiceDataFilterInit]);
+    _inheritMany(A.PermissionStatus, [A.BluetoothPermissionResult, A.USBPermissionResult, A.XRPermissionStatus]);
+    _inheritMany(A.BaseAudioContext, [A.AudioContext, A.OfflineAudioContext]);
+    _inheritMany(A.AudioNode, [A.AudioScheduledSourceNode, A.AnalyserNode, A.AudioDestinationNode, A.BiquadFilterNode, A.ChannelMergerNode, A.ChannelSplitterNode, A.ConvolverNode, A.DelayNode, A.DynamicsCompressorNode, A.GainNode, A.IIRFilterNode, A.MediaElementAudioSourceNode, A.MediaStreamAudioDestinationNode, A.MediaStreamAudioSourceNode, A.MediaStreamTrackAudioSourceNode, A.PannerNode, A.ScriptProcessorNode, A.StereoPannerNode, A.WaveShaperNode, A.AudioWorkletNode]);
+    _inheritMany(A.AudioNodeOptions, [A.AnalyserOptions, A.BiquadFilterOptions, A.ChannelMergerOptions, A.ChannelSplitterOptions, A.ConvolverOptions, A.DelayOptions, A.DynamicsCompressorOptions, A.GainOptions, A.IIRFilterOptions, A.OscillatorOptions, A.PannerOptions, A.StereoPannerOptions, A.WaveShaperOptions, A.AudioWorkletNodeOptions]);
+    _inheritMany(A.AudioScheduledSourceNode, [A.AudioBufferSourceNode, A.ConstantSourceNode, A.OscillatorNode]);
+    _inherit(A.PeriodicWaveOptions, A.PeriodicWaveConstraints);
+    _inherit(A.AudioWorklet, A.Worklet);
+    _inheritMany(A.AuthenticatorResponse, [A.AuthenticatorAttestationResponse, A.AuthenticatorAssertionResponse]);
+    _inheritMany(A.PublicKeyCredentialEntity, [A.PublicKeyCredentialRpEntity, A.PublicKeyCredentialUserEntity]);
+    _inheritMany(A.GPUObjectDescriptorBase, [A.GPUDeviceDescriptor, A.GPUBufferDescriptor, A.GPUTextureDescriptor, A.GPUTextureViewDescriptor, A.GPUExternalTextureDescriptor, A.GPUSamplerDescriptor, A.GPUBindGroupLayoutDescriptor, A.GPUBindGroupDescriptor, A.GPUPipelineLayoutDescriptor, A.GPUShaderModuleDescriptor, A.GPUPipelineDescriptorBase, A.GPUCommandBufferDescriptor, A.GPUCommandEncoderDescriptor, A.GPUComputePassDescriptor, A.GPURenderPassDescriptor, A.GPURenderPassLayout, A.GPURenderBundleDescriptor, A.GPUQueueDescriptor, A.GPUQuerySetDescriptor]);
+    _inheritMany(A.GPUPipelineDescriptorBase, [A.GPUComputePipelineDescriptor, A.GPURenderPipelineDescriptor]);
+    _inheritMany(A.GPUProgrammableStage, [A.GPUFragmentState, A.GPUVertexState]);
+    _inherit(A.GPUImageCopyBuffer, A.GPUImageDataLayout);
+    _inherit(A.GPUImageCopyTextureTagged, A.GPUImageCopyTexture);
+    _inherit(A.GPURenderBundleEncoderDescriptor, A.GPURenderPassLayout);
+    _inheritMany(A.GPUError, [A.GPUValidationError, A.GPUOutOfMemoryError, A.GPUInternalError]);
+    _inheritMany(A.MIDIPort, [A.MIDIInput, A.MIDIOutput]);
+    _inherit(A.RTCRtpEncodingParameters, A.RTCRtpCodingParameters);
+    _inheritMany(A.RTCStats, [A.RTCRtpStreamStats, A.RTCCodecStats, A.RTCMediaSourceStats, A.RTCAudioPlayoutStats, A.RTCPeerConnectionStats, A.RTCDataChannelStats, A.RTCTransportStats, A.RTCIceCandidateStats, A.RTCIceCandidatePairStats, A.RTCCertificateStats]);
+    _inheritMany(A.RTCRtpStreamStats, [A.RTCReceivedRtpStreamStats, A.RTCSentRtpStreamStats]);
+    _inheritMany(A.RTCReceivedRtpStreamStats, [A.RTCInboundRtpStreamStats, A.RTCRemoteInboundRtpStreamStats]);
+    _inheritMany(A.RTCSentRtpStreamStats, [A.RTCOutboundRtpStreamStats, A.RTCRemoteOutboundRtpStreamStats]);
+    _inheritMany(A.RTCMediaSourceStats, [A.RTCAudioSourceStats, A.RTCVideoSourceStats]);
+    _inheritMany(A.RTCOfferAnswerOptions, [A.RTCOfferOptions, A.RTCAnswerOptions]);
+    _inherit(A.RTCRtpSynchronizationSource, A.RTCRtpContributingSource);
+    _inherit(A.WebTransportReceiveStream, A.ReadableStream);
+    _inheritMany(A.XRDepthInformation, [A.XRCPUDepthInformation, A.XRWebGLDepthInformation]);
+    _inheritMany(A.XRSpace, [A.XRJointSpace, A.XRReferenceSpace]);
+    _inheritMany(A.XRPose, [A.XRJointPose, A.XRViewerPose]);
+    _inherit(A.XRBoundedReferenceSpace, A.XRReferenceSpace);
+    _inheritMany(A.XRLayer, [A.XRWebGLLayer, A.XRCompositionLayer]);
+    _inheritMany(A.XRCompositionLayer, [A.XRProjectionLayer, A.XRQuadLayer, A.XRCylinderLayer, A.XREquirectLayer, A.XRCubeLayer]);
+    _inherit(A.XRWebGLSubImage, A.XRSubImage);
+    _inheritMany(A.XRLayerInit, [A.XRQuadLayerInit, A.XRCylinderLayerInit, A.XREquirectLayerInit, A.XRCubeLayerInit]);
+    _inheritMany(A.XRMediaLayerInit, [A.XRMediaQuadLayerInit, A.XRMediaCylinderLayerInit, A.XRMediaEquirectLayerInit]);
+    _inherit(A.ScreenDetailed, A.Screen);
+    _inheritMany(A.XMLHttpRequestEventTarget, [A.XMLHttpRequestUpload, A.XMLHttpRequest]);
+    _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A.ListMixin);
+    _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
+    _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, A.ListMixin);
+    _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
   })();
   var init = {
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: [],
+    types: ["@(@)", "@(@,String)", "@(String)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")
   };
+  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","ANGLE_instanced_arrays":"LegacyJavaScriptObject","CSPViolationReportBody":"LegacyJavaScriptObject","SecurityPolicyViolationEvent":"LegacyJavaScriptObject","SecurityPolicyViolationEventInit":"LegacyJavaScriptObject","XMLSerializer":"LegacyJavaScriptObject","InnerHTML":"LegacyJavaScriptObject","Element":"LegacyJavaScriptObject","Range":"LegacyJavaScriptObject","EXT_blend_minmax":"LegacyJavaScriptObject","EXT_color_buffer_float":"LegacyJavaScriptObject","EXT_color_buffer_half_float":"LegacyJavaScriptObject","WebGLTimerQueryEXT":"LegacyJavaScriptObject","EXT_disjoint_timer_query":"LegacyJavaScriptObject","EXT_disjoint_timer_query_webgl2":"LegacyJavaScriptObject","EXT_float_blend":"LegacyJavaScriptObject","EXT_frag_depth":"LegacyJavaScriptObject","EXT_sRGB":"LegacyJavaScriptObject","EXT_shader_texture_lod":"LegacyJavaScriptObject","EXT_texture_compression_bptc":"LegacyJavaScriptObject","EXT_texture_compression_rgtc":"LegacyJavaScriptObject","EXT_texture_filter_anisotropic":"LegacyJavaScriptObject","EXT_texture_norm16":"LegacyJavaScriptObject","IdentityProviderWellKnown":"LegacyJavaScriptObject","IdentityProviderIcon":"LegacyJavaScriptObject","IdentityProviderBranding":"LegacyJavaScriptObject","IdentityProviderAPIConfig":"LegacyJavaScriptObject","IdentityProviderAccount":"LegacyJavaScriptObject","IdentityProviderAccountList":"LegacyJavaScriptObject","IdentityProviderClientMetadata":"LegacyJavaScriptObject","IdentityProviderToken":"LegacyJavaScriptObject","IdentityCredential":"LegacyJavaScriptObject","CredentialRequestOptions":"LegacyJavaScriptObject","IdentityCredentialRequestOptions":"LegacyJavaScriptObject","IdentityProviderConfig":"LegacyJavaScriptObject","IdentityCredentialLogoutRPsRequest":"LegacyJavaScriptObject","IdentityProvider":"LegacyJavaScriptObject","Blob":"LegacyJavaScriptObject","BlobPropertyBag":"LegacyJavaScriptObject","File":"LegacyJavaScriptObject","FilePropertyBag":"LegacyJavaScriptObject","FileList":"LegacyJavaScriptObject","FileReader":"LegacyJavaScriptObject","FileReaderSync":"LegacyJavaScriptObject","URL":"LegacyJavaScriptObject","IDBRequest":"LegacyJavaScriptObject","IDBOpenDBRequest":"LegacyJavaScriptObject","IDBVersionChangeEvent":"LegacyJavaScriptObject","IDBVersionChangeEventInit":"LegacyJavaScriptObject","WindowOrWorkerGlobalScope":"LegacyJavaScriptObject","IDBFactory":"LegacyJavaScriptObject","IDBDatabaseInfo":"LegacyJavaScriptObject","IDBDatabase":"LegacyJavaScriptObject","IDBTransactionOptions":"LegacyJavaScriptObject","IDBObjectStoreParameters":"LegacyJavaScriptObject","IDBObjectStore":"LegacyJavaScriptObject","IDBIndexParameters":"LegacyJavaScriptObject","IDBIndex":"LegacyJavaScriptObject","IDBKeyRange":"LegacyJavaScriptObject","IDBCursor":"LegacyJavaScriptObject","IDBCursorWithValue":"LegacyJavaScriptObject","IDBTransaction":"LegacyJavaScriptObject","KHR_parallel_shader_compile":"LegacyJavaScriptObject","OES_draw_buffers_indexed":"LegacyJavaScriptObject","OES_element_index_uint":"LegacyJavaScriptObject","OES_fbo_render_mipmap":"LegacyJavaScriptObject","OES_standard_derivatives":"LegacyJavaScriptObject","OES_texture_float":"LegacyJavaScriptObject","OES_texture_float_linear":"LegacyJavaScriptObject","OES_texture_half_float":"LegacyJavaScriptObject","OES_texture_half_float_linear":"LegacyJavaScriptObject","WebGLVertexArrayObjectOES":"LegacyJavaScriptObject","OES_vertex_array_object":"LegacyJavaScriptObject","OVR_multiview2":"LegacyJavaScriptObject","SVGElement":"LegacyJavaScriptObject","SVGBoundingBoxOptions":"LegacyJavaScriptObject","SVGGraphicsElement":"LegacyJavaScriptObject","SVGGeometryElement":"LegacyJavaScriptObject","SVGNumber":"LegacyJavaScriptObject","SVGLength":"LegacyJavaScriptObject","SVGAngle":"LegacyJavaScriptObject","SVGNumberList":"LegacyJavaScriptObject","SVGLengthList":"LegacyJavaScriptObject","SVGStringList":"LegacyJavaScriptObject","SVGAnimatedBoolean":"LegacyJavaScriptObject","SVGAnimatedEnumeration":"LegacyJavaScriptObject","SVGAnimatedInteger":"LegacyJavaScriptObject","SVGAnimatedNumber":"LegacyJavaScriptObject","SVGAnimatedLength":"LegacyJavaScriptObject","SVGAnimatedAngle":"LegacyJavaScriptObject","SVGAnimatedString":"LegacyJavaScriptObject","SVGAnimatedRect":"LegacyJavaScriptObject","SVGAnimatedNumberList":"LegacyJavaScriptObject","SVGAnimatedLengthList":"LegacyJavaScriptObject","SVGUnitTypes":"LegacyJavaScriptObject","SVGTests":"LegacyJavaScriptObject","SVGFitToViewBox":"LegacyJavaScriptObject","SVGURIReference":"LegacyJavaScriptObject","Document":"LegacyJavaScriptObject","SVGSVGElement":"LegacyJavaScriptObject","SVGGElement":"LegacyJavaScriptObject","SVGDefsElement":"LegacyJavaScriptObject","SVGDescElement":"LegacyJavaScriptObject","SVGMetadataElement":"LegacyJavaScriptObject","SVGTitleElement":"LegacyJavaScriptObject","SVGSymbolElement":"LegacyJavaScriptObject","SVGUseElement":"LegacyJavaScriptObject","SVGUseElementShadowRoot":"LegacyJavaScriptObject","SVGElementInstance":"LegacyJavaScriptObject","ShadowAnimation":"LegacyJavaScriptObject","SVGSwitchElement":"LegacyJavaScriptObject","GetSVGDocument":"LegacyJavaScriptObject","SVGStyleElement":"LegacyJavaScriptObject","SVGTransform":"LegacyJavaScriptObject","SVGTransformList":"LegacyJavaScriptObject","SVGAnimatedTransformList":"LegacyJavaScriptObject","SVGPreserveAspectRatio":"LegacyJavaScriptObject","SVGAnimatedPreserveAspectRatio":"LegacyJavaScriptObject","SVGPathElement":"LegacyJavaScriptObject","SVGRectElement":"LegacyJavaScriptObject","SVGCircleElement":"LegacyJavaScriptObject","SVGEllipseElement":"LegacyJavaScriptObject","SVGLineElement":"LegacyJavaScriptObject","SVGAnimatedPoints":"LegacyJavaScriptObject","SVGPointList":"LegacyJavaScriptObject","SVGPolylineElement":"LegacyJavaScriptObject","SVGPolygonElement":"LegacyJavaScriptObject","SVGTextContentElement":"LegacyJavaScriptObject","SVGTextPositioningElement":"LegacyJavaScriptObject","SVGTextElement":"LegacyJavaScriptObject","SVGTSpanElement":"LegacyJavaScriptObject","SVGTextPathElement":"LegacyJavaScriptObject","SVGImageElement":"LegacyJavaScriptObject","SVGForeignObjectElement":"LegacyJavaScriptObject","SVGMarkerElement":"LegacyJavaScriptObject","SVGGradientElement":"LegacyJavaScriptObject","SVGLinearGradientElement":"LegacyJavaScriptObject","SVGRadialGradientElement":"LegacyJavaScriptObject","SVGStopElement":"LegacyJavaScriptObject","SVGPatternElement":"LegacyJavaScriptObject","SVGScriptElement":"LegacyJavaScriptObject","SVGAElement":"LegacyJavaScriptObject","SVGViewElement":"LegacyJavaScriptObject","WEBGL_blend_equation_advanced_coherent":"LegacyJavaScriptObject","WEBGL_clip_cull_distance":"LegacyJavaScriptObject","WEBGL_color_buffer_float":"LegacyJavaScriptObject","WEBGL_compressed_texture_astc":"LegacyJavaScriptObject","WEBGL_compressed_texture_etc":"LegacyJavaScriptObject","WEBGL_compressed_texture_etc1":"LegacyJavaScriptObject","WEBGL_compressed_texture_pvrtc":"LegacyJavaScriptObject","WEBGL_compressed_texture_s3tc":"LegacyJavaScriptObject","WEBGL_compressed_texture_s3tc_srgb":"LegacyJavaScriptObject","WEBGL_debug_renderer_info":"LegacyJavaScriptObject","WEBGL_debug_shaders":"LegacyJavaScriptObject","WEBGL_depth_texture":"LegacyJavaScriptObject","WEBGL_draw_buffers":"LegacyJavaScriptObject","WEBGL_draw_instanced_base_vertex_base_instance":"LegacyJavaScriptObject","WEBGL_lose_context":"LegacyJavaScriptObject","WEBGL_multi_draw":"LegacyJavaScriptObject","WEBGL_multi_draw_instanced_base_vertex_base_instance":"LegacyJavaScriptObject","WEBGL_provoking_vertex":"LegacyJavaScriptObject","Crypto":"LegacyJavaScriptObject","Algorithm":"LegacyJavaScriptObject","KeyAlgorithm":"LegacyJavaScriptObject","CryptoKey":"LegacyJavaScriptObject","SubtleCrypto":"LegacyJavaScriptObject","RsaOtherPrimesInfo":"LegacyJavaScriptObject","JsonWebKey":"LegacyJavaScriptObject","CryptoKeyPair":"LegacyJavaScriptObject","RsaKeyGenParams":"LegacyJavaScriptObject","RsaHashedKeyGenParams":"LegacyJavaScriptObject","RsaKeyAlgorithm":"LegacyJavaScriptObject","RsaHashedKeyAlgorithm":"LegacyJavaScriptObject","RsaHashedImportParams":"LegacyJavaScriptObject","RsaPssParams":"LegacyJavaScriptObject","RsaOaepParams":"LegacyJavaScriptObject","EcdsaParams":"LegacyJavaScriptObject","EcKeyGenParams":"LegacyJavaScriptObject","EcKeyAlgorithm":"LegacyJavaScriptObject","EcKeyImportParams":"LegacyJavaScriptObject","EcdhKeyDeriveParams":"LegacyJavaScriptObject","AesCtrParams":"LegacyJavaScriptObject","AesKeyAlgorithm":"LegacyJavaScriptObject","AesKeyGenParams":"LegacyJavaScriptObject","AesDerivedKeyParams":"LegacyJavaScriptObject","AesCbcParams":"LegacyJavaScriptObject","AesGcmParams":"LegacyJavaScriptObject","HmacImportParams":"LegacyJavaScriptObject","HmacKeyAlgorithm":"LegacyJavaScriptObject","HmacKeyGenParams":"LegacyJavaScriptObject","HkdfParams":"LegacyJavaScriptObject","Pbkdf2Params":"LegacyJavaScriptObject","Accelerometer":"LegacyJavaScriptObject","AccelerometerSensorOptions":"LegacyJavaScriptObject","LinearAccelerationSensor":"LegacyJavaScriptObject","GravitySensor":"LegacyJavaScriptObject","AccelerometerReadingValues":"LegacyJavaScriptObject","LinearAccelerationReadingValues":"LegacyJavaScriptObject","GravityReadingValues":"LegacyJavaScriptObject","AmbientLightSensor":"LegacyJavaScriptObject","AmbientLightReadingValues":"LegacyJavaScriptObject","XRAnchor":"LegacyJavaScriptObject","XRFrame":"LegacyJavaScriptObject","XRSession":"LegacyJavaScriptObject","XRHitTestResult":"LegacyJavaScriptObject","XRAnchorSet":"LegacyJavaScriptObject","HTMLAttributionSrcElementUtils":"LegacyJavaScriptObject","HTMLMediaElement":"LegacyJavaScriptObject","MediaDevices":"LegacyJavaScriptObject","AudioOutputOptions":"LegacyJavaScriptObject","Navigator":"LegacyJavaScriptObject","ServiceWorkerGlobalScope":"LegacyJavaScriptObject","ServiceWorkerRegistration":"LegacyJavaScriptObject","BackgroundFetchManager":"LegacyJavaScriptObject","BackgroundFetchUIOptions":"LegacyJavaScriptObject","BackgroundFetchOptions":"LegacyJavaScriptObject","BackgroundFetchRegistration":"LegacyJavaScriptObject","BackgroundFetchRecord":"LegacyJavaScriptObject","BackgroundFetchEvent":"LegacyJavaScriptObject","BackgroundFetchEventInit":"LegacyJavaScriptObject","BackgroundFetchUpdateUIEvent":"LegacyJavaScriptObject","SyncManager":"LegacyJavaScriptObject","SyncEvent":"LegacyJavaScriptObject","SyncEventInit":"LegacyJavaScriptObject","NavigatorBadge":"LegacyJavaScriptObject","BatteryManager":"LegacyJavaScriptObject","CaptureHandleConfig":"LegacyJavaScriptObject","CaptureHandle":"LegacyJavaScriptObject","MediaStreamTrack":"LegacyJavaScriptObject","ClipboardEventInit":"LegacyJavaScriptObject","ClipboardEvent":"LegacyJavaScriptObject","ClipboardItem":"LegacyJavaScriptObject","ClipboardItemOptions":"LegacyJavaScriptObject","Clipboard":"LegacyJavaScriptObject","ClipboardPermissionDescriptor":"LegacyJavaScriptObject","CloseWatcher":"LegacyJavaScriptObject","CloseWatcherOptions":"LegacyJavaScriptObject","Window":"LegacyJavaScriptObject","HTMLBodyElement":"LegacyJavaScriptObject","CompressionStream":"LegacyJavaScriptObject","DecompressionStream":"LegacyJavaScriptObject","PressureObserver":"LegacyJavaScriptObject","PressureRecord":"LegacyJavaScriptObject","PressureObserverOptions":"LegacyJavaScriptObject","ConsoleType":"LegacyJavaScriptObject","ContactAddress":"LegacyJavaScriptObject","ContactInfo":"LegacyJavaScriptObject","ContactsSelectOptions":"LegacyJavaScriptObject","ContactsManager":"LegacyJavaScriptObject","ContentDescription":"LegacyJavaScriptObject","ContentIndex":"LegacyJavaScriptObject","ContentIndexEventInit":"LegacyJavaScriptObject","ContentIndexEvent":"LegacyJavaScriptObject","CookieStore":"LegacyJavaScriptObject","CookieStoreGetOptions":"LegacyJavaScriptObject","CookieInit":"LegacyJavaScriptObject","CookieStoreDeleteOptions":"LegacyJavaScriptObject","CookieListItem":"LegacyJavaScriptObject","CookieStoreManager":"LegacyJavaScriptObject","CookieChangeEvent":"LegacyJavaScriptObject","CookieChangeEventInit":"LegacyJavaScriptObject","ExtendableCookieChangeEvent":"LegacyJavaScriptObject","ExtendableCookieChangeEventInit":"LegacyJavaScriptObject","CrashReportBody":"LegacyJavaScriptObject","Credential":"LegacyJavaScriptObject","CredentialUserData":"LegacyJavaScriptObject","CredentialsContainer":"LegacyJavaScriptObject","CredentialData":"LegacyJavaScriptObject","CredentialCreationOptions":"LegacyJavaScriptObject","PasswordCredential":"LegacyJavaScriptObject","PasswordCredentialData":"LegacyJavaScriptObject","FederatedCredential":"LegacyJavaScriptObject","FederatedCredentialRequestOptions":"LegacyJavaScriptObject","FederatedCredentialInit":"LegacyJavaScriptObject","HTMLIFrameElement":"LegacyJavaScriptObject","ScriptingPolicyReportBody":"LegacyJavaScriptObject","_CSS":"LegacyJavaScriptObject","AnimationWorkletGlobalScope":"LegacyJavaScriptObject","WorkletAnimationEffect":"LegacyJavaScriptObject","WorkletAnimation":"LegacyJavaScriptObject","WorkletGroupEffect":"LegacyJavaScriptObject","CSSAnimation":"LegacyJavaScriptObject","AnimationEvent":"LegacyJavaScriptObject","AnimationEventInit":"LegacyJavaScriptObject","CSSRule":"LegacyJavaScriptObject","CSSKeyframeRule":"LegacyJavaScriptObject","CSSKeyframesRule":"LegacyJavaScriptObject","GlobalEventHandlers":"LegacyJavaScriptObject","CSSImportRule":"LegacyJavaScriptObject","CSSLayerBlockRule":"LegacyJavaScriptObject","CSSLayerStatementRule":"LegacyJavaScriptObject","CSSColorProfileRule":"LegacyJavaScriptObject","CSSConditionRule":"LegacyJavaScriptObject","CSSMediaRule":"LegacyJavaScriptObject","CSSSupportsRule":"LegacyJavaScriptObject","CSSContainerRule":"LegacyJavaScriptObject","ContentVisibilityAutoStateChangedEvent":"LegacyJavaScriptObject","ContentVisibilityAutoStateChangedEventInit":"LegacyJavaScriptObject","CSSCounterStyleRule":"LegacyJavaScriptObject","FontFaceDescriptors":"LegacyJavaScriptObject","FontFace":"LegacyJavaScriptObject","FontFaceFeatures":"LegacyJavaScriptObject","FontFaceVariationAxis":"LegacyJavaScriptObject","FontFaceVariations":"LegacyJavaScriptObject","FontFacePalette":"LegacyJavaScriptObject","FontFacePalettes":"LegacyJavaScriptObject","FontFaceSetLoadEventInit":"LegacyJavaScriptObject","FontFaceSetLoadEvent":"LegacyJavaScriptObject","FontFaceSet":"LegacyJavaScriptObject","FontFaceSource":"LegacyJavaScriptObject","CSSFontFaceRule":"LegacyJavaScriptObject","CSSFontFeatureValuesRule":"LegacyJavaScriptObject","CSSFontFeatureValuesMap":"LegacyJavaScriptObject","CSSFontPaletteValuesRule":"LegacyJavaScriptObject","Highlight":"LegacyJavaScriptObject","HighlightRegistry":"LegacyJavaScriptObject","LayoutWorkletGlobalScope":"LegacyJavaScriptObject","LayoutOptions":"LegacyJavaScriptObject","LayoutChild":"LegacyJavaScriptObject","LayoutFragment":"LegacyJavaScriptObject","IntrinsicSizes":"LegacyJavaScriptObject","LayoutConstraints":"LegacyJavaScriptObject","LayoutConstraintsOptions":"LegacyJavaScriptObject","ChildBreakToken":"LegacyJavaScriptObject","BreakToken":"LegacyJavaScriptObject","BreakTokenOptions":"LegacyJavaScriptObject","LayoutEdges":"LegacyJavaScriptObject","FragmentResultOptions":"LegacyJavaScriptObject","FragmentResult":"LegacyJavaScriptObject","IntrinsicSizesResultOptions":"LegacyJavaScriptObject","SVGClipPathElement":"LegacyJavaScriptObject","SVGMaskElement":"LegacyJavaScriptObject","FocusableAreasOption":"LegacyJavaScriptObject","SpatialNavigationSearchOptions":"LegacyJavaScriptObject","NavigationEvent":"LegacyJavaScriptObject","NavigationEventInit":"LegacyJavaScriptObject","CSSStyleRule":"LegacyJavaScriptObject","PaintWorkletGlobalScope":"LegacyJavaScriptObject","PaintRenderingContext2DSettings":"LegacyJavaScriptObject","PaintRenderingContext2D":"LegacyJavaScriptObject","PaintSize":"LegacyJavaScriptObject","CSSParserOptions":"LegacyJavaScriptObject","CSSParserRule":"LegacyJavaScriptObject","CSSParserAtRule":"LegacyJavaScriptObject","CSSParserQualifiedRule":"LegacyJavaScriptObject","CSSParserDeclaration":"LegacyJavaScriptObject","CSSParserValue":"LegacyJavaScriptObject","CSSParserBlock":"LegacyJavaScriptObject","CSSParserFunction":"LegacyJavaScriptObject","PropertyDefinition":"LegacyJavaScriptObject","CSSPropertyRule":"LegacyJavaScriptObject","CSSPseudoElement":"LegacyJavaScriptObject","NamedFlowMap":"LegacyJavaScriptObject","NamedFlow":"LegacyJavaScriptObject","Region":"LegacyJavaScriptObject","CSSTransition":"LegacyJavaScriptObject","TransitionEvent":"LegacyJavaScriptObject","TransitionEventInit":"LegacyJavaScriptObject","CSSStyleValue":"LegacyJavaScriptObject","StylePropertyMapReadOnly":"LegacyJavaScriptObject","StylePropertyMap":"LegacyJavaScriptObject","ElementCSSInlineStyle":"LegacyJavaScriptObject","CSSUnparsedValue":"LegacyJavaScriptObject","CSSVariableReferenceValue":"LegacyJavaScriptObject","CSSKeywordValue":"LegacyJavaScriptObject","CSSNumericType":"LegacyJavaScriptObject","CSSNumericValue":"LegacyJavaScriptObject","CSSUnitValue":"LegacyJavaScriptObject","CSSMathValue":"LegacyJavaScriptObject","CSSMathSum":"LegacyJavaScriptObject","CSSMathProduct":"LegacyJavaScriptObject","CSSMathNegate":"LegacyJavaScriptObject","CSSMathInvert":"LegacyJavaScriptObject","CSSMathMin":"LegacyJavaScriptObject","CSSMathMax":"LegacyJavaScriptObject","CSSMathClamp":"LegacyJavaScriptObject","CSSNumericArray":"LegacyJavaScriptObject","CSSTransformValue":"LegacyJavaScriptObject","CSSTransformComponent":"LegacyJavaScriptObject","CSSTranslate":"LegacyJavaScriptObject","CSSRotate":"LegacyJavaScriptObject","CSSScale":"LegacyJavaScriptObject","CSSSkew":"LegacyJavaScriptObject","CSSSkewX":"LegacyJavaScriptObject","CSSSkewY":"LegacyJavaScriptObject","CSSPerspective":"LegacyJavaScriptObject","CSSMatrixComponent":"LegacyJavaScriptObject","CSSMatrixComponentOptions":"LegacyJavaScriptObject","CSSImageValue":"LegacyJavaScriptObject","CSSColorValue":"LegacyJavaScriptObject","CSSRGB":"LegacyJavaScriptObject","CSSHSL":"LegacyJavaScriptObject","CSSHWB":"LegacyJavaScriptObject","CSSLab":"LegacyJavaScriptObject","CSSLCH":"LegacyJavaScriptObject","CSSOKLab":"LegacyJavaScriptObject","CSSOKLCH":"LegacyJavaScriptObject","CSSColor":"LegacyJavaScriptObject","ViewTransition":"LegacyJavaScriptObject","ScrollOptions":"LegacyJavaScriptObject","ScrollToOptions":"LegacyJavaScriptObject","MediaQueryList":"LegacyJavaScriptObject","MediaQueryListEvent":"LegacyJavaScriptObject","MediaQueryListEventInit":"LegacyJavaScriptObject","Screen":"LegacyJavaScriptObject","CaretPosition":"LegacyJavaScriptObject","ScrollIntoViewOptions":"LegacyJavaScriptObject","CheckVisibilityOptions":"LegacyJavaScriptObject","HTMLElement":"LegacyJavaScriptObject","HTMLImageElement":"LegacyJavaScriptObject","MouseEvent":"LegacyJavaScriptObject","BoxQuadOptions":"LegacyJavaScriptObject","ConvertCoordinateOptions":"LegacyJavaScriptObject","GeometryUtils":"LegacyJavaScriptObject","VisualViewport":"LegacyJavaScriptObject","MediaList":"LegacyJavaScriptObject","StyleSheet":"LegacyJavaScriptObject","CSSStyleSheet":"LegacyJavaScriptObject","CSSStyleSheetInit":"LegacyJavaScriptObject","StyleSheetList":"LegacyJavaScriptObject","DocumentOrShadowRoot":"LegacyJavaScriptObject","LinkStyle":"LegacyJavaScriptObject","CSSRuleList":"LegacyJavaScriptObject","CSSGroupingRule":"LegacyJavaScriptObject","CSSPageRule":"LegacyJavaScriptObject","CSSMarginRule":"LegacyJavaScriptObject","CSSNamespaceRule":"LegacyJavaScriptObject","CSSStyleDeclaration":"LegacyJavaScriptObject","ElementInternals":"LegacyJavaScriptObject","CustomStateSet":"LegacyJavaScriptObject","DataCue":"LegacyJavaScriptObject","DeprecationReportBody":"LegacyJavaScriptObject","NavigatorDeviceMemory":"LegacyJavaScriptObject","DevicePosture":"LegacyJavaScriptObject","DigitalGoodsService":"LegacyJavaScriptObject","ItemDetails":"LegacyJavaScriptObject","PurchaseDetails":"LegacyJavaScriptObject","Event":"LegacyJavaScriptObject","EventInit":"LegacyJavaScriptObject","CustomEvent":"LegacyJavaScriptObject","CustomEventInit":"LegacyJavaScriptObject","EventTarget":"LegacyJavaScriptObject","EventListenerOptions":"LegacyJavaScriptObject","AddEventListenerOptions":"LegacyJavaScriptObject","AbortController":"LegacyJavaScriptObject","AbortSignal":"LegacyJavaScriptObject","NonElementParentNode":"LegacyJavaScriptObject","ParentNode":"LegacyJavaScriptObject","NonDocumentTypeChildNode":"LegacyJavaScriptObject","ChildNode":"LegacyJavaScriptObject","Slottable":"LegacyJavaScriptObject","NodeList":"LegacyJavaScriptObject","HTMLCollection":"LegacyJavaScriptObject","MutationObserver":"LegacyJavaScriptObject","MutationObserverInit":"LegacyJavaScriptObject","MutationRecord":"LegacyJavaScriptObject","Node":"LegacyJavaScriptObject","GetRootNodeOptions":"LegacyJavaScriptObject","XMLDocument":"LegacyJavaScriptObject","ElementCreationOptions":"LegacyJavaScriptObject","DOMImplementation":"LegacyJavaScriptObject","DocumentType":"LegacyJavaScriptObject","DocumentFragment":"LegacyJavaScriptObject","ShadowRoot":"LegacyJavaScriptObject","ShadowRootInit":"LegacyJavaScriptObject","NamedNodeMap":"LegacyJavaScriptObject","Attr":"LegacyJavaScriptObject","CharacterData":"LegacyJavaScriptObject","Text":"LegacyJavaScriptObject","CDATASection":"LegacyJavaScriptObject","ProcessingInstruction":"LegacyJavaScriptObject","Comment":"LegacyJavaScriptObject","AbstractRange":"LegacyJavaScriptObject","StaticRangeInit":"LegacyJavaScriptObject","StaticRange":"LegacyJavaScriptObject","NodeIterator":"LegacyJavaScriptObject","TreeWalker":"LegacyJavaScriptObject","DOMTokenList":"LegacyJavaScriptObject","XPathResult":"LegacyJavaScriptObject","XPathExpression":"LegacyJavaScriptObject","XPathEvaluatorBase":"LegacyJavaScriptObject","XPathEvaluator":"LegacyJavaScriptObject","XSLTProcessor":"LegacyJavaScriptObject","EditContextInit":"LegacyJavaScriptObject","EditContext":"LegacyJavaScriptObject","TextUpdateEventInit":"LegacyJavaScriptObject","TextUpdateEvent":"LegacyJavaScriptObject","TextFormatInit":"LegacyJavaScriptObject","TextFormat":"LegacyJavaScriptObject","TextFormatUpdateEventInit":"LegacyJavaScriptObject","TextFormatUpdateEvent":"LegacyJavaScriptObject","CharacterBoundsUpdateEventInit":"LegacyJavaScriptObject","CharacterBoundsUpdateEvent":"LegacyJavaScriptObject","PerformanceElementTiming":"LegacyJavaScriptObject","TextDecoderCommon":"LegacyJavaScriptObject","TextDecoderOptions":"LegacyJavaScriptObject","TextDecodeOptions":"LegacyJavaScriptObject","TextDecoder":"LegacyJavaScriptObject","TextEncoderCommon":"LegacyJavaScriptObject","TextEncoderEncodeIntoResult":"LegacyJavaScriptObject","TextEncoder":"LegacyJavaScriptObject","TextDecoderStream":"LegacyJavaScriptObject","TextEncoderStream":"LegacyJavaScriptObject","MediaKeySystemConfiguration":"LegacyJavaScriptObject","MediaKeySystemMediaCapability":"LegacyJavaScriptObject","MediaKeySystemAccess":"LegacyJavaScriptObject","MediaKeys":"LegacyJavaScriptObject","MediaKeySession":"LegacyJavaScriptObject","MediaKeyStatusMap":"LegacyJavaScriptObject","MediaKeyMessageEvent":"LegacyJavaScriptObject","MediaKeyMessageEventInit":"LegacyJavaScriptObject","MediaEncryptedEvent":"LegacyJavaScriptObject","MediaEncryptedEventInit":"LegacyJavaScriptObject","HTMLInputElement":"LegacyJavaScriptObject","DataTransferItem":"LegacyJavaScriptObject","FileSystemEntry":"LegacyJavaScriptObject","FileSystemDirectoryEntry":"LegacyJavaScriptObject","FileSystemFlags":"LegacyJavaScriptObject","FileSystemDirectoryReader":"LegacyJavaScriptObject","FileSystemFileEntry":"LegacyJavaScriptObject","FileSystem":"LegacyJavaScriptObject","PerformanceEventTiming":"LegacyJavaScriptObject","EventCounts":"LegacyJavaScriptObject","Performance":"LegacyJavaScriptObject","PerformanceObserverInit":"LegacyJavaScriptObject","ColorSelectionResult":"LegacyJavaScriptObject","ColorSelectionOptions":"LegacyJavaScriptObject","EyeDropper":"LegacyJavaScriptObject","Headers":"LegacyJavaScriptObject","Body":"LegacyJavaScriptObject","Request":"LegacyJavaScriptObject","RequestInit":"LegacyJavaScriptObject","Response":"LegacyJavaScriptObject","ResponseInit":"LegacyJavaScriptObject","AuthenticationExtensionsClientInputs":"LegacyJavaScriptObject","HMACGetSecretInput":"LegacyJavaScriptObject","AuthenticationExtensionsClientOutputs":"LegacyJavaScriptObject","HMACGetSecretOutput":"LegacyJavaScriptObject","FileSystemPermissionDescriptor":"LegacyJavaScriptObject","FileSystemHandlePermissionDescriptor":"LegacyJavaScriptObject","FileSystemHandle":"LegacyJavaScriptObject","FilePickerAcceptType":"LegacyJavaScriptObject","FilePickerOptions":"LegacyJavaScriptObject","OpenFilePickerOptions":"LegacyJavaScriptObject","SaveFilePickerOptions":"LegacyJavaScriptObject","DirectoryPickerOptions":"LegacyJavaScriptObject","SVGFilterElement":"LegacyJavaScriptObject","SVGFilterPrimitiveStandardAttributes":"LegacyJavaScriptObject","SVGFEBlendElement":"LegacyJavaScriptObject","SVGFEColorMatrixElement":"LegacyJavaScriptObject","SVGFEComponentTransferElement":"LegacyJavaScriptObject","SVGComponentTransferFunctionElement":"LegacyJavaScriptObject","SVGFEFuncRElement":"LegacyJavaScriptObject","SVGFEFuncGElement":"LegacyJavaScriptObject","SVGFEFuncBElement":"LegacyJavaScriptObject","SVGFEFuncAElement":"LegacyJavaScriptObject","SVGFECompositeElement":"LegacyJavaScriptObject","SVGFEConvolveMatrixElement":"LegacyJavaScriptObject","SVGFEDiffuseLightingElement":"LegacyJavaScriptObject","SVGFEDistantLightElement":"LegacyJavaScriptObject","SVGFEPointLightElement":"LegacyJavaScriptObject","SVGFESpotLightElement":"LegacyJavaScriptObject","SVGFEDisplacementMapElement":"LegacyJavaScriptObject","SVGFEDropShadowElement":"LegacyJavaScriptObject","SVGFEFloodElement":"LegacyJavaScriptObject","SVGFEGaussianBlurElement":"LegacyJavaScriptObject","SVGFEImageElement":"LegacyJavaScriptObject","SVGFEMergeElement":"LegacyJavaScriptObject","SVGFEMergeNodeElement":"LegacyJavaScriptObject","SVGFEMorphologyElement":"LegacyJavaScriptObject","SVGFEOffsetElement":"LegacyJavaScriptObject","SVGFESpecularLightingElement":"LegacyJavaScriptObject","SVGFETileElement":"LegacyJavaScriptObject","SVGFETurbulenceElement":"LegacyJavaScriptObject","FontMetrics":"LegacyJavaScriptObject","Baseline":"LegacyJavaScriptObject","Font":"LegacyJavaScriptObject","FileSystemCreateWritableOptions":"LegacyJavaScriptObject","FileSystemFileHandle":"LegacyJavaScriptObject","FileSystemGetFileOptions":"LegacyJavaScriptObject","FileSystemGetDirectoryOptions":"LegacyJavaScriptObject","FileSystemRemoveOptions":"LegacyJavaScriptObject","FileSystemDirectoryHandle":"LegacyJavaScriptObject","WriteParams":"LegacyJavaScriptObject","FileSystemWritableFileStream":"LegacyJavaScriptObject","FileSystemReadWriteOptions":"LegacyJavaScriptObject","FileSystemSyncAccessHandle":"LegacyJavaScriptObject","StorageManager":"LegacyJavaScriptObject","FullscreenOptions":"LegacyJavaScriptObject","GamepadHapticActuator":"LegacyJavaScriptObject","GamepadEffectParameters":"LegacyJavaScriptObject","GamepadPose":"LegacyJavaScriptObject","GamepadTouch":"LegacyJavaScriptObject","Gamepad":"LegacyJavaScriptObject","GamepadButton":"LegacyJavaScriptObject","GamepadEvent":"LegacyJavaScriptObject","GamepadEventInit":"LegacyJavaScriptObject","WindowEventHandlers":"LegacyJavaScriptObject","Sensor":"LegacyJavaScriptObject","SensorOptions":"LegacyJavaScriptObject","SensorErrorEvent":"LegacyJavaScriptObject","SensorErrorEventInit":"LegacyJavaScriptObject","MockSensorConfiguration":"LegacyJavaScriptObject","MockSensor":"LegacyJavaScriptObject","MockSensorReadingValues":"LegacyJavaScriptObject","GeolocationSensor":"LegacyJavaScriptObject","GeolocationSensorOptions":"LegacyJavaScriptObject","ReadOptions":"LegacyJavaScriptObject","GeolocationSensorReading":"LegacyJavaScriptObject","GeolocationReadingValues":"LegacyJavaScriptObject","Geolocation":"LegacyJavaScriptObject","PositionOptions":"LegacyJavaScriptObject","GeolocationPosition":"LegacyJavaScriptObject","GeolocationCoordinates":"LegacyJavaScriptObject","GeolocationPositionError":"LegacyJavaScriptObject","DOMPointReadOnly":"LegacyJavaScriptObject","DOMPoint":"LegacyJavaScriptObject","DOMPointInit":"LegacyJavaScriptObject","DOMRectReadOnly":"LegacyJavaScriptObject","DOMRect":"LegacyJavaScriptObject","DOMRectInit":"LegacyJavaScriptObject","DOMRectList":"LegacyJavaScriptObject","DOMQuad":"LegacyJavaScriptObject","DOMQuadInit":"LegacyJavaScriptObject","DOMMatrixReadOnly":"LegacyJavaScriptObject","DOMMatrix":"LegacyJavaScriptObject","DOMMatrix2DInit":"LegacyJavaScriptObject","DOMMatrixInit":"LegacyJavaScriptObject","RelatedApplication":"LegacyJavaScriptObject","GlobalPrivacyControl":"LegacyJavaScriptObject","Gyroscope":"LegacyJavaScriptObject","GyroscopeSensorOptions":"LegacyJavaScriptObject","GyroscopeReadingValues":"LegacyJavaScriptObject","HTMLAllCollection":"LegacyJavaScriptObject","HTMLFormControlsCollection":"LegacyJavaScriptObject","RadioNodeList":"LegacyJavaScriptObject","HTMLOptionsCollection":"LegacyJavaScriptObject","DOMStringList":"LegacyJavaScriptObject","HTMLUnknownElement":"LegacyJavaScriptObject","HTMLOrSVGElement":"LegacyJavaScriptObject","DOMStringMap":"LegacyJavaScriptObject","HTMLHtmlElement":"LegacyJavaScriptObject","HTMLHeadElement":"LegacyJavaScriptObject","HTMLTitleElement":"LegacyJavaScriptObject","HTMLBaseElement":"LegacyJavaScriptObject","HTMLLinkElement":"LegacyJavaScriptObject","HTMLMetaElement":"LegacyJavaScriptObject","HTMLStyleElement":"LegacyJavaScriptObject","HTMLHeadingElement":"LegacyJavaScriptObject","HTMLParagraphElement":"LegacyJavaScriptObject","HTMLHRElement":"LegacyJavaScriptObject","HTMLPreElement":"LegacyJavaScriptObject","HTMLQuoteElement":"LegacyJavaScriptObject","HTMLOListElement":"LegacyJavaScriptObject","HTMLUListElement":"LegacyJavaScriptObject","HTMLMenuElement":"LegacyJavaScriptObject","HTMLLIElement":"LegacyJavaScriptObject","HTMLDListElement":"LegacyJavaScriptObject","HTMLDivElement":"LegacyJavaScriptObject","HTMLAnchorElement":"LegacyJavaScriptObject","HTMLDataElement":"LegacyJavaScriptObject","HTMLTimeElement":"LegacyJavaScriptObject","HTMLSpanElement":"LegacyJavaScriptObject","HTMLBRElement":"LegacyJavaScriptObject","HTMLHyperlinkElementUtils":"LegacyJavaScriptObject","HTMLModElement":"LegacyJavaScriptObject","HTMLPictureElement":"LegacyJavaScriptObject","HTMLSourceElement":"LegacyJavaScriptObject","HTMLEmbedElement":"LegacyJavaScriptObject","HTMLObjectElement":"LegacyJavaScriptObject","HTMLVideoElement":"LegacyJavaScriptObject","HTMLAudioElement":"LegacyJavaScriptObject","HTMLTrackElement":"LegacyJavaScriptObject","MediaError":"LegacyJavaScriptObject","AudioTrackList":"LegacyJavaScriptObject","AudioTrack":"LegacyJavaScriptObject","VideoTrackList":"LegacyJavaScriptObject","VideoTrack":"LegacyJavaScriptObject","TextTrackList":"LegacyJavaScriptObject","TextTrack":"LegacyJavaScriptObject","TextTrackCueList":"LegacyJavaScriptObject","TextTrackCue":"LegacyJavaScriptObject","TimeRanges":"LegacyJavaScriptObject","TrackEvent":"LegacyJavaScriptObject","TrackEventInit":"LegacyJavaScriptObject","HTMLMapElement":"LegacyJavaScriptObject","HTMLAreaElement":"LegacyJavaScriptObject","HTMLTableElement":"LegacyJavaScriptObject","HTMLTableCaptionElement":"LegacyJavaScriptObject","HTMLTableColElement":"LegacyJavaScriptObject","HTMLTableSectionElement":"LegacyJavaScriptObject","HTMLTableRowElement":"LegacyJavaScriptObject","HTMLTableCellElement":"LegacyJavaScriptObject","HTMLFormElement":"LegacyJavaScriptObject","HTMLLabelElement":"LegacyJavaScriptObject","HTMLButtonElement":"LegacyJavaScriptObject","HTMLSelectElement":"LegacyJavaScriptObject","HTMLDataListElement":"LegacyJavaScriptObject","HTMLOptGroupElement":"LegacyJavaScriptObject","HTMLOptionElement":"LegacyJavaScriptObject","HTMLTextAreaElement":"LegacyJavaScriptObject","HTMLOutputElement":"LegacyJavaScriptObject","HTMLProgressElement":"LegacyJavaScriptObject","HTMLMeterElement":"LegacyJavaScriptObject","HTMLFieldSetElement":"LegacyJavaScriptObject","HTMLLegendElement":"LegacyJavaScriptObject","ValidityState":"LegacyJavaScriptObject","SubmitEvent":"LegacyJavaScriptObject","SubmitEventInit":"LegacyJavaScriptObject","FormDataEvent":"LegacyJavaScriptObject","FormDataEventInit":"LegacyJavaScriptObject","HTMLDetailsElement":"LegacyJavaScriptObject","HTMLDialogElement":"LegacyJavaScriptObject","HTMLScriptElement":"LegacyJavaScriptObject","HTMLTemplateElement":"LegacyJavaScriptObject","HTMLSlotElement":"LegacyJavaScriptObject","AssignedNodesOptions":"LegacyJavaScriptObject","HTMLCanvasElement":"LegacyJavaScriptObject","CanvasRenderingContext2DSettings":"LegacyJavaScriptObject","CanvasRenderingContext2D":"LegacyJavaScriptObject","CanvasState":"LegacyJavaScriptObject","CanvasTransform":"LegacyJavaScriptObject","CanvasCompositing":"LegacyJavaScriptObject","CanvasImageSmoothing":"LegacyJavaScriptObject","CanvasFillStrokeStyles":"LegacyJavaScriptObject","CanvasShadowStyles":"LegacyJavaScriptObject","CanvasFilters":"LegacyJavaScriptObject","CanvasRect":"LegacyJavaScriptObject","CanvasDrawPath":"LegacyJavaScriptObject","CanvasUserInterface":"LegacyJavaScriptObject","CanvasText":"LegacyJavaScriptObject","CanvasDrawImage":"LegacyJavaScriptObject","CanvasImageData":"LegacyJavaScriptObject","CanvasPathDrawingStyles":"LegacyJavaScriptObject","CanvasTextDrawingStyles":"LegacyJavaScriptObject","CanvasPath":"LegacyJavaScriptObject","CanvasGradient":"LegacyJavaScriptObject","CanvasPattern":"LegacyJavaScriptObject","TextMetrics":"LegacyJavaScriptObject","ImageDataSettings":"LegacyJavaScriptObject","ImageData":"LegacyJavaScriptObject","Path2D":"LegacyJavaScriptObject","ImageBitmapRenderingContext":"LegacyJavaScriptObject","ImageBitmapRenderingContextSettings":"LegacyJavaScriptObject","ImageEncodeOptions":"LegacyJavaScriptObject","OffscreenCanvas":"LegacyJavaScriptObject","OffscreenCanvasRenderingContext2D":"LegacyJavaScriptObject","CustomElementRegistry":"LegacyJavaScriptObject","ElementDefinitionOptions":"LegacyJavaScriptObject","ValidityStateFlags":"LegacyJavaScriptObject","UserActivation":"LegacyJavaScriptObject","FocusOptions":"LegacyJavaScriptObject","ElementContentEditable":"LegacyJavaScriptObject","DataTransfer":"LegacyJavaScriptObject","DataTransferItemList":"LegacyJavaScriptObject","DragEvent":"LegacyJavaScriptObject","DragEventInit":"LegacyJavaScriptObject","PopoverTargetElement":"LegacyJavaScriptObject","ToggleEvent":"LegacyJavaScriptObject","ToggleEventInit":"LegacyJavaScriptObject","WindowPostMessageOptions":"LegacyJavaScriptObject","BarProp":"LegacyJavaScriptObject","Location":"LegacyJavaScriptObject","History":"LegacyJavaScriptObject","PopStateEvent":"LegacyJavaScriptObject","PopStateEventInit":"LegacyJavaScriptObject","HashChangeEvent":"LegacyJavaScriptObject","HashChangeEventInit":"LegacyJavaScriptObject","PageTransitionEvent":"LegacyJavaScriptObject","PageTransitionEventInit":"LegacyJavaScriptObject","BeforeUnloadEvent":"LegacyJavaScriptObject","ErrorEvent":"LegacyJavaScriptObject","ErrorEventInit":"LegacyJavaScriptObject","PromiseRejectionEvent":"LegacyJavaScriptObject","PromiseRejectionEventInit":"LegacyJavaScriptObject","DOMParser":"LegacyJavaScriptObject","NavigatorID":"LegacyJavaScriptObject","NavigatorLanguage":"LegacyJavaScriptObject","NavigatorOnLine":"LegacyJavaScriptObject","NavigatorContentUtils":"LegacyJavaScriptObject","NavigatorCookies":"LegacyJavaScriptObject","NavigatorPlugins":"LegacyJavaScriptObject","PluginArray":"LegacyJavaScriptObject","MimeTypeArray":"LegacyJavaScriptObject","Plugin":"LegacyJavaScriptObject","MimeType":"LegacyJavaScriptObject","ImageBitmap":"LegacyJavaScriptObject","ImageBitmapOptions":"LegacyJavaScriptObject","AnimationFrameProvider":"LegacyJavaScriptObject","MessageEvent":"LegacyJavaScriptObject","MessageEventInit":"LegacyJavaScriptObject","EventSource":"LegacyJavaScriptObject","EventSourceInit":"LegacyJavaScriptObject","MessageChannel":"LegacyJavaScriptObject","MessagePort":"LegacyJavaScriptObject","StructuredSerializeOptions":"LegacyJavaScriptObject","BroadcastChannel":"LegacyJavaScriptObject","WorkerGlobalScope":"LegacyJavaScriptObject","DedicatedWorkerGlobalScope":"LegacyJavaScriptObject","SharedWorkerGlobalScope":"LegacyJavaScriptObject","AbstractWorker":"LegacyJavaScriptObject","Worker":"LegacyJavaScriptObject","WorkerOptions":"LegacyJavaScriptObject","SharedWorker":"LegacyJavaScriptObject","NavigatorConcurrentHardware":"LegacyJavaScriptObject","WorkerNavigator":"LegacyJavaScriptObject","WorkerLocation":"LegacyJavaScriptObject","WorkletGlobalScope":"LegacyJavaScriptObject","Worklet":"LegacyJavaScriptObject","WorkletOptions":"LegacyJavaScriptObject","Storage":"LegacyJavaScriptObject","WindowSessionStorage":"LegacyJavaScriptObject","WindowLocalStorage":"LegacyJavaScriptObject","StorageEvent":"LegacyJavaScriptObject","StorageEventInit":"LegacyJavaScriptObject","HTMLMarqueeElement":"LegacyJavaScriptObject","HTMLFrameSetElement":"LegacyJavaScriptObject","HTMLFrameElement":"LegacyJavaScriptObject","HTMLDirectoryElement":"LegacyJavaScriptObject","HTMLFontElement":"LegacyJavaScriptObject","HTMLParamElement":"LegacyJavaScriptObject","External":"LegacyJavaScriptObject","IdleOptions":"LegacyJavaScriptObject","IdleDetector":"LegacyJavaScriptObject","ImageCapture":"LegacyJavaScriptObject","PhotoCapabilities":"LegacyJavaScriptObject","PhotoSettings":"LegacyJavaScriptObject","MediaSettingsRange":"LegacyJavaScriptObject","MediaTrackSupportedConstraints":"LegacyJavaScriptObject","MediaTrackCapabilities":"LegacyJavaScriptObject","MediaTrackConstraintSet":"LegacyJavaScriptObject","MediaTrackSettings":"LegacyJavaScriptObject","ConstrainPoint2DParameters":"LegacyJavaScriptObject","Point2D":"LegacyJavaScriptObject","ImageResource":"LegacyJavaScriptObject","Ink":"LegacyJavaScriptObject","InkPresenterParam":"LegacyJavaScriptObject","InkPresenter":"LegacyJavaScriptObject","InkTrailStyle":"LegacyJavaScriptObject","InputDeviceCapabilities":"LegacyJavaScriptObject","InputDeviceCapabilitiesInit":"LegacyJavaScriptObject","UIEvent":"LegacyJavaScriptObject","UIEventInit":"LegacyJavaScriptObject","InputEvent":"LegacyJavaScriptObject","InputEventInit":"LegacyJavaScriptObject","IntersectionObserver":"LegacyJavaScriptObject","IntersectionObserverEntry":"LegacyJavaScriptObject","IntersectionObserverEntryInit":"LegacyJavaScriptObject","IntersectionObserverInit":"LegacyJavaScriptObject","InterventionReportBody":"LegacyJavaScriptObject","IsInputPendingOptions":"LegacyJavaScriptObject","Scheduling":"LegacyJavaScriptObject","Profiler":"LegacyJavaScriptObject","ProfilerTrace":"LegacyJavaScriptObject","ProfilerSample":"LegacyJavaScriptObject","ProfilerStack":"LegacyJavaScriptObject","ProfilerFrame":"LegacyJavaScriptObject","ProfilerInitOptions":"LegacyJavaScriptObject","Keyboard":"LegacyJavaScriptObject","KeyboardLayoutMap":"LegacyJavaScriptObject","LargestContentfulPaint":"LegacyJavaScriptObject","LayoutShift":"LegacyJavaScriptObject","LayoutShiftAttribution":"LegacyJavaScriptObject","QueryOptions":"LegacyJavaScriptObject","FontData":"LegacyJavaScriptObject","PerformanceLongTaskTiming":"LegacyJavaScriptObject","TaskAttributionTiming":"LegacyJavaScriptObject","Magnetometer":"LegacyJavaScriptObject","MagnetometerSensorOptions":"LegacyJavaScriptObject","UncalibratedMagnetometer":"LegacyJavaScriptObject","MagnetometerReadingValues":"LegacyJavaScriptObject","UncalibratedMagnetometerReadingValues":"LegacyJavaScriptObject","BeforeInstallPromptEvent":"LegacyJavaScriptObject","PromptResponseObject":"LegacyJavaScriptObject","MathMLElement":"LegacyJavaScriptObject","MediaConfiguration":"LegacyJavaScriptObject","MediaDecodingConfiguration":"LegacyJavaScriptObject","MediaEncodingConfiguration":"LegacyJavaScriptObject","VideoConfiguration":"LegacyJavaScriptObject","AudioConfiguration":"LegacyJavaScriptObject","MediaCapabilitiesKeySystemConfiguration":"LegacyJavaScriptObject","KeySystemTrackConfiguration":"LegacyJavaScriptObject","MediaCapabilitiesInfo":"LegacyJavaScriptObject","MediaCapabilitiesDecodingInfo":"LegacyJavaScriptObject","MediaCapabilitiesEncodingInfo":"LegacyJavaScriptObject","MediaCapabilities":"LegacyJavaScriptObject","VideoPlaybackQuality":"LegacyJavaScriptObject","MediaSource":"LegacyJavaScriptObject","MediaSourceHandle":"LegacyJavaScriptObject","SourceBuffer":"LegacyJavaScriptObject","SourceBufferList":"LegacyJavaScriptObject","MockCapturePromptResultConfiguration":"LegacyJavaScriptObject","MockCaptureDeviceConfiguration":"LegacyJavaScriptObject","MockCameraConfiguration":"LegacyJavaScriptObject","MockMicrophoneConfiguration":"LegacyJavaScriptObject","CanvasCaptureMediaStreamTrack":"LegacyJavaScriptObject","CaptureActionEvent":"LegacyJavaScriptObject","CaptureActionEventInit":"LegacyJavaScriptObject","CropTarget":"LegacyJavaScriptObject","BrowserCaptureMediaStreamTrack":"LegacyJavaScriptObject","MediaStream":"LegacyJavaScriptObject","MediaTrackConstraints":"LegacyJavaScriptObject","MediaStreamTrackEvent":"LegacyJavaScriptObject","MediaStreamTrackEventInit":"LegacyJavaScriptObject","OverconstrainedError":"LegacyJavaScriptObject","MediaDeviceInfo":"LegacyJavaScriptObject","InputDeviceInfo":"LegacyJavaScriptObject","MediaStreamConstraints":"LegacyJavaScriptObject","DoubleRange":"LegacyJavaScriptObject","ConstrainDoubleRange":"LegacyJavaScriptObject","ULongRange":"LegacyJavaScriptObject","ConstrainULongRange":"LegacyJavaScriptObject","ConstrainBooleanParameters":"LegacyJavaScriptObject","ConstrainDOMStringParameters":"LegacyJavaScriptObject","DevicePermissionDescriptor":"LegacyJavaScriptObject","CameraDevicePermissionDescriptor":"LegacyJavaScriptObject","MediaStreamTrackProcessor":"LegacyJavaScriptObject","MediaStreamTrackProcessorInit":"LegacyJavaScriptObject","VideoTrackGenerator":"LegacyJavaScriptObject","ViewportMediaStreamConstraints":"LegacyJavaScriptObject","MediaSession":"LegacyJavaScriptObject","MediaMetadata":"LegacyJavaScriptObject","MediaMetadataInit":"LegacyJavaScriptObject","MediaImage":"LegacyJavaScriptObject","MediaPositionState":"LegacyJavaScriptObject","MediaSessionActionDetails":"LegacyJavaScriptObject","MediaRecorder":"LegacyJavaScriptObject","MediaRecorderOptions":"LegacyJavaScriptObject","BlobEvent":"LegacyJavaScriptObject","BlobEventInit":"LegacyJavaScriptObject","HTMLModelElement":"LegacyJavaScriptObject","RTCRtpSendParameters":"LegacyJavaScriptObject","Navigation":"LegacyJavaScriptObject","NavigationUpdateCurrentEntryOptions":"LegacyJavaScriptObject","NavigationOptions":"LegacyJavaScriptObject","NavigationNavigateOptions":"LegacyJavaScriptObject","NavigationReloadOptions":"LegacyJavaScriptObject","NavigationResult":"LegacyJavaScriptObject","NavigationCurrentEntryChangeEvent":"LegacyJavaScriptObject","NavigationCurrentEntryChangeEventInit":"LegacyJavaScriptObject","NavigationTransition":"LegacyJavaScriptObject","NavigateEvent":"LegacyJavaScriptObject","NavigateEventInit":"LegacyJavaScriptObject","NavigationInterceptOptions":"LegacyJavaScriptObject","NavigationDestination":"LegacyJavaScriptObject","NavigationHistoryEntry":"LegacyJavaScriptObject","PerformanceNavigationTiming":"LegacyJavaScriptObject","PerformanceTiming":"LegacyJavaScriptObject","PerformanceNavigation":"LegacyJavaScriptObject","NavigatorNetworkInformation":"LegacyJavaScriptObject","NetworkInformation":"LegacyJavaScriptObject","Notification":"LegacyJavaScriptObject","NotificationOptions":"LegacyJavaScriptObject","NotificationAction":"LegacyJavaScriptObject","GetNotificationOptions":"LegacyJavaScriptObject","NotificationEvent":"LegacyJavaScriptObject","NotificationEventInit":"LegacyJavaScriptObject","DeviceOrientationEvent":"LegacyJavaScriptObject","DeviceOrientationEventInit":"LegacyJavaScriptObject","DeviceMotionEventAcceleration":"LegacyJavaScriptObject","DeviceMotionEventRotationRate":"LegacyJavaScriptObject","DeviceMotionEvent":"LegacyJavaScriptObject","DeviceMotionEventAccelerationInit":"LegacyJavaScriptObject","DeviceMotionEventRotationRateInit":"LegacyJavaScriptObject","DeviceMotionEventInit":"LegacyJavaScriptObject","OrientationSensor":"LegacyJavaScriptObject","OrientationSensorOptions":"LegacyJavaScriptObject","AbsoluteOrientationSensor":"LegacyJavaScriptObject","RelativeOrientationSensor":"LegacyJavaScriptObject","AbsoluteOrientationReadingValues":"LegacyJavaScriptObject","RelativeOrientationReadingValues":"LegacyJavaScriptObject","Client":"LegacyJavaScriptObject","PerformancePaintTiming":"LegacyJavaScriptObject","PaymentManager":"LegacyJavaScriptObject","CanMakePaymentEvent":"LegacyJavaScriptObject","PaymentRequestDetailsUpdate":"LegacyJavaScriptObject","PaymentRequestEvent":"LegacyJavaScriptObject","PaymentRequestEventInit":"LegacyJavaScriptObject","PaymentHandlerResponse":"LegacyJavaScriptObject","AddressInit":"LegacyJavaScriptObject","PaymentOptions":"LegacyJavaScriptObject","PaymentShippingOption":"LegacyJavaScriptObject","AddressErrors":"LegacyJavaScriptObject","PaymentRequest":"LegacyJavaScriptObject","PaymentMethodData":"LegacyJavaScriptObject","PaymentCurrencyAmount":"LegacyJavaScriptObject","PaymentDetailsBase":"LegacyJavaScriptObject","PaymentDetailsInit":"LegacyJavaScriptObject","PaymentDetailsUpdate":"LegacyJavaScriptObject","PaymentDetailsModifier":"LegacyJavaScriptObject","PaymentItem":"LegacyJavaScriptObject","PaymentCompleteDetails":"LegacyJavaScriptObject","PaymentResponse":"LegacyJavaScriptObject","PaymentValidationErrors":"LegacyJavaScriptObject","PaymentMethodChangeEvent":"LegacyJavaScriptObject","PaymentMethodChangeEventInit":"LegacyJavaScriptObject","PaymentRequestUpdateEvent":"LegacyJavaScriptObject","PaymentRequestUpdateEventInit":"LegacyJavaScriptObject","MemoryMeasurement":"LegacyJavaScriptObject","MemoryBreakdownEntry":"LegacyJavaScriptObject","MemoryAttribution":"LegacyJavaScriptObject","MemoryAttributionContainer":"LegacyJavaScriptObject","PerformanceEntry":"LegacyJavaScriptObject","PerformanceObserver":"LegacyJavaScriptObject","PerformanceObserverCallbackOptions":"LegacyJavaScriptObject","PerformanceObserverEntryList":"LegacyJavaScriptObject","PeriodicSyncManager":"LegacyJavaScriptObject","BackgroundSyncOptions":"LegacyJavaScriptObject","PeriodicSyncEventInit":"LegacyJavaScriptObject","PeriodicSyncEvent":"LegacyJavaScriptObject","PermissionsPolicy":"LegacyJavaScriptObject","PermissionsPolicyViolationReportBody":"LegacyJavaScriptObject","Permissions":"LegacyJavaScriptObject","PermissionDescriptor":"LegacyJavaScriptObject","PermissionStatus":"LegacyJavaScriptObject","PermissionSetParameters":"LegacyJavaScriptObject","PictureInPictureWindow":"LegacyJavaScriptObject","PictureInPictureEvent":"LegacyJavaScriptObject","PictureInPictureEventInit":"LegacyJavaScriptObject","PointerEventInit":"LegacyJavaScriptObject","PointerEvent":"LegacyJavaScriptObject","MouseEventInit":"LegacyJavaScriptObject","HTMLPortalElement":"LegacyJavaScriptObject","PortalActivateOptions":"LegacyJavaScriptObject","PortalHost":"LegacyJavaScriptObject","PortalActivateEvent":"LegacyJavaScriptObject","PortalActivateEventInit":"LegacyJavaScriptObject","Presentation":"LegacyJavaScriptObject","PresentationRequest":"LegacyJavaScriptObject","PresentationAvailability":"LegacyJavaScriptObject","PresentationConnectionAvailableEvent":"LegacyJavaScriptObject","PresentationConnectionAvailableEventInit":"LegacyJavaScriptObject","PresentationConnection":"LegacyJavaScriptObject","PresentationConnectionCloseEvent":"LegacyJavaScriptObject","PresentationConnectionCloseEventInit":"LegacyJavaScriptObject","PresentationReceiver":"LegacyJavaScriptObject","PresentationConnectionList":"LegacyJavaScriptObject","ProximitySensor":"LegacyJavaScriptObject","ProximityReadingValues":"LegacyJavaScriptObject","PushPermissionDescriptor":"LegacyJavaScriptObject","PushManager":"LegacyJavaScriptObject","PushSubscriptionOptions":"LegacyJavaScriptObject","PushSubscriptionOptionsInit":"LegacyJavaScriptObject","PushSubscription":"LegacyJavaScriptObject","PushSubscriptionJSON":"LegacyJavaScriptObject","PushMessageData":"LegacyJavaScriptObject","PushEvent":"LegacyJavaScriptObject","PushEventInit":"LegacyJavaScriptObject","PushSubscriptionChangeEvent":"LegacyJavaScriptObject","PushSubscriptionChangeEventInit":"LegacyJavaScriptObject","XRView":"LegacyJavaScriptObject","XRCamera":"LegacyJavaScriptObject","XRWebGLBinding":"LegacyJavaScriptObject","RemotePlayback":"LegacyJavaScriptObject","ReportBody":"LegacyJavaScriptObject","Report":"LegacyJavaScriptObject","ReportingObserver":"LegacyJavaScriptObject","ReportingObserverOptions":"LegacyJavaScriptObject","GenerateTestReportParameters":"LegacyJavaScriptObject","TopLevelStorageAccessPermissionDescriptor":"LegacyJavaScriptObject","IdleRequestOptions":"LegacyJavaScriptObject","IdleDeadline":"LegacyJavaScriptObject","ResizeObserverOptions":"LegacyJavaScriptObject","ResizeObserver":"LegacyJavaScriptObject","ResizeObserverEntry":"LegacyJavaScriptObject","ResizeObserverSize":"LegacyJavaScriptObject","PerformanceResourceTiming":"LegacyJavaScriptObject","Sanitizer":"LegacyJavaScriptObject","SetHTMLOptions":"LegacyJavaScriptObject","SanitizerConfig":"LegacyJavaScriptObject","NetworkInformationSaveData":"LegacyJavaScriptObject","SchedulerPostTaskOptions":"LegacyJavaScriptObject","Scheduler":"LegacyJavaScriptObject","TaskPriorityChangeEvent":"LegacyJavaScriptObject","TaskPriorityChangeEventInit":"LegacyJavaScriptObject","TaskControllerInit":"LegacyJavaScriptObject","TaskController":"LegacyJavaScriptObject","TaskSignal":"LegacyJavaScriptObject","CaptureController":"LegacyJavaScriptObject","DisplayMediaStreamOptions":"LegacyJavaScriptObject","ScreenOrientation":"LegacyJavaScriptObject","WakeLock":"LegacyJavaScriptObject","WakeLockSentinel":"LegacyJavaScriptObject","ScrollTimelineOptions":"LegacyJavaScriptObject","ScrollTimeline":"LegacyJavaScriptObject","ViewTimelineOptions":"LegacyJavaScriptObject","ViewTimeline":"LegacyJavaScriptObject","AnimationTimeline":"LegacyJavaScriptObject","FragmentDirective":"LegacyJavaScriptObject","SecurePaymentConfirmationRequest":"LegacyJavaScriptObject","AuthenticationExtensionsPaymentInputs":"LegacyJavaScriptObject","CollectedClientPaymentData":"LegacyJavaScriptObject","CollectedClientAdditionalPaymentData":"LegacyJavaScriptObject","PaymentCredentialInstrument":"LegacyJavaScriptObject","Selection":"LegacyJavaScriptObject","Serial":"LegacyJavaScriptObject","SerialPortRequestOptions":"LegacyJavaScriptObject","SerialPortFilter":"LegacyJavaScriptObject","SerialPort":"LegacyJavaScriptObject","SerialPortInfo":"LegacyJavaScriptObject","SerialOptions":"LegacyJavaScriptObject","SerialOutputSignals":"LegacyJavaScriptObject","SerialInputSignals":"LegacyJavaScriptObject","PerformanceServerTiming":"LegacyJavaScriptObject","ServiceWorker":"LegacyJavaScriptObject","ServiceWorkerContainer":"LegacyJavaScriptObject","RegistrationOptions":"LegacyJavaScriptObject","NavigationPreloadManager":"LegacyJavaScriptObject","NavigationPreloadState":"LegacyJavaScriptObject","WindowClient":"LegacyJavaScriptObject","Clients":"LegacyJavaScriptObject","ClientQueryOptions":"LegacyJavaScriptObject","ExtendableEvent":"LegacyJavaScriptObject","ExtendableEventInit":"LegacyJavaScriptObject","FetchEvent":"LegacyJavaScriptObject","FetchEventInit":"LegacyJavaScriptObject","ExtendableMessageEvent":"LegacyJavaScriptObject","ExtendableMessageEventInit":"LegacyJavaScriptObject","Cache":"LegacyJavaScriptObject","CacheQueryOptions":"LegacyJavaScriptObject","CacheStorage":"LegacyJavaScriptObject","MultiCacheQueryOptions":"LegacyJavaScriptObject","FaceDetector":"LegacyJavaScriptObject","FaceDetectorOptions":"LegacyJavaScriptObject","DetectedFace":"LegacyJavaScriptObject","Landmark":"LegacyJavaScriptObject","BarcodeDetector":"LegacyJavaScriptObject","BarcodeDetectorOptions":"LegacyJavaScriptObject","DetectedBarcode":"LegacyJavaScriptObject","SpeechRecognition":"LegacyJavaScriptObject","SpeechRecognitionErrorEvent":"LegacyJavaScriptObject","SpeechRecognitionErrorEventInit":"LegacyJavaScriptObject","SpeechRecognitionAlternative":"LegacyJavaScriptObject","SpeechRecognitionResult":"LegacyJavaScriptObject","SpeechRecognitionResultList":"LegacyJavaScriptObject","SpeechRecognitionEvent":"LegacyJavaScriptObject","SpeechRecognitionEventInit":"LegacyJavaScriptObject","SpeechGrammar":"LegacyJavaScriptObject","SpeechGrammarList":"LegacyJavaScriptObject","SpeechSynthesis":"LegacyJavaScriptObject","SpeechSynthesisUtterance":"LegacyJavaScriptObject","SpeechSynthesisEvent":"LegacyJavaScriptObject","SpeechSynthesisEventInit":"LegacyJavaScriptObject","SpeechSynthesisErrorEvent":"LegacyJavaScriptObject","SpeechSynthesisErrorEventInit":"LegacyJavaScriptObject","SpeechSynthesisVoice":"LegacyJavaScriptObject","NavigatorStorage":"LegacyJavaScriptObject","StorageEstimate":"LegacyJavaScriptObject","ReadableStream":"LegacyJavaScriptObject","ReadableStreamGetReaderOptions":"LegacyJavaScriptObject","ReadableStreamIteratorOptions":"LegacyJavaScriptObject","ReadableWritablePair":"LegacyJavaScriptObject","StreamPipeOptions":"LegacyJavaScriptObject","UnderlyingSource":"LegacyJavaScriptObject","ReadableStreamGenericReader":"LegacyJavaScriptObject","ReadableStreamDefaultReader":"LegacyJavaScriptObject","ReadableStreamReadResult":"LegacyJavaScriptObject","ReadableStreamBYOBReader":"LegacyJavaScriptObject","ReadableStreamDefaultController":"LegacyJavaScriptObject","ReadableByteStreamController":"LegacyJavaScriptObject","ReadableStreamBYOBRequest":"LegacyJavaScriptObject","WritableStream":"LegacyJavaScriptObject","UnderlyingSink":"LegacyJavaScriptObject","WritableStreamDefaultWriter":"LegacyJavaScriptObject","WritableStreamDefaultController":"LegacyJavaScriptObject","TransformStream":"LegacyJavaScriptObject","Transformer":"LegacyJavaScriptObject","TransformStreamDefaultController":"LegacyJavaScriptObject","QueuingStrategy":"LegacyJavaScriptObject","QueuingStrategyInit":"LegacyJavaScriptObject","ByteLengthQueuingStrategy":"LegacyJavaScriptObject","CountQueuingStrategy":"LegacyJavaScriptObject","GenericTransformStream":"LegacyJavaScriptObject","TimeEvent":"LegacyJavaScriptObject","SVGAnimationElement":"LegacyJavaScriptObject","SVGAnimateElement":"LegacyJavaScriptObject","SVGSetElement":"LegacyJavaScriptObject","SVGAnimateMotionElement":"LegacyJavaScriptObject","SVGMPathElement":"LegacyJavaScriptObject","SVGAnimateTransformElement":"LegacyJavaScriptObject","SVGDiscardElement":"LegacyJavaScriptObject","_TestUtils":"LegacyJavaScriptObject","TextDetector":"LegacyJavaScriptObject","DetectedText":"LegacyJavaScriptObject","TouchInit":"LegacyJavaScriptObject","Touch":"LegacyJavaScriptObject","TouchList":"LegacyJavaScriptObject","TouchEventInit":"LegacyJavaScriptObject","TouchEvent":"LegacyJavaScriptObject","TrustedHTML":"LegacyJavaScriptObject","TrustedScript":"LegacyJavaScriptObject","TrustedScriptURL":"LegacyJavaScriptObject","TrustedTypePolicyFactory":"LegacyJavaScriptObject","TrustedTypePolicy":"LegacyJavaScriptObject","TrustedTypePolicyOptions":"LegacyJavaScriptObject","NavigatorUABrandVersion":"LegacyJavaScriptObject","UADataValues":"LegacyJavaScriptObject","UALowEntropyJSON":"LegacyJavaScriptObject","NavigatorUAData":"LegacyJavaScriptObject","NavigatorUA":"LegacyJavaScriptObject","FocusEvent":"LegacyJavaScriptObject","FocusEventInit":"LegacyJavaScriptObject","EventModifierInit":"LegacyJavaScriptObject","WheelEvent":"LegacyJavaScriptObject","WheelEventInit":"LegacyJavaScriptObject","KeyboardEvent":"LegacyJavaScriptObject","KeyboardEventInit":"LegacyJavaScriptObject","CompositionEvent":"LegacyJavaScriptObject","CompositionEventInit":"LegacyJavaScriptObject","MutationEvent":"LegacyJavaScriptObject","URLSearchParams":"LegacyJavaScriptObject","URLPattern":"LegacyJavaScriptObject","URLPatternInit":"LegacyJavaScriptObject","URLPatternOptions":"LegacyJavaScriptObject","URLPatternResult":"LegacyJavaScriptObject","URLPatternComponentResult":"LegacyJavaScriptObject","PerformanceMarkOptions":"LegacyJavaScriptObject","PerformanceMeasureOptions":"LegacyJavaScriptObject","PerformanceMark":"LegacyJavaScriptObject","PerformanceMeasure":"LegacyJavaScriptObject","VideoFrameCallbackMetadata":"LegacyJavaScriptObject","VirtualKeyboard":"LegacyJavaScriptObject","ARIAMixin":"LegacyJavaScriptObject","WebAssemblyInstantiatedSource":"LegacyJavaScriptObject","_WebAssembly":"LegacyJavaScriptObject","ModuleExportDescriptor":"LegacyJavaScriptObject","ModuleImportDescriptor":"LegacyJavaScriptObject","Module":"LegacyJavaScriptObject","Instance":"LegacyJavaScriptObject","MemoryDescriptor":"LegacyJavaScriptObject","Memory":"LegacyJavaScriptObject","TableDescriptor":"LegacyJavaScriptObject","Table":"LegacyJavaScriptObject","GlobalDescriptor":"LegacyJavaScriptObject","Global":"LegacyJavaScriptObject","Animation":"LegacyJavaScriptObject","AnimationEffect":"LegacyJavaScriptObject","EffectTiming":"LegacyJavaScriptObject","OptionalEffectTiming":"LegacyJavaScriptObject","ComputedEffectTiming":"LegacyJavaScriptObject","GroupEffect":"LegacyJavaScriptObject","AnimationNodeList":"LegacyJavaScriptObject","SequenceEffect":"LegacyJavaScriptObject","KeyframeEffect":"LegacyJavaScriptObject","KeyframeEffectOptions":"LegacyJavaScriptObject","AnimationPlaybackEvent":"LegacyJavaScriptObject","AnimationPlaybackEventInit":"LegacyJavaScriptObject","DocumentTimelineOptions":"LegacyJavaScriptObject","DocumentTimeline":"LegacyJavaScriptObject","BaseComputedKeyframe":"LegacyJavaScriptObject","BasePropertyIndexedKeyframe":"LegacyJavaScriptObject","BaseKeyframe":"LegacyJavaScriptObject","Animatable":"LegacyJavaScriptObject","KeyframeAnimationOptions":"LegacyJavaScriptObject","GetAnimationsOptions":"LegacyJavaScriptObject","LaunchParams":"LegacyJavaScriptObject","LaunchQueue":"LegacyJavaScriptObject","BluetoothDataFilterInit":"LegacyJavaScriptObject","BluetoothManufacturerDataFilterInit":"LegacyJavaScriptObject","BluetoothServiceDataFilterInit":"LegacyJavaScriptObject","BluetoothLEScanFilterInit":"LegacyJavaScriptObject","RequestDeviceOptions":"LegacyJavaScriptObject","Bluetooth":"LegacyJavaScriptObject","BluetoothPermissionDescriptor":"LegacyJavaScriptObject","AllowedBluetoothDevice":"LegacyJavaScriptObject","BluetoothPermissionStorage":"LegacyJavaScriptObject","BluetoothPermissionResult":"LegacyJavaScriptObject","ValueEvent":"LegacyJavaScriptObject","ValueEventInit":"LegacyJavaScriptObject","BluetoothDevice":"LegacyJavaScriptObject","WatchAdvertisementsOptions":"LegacyJavaScriptObject","BluetoothManufacturerDataMap":"LegacyJavaScriptObject","BluetoothServiceDataMap":"LegacyJavaScriptObject","BluetoothAdvertisingEvent":"LegacyJavaScriptObject","BluetoothAdvertisingEventInit":"LegacyJavaScriptObject","BluetoothRemoteGATTServer":"LegacyJavaScriptObject","BluetoothRemoteGATTService":"LegacyJavaScriptObject","BluetoothRemoteGATTCharacteristic":"LegacyJavaScriptObject","BluetoothCharacteristicProperties":"LegacyJavaScriptObject","BluetoothRemoteGATTDescriptor":"LegacyJavaScriptObject","CharacteristicEventHandlers":"LegacyJavaScriptObject","BluetoothDeviceEventHandlers":"LegacyJavaScriptObject","ServiceEventHandlers":"LegacyJavaScriptObject","BluetoothUUID":"LegacyJavaScriptObject","NavigatorLocks":"LegacyJavaScriptObject","LockManager":"LegacyJavaScriptObject","LockOptions":"LegacyJavaScriptObject","LockManagerSnapshot":"LegacyJavaScriptObject","LockInfo":"LegacyJavaScriptObject","Lock":"LegacyJavaScriptObject","NDEFMessage":"LegacyJavaScriptObject","NDEFMessageInit":"LegacyJavaScriptObject","NDEFRecord":"LegacyJavaScriptObject","NDEFRecordInit":"LegacyJavaScriptObject","NDEFReader":"LegacyJavaScriptObject","NDEFReadingEvent":"LegacyJavaScriptObject","NDEFReadingEventInit":"LegacyJavaScriptObject","NDEFWriteOptions":"LegacyJavaScriptObject","NDEFMakeReadOnlyOptions":"LegacyJavaScriptObject","NDEFScanOptions":"LegacyJavaScriptObject","OTPCredential":"LegacyJavaScriptObject","OTPCredentialRequestOptions":"LegacyJavaScriptObject","ShareData":"LegacyJavaScriptObject","BaseAudioContext":"LegacyJavaScriptObject","AudioContext":"LegacyJavaScriptObject","AudioContextOptions":"LegacyJavaScriptObject","AudioSinkOptions":"LegacyJavaScriptObject","AudioSinkInfo":"LegacyJavaScriptObject","AudioTimestamp":"LegacyJavaScriptObject","AudioRenderCapacity":"LegacyJavaScriptObject","AudioRenderCapacityOptions":"LegacyJavaScriptObject","AudioRenderCapacityEvent":"LegacyJavaScriptObject","AudioRenderCapacityEventInit":"LegacyJavaScriptObject","OfflineAudioContext":"LegacyJavaScriptObject","OfflineAudioContextOptions":"LegacyJavaScriptObject","OfflineAudioCompletionEvent":"LegacyJavaScriptObject","OfflineAudioCompletionEventInit":"LegacyJavaScriptObject","AudioBuffer":"LegacyJavaScriptObject","AudioBufferOptions":"LegacyJavaScriptObject","AudioNode":"LegacyJavaScriptObject","AudioNodeOptions":"LegacyJavaScriptObject","AudioParam":"LegacyJavaScriptObject","AudioScheduledSourceNode":"LegacyJavaScriptObject","AnalyserNode":"LegacyJavaScriptObject","AnalyserOptions":"LegacyJavaScriptObject","AudioBufferSourceNode":"LegacyJavaScriptObject","AudioBufferSourceOptions":"LegacyJavaScriptObject","AudioDestinationNode":"LegacyJavaScriptObject","AudioListener":"LegacyJavaScriptObject","AudioProcessingEvent":"LegacyJavaScriptObject","AudioProcessingEventInit":"LegacyJavaScriptObject","BiquadFilterNode":"LegacyJavaScriptObject","BiquadFilterOptions":"LegacyJavaScriptObject","ChannelMergerNode":"LegacyJavaScriptObject","ChannelMergerOptions":"LegacyJavaScriptObject","ChannelSplitterNode":"LegacyJavaScriptObject","ChannelSplitterOptions":"LegacyJavaScriptObject","ConstantSourceNode":"LegacyJavaScriptObject","ConstantSourceOptions":"LegacyJavaScriptObject","ConvolverNode":"LegacyJavaScriptObject","ConvolverOptions":"LegacyJavaScriptObject","DelayNode":"LegacyJavaScriptObject","DelayOptions":"LegacyJavaScriptObject","DynamicsCompressorNode":"LegacyJavaScriptObject","DynamicsCompressorOptions":"LegacyJavaScriptObject","GainNode":"LegacyJavaScriptObject","GainOptions":"LegacyJavaScriptObject","IIRFilterNode":"LegacyJavaScriptObject","IIRFilterOptions":"LegacyJavaScriptObject","MediaElementAudioSourceNode":"LegacyJavaScriptObject","MediaElementAudioSourceOptions":"LegacyJavaScriptObject","MediaStreamAudioDestinationNode":"LegacyJavaScriptObject","MediaStreamAudioSourceNode":"LegacyJavaScriptObject","MediaStreamAudioSourceOptions":"LegacyJavaScriptObject","MediaStreamTrackAudioSourceNode":"LegacyJavaScriptObject","MediaStreamTrackAudioSourceOptions":"LegacyJavaScriptObject","OscillatorNode":"LegacyJavaScriptObject","OscillatorOptions":"LegacyJavaScriptObject","PannerNode":"LegacyJavaScriptObject","PannerOptions":"LegacyJavaScriptObject","PeriodicWave":"LegacyJavaScriptObject","PeriodicWaveConstraints":"LegacyJavaScriptObject","PeriodicWaveOptions":"LegacyJavaScriptObject","ScriptProcessorNode":"LegacyJavaScriptObject","StereoPannerNode":"LegacyJavaScriptObject","StereoPannerOptions":"LegacyJavaScriptObject","WaveShaperNode":"LegacyJavaScriptObject","WaveShaperOptions":"LegacyJavaScriptObject","AudioWorklet":"LegacyJavaScriptObject","AudioWorkletGlobalScope":"LegacyJavaScriptObject","AudioParamMap":"LegacyJavaScriptObject","AudioWorkletNode":"LegacyJavaScriptObject","AudioWorkletNodeOptions":"LegacyJavaScriptObject","AudioWorkletProcessor":"LegacyJavaScriptObject","AudioParamDescriptor":"LegacyJavaScriptObject","PublicKeyCredential":"LegacyJavaScriptObject","RegistrationResponseJSON":"LegacyJavaScriptObject","AuthenticatorAttestationResponseJSON":"LegacyJavaScriptObject","AuthenticationResponseJSON":"LegacyJavaScriptObject","AuthenticatorAssertionResponseJSON":"LegacyJavaScriptObject","AuthenticationExtensionsClientOutputsJSON":"LegacyJavaScriptObject","PublicKeyCredentialCreationOptionsJSON":"LegacyJavaScriptObject","PublicKeyCredentialUserEntityJSON":"LegacyJavaScriptObject","PublicKeyCredentialDescriptorJSON":"LegacyJavaScriptObject","AuthenticationExtensionsClientInputsJSON":"LegacyJavaScriptObject","PublicKeyCredentialRequestOptionsJSON":"LegacyJavaScriptObject","AuthenticatorResponse":"LegacyJavaScriptObject","AuthenticatorAttestationResponse":"LegacyJavaScriptObject","AuthenticatorAssertionResponse":"LegacyJavaScriptObject","PublicKeyCredentialParameters":"LegacyJavaScriptObject","PublicKeyCredentialCreationOptions":"LegacyJavaScriptObject","PublicKeyCredentialEntity":"LegacyJavaScriptObject","PublicKeyCredentialRpEntity":"LegacyJavaScriptObject","PublicKeyCredentialUserEntity":"LegacyJavaScriptObject","AuthenticatorSelectionCriteria":"LegacyJavaScriptObject","PublicKeyCredentialRequestOptions":"LegacyJavaScriptObject","CollectedClientData":"LegacyJavaScriptObject","TokenBinding":"LegacyJavaScriptObject","PublicKeyCredentialDescriptor":"LegacyJavaScriptObject","CredentialPropertiesOutput":"LegacyJavaScriptObject","AuthenticationExtensionsPRFValues":"LegacyJavaScriptObject","AuthenticationExtensionsPRFInputs":"LegacyJavaScriptObject","AuthenticationExtensionsPRFOutputs":"LegacyJavaScriptObject","AuthenticationExtensionsLargeBlobInputs":"LegacyJavaScriptObject","AuthenticationExtensionsLargeBlobOutputs":"LegacyJavaScriptObject","AuthenticationExtensionsDevicePublicKeyInputs":"LegacyJavaScriptObject","AuthenticationExtensionsDevicePublicKeyOutputs":"LegacyJavaScriptObject","AudioEncoderConfig":"LegacyJavaScriptObject","AacEncoderConfig":"LegacyJavaScriptObject","VideoEncoderConfig":"LegacyJavaScriptObject","AvcEncoderConfig":"LegacyJavaScriptObject","FlacEncoderConfig":"LegacyJavaScriptObject","HevcEncoderConfig":"LegacyJavaScriptObject","OpusEncoderConfig":"LegacyJavaScriptObject","AudioDecoder":"LegacyJavaScriptObject","AudioDecoderInit":"LegacyJavaScriptObject","VideoDecoder":"LegacyJavaScriptObject","VideoDecoderInit":"LegacyJavaScriptObject","AudioEncoder":"LegacyJavaScriptObject","AudioEncoderInit":"LegacyJavaScriptObject","EncodedAudioChunkMetadata":"LegacyJavaScriptObject","VideoEncoder":"LegacyJavaScriptObject","VideoEncoderInit":"LegacyJavaScriptObject","EncodedVideoChunkMetadata":"LegacyJavaScriptObject","SvcOutputMetadata":"LegacyJavaScriptObject","AudioDecoderSupport":"LegacyJavaScriptObject","VideoDecoderSupport":"LegacyJavaScriptObject","AudioEncoderSupport":"LegacyJavaScriptObject","VideoEncoderSupport":"LegacyJavaScriptObject","AudioDecoderConfig":"LegacyJavaScriptObject","VideoDecoderConfig":"LegacyJavaScriptObject","VideoEncoderEncodeOptions":"LegacyJavaScriptObject","EncodedAudioChunk":"LegacyJavaScriptObject","EncodedAudioChunkInit":"LegacyJavaScriptObject","EncodedVideoChunk":"LegacyJavaScriptObject","EncodedVideoChunkInit":"LegacyJavaScriptObject","AudioData":"LegacyJavaScriptObject","AudioDataInit":"LegacyJavaScriptObject","AudioDataCopyToOptions":"LegacyJavaScriptObject","VideoFrame":"LegacyJavaScriptObject","VideoFrameInit":"LegacyJavaScriptObject","VideoFrameBufferInit":"LegacyJavaScriptObject","VideoFrameMetadata":"LegacyJavaScriptObject","VideoFrameCopyToOptions":"LegacyJavaScriptObject","PlaneLayout":"LegacyJavaScriptObject","VideoColorSpace":"LegacyJavaScriptObject","VideoColorSpaceInit":"LegacyJavaScriptObject","ImageDecoder":"LegacyJavaScriptObject","ImageDecoderInit":"LegacyJavaScriptObject","ImageDecodeOptions":"LegacyJavaScriptObject","ImageDecodeResult":"LegacyJavaScriptObject","ImageTrackList":"LegacyJavaScriptObject","ImageTrack":"LegacyJavaScriptObject","Ed448Params":"LegacyJavaScriptObject","NavigatorAutomationInformation":"LegacyJavaScriptObject","WebGLContextAttributes":"LegacyJavaScriptObject","WebGLObject":"LegacyJavaScriptObject","WebGLBuffer":"LegacyJavaScriptObject","WebGLFramebuffer":"LegacyJavaScriptObject","WebGLProgram":"LegacyJavaScriptObject","WebGLRenderbuffer":"LegacyJavaScriptObject","WebGLShader":"LegacyJavaScriptObject","WebGLTexture":"LegacyJavaScriptObject","WebGLUniformLocation":"LegacyJavaScriptObject","WebGLActiveInfo":"LegacyJavaScriptObject","WebGLShaderPrecisionFormat":"LegacyJavaScriptObject","WebGLRenderingContextBase":"LegacyJavaScriptObject","WebGLRenderingContextOverloads":"LegacyJavaScriptObject","WebGLRenderingContext":"LegacyJavaScriptObject","WebGLContextEvent":"LegacyJavaScriptObject","WebGLContextEventInit":"LegacyJavaScriptObject","WebGLQuery":"LegacyJavaScriptObject","WebGLSampler":"LegacyJavaScriptObject","WebGLSync":"LegacyJavaScriptObject","WebGLTransformFeedback":"LegacyJavaScriptObject","WebGLVertexArrayObject":"LegacyJavaScriptObject","WebGL2RenderingContextBase":"LegacyJavaScriptObject","WebGL2RenderingContextOverloads":"LegacyJavaScriptObject","WebGL2RenderingContext":"LegacyJavaScriptObject","GPUObjectBase":"LegacyJavaScriptObject","GPUObjectDescriptorBase":"LegacyJavaScriptObject","GPUSupportedLimits":"LegacyJavaScriptObject","GPUSupportedFeatures":"LegacyJavaScriptObject","GPUAdapterInfo":"LegacyJavaScriptObject","NavigatorGPU":"LegacyJavaScriptObject","GPU":"LegacyJavaScriptObject","GPURequestAdapterOptions":"LegacyJavaScriptObject","GPUAdapter":"LegacyJavaScriptObject","GPUDeviceDescriptor":"LegacyJavaScriptObject","GPUDevice":"LegacyJavaScriptObject","GPUBuffer":"LegacyJavaScriptObject","GPUBufferDescriptor":"LegacyJavaScriptObject","_GPUBufferUsage":"LegacyJavaScriptObject","_GPUMapMode":"LegacyJavaScriptObject","GPUTexture":"LegacyJavaScriptObject","GPUTextureDescriptor":"LegacyJavaScriptObject","_GPUTextureUsage":"LegacyJavaScriptObject","GPUTextureView":"LegacyJavaScriptObject","GPUTextureViewDescriptor":"LegacyJavaScriptObject","GPUExternalTexture":"LegacyJavaScriptObject","GPUExternalTextureDescriptor":"LegacyJavaScriptObject","GPUSampler":"LegacyJavaScriptObject","GPUSamplerDescriptor":"LegacyJavaScriptObject","GPUBindGroupLayout":"LegacyJavaScriptObject","GPUBindGroupLayoutDescriptor":"LegacyJavaScriptObject","GPUBindGroupLayoutEntry":"LegacyJavaScriptObject","_GPUShaderStage":"LegacyJavaScriptObject","GPUBufferBindingLayout":"LegacyJavaScriptObject","GPUSamplerBindingLayout":"LegacyJavaScriptObject","GPUTextureBindingLayout":"LegacyJavaScriptObject","GPUStorageTextureBindingLayout":"LegacyJavaScriptObject","GPUExternalTextureBindingLayout":"LegacyJavaScriptObject","GPUBindGroup":"LegacyJavaScriptObject","GPUBindGroupDescriptor":"LegacyJavaScriptObject","GPUBindGroupEntry":"LegacyJavaScriptObject","GPUBufferBinding":"LegacyJavaScriptObject","GPUPipelineLayout":"LegacyJavaScriptObject","GPUPipelineLayoutDescriptor":"LegacyJavaScriptObject","GPUShaderModule":"LegacyJavaScriptObject","GPUShaderModuleDescriptor":"LegacyJavaScriptObject","GPUShaderModuleCompilationHint":"LegacyJavaScriptObject","GPUCompilationMessage":"LegacyJavaScriptObject","GPUCompilationInfo":"LegacyJavaScriptObject","GPUPipelineError":"LegacyJavaScriptObject","GPUPipelineErrorInit":"LegacyJavaScriptObject","GPUPipelineDescriptorBase":"LegacyJavaScriptObject","GPUPipelineBase":"LegacyJavaScriptObject","GPUProgrammableStage":"LegacyJavaScriptObject","GPUComputePipeline":"LegacyJavaScriptObject","GPUComputePipelineDescriptor":"LegacyJavaScriptObject","GPURenderPipeline":"LegacyJavaScriptObject","GPURenderPipelineDescriptor":"LegacyJavaScriptObject","GPUPrimitiveState":"LegacyJavaScriptObject","GPUMultisampleState":"LegacyJavaScriptObject","GPUFragmentState":"LegacyJavaScriptObject","GPUColorTargetState":"LegacyJavaScriptObject","GPUBlendState":"LegacyJavaScriptObject","_GPUColorWrite":"LegacyJavaScriptObject","GPUBlendComponent":"LegacyJavaScriptObject","GPUDepthStencilState":"LegacyJavaScriptObject","GPUStencilFaceState":"LegacyJavaScriptObject","GPUVertexState":"LegacyJavaScriptObject","GPUVertexBufferLayout":"LegacyJavaScriptObject","GPUVertexAttribute":"LegacyJavaScriptObject","GPUImageDataLayout":"LegacyJavaScriptObject","GPUImageCopyBuffer":"LegacyJavaScriptObject","GPUImageCopyTexture":"LegacyJavaScriptObject","GPUImageCopyTextureTagged":"LegacyJavaScriptObject","GPUImageCopyExternalImage":"LegacyJavaScriptObject","GPUCommandBuffer":"LegacyJavaScriptObject","GPUCommandBufferDescriptor":"LegacyJavaScriptObject","GPUCommandsMixin":"LegacyJavaScriptObject","GPUCommandEncoder":"LegacyJavaScriptObject","GPUCommandEncoderDescriptor":"LegacyJavaScriptObject","GPUBindingCommandsMixin":"LegacyJavaScriptObject","GPUDebugCommandsMixin":"LegacyJavaScriptObject","GPUComputePassEncoder":"LegacyJavaScriptObject","GPUComputePassTimestampWrite":"LegacyJavaScriptObject","GPUComputePassDescriptor":"LegacyJavaScriptObject","GPURenderPassEncoder":"LegacyJavaScriptObject","GPURenderPassTimestampWrite":"LegacyJavaScriptObject","GPURenderPassDescriptor":"LegacyJavaScriptObject","GPURenderPassColorAttachment":"LegacyJavaScriptObject","GPURenderPassDepthStencilAttachment":"LegacyJavaScriptObject","GPURenderPassLayout":"LegacyJavaScriptObject","GPURenderCommandsMixin":"LegacyJavaScriptObject","GPURenderBundle":"LegacyJavaScriptObject","GPURenderBundleDescriptor":"LegacyJavaScriptObject","GPURenderBundleEncoder":"LegacyJavaScriptObject","GPURenderBundleEncoderDescriptor":"LegacyJavaScriptObject","GPUQueueDescriptor":"LegacyJavaScriptObject","GPUQueue":"LegacyJavaScriptObject","GPUQuerySet":"LegacyJavaScriptObject","GPUQuerySetDescriptor":"LegacyJavaScriptObject","GPUCanvasContext":"LegacyJavaScriptObject","GPUCanvasConfiguration":"LegacyJavaScriptObject","GPUDeviceLostInfo":"LegacyJavaScriptObject","GPUError":"LegacyJavaScriptObject","GPUValidationError":"LegacyJavaScriptObject","GPUOutOfMemoryError":"LegacyJavaScriptObject","GPUInternalError":"LegacyJavaScriptObject","GPUUncapturedErrorEvent":"LegacyJavaScriptObject","GPUUncapturedErrorEventInit":"LegacyJavaScriptObject","GPUColorDict":"LegacyJavaScriptObject","GPUOrigin2DDict":"LegacyJavaScriptObject","GPUOrigin3DDict":"LegacyJavaScriptObject","GPUExtent3DDict":"LegacyJavaScriptObject","HID":"LegacyJavaScriptObject","HIDDeviceRequestOptions":"LegacyJavaScriptObject","HIDDeviceFilter":"LegacyJavaScriptObject","HIDDevice":"LegacyJavaScriptObject","HIDConnectionEvent":"LegacyJavaScriptObject","HIDConnectionEventInit":"LegacyJavaScriptObject","HIDInputReportEvent":"LegacyJavaScriptObject","HIDInputReportEventInit":"LegacyJavaScriptObject","HIDCollectionInfo":"LegacyJavaScriptObject","HIDReportInfo":"LegacyJavaScriptObject","HIDReportItem":"LegacyJavaScriptObject","DOMException":"LegacyJavaScriptObject","MidiPermissionDescriptor":"LegacyJavaScriptObject","MIDIOptions":"LegacyJavaScriptObject","MIDIInputMap":"LegacyJavaScriptObject","MIDIOutputMap":"LegacyJavaScriptObject","MIDIAccess":"LegacyJavaScriptObject","MIDIPort":"LegacyJavaScriptObject","MIDIInput":"LegacyJavaScriptObject","MIDIOutput":"LegacyJavaScriptObject","MIDIMessageEvent":"LegacyJavaScriptObject","MIDIMessageEventInit":"LegacyJavaScriptObject","MIDIConnectionEvent":"LegacyJavaScriptObject","MIDIConnectionEventInit":"LegacyJavaScriptObject","NavigatorML":"LegacyJavaScriptObject","MLContextOptions":"LegacyJavaScriptObject","ML":"LegacyJavaScriptObject","MLGraph":"LegacyJavaScriptObject","MLOperandDescriptor":"LegacyJavaScriptObject","MLOperand":"LegacyJavaScriptObject","MLActivation":"LegacyJavaScriptObject","MLContext":"LegacyJavaScriptObject","MLComputeResult":"LegacyJavaScriptObject","MLCommandEncoder":"LegacyJavaScriptObject","MLBufferResourceView":"LegacyJavaScriptObject","MLGraphBuilder":"LegacyJavaScriptObject","MLBatchNormalizationOptions":"LegacyJavaScriptObject","MLClampOptions":"LegacyJavaScriptObject","MLConv2dOptions":"LegacyJavaScriptObject","MLConvTranspose2dOptions":"LegacyJavaScriptObject","MLEluOptions":"LegacyJavaScriptObject","MLGemmOptions":"LegacyJavaScriptObject","MLGruOptions":"LegacyJavaScriptObject","MLGruCellOptions":"LegacyJavaScriptObject","MLHardSigmoidOptions":"LegacyJavaScriptObject","MLInstanceNormalizationOptions":"LegacyJavaScriptObject","MLLeakyReluOptions":"LegacyJavaScriptObject","MLLinearOptions":"LegacyJavaScriptObject","MLLstmOptions":"LegacyJavaScriptObject","MLLstmCellOptions":"LegacyJavaScriptObject","MLPadOptions":"LegacyJavaScriptObject","MLPool2dOptions":"LegacyJavaScriptObject","MLReduceOptions":"LegacyJavaScriptObject","MLResample2dOptions":"LegacyJavaScriptObject","MLSliceOptions":"LegacyJavaScriptObject","MLSoftplusOptions":"LegacyJavaScriptObject","MLSplitOptions":"LegacyJavaScriptObject","MLSqueezeOptions":"LegacyJavaScriptObject","MLTransposeOptions":"LegacyJavaScriptObject","RTCRtpSender":"LegacyJavaScriptObject","RTCRtpReceiver":"LegacyJavaScriptObject","SFrameTransformOptions":"LegacyJavaScriptObject","SFrameTransform":"LegacyJavaScriptObject","SFrameTransformErrorEvent":"LegacyJavaScriptObject","SFrameTransformErrorEventInit":"LegacyJavaScriptObject","RTCEncodedVideoFrameMetadata":"LegacyJavaScriptObject","RTCEncodedVideoFrame":"LegacyJavaScriptObject","RTCEncodedAudioFrameMetadata":"LegacyJavaScriptObject","RTCEncodedAudioFrame":"LegacyJavaScriptObject","RTCTransformEvent":"LegacyJavaScriptObject","RTCRtpScriptTransformer":"LegacyJavaScriptObject","RTCRtpScriptTransform":"LegacyJavaScriptObject","RTCIceParameters":"LegacyJavaScriptObject","RTCIceGatherOptions":"LegacyJavaScriptObject","RTCIceTransport":"LegacyJavaScriptObject","RTCIdentityProviderGlobalScope":"LegacyJavaScriptObject","RTCIdentityProviderRegistrar":"LegacyJavaScriptObject","RTCIdentityProvider":"LegacyJavaScriptObject","RTCIdentityAssertionResult":"LegacyJavaScriptObject","RTCIdentityProviderDetails":"LegacyJavaScriptObject","RTCIdentityValidationResult":"LegacyJavaScriptObject","RTCPeerConnection":"LegacyJavaScriptObject","RTCConfiguration":"LegacyJavaScriptObject","RTCIdentityProviderOptions":"LegacyJavaScriptObject","RTCIdentityAssertion":"LegacyJavaScriptObject","RTCError":"LegacyJavaScriptObject","RTCErrorInit":"LegacyJavaScriptObject","RTCRtpEncodingParameters":"LegacyJavaScriptObject","RTCDataChannel":"LegacyJavaScriptObject","RTCDataChannelInit":"LegacyJavaScriptObject","RTCRtpStreamStats":"LegacyJavaScriptObject","RTCCodecStats":"LegacyJavaScriptObject","RTCReceivedRtpStreamStats":"LegacyJavaScriptObject","RTCInboundRtpStreamStats":"LegacyJavaScriptObject","RTCRemoteInboundRtpStreamStats":"LegacyJavaScriptObject","RTCSentRtpStreamStats":"LegacyJavaScriptObject","RTCOutboundRtpStreamStats":"LegacyJavaScriptObject","RTCRemoteOutboundRtpStreamStats":"LegacyJavaScriptObject","RTCMediaSourceStats":"LegacyJavaScriptObject","RTCAudioSourceStats":"LegacyJavaScriptObject","RTCVideoSourceStats":"LegacyJavaScriptObject","RTCAudioPlayoutStats":"LegacyJavaScriptObject","RTCPeerConnectionStats":"LegacyJavaScriptObject","RTCDataChannelStats":"LegacyJavaScriptObject","RTCTransportStats":"LegacyJavaScriptObject","RTCIceCandidateStats":"LegacyJavaScriptObject","RTCIceCandidatePairStats":"LegacyJavaScriptObject","RTCCertificateStats":"LegacyJavaScriptObject","RTCIceServer":"LegacyJavaScriptObject","RTCOfferAnswerOptions":"LegacyJavaScriptObject","RTCOfferOptions":"LegacyJavaScriptObject","RTCAnswerOptions":"LegacyJavaScriptObject","RTCSessionDescription":"LegacyJavaScriptObject","RTCSessionDescriptionInit":"LegacyJavaScriptObject","RTCLocalSessionDescriptionInit":"LegacyJavaScriptObject","RTCIceCandidate":"LegacyJavaScriptObject","RTCIceCandidateInit":"LegacyJavaScriptObject","RTCPeerConnectionIceEvent":"LegacyJavaScriptObject","RTCPeerConnectionIceEventInit":"LegacyJavaScriptObject","RTCPeerConnectionIceErrorEvent":"LegacyJavaScriptObject","RTCPeerConnectionIceErrorEventInit":"LegacyJavaScriptObject","RTCCertificateExpiration":"LegacyJavaScriptObject","RTCCertificate":"LegacyJavaScriptObject","RTCRtpTransceiverInit":"LegacyJavaScriptObject","RTCRtpParameters":"LegacyJavaScriptObject","RTCRtpReceiveParameters":"LegacyJavaScriptObject","RTCRtpCodingParameters":"LegacyJavaScriptObject","RTCRtcpParameters":"LegacyJavaScriptObject","RTCRtpHeaderExtensionParameters":"LegacyJavaScriptObject","RTCRtpCodecParameters":"LegacyJavaScriptObject","RTCRtpCapabilities":"LegacyJavaScriptObject","RTCRtpCodecCapability":"LegacyJavaScriptObject","RTCRtpHeaderExtensionCapability":"LegacyJavaScriptObject","RTCRtpContributingSource":"LegacyJavaScriptObject","RTCRtpSynchronizationSource":"LegacyJavaScriptObject","RTCRtpTransceiver":"LegacyJavaScriptObject","RTCDtlsTransport":"LegacyJavaScriptObject","RTCDtlsFingerprint":"LegacyJavaScriptObject","RTCIceCandidatePair":"LegacyJavaScriptObject","RTCTrackEvent":"LegacyJavaScriptObject","RTCTrackEventInit":"LegacyJavaScriptObject","RTCSctpTransport":"LegacyJavaScriptObject","RTCDataChannelEvent":"LegacyJavaScriptObject","RTCDataChannelEventInit":"LegacyJavaScriptObject","RTCDTMFSender":"LegacyJavaScriptObject","RTCDTMFToneChangeEvent":"LegacyJavaScriptObject","RTCDTMFToneChangeEventInit":"LegacyJavaScriptObject","RTCStatsReport":"LegacyJavaScriptObject","RTCStats":"LegacyJavaScriptObject","RTCErrorEvent":"LegacyJavaScriptObject","RTCErrorEventInit":"LegacyJavaScriptObject","WebSocket":"LegacyJavaScriptObject","CloseEvent":"LegacyJavaScriptObject","CloseEventInit":"LegacyJavaScriptObject","WebTransportDatagramDuplexStream":"LegacyJavaScriptObject","WebTransport":"LegacyJavaScriptObject","WebTransportHash":"LegacyJavaScriptObject","WebTransportOptions":"LegacyJavaScriptObject","WebTransportCloseInfo":"LegacyJavaScriptObject","WebTransportSendStreamOptions":"LegacyJavaScriptObject","WebTransportStats":"LegacyJavaScriptObject","WebTransportDatagramStats":"LegacyJavaScriptObject","WebTransportSendStream":"LegacyJavaScriptObject","WebTransportSendStreamStats":"LegacyJavaScriptObject","WebTransportReceiveStream":"LegacyJavaScriptObject","WebTransportReceiveStreamStats":"LegacyJavaScriptObject","WebTransportBidirectionalStream":"LegacyJavaScriptObject","WebTransportError":"LegacyJavaScriptObject","WebTransportErrorInit":"LegacyJavaScriptObject","USBDeviceFilter":"LegacyJavaScriptObject","USBDeviceRequestOptions":"LegacyJavaScriptObject","USB":"LegacyJavaScriptObject","USBConnectionEventInit":"LegacyJavaScriptObject","USBConnectionEvent":"LegacyJavaScriptObject","USBInTransferResult":"LegacyJavaScriptObject","USBOutTransferResult":"LegacyJavaScriptObject","USBIsochronousInTransferPacket":"LegacyJavaScriptObject","USBIsochronousInTransferResult":"LegacyJavaScriptObject","USBIsochronousOutTransferPacket":"LegacyJavaScriptObject","USBIsochronousOutTransferResult":"LegacyJavaScriptObject","USBDevice":"LegacyJavaScriptObject","USBControlTransferParameters":"LegacyJavaScriptObject","USBConfiguration":"LegacyJavaScriptObject","USBInterface":"LegacyJavaScriptObject","USBAlternateInterface":"LegacyJavaScriptObject","USBEndpoint":"LegacyJavaScriptObject","USBPermissionDescriptor":"LegacyJavaScriptObject","AllowedUSBDevice":"LegacyJavaScriptObject","USBPermissionStorage":"LegacyJavaScriptObject","USBPermissionResult":"LegacyJavaScriptObject","VTTCue":"LegacyJavaScriptObject","VTTRegion":"LegacyJavaScriptObject","XRDepthStateInit":"LegacyJavaScriptObject","XRSessionInit":"LegacyJavaScriptObject","XRDepthInformation":"LegacyJavaScriptObject","XRCPUDepthInformation":"LegacyJavaScriptObject","XRWebGLDepthInformation":"LegacyJavaScriptObject","XRDOMOverlayInit":"LegacyJavaScriptObject","XRDOMOverlayState":"LegacyJavaScriptObject","XRInputSource":"LegacyJavaScriptObject","XRHand":"LegacyJavaScriptObject","XRJointSpace":"LegacyJavaScriptObject","XRJointPose":"LegacyJavaScriptObject","XRHitTestOptionsInit":"LegacyJavaScriptObject","XRTransientInputHitTestOptionsInit":"LegacyJavaScriptObject","XRHitTestSource":"LegacyJavaScriptObject","XRTransientInputHitTestSource":"LegacyJavaScriptObject","XRTransientInputHitTestResult":"LegacyJavaScriptObject","XRRayDirectionInit":"LegacyJavaScriptObject","XRRay":"LegacyJavaScriptObject","XRLightProbe":"LegacyJavaScriptObject","XRLightEstimate":"LegacyJavaScriptObject","XRLightProbeInit":"LegacyJavaScriptObject","XRSystem":"LegacyJavaScriptObject","XRRenderStateInit":"LegacyJavaScriptObject","XRRenderState":"LegacyJavaScriptObject","XRSpace":"LegacyJavaScriptObject","XRReferenceSpace":"LegacyJavaScriptObject","XRBoundedReferenceSpace":"LegacyJavaScriptObject","XRViewport":"LegacyJavaScriptObject","XRRigidTransform":"LegacyJavaScriptObject","XRPose":"LegacyJavaScriptObject","XRViewerPose":"LegacyJavaScriptObject","XRInputSourceArray":"LegacyJavaScriptObject","XRLayer":"LegacyJavaScriptObject","XRWebGLLayerInit":"LegacyJavaScriptObject","XRWebGLLayer":"LegacyJavaScriptObject","XRSessionEvent":"LegacyJavaScriptObject","XRSessionEventInit":"LegacyJavaScriptObject","XRInputSourceEvent":"LegacyJavaScriptObject","XRInputSourceEventInit":"LegacyJavaScriptObject","XRInputSourcesChangeEvent":"LegacyJavaScriptObject","XRInputSourcesChangeEventInit":"LegacyJavaScriptObject","XRReferenceSpaceEvent":"LegacyJavaScriptObject","XRReferenceSpaceEventInit":"LegacyJavaScriptObject","XRSessionSupportedPermissionDescriptor":"LegacyJavaScriptObject","XRPermissionDescriptor":"LegacyJavaScriptObject","XRPermissionStatus":"LegacyJavaScriptObject","XRCompositionLayer":"LegacyJavaScriptObject","XRProjectionLayer":"LegacyJavaScriptObject","XRQuadLayer":"LegacyJavaScriptObject","XRCylinderLayer":"LegacyJavaScriptObject","XREquirectLayer":"LegacyJavaScriptObject","XRCubeLayer":"LegacyJavaScriptObject","XRSubImage":"LegacyJavaScriptObject","XRWebGLSubImage":"LegacyJavaScriptObject","XRProjectionLayerInit":"LegacyJavaScriptObject","XRLayerInit":"LegacyJavaScriptObject","XRQuadLayerInit":"LegacyJavaScriptObject","XRCylinderLayerInit":"LegacyJavaScriptObject","XREquirectLayerInit":"LegacyJavaScriptObject","XRCubeLayerInit":"LegacyJavaScriptObject","XRMediaLayerInit":"LegacyJavaScriptObject","XRMediaQuadLayerInit":"LegacyJavaScriptObject","XRMediaCylinderLayerInit":"LegacyJavaScriptObject","XRMediaEquirectLayerInit":"LegacyJavaScriptObject","XRMediaBinding":"LegacyJavaScriptObject","XRLayerEvent":"LegacyJavaScriptObject","XRLayerEventInit":"LegacyJavaScriptObject","WindowControlsOverlay":"LegacyJavaScriptObject","WindowControlsOverlayGeometryChangeEvent":"LegacyJavaScriptObject","WindowControlsOverlayGeometryChangeEventInit":"LegacyJavaScriptObject","ScreenDetails":"LegacyJavaScriptObject","ScreenDetailed":"LegacyJavaScriptObject","XMLHttpRequestEventTarget":"LegacyJavaScriptObject","XMLHttpRequestUpload":"LegacyJavaScriptObject","XMLHttpRequest":"LegacyJavaScriptObject","FormData":"LegacyJavaScriptObject","ProgressEvent":"LegacyJavaScriptObject","ProgressEventInit":"LegacyJavaScriptObject","NativeFloat32List":"NativeTypedArrayOfDouble","JSBool":{"bool":[]},"JSArray":{"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"Iterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"Iterable":["double"],"FixedLengthListMixin":["double"],"ListMixin.E":"double"},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"double":{"num":[]},"int":{"num":[]}}'));
+  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"NativeTypedArray":1}'));
+  var type$ = (function rtii() {
+    var findType = A.findType;
+    return {
+      Function: findType("Function"),
+      JSArray_String: findType("JSArray<String>"),
+      JSArray_dynamic: findType("JSArray<@>"),
+      JSNull: findType("JSNull"),
+      JavaScriptFunction: findType("JavaScriptFunction"),
+      JavaScriptIndexingBehavior_dynamic: findType("JavaScriptIndexingBehavior<@>"),
+      Null: findType("Null"),
+      Object: findType("Object"),
+      Record: findType("Record"),
+      String: findType("String"),
+      UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
+      bool: findType("bool"),
+      double: findType("double"),
+      int: findType("int"),
+      legacy_Never: findType("0&*"),
+      legacy_Object: findType("Object*"),
+      nullable_Future_Null: findType("Future<Null>?"),
+      nullable_Object: findType("Object?"),
+      num: findType("num")
+    };
+  })();
+  (function constants() {
+    B.Interceptor_methods = J.Interceptor.prototype;
+    B.JSArray_methods = J.JSArray.prototype;
+    B.JSString_methods = J.JSString.prototype;
+    B.JavaScriptFunction_methods = J.JavaScriptFunction.prototype;
+    B.JavaScriptObject_methods = J.JavaScriptObject.prototype;
+    B.PlainJavaScriptObject_methods = J.PlainJavaScriptObject.prototype;
+    B.UnknownJavaScriptObject_methods = J.UnknownJavaScriptObject.prototype;
+    B.C_JS_CONST = function getTagFallback(o) {
+  var s = Object.prototype.toString.call(o);
+  return s.substring(8, s.length - 1);
+};
+    B.C_JS_CONST0 = function() {
+  var toStringFunction = Object.prototype.toString;
+  function getTag(o) {
+    var s = toStringFunction.call(o);
+    return s.substring(8, s.length - 1);
+  }
+  function getUnknownTag(object, tag) {
+    if (/^HTML[A-Z].*Element$/.test(tag)) {
+      var name = toStringFunction.call(object);
+      if (name == "[object Object]") return null;
+      return "HTMLElement";
+    }
+  }
+  function getUnknownTagGenericBrowser(object, tag) {
+    if (self.HTMLElement && object instanceof HTMLElement) return "HTMLElement";
+    return getUnknownTag(object, tag);
+  }
+  function prototypeForTag(tag) {
+    if (typeof window == "undefined") return null;
+    if (typeof window[tag] == "undefined") return null;
+    var constructor = window[tag];
+    if (typeof constructor != "function") return null;
+    return constructor.prototype;
+  }
+  function discriminator(tag) { return null; }
+  var isBrowser = typeof navigator == "object";
+  return {
+    getTag: getTag,
+    getUnknownTag: isBrowser ? getUnknownTagGenericBrowser : getUnknownTag,
+    prototypeForTag: prototypeForTag,
+    discriminator: discriminator };
+};
+    B.C_JS_CONST6 = function(getTagFallback) {
+  return function(hooks) {
+    if (typeof navigator != "object") return hooks;
+    var ua = navigator.userAgent;
+    if (ua.indexOf("DumpRenderTree") >= 0) return hooks;
+    if (ua.indexOf("Chrome") >= 0) {
+      function confirm(p) {
+        return typeof window == "object" && window[p] && window[p].name == p;
+      }
+      if (confirm("Window") && confirm("HTMLElement")) return hooks;
+    }
+    hooks.getTag = getTagFallback;
+  };
+};
+    B.C_JS_CONST1 = function(hooks) {
+  if (typeof dartExperimentalFixupGetTag != "function") return hooks;
+  hooks.getTag = dartExperimentalFixupGetTag(hooks.getTag);
+};
+    B.C_JS_CONST2 = function(hooks) {
+  var getTag = hooks.getTag;
+  var prototypeForTag = hooks.prototypeForTag;
+  function getTagFixed(o) {
+    var tag = getTag(o);
+    if (tag == "Document") {
+      if (!!o.xmlVersion) return "!Document";
+      return "!HTMLDocument";
+    }
+    return tag;
+  }
+  function prototypeForTagFixed(tag) {
+    if (tag == "Document") return null;
+    return prototypeForTag(tag);
+  }
+  hooks.getTag = getTagFixed;
+  hooks.prototypeForTag = prototypeForTagFixed;
+};
+    B.C_JS_CONST5 = function(hooks) {
+  var userAgent = typeof navigator == "object" ? navigator.userAgent : "";
+  if (userAgent.indexOf("Firefox") == -1) return hooks;
+  var getTag = hooks.getTag;
+  var quickMap = {
+    "BeforeUnloadEvent": "Event",
+    "DataTransfer": "Clipboard",
+    "GeoGeolocation": "Geolocation",
+    "Location": "!Location",
+    "WorkerMessageEvent": "MessageEvent",
+    "XMLDocument": "!Document"};
+  function getTagFirefox(o) {
+    var tag = getTag(o);
+    return quickMap[tag] || tag;
+  }
+  hooks.getTag = getTagFirefox;
+};
+    B.C_JS_CONST4 = function(hooks) {
+  var userAgent = typeof navigator == "object" ? navigator.userAgent : "";
+  if (userAgent.indexOf("Trident/") == -1) return hooks;
+  var getTag = hooks.getTag;
+  var quickMap = {
+    "BeforeUnloadEvent": "Event",
+    "DataTransfer": "Clipboard",
+    "HTMLDDElement": "HTMLElement",
+    "HTMLDTElement": "HTMLElement",
+    "HTMLPhraseElement": "HTMLElement",
+    "Position": "Geoposition"
+  };
+  function getTagIE(o) {
+    var tag = getTag(o);
+    var newTag = quickMap[tag];
+    if (newTag) return newTag;
+    if (tag == "Object") {
+      if (window.DataView && (o instanceof window.DataView)) return "DataView";
+    }
+    return tag;
+  }
+  function prototypeForTagIE(tag) {
+    var constructor = window[tag];
+    if (constructor == null) return null;
+    return constructor.prototype;
+  }
+  hooks.getTag = getTagIE;
+  hooks.prototypeForTag = prototypeForTagIE;
+};
+    B.C_JS_CONST3 = function(hooks) { return hooks; }
+;
+  })();
+  (function staticFields() {
+    $._JS_INTEROP_INTERCEPTOR_TAG = null;
+    $.BoundClosure__receiverFieldNameCache = null;
+    $.BoundClosure__interceptorFieldNameCache = null;
+    $.getTagFunction = null;
+    $.alternateTagFunction = null;
+    $.prototypeForTagFunction = null;
+    $.dispatchRecordsForInstanceTags = null;
+    $.interceptorsForUncacheableTags = null;
+    $.initNativeDispatchFlag = null;
+    $._toStringVisiting = A._setArrayType([], A.findType("JSArray<Object>"));
+  })();
+  (function lazyInitializers() {
+    var _lazyFinal = hunkHelpers.lazyFinal;
+    _lazyFinal($, "DART_CLOSURE_PROPERTY_NAME", "$get$DART_CLOSURE_PROPERTY_NAME", () => A.getIsolateAffinityTag("_$dart_dartClosure"));
+  })();
   (function nativeSupport() {
     !function() {
       var intern = function(s) {
@@ -309,10 +8930,27 @@
           break;
         }
       }
+      init.dispatchPropertyName = init.getIsolateTag("dispatch_record");
     }();
-    hunkHelpers.setOrUpdateInterceptorsByTag({ApplicationCacheErrorEvent: J.JavaScriptObject, DOMError: J.JavaScriptObject, DOMException: J.JavaScriptObject, ErrorEvent: J.JavaScriptObject, Event: J.JavaScriptObject, InputEvent: J.JavaScriptObject, SubmitEvent: J.JavaScriptObject, EventTarget: J.JavaScriptObject, MediaError: J.JavaScriptObject, NavigatorUserMediaError: J.JavaScriptObject, OverconstrainedError: J.JavaScriptObject, PositionError: J.JavaScriptObject, GeolocationPositionError: J.JavaScriptObject, SensorErrorEvent: J.JavaScriptObject, SpeechRecognitionError: J.JavaScriptObject, Window: J.JavaScriptObject, DOMWindow: J.JavaScriptObject});
-    hunkHelpers.setOrUpdateLeafTags({ApplicationCacheErrorEvent: true, DOMError: true, DOMException: true, ErrorEvent: true, Event: true, InputEvent: true, SubmitEvent: true, EventTarget: true, MediaError: true, NavigatorUserMediaError: true, OverconstrainedError: true, PositionError: true, GeolocationPositionError: true, SensorErrorEvent: true, SpeechRecognitionError: true, Window: true, DOMWindow: true});
+    hunkHelpers.setOrUpdateInterceptorsByTag({ArrayBuffer: J.Interceptor, DataView: A.NativeTypedData, ArrayBufferView: A.NativeTypedData, Float32Array: A.NativeTypedArrayOfDouble, Float64Array: A.NativeTypedArrayOfDouble, Int16Array: A.NativeInt16List, Int32Array: A.NativeInt32List, Int8Array: A.NativeInt8List, Uint16Array: A.NativeUint16List, Uint32Array: A.NativeUint32List, Uint8ClampedArray: A.NativeUint8ClampedList, CanvasPixelArray: A.NativeUint8ClampedList, Uint8Array: A.NativeUint8List});
+    hunkHelpers.setOrUpdateLeafTags({ArrayBuffer: true, DataView: true, ArrayBufferView: false, Float32Array: true, Float64Array: true, Int16Array: true, Int32Array: true, Int8Array: true, Uint16Array: true, Uint32Array: true, Uint8ClampedArray: true, CanvasPixelArray: true, Uint8Array: false});
+    A.NativeTypedArray.$nativeSuperclassTag = "ArrayBufferView";
+    A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin.$nativeSuperclassTag = "ArrayBufferView";
+    A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin.$nativeSuperclassTag = "ArrayBufferView";
+    A.NativeTypedArrayOfDouble.$nativeSuperclassTag = "ArrayBufferView";
+    A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin.$nativeSuperclassTag = "ArrayBufferView";
+    A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin.$nativeSuperclassTag = "ArrayBufferView";
+    A.NativeTypedArrayOfInt.$nativeSuperclassTag = "ArrayBufferView";
   })();
+  Function.prototype.call$0 = function() {
+    return this();
+  };
+  Function.prototype.call$1 = function(a) {
+    return this(a);
+  };
+  Function.prototype.call$2 = function(a, b) {
+    return this(a, b);
+  };
   convertAllToFastObject(holders);
   convertToFastObject($);
   (function(callback) {
