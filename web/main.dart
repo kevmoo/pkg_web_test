@@ -1,5 +1,5 @@
-import 'dart:html';
+import 'package:web/dom.dart';
 
 void main() {
-  window.console.log('hello, world!');
+  console.log('hello, world!');
 }

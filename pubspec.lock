@@ -457,6 +457,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  web:
+    dependency: "direct main"
+    description:
+      path: "../../web"
+      relative: true
+    source: path
+    version: "0.0.1-dev"
   web_socket_channel:
     dependency: transitive
     description:
