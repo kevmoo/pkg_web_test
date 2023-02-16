@@ -74,12 +74,11 @@ packages:
     source: hosted
     version: "3.1.0"
   build_modules:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: build_modules
-      sha256: "8b5fa848cb29b2a726d75b473af6359d8ab6223d6bd943e8a01d16a7bf63e2b7"
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/kevmoo/github/build/build_modules"
+      relative: false
+    source: path
     version: "5.0.0"
   build_resolvers:
     dependency: transitive
@@ -108,10 +107,9 @@ packages:
   build_web_compilers:
     dependency: "direct dev"
     description:
-      name: build_web_compilers
-      sha256: f6450115ab551223683963a00348445930a9d3d3bc4b330a907daa641cd202ae
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/kevmoo/github/build/build_web_compilers"
+      relative: false
+    source: path
     version: "4.0.0"
   built_collection:
     dependency: transitive
@@ -481,4 +479,4 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=3.0.0-187.0.dev <3.0.0"
+  dart: ">=3.0.0-187.0.dev <4.0.0"
