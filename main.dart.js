@@ -237,33 +237,16 @@
     hunk(hunkHelpers, init, holders, $);
   }
   var A = {JS_CONST: function JS_CONST() {
-    },
-    SystemHash_combine(hash, value) {
-      hash = hash + value & 536870911;
-      hash = hash + ((hash & 524287) << 10) & 536870911;
-      return hash ^ hash >>> 6;
-    },
-    SystemHash_finish(hash) {
-      hash = hash + ((hash & 67108863) << 3) & 536870911;
-      hash ^= hash >>> 11;
-      return hash + ((hash & 16383) << 15) & 536870911;
-    },
-    LateError: function LateError(t0) {
+    }, LateError: function LateError(t0) {
       this._message = t0;
-    },
-    SentinelValue: function SentinelValue() {
-    },
-    EfficientLengthIterable: function EfficientLengthIterable() {
-    },
-    ListIterator: function ListIterator(t0, t1, t2) {
+    }, ListIterator: function ListIterator(t0, t1, t2) {
       var _ = this;
       _.__internal$_iterable = t0;
       _.__internal$_length = t1;
       _.__internal$_index = 0;
       _.__internal$_current = null;
       _.$ti = t2;
-    },
-    FixedLengthListMixin: function FixedLengthListMixin() {
+    }, FixedLengthListMixin: function FixedLengthListMixin() {
     },
     unminifyOrTag(rawClassName) {
       var preserved = init.mangledGlobalNames[rawClassName];
@@ -296,18 +279,6 @@
       result = J.toString$0$(value);
       return result;
     },
-    Primitives_objectHashCode(object) {
-      var hash,
-        property = $.Primitives__identityHashCodeProperty;
-      if (property == null)
-        property = $.Primitives__identityHashCodeProperty = Symbol("identityHashCode");
-      hash = object[property];
-      if (hash == null) {
-        hash = Math.random() * 0x3fffffff | 0;
-        object[property] = hash;
-      }
-      return hash;
-    },
     Primitives_objectTypeName(object) {
       return A.Primitives__objectTypeNameNewRti(object);
     },
@@ -338,9 +309,9 @@
       var $length, _s5_ = "index";
       if (!A._isInt(index))
         return new A.ArgumentError(true, index, _s5_, null);
-      $length = A._asInt(J.get$length$asx(indexable));
+      $length = J.get$length$asx(indexable);
       if (index < 0 || index >= $length)
-        return A.IndexError$withLength(index, $length, indexable, _s5_);
+        return new A.IndexError($length, true, index, _s5_, "Index out of range");
       return new A.RangeError(null, null, true, index, _s5_, "Value not in range");
     },
     wrapException(ex) {
@@ -365,12 +336,6 @@
     },
     throwConcurrentModificationError(collection) {
       throw A.wrapException(A.ConcurrentModificationError$(collection));
-    },
-    objectHashCode(object) {
-      if (object == null || typeof object != "object")
-        return J.get$hashCode$(object);
-      else
-        return A.Primitives_objectHashCode(object);
     },
     Closure_fromTearOff(parameters) {
       var $prototype, $constructor, t2, trampoline, applyTrampoline, i, stub, stub0, stubName, stubCallName,
@@ -593,11 +558,6 @@
     getIsolateAffinityTag($name) {
       return init.getIsolateTag($name);
     },
-    LinkedHashMapKeyIterator$(_map, _modifications, $E) {
-      var t1 = new A.LinkedHashMapKeyIterator(_map, _modifications, $E._eval$1("LinkedHashMapKeyIterator<0>"));
-      t1._cell = _map._first;
-      return t1;
-    },
     lookupAndCacheInterceptor(obj) {
       var interceptor, interceptorClass, altTag, mark, t1,
         tag = A._asString($.getTagFunction.call$1(obj)),
@@ -764,29 +724,6 @@
     },
     RuntimeError: function RuntimeError(t0) {
       this.message = t0;
-    },
-    JsLinkedHashMap: function JsLinkedHashMap(t0) {
-      var _ = this;
-      _._length = 0;
-      _._last = _._first = _.__js_helper$_rest = _._nums = _._strings = null;
-      _._modifications = 0;
-      _.$ti = t0;
-    },
-    LinkedHashMapCell: function LinkedHashMapCell(t0, t1) {
-      this.hashMapCellKey = t0;
-      this.hashMapCellValue = t1;
-      this._next = null;
-    },
-    LinkedHashMapKeyIterable: function LinkedHashMapKeyIterable(t0, t1) {
-      this._map = t0;
-      this.$ti = t1;
-    },
-    LinkedHashMapKeyIterator: function LinkedHashMapKeyIterator(t0, t1, t2) {
-      var _ = this;
-      _._map = t0;
-      _._modifications = t1;
-      _.__js_helper$_current = _._cell = null;
-      _.$ti = t2;
     },
     initHooks_closure: function initHooks_closure(t0) {
       this.getTag = t0;
@@ -1039,23 +976,6 @@
         return rti;
       }
       return type;
-    },
-    createRuntimeType(rti) {
-      var t1 = rti._cachedRuntimeType;
-      return t1 == null ? rti._cachedRuntimeType = A._createRuntimeType(rti) : t1;
-    },
-    _createRuntimeType(rti) {
-      var starErasedRti, t1,
-        s = rti._canonicalRecipe,
-        starErasedRecipe = s.replace(/\*/g, "");
-      if (starErasedRecipe === s)
-        return rti._cachedRuntimeType = new A._Type(rti);
-      starErasedRti = A._Universe_eval(init.typeUniverse, starErasedRecipe, true);
-      t1 = starErasedRti._cachedRuntimeType;
-      return t1 == null ? starErasedRti._cachedRuntimeType = A._createRuntimeType(starErasedRti) : t1;
-    },
-    typeLiteral(recipe) {
-      return A.createRuntimeType(A._Universe_eval(init.typeUniverse, recipe, false));
     },
     _installSpecializedIsTest(object) {
       var t1, unstarred, isFn, t2, $name, predicate, testRti = this;
@@ -2390,35 +2310,10 @@
     _FunctionParameters: function _FunctionParameters() {
       this._named = this._optionalPositional = this._requiredPositional = null;
     },
-    _Type: function _Type(t0) {
-      this._rti = t0;
-    },
     _Error: function _Error() {
     },
     _TypeError: function _TypeError(t0) {
       this.__rti$_message = t0;
-    },
-    LinkedHashMap_LinkedHashMap$_empty($K, $V) {
-      return new A.JsLinkedHashMap($K._eval$1("@<0>")._bind$1($V)._eval$1("JsLinkedHashMap<1,2>"));
-    },
-    IterableBase_iterableToShortString(iterable, leftDelimiter, rightDelimiter) {
-      var parts, t1;
-      if (A._isToStringVisiting(iterable)) {
-        if (leftDelimiter === "(" && rightDelimiter === ")")
-          return "(...)";
-        return leftDelimiter + "..." + rightDelimiter;
-      }
-      parts = A._setArrayType([], type$.JSArray_String);
-      B.JSArray_methods.add$1($._toStringVisiting, iterable);
-      try {
-        A._iterablePartsToStrings(iterable, parts);
-      } finally {
-        if (0 >= $._toStringVisiting.length)
-          return A.ioore($._toStringVisiting, -1);
-        $._toStringVisiting.pop();
-      }
-      t1 = A.StringBuffer__writeAll(leftDelimiter, type$.Iterable_dynamic._as(parts), ", ") + rightDelimiter;
-      return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
     IterableBase_iterableToFullString(iterable, leftDelimiter, rightDelimiter) {
       var buffer, t1;
@@ -2445,116 +2340,7 @@
           return true;
       return false;
     },
-    _iterablePartsToStrings(iterable, parts) {
-      var next, ultimateString, penultimateString, penultimate, ultimate, ultimate0, elision,
-        t1 = iterable._map,
-        it = A.LinkedHashMapKeyIterator$(t1, t1._modifications, iterable.$ti._precomputed1),
-        $length = 0, count = 0;
-      while (true) {
-        if (!($length < 80 || count < 3))
-          break;
-        if (!it.moveNext$0())
-          return;
-        next = A.S(it.__js_helper$_current);
-        B.JSArray_methods.add$1(parts, next);
-        $length += next.length + 2;
-        ++count;
-      }
-      if (!it.moveNext$0()) {
-        if (count <= 5)
-          return;
-        if (0 >= parts.length)
-          return A.ioore(parts, -1);
-        ultimateString = parts.pop();
-        if (0 >= parts.length)
-          return A.ioore(parts, -1);
-        penultimateString = parts.pop();
-      } else {
-        penultimate = it.__js_helper$_current;
-        ++count;
-        if (!it.moveNext$0()) {
-          if (count <= 4) {
-            B.JSArray_methods.add$1(parts, A.S(penultimate));
-            return;
-          }
-          ultimateString = A.S(penultimate);
-          if (0 >= parts.length)
-            return A.ioore(parts, -1);
-          penultimateString = parts.pop();
-          $length += ultimateString.length + 2;
-        } else {
-          ultimate = it.__js_helper$_current;
-          ++count;
-          for (; it.moveNext$0(); penultimate = ultimate, ultimate = ultimate0) {
-            ultimate0 = it.__js_helper$_current;
-            ++count;
-            if (count > 100) {
-              while (true) {
-                if (!($length > 75 && count > 3))
-                  break;
-                if (0 >= parts.length)
-                  return A.ioore(parts, -1);
-                $length -= parts.pop().length + 2;
-                --count;
-              }
-              B.JSArray_methods.add$1(parts, "...");
-              return;
-            }
-          }
-          penultimateString = A.S(penultimate);
-          ultimateString = A.S(ultimate);
-          $length += ultimateString.length + penultimateString.length + 4;
-        }
-      }
-      if (count > parts.length + 2) {
-        $length += 5;
-        elision = "...";
-      } else
-        elision = null;
-      while (true) {
-        if (!($length > 80 && parts.length > 3))
-          break;
-        if (0 >= parts.length)
-          return A.ioore(parts, -1);
-        $length -= parts.pop().length + 2;
-        if (elision == null) {
-          $length += 5;
-          elision = "...";
-        }
-      }
-      if (elision != null)
-        B.JSArray_methods.add$1(parts, elision);
-      B.JSArray_methods.add$1(parts, penultimateString);
-      B.JSArray_methods.add$1(parts, ultimateString);
-    },
-    MapBase_mapToString(m) {
-      var result, t1 = {};
-      if (A._isToStringVisiting(m))
-        return "{...}";
-      result = new A.StringBuffer("");
-      try {
-        B.JSArray_methods.add$1($._toStringVisiting, m);
-        result._contents += "{";
-        t1.first = true;
-        J.forEach$1$x(m, new A.MapBase_mapToString_closure(t1, result));
-        result._contents += "}";
-      } finally {
-        if (0 >= $._toStringVisiting.length)
-          return A.ioore($._toStringVisiting, -1);
-        $._toStringVisiting.pop();
-      }
-      t1 = result._contents;
-      return t1.charCodeAt(0) == 0 ? t1 : t1;
-    },
     ListMixin: function ListMixin() {
-    },
-    MapBase: function MapBase() {
-    },
-    MapBase_mapToString_closure: function MapBase_mapToString_closure(t0, t1) {
-      this._box_0 = t0;
-      this.result = t1;
-    },
-    MapMixin: function MapMixin() {
     },
     Error__objectToString(object) {
       if (object instanceof A.Closure)
@@ -2567,12 +2353,12 @@
         return string;
       if (separator.length === 0) {
         do
-          string += A.S(iterator.get$current(iterator));
+          string += A.S(iterator.get$current());
         while (iterator.moveNext$0());
       } else {
-        string += A.S(iterator.get$current(iterator));
+        string += A.S(iterator.get$current());
         for (; iterator.moveNext$0();)
-          string = string + separator + A.S(iterator.get$current(iterator));
+          string = string + separator + A.S(iterator.get$current());
       }
       return string;
     },
@@ -2586,9 +2372,6 @@
     AssertionError$(message) {
       return new A.AssertionError(message);
     },
-    IndexError$withLength(invalidValue, $length, indexable, $name) {
-      return new A.IndexError($length, true, invalidValue, $name, "Index out of range");
-    },
     UnsupportedError$(message) {
       return new A.UnsupportedError(message);
     },
@@ -2597,15 +2380,6 @@
     },
     ConcurrentModificationError$(modifiedObject) {
       return new A.ConcurrentModificationError(modifiedObject);
-    },
-    Object_hash(object1, object2, object3, object4) {
-      var t2,
-        t1 = B.JSNumber_methods.get$hashCode(object1);
-      object2 = B.JSNumber_methods.get$hashCode(object2);
-      object3 = B.JSNumber_methods.get$hashCode(object3);
-      object4 = B.JSNumber_methods.get$hashCode(object4);
-      t2 = $.$get$_hashSeed();
-      return A.SystemHash_finish(A.SystemHash_combine(A.SystemHash_combine(A.SystemHash_combine(A.SystemHash_combine(t2, t1), object2), object3), object4));
     },
     Error: function Error() {
     },
@@ -2647,8 +2421,6 @@
     ConcurrentModificationError: function ConcurrentModificationError(t0) {
       this.modifiedObject = t0;
     },
-    Iterable: function Iterable() {
-    },
     Null: function Null() {
     },
     Object: function Object() {
@@ -2656,332 +2428,3720 @@
     StringBuffer: function StringBuffer(t0) {
       this._contents = t0;
     },
-    HtmlElement: function HtmlElement() {
+    Accelerometer: function Accelerometer() {
     },
-    AccessibleNodeList: function AccessibleNodeList() {
+    AccelerometerSensorOptions: function AccelerometerSensorOptions() {
     },
-    AnchorElement: function AnchorElement() {
+    LinearAccelerationSensor: function LinearAccelerationSensor() {
     },
-    AreaElement: function AreaElement() {
+    GravitySensor: function GravitySensor() {
     },
-    Blob: function Blob() {
+    AccelerometerReadingValues: function AccelerometerReadingValues() {
     },
-    CharacterData: function CharacterData() {
+    LinearAccelerationReadingValues: function LinearAccelerationReadingValues() {
     },
-    CssPerspective: function CssPerspective() {
+    GravityReadingValues: function GravityReadingValues() {
     },
-    CssRule: function CssRule() {
+    AmbientLightSensor: function AmbientLightSensor() {
     },
-    CssStyleDeclaration: function CssStyleDeclaration() {
+    AmbientLightReadingValues: function AmbientLightReadingValues() {
     },
-    CssStyleDeclarationBase: function CssStyleDeclarationBase() {
+    XRAnchor: function XRAnchor() {
     },
-    CssStyleValue: function CssStyleValue() {
+    XRAnchorSet: function XRAnchorSet() {
     },
-    CssTransformComponent: function CssTransformComponent() {
+    ANGLE_instanced_arrays: function ANGLE_instanced_arrays() {
     },
-    CssTransformValue: function CssTransformValue() {
+    HTMLAttributionSrcElementUtils: function HTMLAttributionSrcElementUtils() {
     },
-    CssUnparsedValue: function CssUnparsedValue() {
+    AudioOutputOptions: function AudioOutputOptions() {
     },
-    DataTransferItemList: function DataTransferItemList() {
+    BackgroundFetchManager: function BackgroundFetchManager() {
     },
-    DomException: function DomException() {
+    BackgroundFetchUIOptions: function BackgroundFetchUIOptions() {
     },
-    DomRectList: function DomRectList() {
+    BackgroundFetchOptions: function BackgroundFetchOptions() {
     },
-    DomRectReadOnly: function DomRectReadOnly() {
+    BackgroundFetchRegistration: function BackgroundFetchRegistration() {
     },
-    DomStringList: function DomStringList() {
+    BackgroundFetchRecord: function BackgroundFetchRecord() {
     },
-    DomTokenList: function DomTokenList() {
+    BackgroundFetchEvent: function BackgroundFetchEvent() {
     },
-    Element: function Element() {
+    BackgroundFetchEventInit: function BackgroundFetchEventInit() {
     },
-    EventTarget: function EventTarget() {
+    BackgroundFetchUpdateUIEvent: function BackgroundFetchUpdateUIEvent() {
     },
-    File: function File() {
+    SyncManager: function SyncManager() {
     },
-    FileList: function FileList() {
+    SyncEvent: function SyncEvent() {
     },
-    FileWriter: function FileWriter() {
+    SyncEventInit: function SyncEventInit() {
     },
-    FormElement: function FormElement() {
+    NavigatorBadge: function NavigatorBadge() {
     },
-    Gamepad: function Gamepad() {
+    BatteryManager: function BatteryManager() {
     },
-    History: function History() {
+    CaptureHandleConfig: function CaptureHandleConfig() {
     },
-    HtmlCollection: function HtmlCollection() {
+    CaptureHandle: function CaptureHandle() {
     },
-    Location: function Location() {
+    ClipboardEventInit: function ClipboardEventInit() {
+    },
+    ClipboardEvent: function ClipboardEvent() {
+    },
+    ClipboardItem: function ClipboardItem() {
+    },
+    ClipboardItemOptions: function ClipboardItemOptions() {
+    },
+    Clipboard: function Clipboard() {
+    },
+    ClipboardPermissionDescriptor: function ClipboardPermissionDescriptor() {
+    },
+    CloseWatcher: function CloseWatcher() {
+    },
+    CloseWatcherOptions: function CloseWatcherOptions() {
+    },
+    CompressionStream: function CompressionStream() {
+    },
+    DecompressionStream: function DecompressionStream() {
+    },
+    PressureObserver: function PressureObserver() {
+    },
+    PressureRecord: function PressureRecord() {
+    },
+    PressureObserverOptions: function PressureObserverOptions() {
+    },
+    $Console: function $Console() {
+    },
+    ContactAddress: function ContactAddress() {
+    },
+    ContactInfo: function ContactInfo() {
+    },
+    ContactsSelectOptions: function ContactsSelectOptions() {
+    },
+    ContactsManager: function ContactsManager() {
+    },
+    ContentDescription: function ContentDescription() {
+    },
+    ContentIndex: function ContentIndex() {
+    },
+    ContentIndexEventInit: function ContentIndexEventInit() {
+    },
+    ContentIndexEvent: function ContentIndexEvent() {
+    },
+    CookieStore: function CookieStore() {
+    },
+    CookieStoreGetOptions: function CookieStoreGetOptions() {
+    },
+    CookieInit: function CookieInit() {
+    },
+    CookieStoreDeleteOptions: function CookieStoreDeleteOptions() {
+    },
+    CookieListItem: function CookieListItem() {
+    },
+    CookieStoreManager: function CookieStoreManager() {
+    },
+    CookieChangeEvent: function CookieChangeEvent() {
+    },
+    CookieChangeEventInit: function CookieChangeEventInit() {
+    },
+    ExtendableCookieChangeEvent: function ExtendableCookieChangeEvent() {
+    },
+    ExtendableCookieChangeEventInit: function ExtendableCookieChangeEventInit() {
+    },
+    CrashReportBody: function CrashReportBody() {
+    },
+    Credential: function Credential() {
+    },
+    CredentialUserData: function CredentialUserData() {
+    },
+    CredentialsContainer: function CredentialsContainer() {
+    },
+    CredentialData: function CredentialData() {
+    },
+    CredentialRequestOptions: function CredentialRequestOptions() {
+    },
+    CredentialCreationOptions: function CredentialCreationOptions() {
+    },
+    PasswordCredential: function PasswordCredential() {
+    },
+    PasswordCredentialData: function PasswordCredentialData() {
+    },
+    FederatedCredential: function FederatedCredential() {
+    },
+    FederatedCredentialRequestOptions: function FederatedCredentialRequestOptions() {
+    },
+    FederatedCredentialInit: function FederatedCredentialInit() {
+    },
+    CSPViolationReportBody: function CSPViolationReportBody() {
+    },
+    SecurityPolicyViolationEvent: function SecurityPolicyViolationEvent() {
+    },
+    SecurityPolicyViolationEventInit: function SecurityPolicyViolationEventInit() {
+    },
+    ScriptingPolicyReportBody: function ScriptingPolicyReportBody() {
+    },
+    AnimationWorkletGlobalScope: function AnimationWorkletGlobalScope() {
+    },
+    WorkletAnimationEffect: function WorkletAnimationEffect() {
+    },
+    WorkletAnimation: function WorkletAnimation() {
+    },
+    WorkletGroupEffect: function WorkletGroupEffect() {
+    },
+    AnimationEvent: function AnimationEvent() {
+    },
+    AnimationEventInit: function AnimationEventInit() {
+    },
+    CSSKeyframeRule: function CSSKeyframeRule() {
+    },
+    CSSKeyframesRule: function CSSKeyframesRule() {
+    },
+    CSSAnimation: function CSSAnimation() {
+    },
+    CSSLayerBlockRule: function CSSLayerBlockRule() {
+    },
+    CSSLayerStatementRule: function CSSLayerStatementRule() {
+    },
+    CSSColorProfileRule: function CSSColorProfileRule() {
+    },
+    CSSConditionRule: function CSSConditionRule() {
+    },
+    CSSMediaRule: function CSSMediaRule() {
+    },
+    CSSSupportsRule: function CSSSupportsRule() {
+    },
+    ContentVisibilityAutoStateChangedEvent: function ContentVisibilityAutoStateChangedEvent() {
+    },
+    ContentVisibilityAutoStateChangedEventInit: function ContentVisibilityAutoStateChangedEventInit() {
+    },
+    CSSContainerRule: function CSSContainerRule() {
+    },
+    CSSCounterStyleRule: function CSSCounterStyleRule() {
+    },
+    FontFaceDescriptors: function FontFaceDescriptors() {
+    },
+    FontFace: function FontFace() {
+    },
+    FontFaceFeatures: function FontFaceFeatures() {
+    },
+    FontFaceVariationAxis: function FontFaceVariationAxis() {
+    },
+    FontFaceVariations: function FontFaceVariations() {
+    },
+    FontFacePalette: function FontFacePalette() {
+    },
+    FontFacePalettes: function FontFacePalettes() {
+    },
+    FontFaceSetLoadEventInit: function FontFaceSetLoadEventInit() {
+    },
+    FontFaceSetLoadEvent: function FontFaceSetLoadEvent() {
+    },
+    FontFaceSet: function FontFaceSet() {
+    },
+    FontFaceSource: function FontFaceSource() {
+    },
+    CSSFontFaceRule: function CSSFontFaceRule() {
+    },
+    CSSFontFeatureValuesRule: function CSSFontFeatureValuesRule() {
+    },
+    CSSFontFeatureValuesMap: function CSSFontFeatureValuesMap() {
+    },
+    CSSFontPaletteValuesRule: function CSSFontPaletteValuesRule() {
+    },
+    Highlight: function Highlight() {
+    },
+    HighlightRegistry: function HighlightRegistry() {
+    },
+    LayoutWorkletGlobalScope: function LayoutWorkletGlobalScope() {
+    },
+    LayoutOptions: function LayoutOptions() {
+    },
+    LayoutChild: function LayoutChild() {
+    },
+    LayoutFragment: function LayoutFragment() {
+    },
+    IntrinsicSizes: function IntrinsicSizes() {
+    },
+    LayoutConstraints: function LayoutConstraints() {
+    },
+    LayoutConstraintsOptions: function LayoutConstraintsOptions() {
+    },
+    ChildBreakToken: function ChildBreakToken() {
+    },
+    BreakToken: function BreakToken() {
+    },
+    BreakTokenOptions: function BreakTokenOptions() {
+    },
+    LayoutEdges: function LayoutEdges() {
+    },
+    FragmentResultOptions: function FragmentResultOptions() {
+    },
+    FragmentResult: function FragmentResult() {
+    },
+    IntrinsicSizesResultOptions: function IntrinsicSizesResultOptions() {
+    },
+    SVGClipPathElement: function SVGClipPathElement() {
+    },
+    SVGMaskElement: function SVGMaskElement() {
+    },
+    FocusableAreasOption: function FocusableAreasOption() {
+    },
+    SpatialNavigationSearchOptions: function SpatialNavigationSearchOptions() {
+    },
+    NavigationEvent: function NavigationEvent() {
+    },
+    NavigationEventInit: function NavigationEventInit() {
+    },
+    PaintWorkletGlobalScope: function PaintWorkletGlobalScope() {
+    },
+    PaintRenderingContext2DSettings: function PaintRenderingContext2DSettings() {
+    },
+    PaintRenderingContext2D: function PaintRenderingContext2D() {
+    },
+    PaintSize: function PaintSize() {
+    },
+    CSSParserOptions: function CSSParserOptions() {
+    },
+    CSSParserRule: function CSSParserRule() {
+    },
+    CSSParserAtRule: function CSSParserAtRule() {
+    },
+    CSSParserQualifiedRule: function CSSParserQualifiedRule() {
+    },
+    CSSParserDeclaration: function CSSParserDeclaration() {
+    },
+    CSSParserValue: function CSSParserValue() {
+    },
+    CSSParserBlock: function CSSParserBlock() {
+    },
+    CSSParserFunction: function CSSParserFunction() {
+    },
+    PropertyDefinition: function PropertyDefinition() {
+    },
+    CSSPropertyRule: function CSSPropertyRule() {
+    },
+    CSSPseudoElement: function CSSPseudoElement() {
+    },
+    NamedFlowMap: function NamedFlowMap() {
+    },
+    NamedFlow: function NamedFlow() {
+    },
+    Region: function Region() {
+    },
+    TransitionEvent: function TransitionEvent() {
+    },
+    TransitionEventInit: function TransitionEventInit() {
+    },
+    CSSTransition: function CSSTransition() {
+    },
+    CSSStyleValue: function CSSStyleValue() {
+    },
+    StylePropertyMapReadOnly: function StylePropertyMapReadOnly() {
+    },
+    StylePropertyMap: function StylePropertyMap() {
+    },
+    CSSUnparsedValue: function CSSUnparsedValue() {
+    },
+    CSSVariableReferenceValue: function CSSVariableReferenceValue() {
+    },
+    CSSKeywordValue: function CSSKeywordValue() {
+    },
+    CSSNumericType: function CSSNumericType() {
+    },
+    CSSNumericValue: function CSSNumericValue() {
+    },
+    CSSUnitValue: function CSSUnitValue() {
+    },
+    CSSMathValue: function CSSMathValue() {
+    },
+    CSSMathSum: function CSSMathSum() {
+    },
+    CSSMathProduct: function CSSMathProduct() {
+    },
+    CSSMathNegate: function CSSMathNegate() {
+    },
+    CSSMathInvert: function CSSMathInvert() {
+    },
+    CSSMathMin: function CSSMathMin() {
+    },
+    CSSMathMax: function CSSMathMax() {
+    },
+    CSSMathClamp: function CSSMathClamp() {
+    },
+    CSSNumericArray: function CSSNumericArray() {
+    },
+    CSSTransformValue: function CSSTransformValue() {
+    },
+    CSSTransformComponent: function CSSTransformComponent() {
+    },
+    CSSTranslate: function CSSTranslate() {
+    },
+    CSSRotate: function CSSRotate() {
+    },
+    CSSScale: function CSSScale() {
+    },
+    CSSSkew: function CSSSkew() {
+    },
+    CSSSkewX: function CSSSkewX() {
+    },
+    CSSSkewY: function CSSSkewY() {
+    },
+    CSSPerspective: function CSSPerspective() {
+    },
+    CSSMatrixComponent: function CSSMatrixComponent() {
+    },
+    CSSMatrixComponentOptions: function CSSMatrixComponentOptions() {
+    },
+    CSSImageValue: function CSSImageValue() {
+    },
+    CSSColorValue: function CSSColorValue() {
+    },
+    CSSRGB: function CSSRGB() {
+    },
+    CSSHSL: function CSSHSL() {
+    },
+    CSSHWB: function CSSHWB() {
+    },
+    CSSLab: function CSSLab() {
+    },
+    CSSLCH: function CSSLCH() {
+    },
+    CSSOKLab: function CSSOKLab() {
+    },
+    CSSOKLCH: function CSSOKLCH() {
+    },
+    CSSColor: function CSSColor() {
+    },
+    ViewTransition: function ViewTransition() {
     },
     MediaList: function MediaList() {
     },
-    MidiInputMap: function MidiInputMap() {
+    StyleSheet: function StyleSheet() {
     },
-    MidiInputMap_keys_closure: function MidiInputMap_keys_closure(t0) {
-      this.keys = t0;
+    CSSStyleSheet: function CSSStyleSheet() {
     },
-    MidiOutputMap: function MidiOutputMap() {
+    CSSStyleSheetInit: function CSSStyleSheetInit() {
     },
-    MidiOutputMap_keys_closure: function MidiOutputMap_keys_closure(t0) {
-      this.keys = t0;
+    StyleSheetList: function StyleSheetList() {
     },
-    MimeType: function MimeType() {
+    LinkStyle: function LinkStyle() {
     },
-    MimeTypeArray: function MimeTypeArray() {
+    CSSRuleList: function CSSRuleList() {
     },
-    Node: function Node() {
+    CSSRule: function CSSRule() {
+    },
+    CSSStyleRule: function CSSStyleRule() {
+    },
+    CSSImportRule: function CSSImportRule() {
+    },
+    CSSGroupingRule: function CSSGroupingRule() {
+    },
+    CSSPageRule: function CSSPageRule() {
+    },
+    CSSMarginRule: function CSSMarginRule() {
+    },
+    CSSNamespaceRule: function CSSNamespaceRule() {
+    },
+    CSSStyleDeclaration: function CSSStyleDeclaration() {
+    },
+    ElementCSSInlineStyle: function ElementCSSInlineStyle() {
+    },
+    $CSS: function $CSS() {
+    },
+    ScrollOptions: function ScrollOptions() {
+    },
+    ScrollToOptions: function ScrollToOptions() {
+    },
+    MediaQueryList: function MediaQueryList() {
+    },
+    MediaQueryListEvent: function MediaQueryListEvent() {
+    },
+    MediaQueryListEventInit: function MediaQueryListEventInit() {
+    },
+    Screen: function Screen() {
+    },
+    CaretPosition: function CaretPosition() {
+    },
+    ScrollIntoViewOptions: function ScrollIntoViewOptions() {
+    },
+    CheckVisibilityOptions: function CheckVisibilityOptions() {
+    },
+    BoxQuadOptions: function BoxQuadOptions() {
+    },
+    ConvertCoordinateOptions: function ConvertCoordinateOptions() {
+    },
+    GeometryUtils: function GeometryUtils() {
+    },
+    VisualViewport: function VisualViewport() {
+    },
+    CustomStateSet: function CustomStateSet() {
+    },
+    DataCue: function DataCue() {
+    },
+    DeprecationReportBody: function DeprecationReportBody() {
+    },
+    NavigatorDeviceMemory: function NavigatorDeviceMemory() {
+    },
+    DevicePosture: function DevicePosture() {
+    },
+    DigitalGoodsService: function DigitalGoodsService() {
+    },
+    ItemDetails: function ItemDetails() {
+    },
+    PurchaseDetails: function PurchaseDetails() {
+    },
+    Event: function Event() {
+    },
+    EventInit: function EventInit() {
+    },
+    CustomEvent: function CustomEvent() {
+    },
+    CustomEventInit: function CustomEventInit() {
+    },
+    EventTarget: function EventTarget() {
+    },
+    EventListenerOptions: function EventListenerOptions() {
+    },
+    AddEventListenerOptions: function AddEventListenerOptions() {
+    },
+    AbortController: function AbortController() {
+    },
+    AbortSignal: function AbortSignal() {
+    },
+    NonElementParentNode: function NonElementParentNode() {
+    },
+    DocumentOrShadowRoot: function DocumentOrShadowRoot() {
+    },
+    ParentNode: function ParentNode() {
+    },
+    NonDocumentTypeChildNode: function NonDocumentTypeChildNode() {
+    },
+    ChildNode: function ChildNode() {
+    },
+    Slottable: function Slottable() {
     },
     NodeList: function NodeList() {
     },
-    Plugin: function Plugin() {
+    HTMLCollection: function HTMLCollection() {
+    },
+    MutationObserver: function MutationObserver() {
+    },
+    MutationObserverInit: function MutationObserverInit() {
+    },
+    MutationRecord: function MutationRecord() {
+    },
+    Node: function Node() {
+    },
+    GetRootNodeOptions: function GetRootNodeOptions() {
+    },
+    Document: function Document() {
+    },
+    XMLDocument: function XMLDocument() {
+    },
+    ElementCreationOptions: function ElementCreationOptions() {
+    },
+    DOMImplementation: function DOMImplementation() {
+    },
+    DocumentType: function DocumentType() {
+    },
+    DocumentFragment: function DocumentFragment() {
+    },
+    ShadowRoot: function ShadowRoot() {
+    },
+    Element: function Element() {
+    },
+    ShadowRootInit: function ShadowRootInit() {
+    },
+    NamedNodeMap: function NamedNodeMap() {
+    },
+    Attr: function Attr() {
+    },
+    CharacterData: function CharacterData() {
+    },
+    Text: function Text() {
+    },
+    CDATASection: function CDATASection() {
+    },
+    ProcessingInstruction: function ProcessingInstruction() {
+    },
+    Comment: function Comment() {
+    },
+    AbstractRange: function AbstractRange() {
+    },
+    StaticRangeInit: function StaticRangeInit() {
+    },
+    StaticRange: function StaticRange() {
+    },
+    Range: function Range() {
+    },
+    NodeIterator: function NodeIterator() {
+    },
+    TreeWalker: function TreeWalker() {
+    },
+    DOMTokenList: function DOMTokenList() {
+    },
+    XPathResult: function XPathResult() {
+    },
+    XPathExpression: function XPathExpression() {
+    },
+    XPathEvaluatorBase: function XPathEvaluatorBase() {
+    },
+    XPathEvaluator: function XPathEvaluator() {
+    },
+    XSLTProcessor: function XSLTProcessor() {
+    },
+    XMLSerializer: function XMLSerializer() {
+    },
+    InnerHTML: function InnerHTML() {
+    },
+    EditContextInit: function EditContextInit() {
+    },
+    EditContext: function EditContext() {
+    },
+    TextUpdateEventInit: function TextUpdateEventInit() {
+    },
+    TextUpdateEvent: function TextUpdateEvent() {
+    },
+    TextFormatInit: function TextFormatInit() {
+    },
+    TextFormat: function TextFormat() {
+    },
+    TextFormatUpdateEventInit: function TextFormatUpdateEventInit() {
+    },
+    TextFormatUpdateEvent: function TextFormatUpdateEvent() {
+    },
+    CharacterBoundsUpdateEventInit: function CharacterBoundsUpdateEventInit() {
+    },
+    CharacterBoundsUpdateEvent: function CharacterBoundsUpdateEvent() {
+    },
+    PerformanceElementTiming: function PerformanceElementTiming() {
+    },
+    TextDecoderCommon: function TextDecoderCommon() {
+    },
+    TextDecoderOptions: function TextDecoderOptions() {
+    },
+    TextDecodeOptions: function TextDecodeOptions() {
+    },
+    TextDecoder: function TextDecoder() {
+    },
+    TextEncoderCommon: function TextEncoderCommon() {
+    },
+    TextEncoderEncodeIntoResult: function TextEncoderEncodeIntoResult() {
+    },
+    TextEncoder: function TextEncoder() {
+    },
+    TextDecoderStream: function TextDecoderStream() {
+    },
+    TextEncoderStream: function TextEncoderStream() {
+    },
+    MediaKeySystemConfiguration: function MediaKeySystemConfiguration() {
+    },
+    MediaKeySystemMediaCapability: function MediaKeySystemMediaCapability() {
+    },
+    MediaKeySystemAccess: function MediaKeySystemAccess() {
+    },
+    MediaKeys: function MediaKeys() {
+    },
+    MediaKeySession: function MediaKeySession() {
+    },
+    MediaKeyStatusMap: function MediaKeyStatusMap() {
+    },
+    MediaKeyMessageEvent: function MediaKeyMessageEvent() {
+    },
+    MediaKeyMessageEventInit: function MediaKeyMessageEventInit() {
+    },
+    MediaEncryptedEvent: function MediaEncryptedEvent() {
+    },
+    MediaEncryptedEventInit: function MediaEncryptedEventInit() {
+    },
+    FileSystemEntry: function FileSystemEntry() {
+    },
+    FileSystemDirectoryEntry: function FileSystemDirectoryEntry() {
+    },
+    FileSystemFlags: function FileSystemFlags() {
+    },
+    FileSystemDirectoryReader: function FileSystemDirectoryReader() {
+    },
+    FileSystemFileEntry: function FileSystemFileEntry() {
+    },
+    FileSystem: function FileSystem() {
+    },
+    PerformanceEventTiming: function PerformanceEventTiming() {
+    },
+    EventCounts: function EventCounts() {
+    },
+    EXT_blend_minmax: function EXT_blend_minmax() {
+    },
+    EXT_color_buffer_float: function EXT_color_buffer_float() {
+    },
+    EXT_color_buffer_half_float: function EXT_color_buffer_half_float() {
+    },
+    WebGLTimerQueryEXT: function WebGLTimerQueryEXT() {
+    },
+    EXT_disjoint_timer_query: function EXT_disjoint_timer_query() {
+    },
+    EXT_disjoint_timer_query_webgl2: function EXT_disjoint_timer_query_webgl2() {
+    },
+    EXT_float_blend: function EXT_float_blend() {
+    },
+    EXT_frag_depth: function EXT_frag_depth() {
+    },
+    EXT_shader_texture_lod: function EXT_shader_texture_lod() {
+    },
+    EXT_sRGB: function EXT_sRGB() {
+    },
+    EXT_texture_compression_bptc: function EXT_texture_compression_bptc() {
+    },
+    EXT_texture_compression_rgtc: function EXT_texture_compression_rgtc() {
+    },
+    EXT_texture_filter_anisotropic: function EXT_texture_filter_anisotropic() {
+    },
+    EXT_texture_norm16: function EXT_texture_norm16() {
+    },
+    ColorSelectionResult: function ColorSelectionResult() {
+    },
+    ColorSelectionOptions: function ColorSelectionOptions() {
+    },
+    EyeDropper: function EyeDropper() {
+    },
+    IdentityProviderWellKnown: function IdentityProviderWellKnown() {
+    },
+    IdentityProviderIcon: function IdentityProviderIcon() {
+    },
+    IdentityProviderBranding: function IdentityProviderBranding() {
+    },
+    IdentityProviderAPIConfig: function IdentityProviderAPIConfig() {
+    },
+    IdentityProviderAccount: function IdentityProviderAccount() {
+    },
+    IdentityProviderAccountList: function IdentityProviderAccountList() {
+    },
+    IdentityProviderClientMetadata: function IdentityProviderClientMetadata() {
+    },
+    IdentityProviderToken: function IdentityProviderToken() {
+    },
+    IdentityCredential: function IdentityCredential() {
+    },
+    IdentityCredentialRequestOptions: function IdentityCredentialRequestOptions() {
+    },
+    IdentityProviderConfig: function IdentityProviderConfig() {
+    },
+    IdentityCredentialLogoutRPsRequest: function IdentityCredentialLogoutRPsRequest() {
+    },
+    IdentityProvider: function IdentityProvider() {
+    },
+    Headers: function Headers() {
+    },
+    Body: function Body() {
+    },
+    Request: function Request() {
+    },
+    RequestInit: function RequestInit() {
+    },
+    Response: function Response() {
+    },
+    ResponseInit: function ResponseInit() {
+    },
+    HMACGetSecretInput: function HMACGetSecretInput() {
+    },
+    HMACGetSecretOutput: function HMACGetSecretOutput() {
+    },
+    FileSystemPermissionDescriptor: function FileSystemPermissionDescriptor() {
+    },
+    FileSystemHandlePermissionDescriptor: function FileSystemHandlePermissionDescriptor() {
+    },
+    FilePickerAcceptType: function FilePickerAcceptType() {
+    },
+    FilePickerOptions: function FilePickerOptions() {
+    },
+    OpenFilePickerOptions: function OpenFilePickerOptions() {
+    },
+    SaveFilePickerOptions: function SaveFilePickerOptions() {
+    },
+    DirectoryPickerOptions: function DirectoryPickerOptions() {
+    },
+    Blob: function Blob() {
+    },
+    BlobPropertyBag: function BlobPropertyBag() {
+    },
+    File: function File() {
+    },
+    FilePropertyBag: function FilePropertyBag() {
+    },
+    FileList: function FileList() {
+    },
+    FileReader: function FileReader() {
+    },
+    FileReaderSync: function FileReaderSync() {
+    },
+    SVGFilterElement: function SVGFilterElement() {
+    },
+    SVGFilterPrimitiveStandardAttributes: function SVGFilterPrimitiveStandardAttributes() {
+    },
+    SVGFEBlendElement: function SVGFEBlendElement() {
+    },
+    SVGFEColorMatrixElement: function SVGFEColorMatrixElement() {
+    },
+    SVGFEComponentTransferElement: function SVGFEComponentTransferElement() {
+    },
+    SVGComponentTransferFunctionElement: function SVGComponentTransferFunctionElement() {
+    },
+    SVGFEFuncRElement: function SVGFEFuncRElement() {
+    },
+    SVGFEFuncGElement: function SVGFEFuncGElement() {
+    },
+    SVGFEFuncBElement: function SVGFEFuncBElement() {
+    },
+    SVGFEFuncAElement: function SVGFEFuncAElement() {
+    },
+    SVGFECompositeElement: function SVGFECompositeElement() {
+    },
+    SVGFEConvolveMatrixElement: function SVGFEConvolveMatrixElement() {
+    },
+    SVGFEDiffuseLightingElement: function SVGFEDiffuseLightingElement() {
+    },
+    SVGFEDistantLightElement: function SVGFEDistantLightElement() {
+    },
+    SVGFEPointLightElement: function SVGFEPointLightElement() {
+    },
+    SVGFESpotLightElement: function SVGFESpotLightElement() {
+    },
+    SVGFEDisplacementMapElement: function SVGFEDisplacementMapElement() {
+    },
+    SVGFEDropShadowElement: function SVGFEDropShadowElement() {
+    },
+    SVGFEFloodElement: function SVGFEFloodElement() {
+    },
+    SVGFEGaussianBlurElement: function SVGFEGaussianBlurElement() {
+    },
+    SVGFEImageElement: function SVGFEImageElement() {
+    },
+    SVGFEMergeElement: function SVGFEMergeElement() {
+    },
+    SVGFEMergeNodeElement: function SVGFEMergeNodeElement() {
+    },
+    SVGFEMorphologyElement: function SVGFEMorphologyElement() {
+    },
+    SVGFEOffsetElement: function SVGFEOffsetElement() {
+    },
+    SVGFESpecularLightingElement: function SVGFESpecularLightingElement() {
+    },
+    SVGFETileElement: function SVGFETileElement() {
+    },
+    SVGFETurbulenceElement: function SVGFETurbulenceElement() {
+    },
+    FontMetrics: function FontMetrics() {
+    },
+    Baseline: function Baseline() {
+    },
+    Font: function Font() {
+    },
+    FileSystemHandle: function FileSystemHandle() {
+    },
+    FileSystemCreateWritableOptions: function FileSystemCreateWritableOptions() {
+    },
+    FileSystemFileHandle: function FileSystemFileHandle() {
+    },
+    FileSystemGetFileOptions: function FileSystemGetFileOptions() {
+    },
+    FileSystemGetDirectoryOptions: function FileSystemGetDirectoryOptions() {
+    },
+    FileSystemRemoveOptions: function FileSystemRemoveOptions() {
+    },
+    FileSystemDirectoryHandle: function FileSystemDirectoryHandle() {
+    },
+    WriteParams: function WriteParams() {
+    },
+    FileSystemWritableFileStream: function FileSystemWritableFileStream() {
+    },
+    FileSystemReadWriteOptions: function FileSystemReadWriteOptions() {
+    },
+    FileSystemSyncAccessHandle: function FileSystemSyncAccessHandle() {
+    },
+    FullscreenOptions: function FullscreenOptions() {
+    },
+    Gamepad: function Gamepad() {
+    },
+    GamepadButton: function GamepadButton() {
+    },
+    GamepadEvent: function GamepadEvent() {
+    },
+    GamepadEventInit: function GamepadEventInit() {
+    },
+    GamepadHapticActuator: function GamepadHapticActuator() {
+    },
+    GamepadEffectParameters: function GamepadEffectParameters() {
+    },
+    GamepadPose: function GamepadPose() {
+    },
+    GamepadTouch: function GamepadTouch() {
+    },
+    Sensor: function Sensor() {
+    },
+    SensorOptions: function SensorOptions() {
+    },
+    SensorErrorEvent: function SensorErrorEvent() {
+    },
+    SensorErrorEventInit: function SensorErrorEventInit() {
+    },
+    MockSensorConfiguration: function MockSensorConfiguration() {
+    },
+    MockSensor: function MockSensor() {
+    },
+    MockSensorReadingValues: function MockSensorReadingValues() {
+    },
+    Geolocation: function Geolocation() {
+    },
+    PositionOptions: function PositionOptions() {
+    },
+    GeolocationPosition: function GeolocationPosition() {
+    },
+    GeolocationCoordinates: function GeolocationCoordinates() {
+    },
+    GeolocationPositionError: function GeolocationPositionError() {
+    },
+    GeolocationSensor: function GeolocationSensor() {
+    },
+    GeolocationSensorOptions: function GeolocationSensorOptions() {
+    },
+    ReadOptions: function ReadOptions() {
+    },
+    GeolocationSensorReading: function GeolocationSensorReading() {
+    },
+    GeolocationReadingValues: function GeolocationReadingValues() {
+    },
+    DOMPointReadOnly: function DOMPointReadOnly() {
+    },
+    DOMPoint: function DOMPoint() {
+    },
+    DOMPointInit: function DOMPointInit() {
+    },
+    DOMRectReadOnly: function DOMRectReadOnly() {
+    },
+    DOMRect: function DOMRect() {
+    },
+    DOMRectInit: function DOMRectInit() {
+    },
+    DOMRectList: function DOMRectList() {
+    },
+    DOMQuad: function DOMQuad() {
+    },
+    DOMQuadInit: function DOMQuadInit() {
+    },
+    DOMMatrixReadOnly: function DOMMatrixReadOnly() {
+    },
+    DOMMatrix: function DOMMatrix() {
+    },
+    DOMMatrix2DInit: function DOMMatrix2DInit() {
+    },
+    DOMMatrixInit: function DOMMatrixInit() {
+    },
+    RelatedApplication: function RelatedApplication() {
+    },
+    GlobalPrivacyControl: function GlobalPrivacyControl() {
+    },
+    Gyroscope: function Gyroscope() {
+    },
+    GyroscopeSensorOptions: function GyroscopeSensorOptions() {
+    },
+    GyroscopeReadingValues: function GyroscopeReadingValues() {
+    },
+    Performance: function Performance() {
+    },
+    HTMLAllCollection: function HTMLAllCollection() {
+    },
+    HTMLFormControlsCollection: function HTMLFormControlsCollection() {
+    },
+    RadioNodeList: function RadioNodeList() {
+    },
+    HTMLOptionsCollection: function HTMLOptionsCollection() {
+    },
+    DOMStringList: function DOMStringList() {
+    },
+    HTMLElement: function HTMLElement() {
+    },
+    HTMLUnknownElement: function HTMLUnknownElement() {
+    },
+    HTMLOrSVGElement: function HTMLOrSVGElement() {
+    },
+    DOMStringMap: function DOMStringMap() {
+    },
+    HTMLHtmlElement: function HTMLHtmlElement() {
+    },
+    HTMLHeadElement: function HTMLHeadElement() {
+    },
+    HTMLTitleElement: function HTMLTitleElement() {
+    },
+    HTMLBaseElement: function HTMLBaseElement() {
+    },
+    HTMLLinkElement: function HTMLLinkElement() {
+    },
+    HTMLMetaElement: function HTMLMetaElement() {
+    },
+    HTMLStyleElement: function HTMLStyleElement() {
+    },
+    HTMLBodyElement: function HTMLBodyElement() {
+    },
+    HTMLHeadingElement: function HTMLHeadingElement() {
+    },
+    HTMLParagraphElement: function HTMLParagraphElement() {
+    },
+    HTMLHRElement: function HTMLHRElement() {
+    },
+    HTMLPreElement: function HTMLPreElement() {
+    },
+    HTMLQuoteElement: function HTMLQuoteElement() {
+    },
+    HTMLOListElement: function HTMLOListElement() {
+    },
+    HTMLUListElement: function HTMLUListElement() {
+    },
+    HTMLMenuElement: function HTMLMenuElement() {
+    },
+    HTMLLIElement: function HTMLLIElement() {
+    },
+    HTMLDListElement: function HTMLDListElement() {
+    },
+    HTMLDivElement: function HTMLDivElement() {
+    },
+    HTMLAnchorElement: function HTMLAnchorElement() {
+    },
+    HTMLDataElement: function HTMLDataElement() {
+    },
+    HTMLTimeElement: function HTMLTimeElement() {
+    },
+    HTMLSpanElement: function HTMLSpanElement() {
+    },
+    HTMLBRElement: function HTMLBRElement() {
+    },
+    HTMLHyperlinkElementUtils: function HTMLHyperlinkElementUtils() {
+    },
+    HTMLModElement: function HTMLModElement() {
+    },
+    HTMLPictureElement: function HTMLPictureElement() {
+    },
+    HTMLSourceElement: function HTMLSourceElement() {
+    },
+    HTMLImageElement: function HTMLImageElement() {
+    },
+    HTMLIFrameElement: function HTMLIFrameElement() {
+    },
+    HTMLEmbedElement: function HTMLEmbedElement() {
+    },
+    HTMLObjectElement: function HTMLObjectElement() {
+    },
+    HTMLVideoElement: function HTMLVideoElement() {
+    },
+    HTMLAudioElement: function HTMLAudioElement() {
+    },
+    HTMLTrackElement: function HTMLTrackElement() {
+    },
+    HTMLMediaElement: function HTMLMediaElement() {
+    },
+    MediaError: function MediaError() {
+    },
+    AudioTrackList: function AudioTrackList() {
+    },
+    AudioTrack: function AudioTrack() {
+    },
+    VideoTrackList: function VideoTrackList() {
+    },
+    VideoTrack: function VideoTrack() {
+    },
+    TextTrackList: function TextTrackList() {
+    },
+    TextTrack: function TextTrack() {
+    },
+    TextTrackCueList: function TextTrackCueList() {
+    },
+    TextTrackCue: function TextTrackCue() {
+    },
+    TimeRanges: function TimeRanges() {
+    },
+    TrackEvent: function TrackEvent() {
+    },
+    TrackEventInit: function TrackEventInit() {
+    },
+    HTMLMapElement: function HTMLMapElement() {
+    },
+    HTMLAreaElement: function HTMLAreaElement() {
+    },
+    HTMLTableElement: function HTMLTableElement() {
+    },
+    HTMLTableCaptionElement: function HTMLTableCaptionElement() {
+    },
+    HTMLTableColElement: function HTMLTableColElement() {
+    },
+    HTMLTableSectionElement: function HTMLTableSectionElement() {
+    },
+    HTMLTableRowElement: function HTMLTableRowElement() {
+    },
+    HTMLTableCellElement: function HTMLTableCellElement() {
+    },
+    HTMLFormElement: function HTMLFormElement() {
+    },
+    HTMLLabelElement: function HTMLLabelElement() {
+    },
+    HTMLInputElement: function HTMLInputElement() {
+    },
+    HTMLButtonElement: function HTMLButtonElement() {
+    },
+    HTMLSelectElement: function HTMLSelectElement() {
+    },
+    HTMLDataListElement: function HTMLDataListElement() {
+    },
+    HTMLOptGroupElement: function HTMLOptGroupElement() {
+    },
+    HTMLOptionElement: function HTMLOptionElement() {
+    },
+    HTMLTextAreaElement: function HTMLTextAreaElement() {
+    },
+    HTMLOutputElement: function HTMLOutputElement() {
+    },
+    HTMLProgressElement: function HTMLProgressElement() {
+    },
+    HTMLMeterElement: function HTMLMeterElement() {
+    },
+    HTMLFieldSetElement: function HTMLFieldSetElement() {
+    },
+    HTMLLegendElement: function HTMLLegendElement() {
+    },
+    ValidityState: function ValidityState() {
+    },
+    SubmitEvent: function SubmitEvent() {
+    },
+    SubmitEventInit: function SubmitEventInit() {
+    },
+    FormDataEvent: function FormDataEvent() {
+    },
+    FormDataEventInit: function FormDataEventInit() {
+    },
+    HTMLDetailsElement: function HTMLDetailsElement() {
+    },
+    HTMLDialogElement: function HTMLDialogElement() {
+    },
+    HTMLScriptElement: function HTMLScriptElement() {
+    },
+    HTMLTemplateElement: function HTMLTemplateElement() {
+    },
+    HTMLSlotElement: function HTMLSlotElement() {
+    },
+    AssignedNodesOptions: function AssignedNodesOptions() {
+    },
+    HTMLCanvasElement: function HTMLCanvasElement() {
+    },
+    CanvasRenderingContext2DSettings: function CanvasRenderingContext2DSettings() {
+    },
+    CanvasRenderingContext2D: function CanvasRenderingContext2D() {
+    },
+    CanvasState: function CanvasState() {
+    },
+    CanvasTransform: function CanvasTransform() {
+    },
+    CanvasCompositing: function CanvasCompositing() {
+    },
+    CanvasImageSmoothing: function CanvasImageSmoothing() {
+    },
+    CanvasFillStrokeStyles: function CanvasFillStrokeStyles() {
+    },
+    CanvasShadowStyles: function CanvasShadowStyles() {
+    },
+    CanvasFilters: function CanvasFilters() {
+    },
+    CanvasRect: function CanvasRect() {
+    },
+    CanvasDrawPath: function CanvasDrawPath() {
+    },
+    CanvasUserInterface: function CanvasUserInterface() {
+    },
+    CanvasText: function CanvasText() {
+    },
+    CanvasDrawImage: function CanvasDrawImage() {
+    },
+    CanvasImageData: function CanvasImageData() {
+    },
+    CanvasPathDrawingStyles: function CanvasPathDrawingStyles() {
+    },
+    CanvasTextDrawingStyles: function CanvasTextDrawingStyles() {
+    },
+    CanvasPath: function CanvasPath() {
+    },
+    CanvasGradient: function CanvasGradient() {
+    },
+    CanvasPattern: function CanvasPattern() {
+    },
+    TextMetrics: function TextMetrics() {
+    },
+    ImageDataSettings: function ImageDataSettings() {
+    },
+    ImageData: function ImageData() {
+    },
+    Path2D: function Path2D() {
+    },
+    ImageBitmapRenderingContext: function ImageBitmapRenderingContext() {
+    },
+    ImageBitmapRenderingContextSettings: function ImageBitmapRenderingContextSettings() {
+    },
+    ImageEncodeOptions: function ImageEncodeOptions() {
+    },
+    OffscreenCanvas: function OffscreenCanvas() {
+    },
+    OffscreenCanvasRenderingContext2D: function OffscreenCanvasRenderingContext2D() {
+    },
+    CustomElementRegistry: function CustomElementRegistry() {
+    },
+    ElementDefinitionOptions: function ElementDefinitionOptions() {
+    },
+    ElementInternals: function ElementInternals() {
+    },
+    ValidityStateFlags: function ValidityStateFlags() {
+    },
+    UserActivation: function UserActivation() {
+    },
+    FocusOptions: function FocusOptions() {
+    },
+    ElementContentEditable: function ElementContentEditable() {
+    },
+    DataTransfer: function DataTransfer() {
+    },
+    DataTransferItemList: function DataTransferItemList() {
+    },
+    DataTransferItem: function DataTransferItem() {
+    },
+    DragEvent: function DragEvent() {
+    },
+    DragEventInit: function DragEventInit() {
+    },
+    PopoverTargetElement: function PopoverTargetElement() {
+    },
+    ToggleEvent: function ToggleEvent() {
+    },
+    ToggleEventInit: function ToggleEventInit() {
+    },
+    Window: function Window() {
+    },
+    WindowPostMessageOptions: function WindowPostMessageOptions() {
+    },
+    BarProp: function BarProp() {
+    },
+    Location: function Location() {
+    },
+    History: function History() {
+    },
+    PopStateEvent: function PopStateEvent() {
+    },
+    PopStateEventInit: function PopStateEventInit() {
+    },
+    HashChangeEvent: function HashChangeEvent() {
+    },
+    HashChangeEventInit: function HashChangeEventInit() {
+    },
+    PageTransitionEvent: function PageTransitionEvent() {
+    },
+    PageTransitionEventInit: function PageTransitionEventInit() {
+    },
+    BeforeUnloadEvent: function BeforeUnloadEvent() {
+    },
+    ErrorEvent: function ErrorEvent() {
+    },
+    ErrorEventInit: function ErrorEventInit() {
+    },
+    PromiseRejectionEvent: function PromiseRejectionEvent() {
+    },
+    PromiseRejectionEventInit: function PromiseRejectionEventInit() {
+    },
+    GlobalEventHandlers: function GlobalEventHandlers() {
+    },
+    WindowEventHandlers: function WindowEventHandlers() {
+    },
+    WindowOrWorkerGlobalScope: function WindowOrWorkerGlobalScope() {
+    },
+    DOMParser: function DOMParser() {
+    },
+    Navigator: function Navigator() {
+    },
+    NavigatorID: function NavigatorID() {
+    },
+    NavigatorLanguage: function NavigatorLanguage() {
+    },
+    NavigatorOnLine: function NavigatorOnLine() {
+    },
+    NavigatorContentUtils: function NavigatorContentUtils() {
+    },
+    NavigatorCookies: function NavigatorCookies() {
+    },
+    NavigatorPlugins: function NavigatorPlugins() {
     },
     PluginArray: function PluginArray() {
     },
-    RtcStatsReport: function RtcStatsReport() {
+    MimeTypeArray: function MimeTypeArray() {
     },
-    RtcStatsReport_keys_closure: function RtcStatsReport_keys_closure(t0) {
-      this.keys = t0;
+    Plugin: function Plugin() {
     },
-    SelectElement: function SelectElement() {
+    MimeType: function MimeType() {
+    },
+    ImageBitmap: function ImageBitmap() {
+    },
+    ImageBitmapOptions: function ImageBitmapOptions() {
+    },
+    AnimationFrameProvider: function AnimationFrameProvider() {
+    },
+    MessageEvent: function MessageEvent() {
+    },
+    MessageEventInit: function MessageEventInit() {
+    },
+    EventSource: function EventSource() {
+    },
+    EventSourceInit: function EventSourceInit() {
+    },
+    MessageChannel: function MessageChannel() {
+    },
+    MessagePort: function MessagePort() {
+    },
+    StructuredSerializeOptions: function StructuredSerializeOptions() {
+    },
+    BroadcastChannel: function BroadcastChannel() {
+    },
+    WorkerGlobalScope: function WorkerGlobalScope() {
+    },
+    DedicatedWorkerGlobalScope: function DedicatedWorkerGlobalScope() {
+    },
+    SharedWorkerGlobalScope: function SharedWorkerGlobalScope() {
+    },
+    AbstractWorker: function AbstractWorker() {
+    },
+    Worker: function Worker() {
+    },
+    WorkerOptions: function WorkerOptions() {
+    },
+    SharedWorker: function SharedWorker() {
+    },
+    NavigatorConcurrentHardware: function NavigatorConcurrentHardware() {
+    },
+    WorkerNavigator: function WorkerNavigator() {
+    },
+    WorkerLocation: function WorkerLocation() {
+    },
+    WorkletGlobalScope: function WorkletGlobalScope() {
+    },
+    Worklet: function Worklet() {
+    },
+    WorkletOptions: function WorkletOptions() {
+    },
+    Storage: function Storage() {
+    },
+    WindowSessionStorage: function WindowSessionStorage() {
+    },
+    WindowLocalStorage: function WindowLocalStorage() {
+    },
+    StorageEvent: function StorageEvent() {
+    },
+    StorageEventInit: function StorageEventInit() {
+    },
+    HTMLMarqueeElement: function HTMLMarqueeElement() {
+    },
+    HTMLFrameSetElement: function HTMLFrameSetElement() {
+    },
+    HTMLFrameElement: function HTMLFrameElement() {
+    },
+    HTMLDirectoryElement: function HTMLDirectoryElement() {
+    },
+    HTMLFontElement: function HTMLFontElement() {
+    },
+    HTMLParamElement: function HTMLParamElement() {
+    },
+    External: function External() {
+    },
+    IdleOptions: function IdleOptions() {
+    },
+    IdleDetector: function IdleDetector() {
+    },
+    ImageCapture: function ImageCapture() {
+    },
+    PhotoCapabilities: function PhotoCapabilities() {
+    },
+    PhotoSettings: function PhotoSettings() {
+    },
+    MediaSettingsRange: function MediaSettingsRange() {
+    },
+    ConstrainPoint2DParameters: function ConstrainPoint2DParameters() {
+    },
+    Point2D: function Point2D() {
+    },
+    ImageResource: function ImageResource() {
+    },
+    IDBRequest: function IDBRequest() {
+    },
+    IDBOpenDBRequest: function IDBOpenDBRequest() {
+    },
+    IDBVersionChangeEvent: function IDBVersionChangeEvent() {
+    },
+    IDBVersionChangeEventInit: function IDBVersionChangeEventInit() {
+    },
+    IDBFactory: function IDBFactory() {
+    },
+    IDBDatabaseInfo: function IDBDatabaseInfo() {
+    },
+    IDBDatabase: function IDBDatabase() {
+    },
+    IDBTransactionOptions: function IDBTransactionOptions() {
+    },
+    IDBObjectStoreParameters: function IDBObjectStoreParameters() {
+    },
+    IDBObjectStore: function IDBObjectStore() {
+    },
+    IDBIndexParameters: function IDBIndexParameters() {
+    },
+    IDBIndex: function IDBIndex() {
+    },
+    IDBKeyRange: function IDBKeyRange() {
+    },
+    IDBCursor: function IDBCursor() {
+    },
+    IDBCursorWithValue: function IDBCursorWithValue() {
+    },
+    IDBTransaction: function IDBTransaction() {
+    },
+    Ink: function Ink() {
+    },
+    InkPresenterParam: function InkPresenterParam() {
+    },
+    InkPresenter: function InkPresenter() {
+    },
+    InkTrailStyle: function InkTrailStyle() {
+    },
+    InputDeviceCapabilities: function InputDeviceCapabilities() {
+    },
+    InputDeviceCapabilitiesInit: function InputDeviceCapabilitiesInit() {
+    },
+    IntersectionObserver: function IntersectionObserver() {
+    },
+    IntersectionObserverEntry: function IntersectionObserverEntry() {
+    },
+    IntersectionObserverEntryInit: function IntersectionObserverEntryInit() {
+    },
+    IntersectionObserverInit: function IntersectionObserverInit() {
+    },
+    InterventionReportBody: function InterventionReportBody() {
+    },
+    IsInputPendingOptions: function IsInputPendingOptions() {
+    },
+    Scheduling: function Scheduling() {
+    },
+    Profiler: function Profiler() {
+    },
+    ProfilerTrace: function ProfilerTrace() {
+    },
+    ProfilerSample: function ProfilerSample() {
+    },
+    ProfilerStack: function ProfilerStack() {
+    },
+    ProfilerFrame: function ProfilerFrame() {
+    },
+    ProfilerInitOptions: function ProfilerInitOptions() {
+    },
+    Keyboard: function Keyboard() {
+    },
+    KeyboardLayoutMap: function KeyboardLayoutMap() {
+    },
+    KHR_parallel_shader_compile: function KHR_parallel_shader_compile() {
+    },
+    LargestContentfulPaint: function LargestContentfulPaint() {
+    },
+    LayoutShift: function LayoutShift() {
+    },
+    LayoutShiftAttribution: function LayoutShiftAttribution() {
+    },
+    QueryOptions: function QueryOptions() {
+    },
+    FontData: function FontData() {
+    },
+    PerformanceLongTaskTiming: function PerformanceLongTaskTiming() {
+    },
+    TaskAttributionTiming: function TaskAttributionTiming() {
+    },
+    Magnetometer: function Magnetometer() {
+    },
+    MagnetometerSensorOptions: function MagnetometerSensorOptions() {
+    },
+    UncalibratedMagnetometer: function UncalibratedMagnetometer() {
+    },
+    MagnetometerReadingValues: function MagnetometerReadingValues() {
+    },
+    UncalibratedMagnetometerReadingValues: function UncalibratedMagnetometerReadingValues() {
+    },
+    BeforeInstallPromptEvent: function BeforeInstallPromptEvent() {
+    },
+    PromptResponseObject: function PromptResponseObject() {
+    },
+    MathMLElement: function MathMLElement() {
+    },
+    MediaConfiguration: function MediaConfiguration() {
+    },
+    MediaDecodingConfiguration: function MediaDecodingConfiguration() {
+    },
+    MediaEncodingConfiguration: function MediaEncodingConfiguration() {
+    },
+    VideoConfiguration: function VideoConfiguration() {
+    },
+    AudioConfiguration: function AudioConfiguration() {
+    },
+    MediaCapabilitiesKeySystemConfiguration: function MediaCapabilitiesKeySystemConfiguration() {
+    },
+    KeySystemTrackConfiguration: function KeySystemTrackConfiguration() {
+    },
+    MediaCapabilitiesInfo: function MediaCapabilitiesInfo() {
+    },
+    MediaCapabilitiesDecodingInfo: function MediaCapabilitiesDecodingInfo() {
+    },
+    MediaCapabilitiesEncodingInfo: function MediaCapabilitiesEncodingInfo() {
+    },
+    MediaCapabilities: function MediaCapabilities() {
+    },
+    VideoPlaybackQuality: function VideoPlaybackQuality() {
+    },
+    MediaSource: function MediaSource() {
+    },
+    MediaSourceHandle: function MediaSourceHandle() {
     },
     SourceBuffer: function SourceBuffer() {
     },
     SourceBufferList: function SourceBufferList() {
     },
+    MockCapturePromptResultConfiguration: function MockCapturePromptResultConfiguration() {
+    },
+    MockCaptureDeviceConfiguration: function MockCaptureDeviceConfiguration() {
+    },
+    MockCameraConfiguration: function MockCameraConfiguration() {
+    },
+    MockMicrophoneConfiguration: function MockMicrophoneConfiguration() {
+    },
+    CanvasCaptureMediaStreamTrack: function CanvasCaptureMediaStreamTrack() {
+    },
+    CaptureActionEvent: function CaptureActionEvent() {
+    },
+    CaptureActionEventInit: function CaptureActionEventInit() {
+    },
+    CropTarget: function CropTarget() {
+    },
+    BrowserCaptureMediaStreamTrack: function BrowserCaptureMediaStreamTrack() {
+    },
+    MediaStream: function MediaStream() {
+    },
+    MediaStreamTrack: function MediaStreamTrack() {
+    },
+    MediaTrackSupportedConstraints: function MediaTrackSupportedConstraints() {
+    },
+    MediaTrackCapabilities: function MediaTrackCapabilities() {
+    },
+    MediaTrackConstraints: function MediaTrackConstraints() {
+    },
+    MediaTrackConstraintSet: function MediaTrackConstraintSet() {
+    },
+    MediaTrackSettings: function MediaTrackSettings() {
+    },
+    MediaStreamTrackEvent: function MediaStreamTrackEvent() {
+    },
+    MediaStreamTrackEventInit: function MediaStreamTrackEventInit() {
+    },
+    OverconstrainedError: function OverconstrainedError() {
+    },
+    MediaDevices: function MediaDevices() {
+    },
+    MediaDeviceInfo: function MediaDeviceInfo() {
+    },
+    InputDeviceInfo: function InputDeviceInfo() {
+    },
+    MediaStreamConstraints: function MediaStreamConstraints() {
+    },
+    DoubleRange: function DoubleRange() {
+    },
+    ConstrainDoubleRange: function ConstrainDoubleRange() {
+    },
+    ULongRange: function ULongRange() {
+    },
+    ConstrainULongRange: function ConstrainULongRange() {
+    },
+    ConstrainBooleanParameters: function ConstrainBooleanParameters() {
+    },
+    ConstrainDOMStringParameters: function ConstrainDOMStringParameters() {
+    },
+    DevicePermissionDescriptor: function DevicePermissionDescriptor() {
+    },
+    CameraDevicePermissionDescriptor: function CameraDevicePermissionDescriptor() {
+    },
+    MediaStreamTrackProcessor: function MediaStreamTrackProcessor() {
+    },
+    MediaStreamTrackProcessorInit: function MediaStreamTrackProcessorInit() {
+    },
+    VideoTrackGenerator: function VideoTrackGenerator() {
+    },
+    ViewportMediaStreamConstraints: function ViewportMediaStreamConstraints() {
+    },
+    MediaSession: function MediaSession() {
+    },
+    MediaMetadata: function MediaMetadata() {
+    },
+    MediaMetadataInit: function MediaMetadataInit() {
+    },
+    MediaImage: function MediaImage() {
+    },
+    MediaPositionState: function MediaPositionState() {
+    },
+    MediaSessionActionDetails: function MediaSessionActionDetails() {
+    },
+    MediaRecorder: function MediaRecorder() {
+    },
+    MediaRecorderOptions: function MediaRecorderOptions() {
+    },
+    BlobEvent: function BlobEvent() {
+    },
+    BlobEventInit: function BlobEventInit() {
+    },
+    HTMLModelElement: function HTMLModelElement() {
+    },
+    Navigation: function Navigation() {
+    },
+    NavigationUpdateCurrentEntryOptions: function NavigationUpdateCurrentEntryOptions() {
+    },
+    NavigationOptions: function NavigationOptions() {
+    },
+    NavigationNavigateOptions: function NavigationNavigateOptions() {
+    },
+    NavigationReloadOptions: function NavigationReloadOptions() {
+    },
+    NavigationResult: function NavigationResult() {
+    },
+    NavigationCurrentEntryChangeEvent: function NavigationCurrentEntryChangeEvent() {
+    },
+    NavigationCurrentEntryChangeEventInit: function NavigationCurrentEntryChangeEventInit() {
+    },
+    NavigationTransition: function NavigationTransition() {
+    },
+    NavigateEvent: function NavigateEvent() {
+    },
+    NavigateEventInit: function NavigateEventInit() {
+    },
+    NavigationInterceptOptions: function NavigationInterceptOptions() {
+    },
+    NavigationDestination: function NavigationDestination() {
+    },
+    NavigationHistoryEntry: function NavigationHistoryEntry() {
+    },
+    PerformanceNavigationTiming: function PerformanceNavigationTiming() {
+    },
+    PerformanceTiming: function PerformanceTiming() {
+    },
+    PerformanceNavigation: function PerformanceNavigation() {
+    },
+    NavigatorNetworkInformation: function NavigatorNetworkInformation() {
+    },
+    NetworkInformation: function NetworkInformation() {
+    },
+    Notification: function Notification() {
+    },
+    NotificationOptions: function NotificationOptions() {
+    },
+    NotificationAction: function NotificationAction() {
+    },
+    GetNotificationOptions: function GetNotificationOptions() {
+    },
+    NotificationEvent: function NotificationEvent() {
+    },
+    NotificationEventInit: function NotificationEventInit() {
+    },
+    OES_draw_buffers_indexed: function OES_draw_buffers_indexed() {
+    },
+    OES_element_index_uint: function OES_element_index_uint() {
+    },
+    OES_fbo_render_mipmap: function OES_fbo_render_mipmap() {
+    },
+    OES_standard_derivatives: function OES_standard_derivatives() {
+    },
+    OES_texture_float: function OES_texture_float() {
+    },
+    OES_texture_float_linear: function OES_texture_float_linear() {
+    },
+    OES_texture_half_float: function OES_texture_half_float() {
+    },
+    OES_texture_half_float_linear: function OES_texture_half_float_linear() {
+    },
+    WebGLVertexArrayObjectOES: function WebGLVertexArrayObjectOES() {
+    },
+    OES_vertex_array_object: function OES_vertex_array_object() {
+    },
+    DeviceOrientationEvent: function DeviceOrientationEvent() {
+    },
+    DeviceOrientationEventInit: function DeviceOrientationEventInit() {
+    },
+    DeviceMotionEventAcceleration: function DeviceMotionEventAcceleration() {
+    },
+    DeviceMotionEventRotationRate: function DeviceMotionEventRotationRate() {
+    },
+    DeviceMotionEvent: function DeviceMotionEvent() {
+    },
+    DeviceMotionEventAccelerationInit: function DeviceMotionEventAccelerationInit() {
+    },
+    DeviceMotionEventRotationRateInit: function DeviceMotionEventRotationRateInit() {
+    },
+    DeviceMotionEventInit: function DeviceMotionEventInit() {
+    },
+    OrientationSensor: function OrientationSensor() {
+    },
+    OrientationSensorOptions: function OrientationSensorOptions() {
+    },
+    AbsoluteOrientationSensor: function AbsoluteOrientationSensor() {
+    },
+    RelativeOrientationSensor: function RelativeOrientationSensor() {
+    },
+    AbsoluteOrientationReadingValues: function AbsoluteOrientationReadingValues() {
+    },
+    RelativeOrientationReadingValues: function RelativeOrientationReadingValues() {
+    },
+    OVR_multiview2: function OVR_multiview2() {
+    },
+    PerformancePaintTiming: function PerformancePaintTiming() {
+    },
+    PaymentManager: function PaymentManager() {
+    },
+    CanMakePaymentEvent: function CanMakePaymentEvent() {
+    },
+    PaymentRequestDetailsUpdate: function PaymentRequestDetailsUpdate() {
+    },
+    PaymentRequestEvent: function PaymentRequestEvent() {
+    },
+    PaymentRequestEventInit: function PaymentRequestEventInit() {
+    },
+    PaymentHandlerResponse: function PaymentHandlerResponse() {
+    },
+    AddressInit: function AddressInit() {
+    },
+    PaymentOptions: function PaymentOptions() {
+    },
+    PaymentShippingOption: function PaymentShippingOption() {
+    },
+    AddressErrors: function AddressErrors() {
+    },
+    PaymentRequest: function PaymentRequest() {
+    },
+    PaymentMethodData: function PaymentMethodData() {
+    },
+    PaymentCurrencyAmount: function PaymentCurrencyAmount() {
+    },
+    PaymentDetailsBase: function PaymentDetailsBase() {
+    },
+    PaymentDetailsInit: function PaymentDetailsInit() {
+    },
+    PaymentDetailsUpdate: function PaymentDetailsUpdate() {
+    },
+    PaymentDetailsModifier: function PaymentDetailsModifier() {
+    },
+    PaymentItem: function PaymentItem() {
+    },
+    PaymentCompleteDetails: function PaymentCompleteDetails() {
+    },
+    PaymentResponse: function PaymentResponse() {
+    },
+    PaymentValidationErrors: function PaymentValidationErrors() {
+    },
+    PaymentMethodChangeEvent: function PaymentMethodChangeEvent() {
+    },
+    PaymentMethodChangeEventInit: function PaymentMethodChangeEventInit() {
+    },
+    PaymentRequestUpdateEvent: function PaymentRequestUpdateEvent() {
+    },
+    PaymentRequestUpdateEventInit: function PaymentRequestUpdateEventInit() {
+    },
+    MemoryMeasurement: function MemoryMeasurement() {
+    },
+    MemoryBreakdownEntry: function MemoryBreakdownEntry() {
+    },
+    MemoryAttribution: function MemoryAttribution() {
+    },
+    MemoryAttributionContainer: function MemoryAttributionContainer() {
+    },
+    PerformanceEntry: function PerformanceEntry() {
+    },
+    PerformanceObserver: function PerformanceObserver() {
+    },
+    PerformanceObserverCallbackOptions: function PerformanceObserverCallbackOptions() {
+    },
+    PerformanceObserverInit: function PerformanceObserverInit() {
+    },
+    PerformanceObserverEntryList: function PerformanceObserverEntryList() {
+    },
+    PeriodicSyncManager: function PeriodicSyncManager() {
+    },
+    BackgroundSyncOptions: function BackgroundSyncOptions() {
+    },
+    PeriodicSyncEventInit: function PeriodicSyncEventInit() {
+    },
+    PeriodicSyncEvent: function PeriodicSyncEvent() {
+    },
+    Permissions: function Permissions() {
+    },
+    PermissionDescriptor: function PermissionDescriptor() {
+    },
+    PermissionStatus: function PermissionStatus() {
+    },
+    PermissionSetParameters: function PermissionSetParameters() {
+    },
+    PermissionsPolicy: function PermissionsPolicy() {
+    },
+    PermissionsPolicyViolationReportBody: function PermissionsPolicyViolationReportBody() {
+    },
+    PictureInPictureWindow: function PictureInPictureWindow() {
+    },
+    PictureInPictureEvent: function PictureInPictureEvent() {
+    },
+    PictureInPictureEventInit: function PictureInPictureEventInit() {
+    },
+    PointerEventInit: function PointerEventInit() {
+    },
+    PointerEvent: function PointerEvent() {
+    },
+    HTMLPortalElement: function HTMLPortalElement() {
+    },
+    PortalActivateOptions: function PortalActivateOptions() {
+    },
+    PortalHost: function PortalHost() {
+    },
+    PortalActivateEvent: function PortalActivateEvent() {
+    },
+    PortalActivateEventInit: function PortalActivateEventInit() {
+    },
+    Presentation: function Presentation() {
+    },
+    PresentationRequest: function PresentationRequest() {
+    },
+    PresentationAvailability: function PresentationAvailability() {
+    },
+    PresentationConnectionAvailableEvent: function PresentationConnectionAvailableEvent() {
+    },
+    PresentationConnectionAvailableEventInit: function PresentationConnectionAvailableEventInit() {
+    },
+    PresentationConnection: function PresentationConnection() {
+    },
+    PresentationConnectionCloseEvent: function PresentationConnectionCloseEvent() {
+    },
+    PresentationConnectionCloseEventInit: function PresentationConnectionCloseEventInit() {
+    },
+    PresentationReceiver: function PresentationReceiver() {
+    },
+    PresentationConnectionList: function PresentationConnectionList() {
+    },
+    ProximitySensor: function ProximitySensor() {
+    },
+    ProximityReadingValues: function ProximityReadingValues() {
+    },
+    PushPermissionDescriptor: function PushPermissionDescriptor() {
+    },
+    PushManager: function PushManager() {
+    },
+    PushSubscriptionOptions: function PushSubscriptionOptions() {
+    },
+    PushSubscriptionOptionsInit: function PushSubscriptionOptionsInit() {
+    },
+    PushSubscription: function PushSubscription() {
+    },
+    PushSubscriptionJSON: function PushSubscriptionJSON() {
+    },
+    PushMessageData: function PushMessageData() {
+    },
+    PushEvent: function PushEvent() {
+    },
+    PushEventInit: function PushEventInit() {
+    },
+    PushSubscriptionChangeEvent: function PushSubscriptionChangeEvent() {
+    },
+    PushSubscriptionChangeEventInit: function PushSubscriptionChangeEventInit() {
+    },
+    XRCamera: function XRCamera() {
+    },
+    RemotePlayback: function RemotePlayback() {
+    },
+    ReportBody: function ReportBody() {
+    },
+    Report: function Report() {
+    },
+    ReportingObserver: function ReportingObserver() {
+    },
+    ReportingObserverOptions: function ReportingObserverOptions() {
+    },
+    GenerateTestReportParameters: function GenerateTestReportParameters() {
+    },
+    IdleRequestOptions: function IdleRequestOptions() {
+    },
+    IdleDeadline: function IdleDeadline() {
+    },
+    TopLevelStorageAccessPermissionDescriptor: function TopLevelStorageAccessPermissionDescriptor() {
+    },
+    ResizeObserverOptions: function ResizeObserverOptions() {
+    },
+    ResizeObserver: function ResizeObserver() {
+    },
+    ResizeObserverEntry: function ResizeObserverEntry() {
+    },
+    ResizeObserverSize: function ResizeObserverSize() {
+    },
+    PerformanceResourceTiming: function PerformanceResourceTiming() {
+    },
+    Sanitizer: function Sanitizer() {
+    },
+    SetHTMLOptions: function SetHTMLOptions() {
+    },
+    SanitizerConfig: function SanitizerConfig() {
+    },
+    NetworkInformationSaveData: function NetworkInformationSaveData() {
+    },
+    SchedulerPostTaskOptions: function SchedulerPostTaskOptions() {
+    },
+    Scheduler: function Scheduler() {
+    },
+    TaskPriorityChangeEvent: function TaskPriorityChangeEvent() {
+    },
+    TaskPriorityChangeEventInit: function TaskPriorityChangeEventInit() {
+    },
+    TaskControllerInit: function TaskControllerInit() {
+    },
+    TaskController: function TaskController() {
+    },
+    TaskSignal: function TaskSignal() {
+    },
+    CaptureController: function CaptureController() {
+    },
+    DisplayMediaStreamOptions: function DisplayMediaStreamOptions() {
+    },
+    ScreenOrientation: function ScreenOrientation() {
+    },
+    WakeLock: function WakeLock() {
+    },
+    WakeLockSentinel: function WakeLockSentinel() {
+    },
+    ScrollTimelineOptions: function ScrollTimelineOptions() {
+    },
+    ScrollTimeline: function ScrollTimeline() {
+    },
+    ViewTimelineOptions: function ViewTimelineOptions() {
+    },
+    ViewTimeline: function ViewTimeline() {
+    },
+    FragmentDirective: function FragmentDirective() {
+    },
+    SecurePaymentConfirmationRequest: function SecurePaymentConfirmationRequest() {
+    },
+    AuthenticationExtensionsPaymentInputs: function AuthenticationExtensionsPaymentInputs() {
+    },
+    CollectedClientPaymentData: function CollectedClientPaymentData() {
+    },
+    CollectedClientAdditionalPaymentData: function CollectedClientAdditionalPaymentData() {
+    },
+    PaymentCredentialInstrument: function PaymentCredentialInstrument() {
+    },
+    Selection: function Selection() {
+    },
+    Serial: function Serial() {
+    },
+    SerialPortRequestOptions: function SerialPortRequestOptions() {
+    },
+    SerialPortFilter: function SerialPortFilter() {
+    },
+    SerialPort: function SerialPort() {
+    },
+    SerialPortInfo: function SerialPortInfo() {
+    },
+    SerialOptions: function SerialOptions() {
+    },
+    SerialOutputSignals: function SerialOutputSignals() {
+    },
+    SerialInputSignals: function SerialInputSignals() {
+    },
+    PerformanceServerTiming: function PerformanceServerTiming() {
+    },
+    ServiceWorker: function ServiceWorker() {
+    },
+    ServiceWorkerRegistration: function ServiceWorkerRegistration() {
+    },
+    ServiceWorkerContainer: function ServiceWorkerContainer() {
+    },
+    RegistrationOptions: function RegistrationOptions() {
+    },
+    NavigationPreloadManager: function NavigationPreloadManager() {
+    },
+    NavigationPreloadState: function NavigationPreloadState() {
+    },
+    ServiceWorkerGlobalScope: function ServiceWorkerGlobalScope() {
+    },
+    Client: function Client() {
+    },
+    WindowClient: function WindowClient() {
+    },
+    Clients: function Clients() {
+    },
+    ClientQueryOptions: function ClientQueryOptions() {
+    },
+    ExtendableEvent: function ExtendableEvent() {
+    },
+    ExtendableEventInit: function ExtendableEventInit() {
+    },
+    FetchEvent: function FetchEvent() {
+    },
+    FetchEventInit: function FetchEventInit() {
+    },
+    ExtendableMessageEvent: function ExtendableMessageEvent() {
+    },
+    ExtendableMessageEventInit: function ExtendableMessageEventInit() {
+    },
+    Cache: function Cache() {
+    },
+    CacheQueryOptions: function CacheQueryOptions() {
+    },
+    CacheStorage: function CacheStorage() {
+    },
+    MultiCacheQueryOptions: function MultiCacheQueryOptions() {
+    },
+    FaceDetector: function FaceDetector() {
+    },
+    FaceDetectorOptions: function FaceDetectorOptions() {
+    },
+    DetectedFace: function DetectedFace() {
+    },
+    Landmark: function Landmark() {
+    },
+    BarcodeDetector: function BarcodeDetector() {
+    },
+    BarcodeDetectorOptions: function BarcodeDetectorOptions() {
+    },
+    DetectedBarcode: function DetectedBarcode() {
+    },
+    SpeechRecognition: function SpeechRecognition() {
+    },
+    SpeechRecognitionErrorEvent: function SpeechRecognitionErrorEvent() {
+    },
+    SpeechRecognitionErrorEventInit: function SpeechRecognitionErrorEventInit() {
+    },
+    SpeechRecognitionAlternative: function SpeechRecognitionAlternative() {
+    },
+    SpeechRecognitionResult: function SpeechRecognitionResult() {
+    },
+    SpeechRecognitionResultList: function SpeechRecognitionResultList() {
+    },
+    SpeechRecognitionEvent: function SpeechRecognitionEvent() {
+    },
+    SpeechRecognitionEventInit: function SpeechRecognitionEventInit() {
+    },
     SpeechGrammar: function SpeechGrammar() {
     },
     SpeechGrammarList: function SpeechGrammarList() {
     },
-    SpeechRecognitionResult: function SpeechRecognitionResult() {
+    SpeechSynthesis: function SpeechSynthesis() {
     },
-    Storage: function Storage() {
+    SpeechSynthesisUtterance: function SpeechSynthesisUtterance() {
     },
-    Storage_keys_closure: function Storage_keys_closure(t0) {
-      this.keys = t0;
+    SpeechSynthesisEvent: function SpeechSynthesisEvent() {
     },
-    StyleSheet: function StyleSheet() {
+    SpeechSynthesisEventInit: function SpeechSynthesisEventInit() {
     },
-    TextTrack: function TextTrack() {
+    SpeechSynthesisErrorEvent: function SpeechSynthesisErrorEvent() {
     },
-    TextTrackCue: function TextTrackCue() {
+    SpeechSynthesisErrorEventInit: function SpeechSynthesisErrorEventInit() {
     },
-    TextTrackCueList: function TextTrackCueList() {
+    SpeechSynthesisVoice: function SpeechSynthesisVoice() {
     },
-    TextTrackList: function TextTrackList() {
+    NavigatorStorage: function NavigatorStorage() {
     },
-    TimeRanges: function TimeRanges() {
+    StorageManager: function StorageManager() {
+    },
+    StorageEstimate: function StorageEstimate() {
+    },
+    ReadableStream: function ReadableStream() {
+    },
+    ReadableStreamGetReaderOptions: function ReadableStreamGetReaderOptions() {
+    },
+    ReadableStreamIteratorOptions: function ReadableStreamIteratorOptions() {
+    },
+    ReadableWritablePair: function ReadableWritablePair() {
+    },
+    StreamPipeOptions: function StreamPipeOptions() {
+    },
+    UnderlyingSource: function UnderlyingSource() {
+    },
+    ReadableStreamGenericReader: function ReadableStreamGenericReader() {
+    },
+    ReadableStreamDefaultReader: function ReadableStreamDefaultReader() {
+    },
+    ReadableStreamReadResult: function ReadableStreamReadResult() {
+    },
+    ReadableStreamBYOBReader: function ReadableStreamBYOBReader() {
+    },
+    ReadableStreamDefaultController: function ReadableStreamDefaultController() {
+    },
+    ReadableByteStreamController: function ReadableByteStreamController() {
+    },
+    ReadableStreamBYOBRequest: function ReadableStreamBYOBRequest() {
+    },
+    WritableStream: function WritableStream() {
+    },
+    UnderlyingSink: function UnderlyingSink() {
+    },
+    WritableStreamDefaultWriter: function WritableStreamDefaultWriter() {
+    },
+    WritableStreamDefaultController: function WritableStreamDefaultController() {
+    },
+    TransformStream: function TransformStream() {
+    },
+    Transformer: function Transformer() {
+    },
+    TransformStreamDefaultController: function TransformStreamDefaultController() {
+    },
+    QueuingStrategy: function QueuingStrategy() {
+    },
+    QueuingStrategyInit: function QueuingStrategyInit() {
+    },
+    ByteLengthQueuingStrategy: function ByteLengthQueuingStrategy() {
+    },
+    CountQueuingStrategy: function CountQueuingStrategy() {
+    },
+    GenericTransformStream: function GenericTransformStream() {
+    },
+    SVGElement: function SVGElement() {
+    },
+    SVGBoundingBoxOptions: function SVGBoundingBoxOptions() {
+    },
+    SVGGraphicsElement: function SVGGraphicsElement() {
+    },
+    SVGGeometryElement: function SVGGeometryElement() {
+    },
+    SVGNumber: function SVGNumber() {
+    },
+    SVGLength: function SVGLength() {
+    },
+    SVGAngle: function SVGAngle() {
+    },
+    SVGNumberList: function SVGNumberList() {
+    },
+    SVGLengthList: function SVGLengthList() {
+    },
+    SVGStringList: function SVGStringList() {
+    },
+    SVGAnimatedBoolean: function SVGAnimatedBoolean() {
+    },
+    SVGAnimatedEnumeration: function SVGAnimatedEnumeration() {
+    },
+    SVGAnimatedInteger: function SVGAnimatedInteger() {
+    },
+    SVGAnimatedNumber: function SVGAnimatedNumber() {
+    },
+    SVGAnimatedLength: function SVGAnimatedLength() {
+    },
+    SVGAnimatedAngle: function SVGAnimatedAngle() {
+    },
+    SVGAnimatedString: function SVGAnimatedString() {
+    },
+    SVGAnimatedRect: function SVGAnimatedRect() {
+    },
+    SVGAnimatedNumberList: function SVGAnimatedNumberList() {
+    },
+    SVGAnimatedLengthList: function SVGAnimatedLengthList() {
+    },
+    SVGUnitTypes: function SVGUnitTypes() {
+    },
+    SVGTests: function SVGTests() {
+    },
+    SVGFitToViewBox: function SVGFitToViewBox() {
+    },
+    SVGURIReference: function SVGURIReference() {
+    },
+    SVGSVGElement: function SVGSVGElement() {
+    },
+    SVGGElement: function SVGGElement() {
+    },
+    SVGDefsElement: function SVGDefsElement() {
+    },
+    SVGDescElement: function SVGDescElement() {
+    },
+    SVGMetadataElement: function SVGMetadataElement() {
+    },
+    SVGTitleElement: function SVGTitleElement() {
+    },
+    SVGSymbolElement: function SVGSymbolElement() {
+    },
+    SVGUseElement: function SVGUseElement() {
+    },
+    SVGUseElementShadowRoot: function SVGUseElementShadowRoot() {
+    },
+    SVGElementInstance: function SVGElementInstance() {
+    },
+    ShadowAnimation: function ShadowAnimation() {
+    },
+    SVGSwitchElement: function SVGSwitchElement() {
+    },
+    GetSVGDocument: function GetSVGDocument() {
+    },
+    SVGStyleElement: function SVGStyleElement() {
+    },
+    SVGTransform: function SVGTransform() {
+    },
+    SVGTransformList: function SVGTransformList() {
+    },
+    SVGAnimatedTransformList: function SVGAnimatedTransformList() {
+    },
+    SVGPreserveAspectRatio: function SVGPreserveAspectRatio() {
+    },
+    SVGAnimatedPreserveAspectRatio: function SVGAnimatedPreserveAspectRatio() {
+    },
+    SVGPathElement: function SVGPathElement() {
+    },
+    SVGRectElement: function SVGRectElement() {
+    },
+    SVGCircleElement: function SVGCircleElement() {
+    },
+    SVGEllipseElement: function SVGEllipseElement() {
+    },
+    SVGLineElement: function SVGLineElement() {
+    },
+    SVGAnimatedPoints: function SVGAnimatedPoints() {
+    },
+    SVGPointList: function SVGPointList() {
+    },
+    SVGPolylineElement: function SVGPolylineElement() {
+    },
+    SVGPolygonElement: function SVGPolygonElement() {
+    },
+    SVGTextContentElement: function SVGTextContentElement() {
+    },
+    SVGTextPositioningElement: function SVGTextPositioningElement() {
+    },
+    SVGTextElement: function SVGTextElement() {
+    },
+    SVGTSpanElement: function SVGTSpanElement() {
+    },
+    SVGTextPathElement: function SVGTextPathElement() {
+    },
+    SVGImageElement: function SVGImageElement() {
+    },
+    SVGForeignObjectElement: function SVGForeignObjectElement() {
+    },
+    SVGMarkerElement: function SVGMarkerElement() {
+    },
+    SVGGradientElement: function SVGGradientElement() {
+    },
+    SVGLinearGradientElement: function SVGLinearGradientElement() {
+    },
+    SVGRadialGradientElement: function SVGRadialGradientElement() {
+    },
+    SVGStopElement: function SVGStopElement() {
+    },
+    SVGPatternElement: function SVGPatternElement() {
+    },
+    SVGScriptElement: function SVGScriptElement() {
+    },
+    SVGAElement: function SVGAElement() {
+    },
+    SVGViewElement: function SVGViewElement() {
+    },
+    TimeEvent: function TimeEvent() {
+    },
+    SVGAnimationElement: function SVGAnimationElement() {
+    },
+    SVGAnimateElement: function SVGAnimateElement() {
+    },
+    SVGSetElement: function SVGSetElement() {
+    },
+    SVGAnimateMotionElement: function SVGAnimateMotionElement() {
+    },
+    SVGMPathElement: function SVGMPathElement() {
+    },
+    SVGAnimateTransformElement: function SVGAnimateTransformElement() {
+    },
+    SVGDiscardElement: function SVGDiscardElement() {
+    },
+    $TestUtils: function $TestUtils() {
+    },
+    TextDetector: function TextDetector() {
+    },
+    DetectedText: function DetectedText() {
+    },
+    TouchInit: function TouchInit() {
     },
     Touch: function Touch() {
     },
     TouchList: function TouchList() {
     },
-    TrackDefaultList: function TrackDefaultList() {
+    TouchEventInit: function TouchEventInit() {
     },
-    Url: function Url() {
+    TouchEvent: function TouchEvent() {
     },
-    VideoTrackList: function VideoTrackList() {
+    TrustedHTML: function TrustedHTML() {
     },
-    _CssRuleList: function _CssRuleList() {
+    TrustedScript: function TrustedScript() {
     },
-    _DomRect: function _DomRect() {
+    TrustedScriptURL: function TrustedScriptURL() {
     },
-    _GamepadList: function _GamepadList() {
+    TrustedTypePolicyFactory: function TrustedTypePolicyFactory() {
     },
-    _NamedNodeMap: function _NamedNodeMap() {
+    TrustedTypePolicy: function TrustedTypePolicy() {
     },
-    _SpeechRecognitionResultList: function _SpeechRecognitionResultList() {
+    TrustedTypePolicyOptions: function TrustedTypePolicyOptions() {
     },
-    _StyleSheetList: function _StyleSheetList() {
+    NavigatorUABrandVersion: function NavigatorUABrandVersion() {
     },
-    ImmutableListMixin: function ImmutableListMixin() {
+    UADataValues: function UADataValues() {
     },
-    FixedSizeListIterator: function FixedSizeListIterator(t0, t1, t2) {
-      var _ = this;
-      _._array = t0;
-      _._html$_length = t1;
-      _._position = -1;
-      _._html$_current = null;
-      _.$ti = t2;
+    UALowEntropyJSON: function UALowEntropyJSON() {
     },
-    _CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase: function _CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase() {
+    NavigatorUAData: function NavigatorUAData() {
     },
-    _DomRectList_JavaScriptObject_ListMixin: function _DomRectList_JavaScriptObject_ListMixin() {
+    NavigatorUA: function NavigatorUA() {
     },
-    _DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin: function _DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    UIEvent: function UIEvent() {
     },
-    _DomStringList_JavaScriptObject_ListMixin: function _DomStringList_JavaScriptObject_ListMixin() {
+    UIEventInit: function UIEventInit() {
     },
-    _DomStringList_JavaScriptObject_ListMixin_ImmutableListMixin: function _DomStringList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    FocusEvent: function FocusEvent() {
     },
-    _FileList_JavaScriptObject_ListMixin: function _FileList_JavaScriptObject_ListMixin() {
+    FocusEventInit: function FocusEventInit() {
     },
-    _FileList_JavaScriptObject_ListMixin_ImmutableListMixin: function _FileList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    MouseEvent: function MouseEvent() {
     },
-    _HtmlCollection_JavaScriptObject_ListMixin: function _HtmlCollection_JavaScriptObject_ListMixin() {
+    MouseEventInit: function MouseEventInit() {
     },
-    _HtmlCollection_JavaScriptObject_ListMixin_ImmutableListMixin: function _HtmlCollection_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    EventModifierInit: function EventModifierInit() {
     },
-    _MidiInputMap_JavaScriptObject_MapMixin: function _MidiInputMap_JavaScriptObject_MapMixin() {
+    WheelEvent: function WheelEvent() {
     },
-    _MidiOutputMap_JavaScriptObject_MapMixin: function _MidiOutputMap_JavaScriptObject_MapMixin() {
+    WheelEventInit: function WheelEventInit() {
     },
-    _MimeTypeArray_JavaScriptObject_ListMixin: function _MimeTypeArray_JavaScriptObject_ListMixin() {
+    InputEvent: function InputEvent() {
     },
-    _MimeTypeArray_JavaScriptObject_ListMixin_ImmutableListMixin: function _MimeTypeArray_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    InputEventInit: function InputEventInit() {
     },
-    _NodeList_JavaScriptObject_ListMixin: function _NodeList_JavaScriptObject_ListMixin() {
+    KeyboardEvent: function KeyboardEvent() {
     },
-    _NodeList_JavaScriptObject_ListMixin_ImmutableListMixin: function _NodeList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    KeyboardEventInit: function KeyboardEventInit() {
     },
-    _PluginArray_JavaScriptObject_ListMixin: function _PluginArray_JavaScriptObject_ListMixin() {
+    CompositionEvent: function CompositionEvent() {
     },
-    _PluginArray_JavaScriptObject_ListMixin_ImmutableListMixin: function _PluginArray_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    CompositionEventInit: function CompositionEventInit() {
     },
-    _RtcStatsReport_JavaScriptObject_MapMixin: function _RtcStatsReport_JavaScriptObject_MapMixin() {
+    MutationEvent: function MutationEvent() {
     },
-    _SourceBufferList_EventTarget_ListMixin: function _SourceBufferList_EventTarget_ListMixin() {
+    URL: function URL() {
     },
-    _SourceBufferList_EventTarget_ListMixin_ImmutableListMixin: function _SourceBufferList_EventTarget_ListMixin_ImmutableListMixin() {
+    URLSearchParams: function URLSearchParams() {
     },
-    _SpeechGrammarList_JavaScriptObject_ListMixin: function _SpeechGrammarList_JavaScriptObject_ListMixin() {
+    URLPattern: function URLPattern() {
     },
-    _SpeechGrammarList_JavaScriptObject_ListMixin_ImmutableListMixin: function _SpeechGrammarList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    URLPatternInit: function URLPatternInit() {
     },
-    _Storage_JavaScriptObject_MapMixin: function _Storage_JavaScriptObject_MapMixin() {
+    URLPatternOptions: function URLPatternOptions() {
     },
-    _TextTrackCueList_JavaScriptObject_ListMixin: function _TextTrackCueList_JavaScriptObject_ListMixin() {
+    URLPatternResult: function URLPatternResult() {
     },
-    _TextTrackCueList_JavaScriptObject_ListMixin_ImmutableListMixin: function _TextTrackCueList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    URLPatternComponentResult: function URLPatternComponentResult() {
     },
-    _TextTrackList_EventTarget_ListMixin: function _TextTrackList_EventTarget_ListMixin() {
+    PerformanceMarkOptions: function PerformanceMarkOptions() {
     },
-    _TextTrackList_EventTarget_ListMixin_ImmutableListMixin: function _TextTrackList_EventTarget_ListMixin_ImmutableListMixin() {
+    PerformanceMeasureOptions: function PerformanceMeasureOptions() {
     },
-    _TouchList_JavaScriptObject_ListMixin: function _TouchList_JavaScriptObject_ListMixin() {
+    PerformanceMark: function PerformanceMark() {
     },
-    _TouchList_JavaScriptObject_ListMixin_ImmutableListMixin: function _TouchList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    PerformanceMeasure: function PerformanceMeasure() {
     },
-    __CssRuleList_JavaScriptObject_ListMixin: function __CssRuleList_JavaScriptObject_ListMixin() {
+    VideoFrameCallbackMetadata: function VideoFrameCallbackMetadata() {
     },
-    __CssRuleList_JavaScriptObject_ListMixin_ImmutableListMixin: function __CssRuleList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    VirtualKeyboard: function VirtualKeyboard() {
     },
-    __GamepadList_JavaScriptObject_ListMixin: function __GamepadList_JavaScriptObject_ListMixin() {
+    ARIAMixin: function ARIAMixin() {
     },
-    __GamepadList_JavaScriptObject_ListMixin_ImmutableListMixin: function __GamepadList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    WebAssemblyInstantiatedSource: function WebAssemblyInstantiatedSource() {
     },
-    __NamedNodeMap_JavaScriptObject_ListMixin: function __NamedNodeMap_JavaScriptObject_ListMixin() {
+    $WebAssembly: function $WebAssembly() {
     },
-    __NamedNodeMap_JavaScriptObject_ListMixin_ImmutableListMixin: function __NamedNodeMap_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    ModuleExportDescriptor: function ModuleExportDescriptor() {
     },
-    __SpeechRecognitionResultList_JavaScriptObject_ListMixin: function __SpeechRecognitionResultList_JavaScriptObject_ListMixin() {
+    ModuleImportDescriptor: function ModuleImportDescriptor() {
     },
-    __SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin: function __SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    Module: function Module() {
     },
-    __StyleSheetList_JavaScriptObject_ListMixin: function __StyleSheetList_JavaScriptObject_ListMixin() {
+    Instance: function Instance() {
     },
-    __StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin: function __StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    MemoryDescriptor: function MemoryDescriptor() {
     },
-    Length: function Length() {
+    Memory: function Memory() {
     },
-    LengthList: function LengthList() {
+    TableDescriptor: function TableDescriptor() {
     },
-    Number: function Number() {
+    Table: function Table() {
     },
-    NumberList: function NumberList() {
+    GlobalDescriptor: function GlobalDescriptor() {
     },
-    PointList: function PointList() {
+    Global: function Global() {
     },
-    StringList: function StringList() {
+    AnimationTimeline: function AnimationTimeline() {
     },
-    Transform: function Transform() {
+    DocumentTimelineOptions: function DocumentTimelineOptions() {
     },
-    TransformList: function TransformList() {
+    DocumentTimeline: function DocumentTimeline() {
     },
-    _LengthList_JavaScriptObject_ListMixin: function _LengthList_JavaScriptObject_ListMixin() {
+    Animation: function Animation() {
     },
-    _LengthList_JavaScriptObject_ListMixin_ImmutableListMixin: function _LengthList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    AnimationEffect: function AnimationEffect() {
     },
-    _NumberList_JavaScriptObject_ListMixin: function _NumberList_JavaScriptObject_ListMixin() {
+    EffectTiming: function EffectTiming() {
     },
-    _NumberList_JavaScriptObject_ListMixin_ImmutableListMixin: function _NumberList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    OptionalEffectTiming: function OptionalEffectTiming() {
     },
-    _StringList_JavaScriptObject_ListMixin: function _StringList_JavaScriptObject_ListMixin() {
+    ComputedEffectTiming: function ComputedEffectTiming() {
     },
-    _StringList_JavaScriptObject_ListMixin_ImmutableListMixin: function _StringList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    KeyframeEffect: function KeyframeEffect() {
     },
-    _TransformList_JavaScriptObject_ListMixin: function _TransformList_JavaScriptObject_ListMixin() {
+    BaseComputedKeyframe: function BaseComputedKeyframe() {
     },
-    _TransformList_JavaScriptObject_ListMixin_ImmutableListMixin: function _TransformList_JavaScriptObject_ListMixin_ImmutableListMixin() {
+    BasePropertyIndexedKeyframe: function BasePropertyIndexedKeyframe() {
     },
-    AudioBuffer: function AudioBuffer() {
+    BaseKeyframe: function BaseKeyframe() {
     },
-    AudioParamMap: function AudioParamMap() {
+    KeyframeEffectOptions: function KeyframeEffectOptions() {
     },
-    AudioParamMap_keys_closure: function AudioParamMap_keys_closure(t0) {
-      this.keys = t0;
+    Animatable: function Animatable() {
     },
-    AudioTrackList: function AudioTrackList() {
+    KeyframeAnimationOptions: function KeyframeAnimationOptions() {
+    },
+    GetAnimationsOptions: function GetAnimationsOptions() {
+    },
+    GroupEffect: function GroupEffect() {
+    },
+    AnimationNodeList: function AnimationNodeList() {
+    },
+    SequenceEffect: function SequenceEffect() {
+    },
+    AnimationPlaybackEvent: function AnimationPlaybackEvent() {
+    },
+    AnimationPlaybackEventInit: function AnimationPlaybackEventInit() {
+    },
+    LaunchParams: function LaunchParams() {
+    },
+    LaunchQueue: function LaunchQueue() {
+    },
+    BluetoothDataFilterInit: function BluetoothDataFilterInit() {
+    },
+    BluetoothManufacturerDataFilterInit: function BluetoothManufacturerDataFilterInit() {
+    },
+    BluetoothServiceDataFilterInit: function BluetoothServiceDataFilterInit() {
+    },
+    BluetoothLEScanFilterInit: function BluetoothLEScanFilterInit() {
+    },
+    RequestDeviceOptions: function RequestDeviceOptions() {
+    },
+    Bluetooth: function Bluetooth() {
+    },
+    BluetoothPermissionDescriptor: function BluetoothPermissionDescriptor() {
+    },
+    AllowedBluetoothDevice: function AllowedBluetoothDevice() {
+    },
+    BluetoothPermissionStorage: function BluetoothPermissionStorage() {
+    },
+    BluetoothPermissionResult: function BluetoothPermissionResult() {
+    },
+    ValueEvent: function ValueEvent() {
+    },
+    ValueEventInit: function ValueEventInit() {
+    },
+    BluetoothDevice: function BluetoothDevice() {
+    },
+    WatchAdvertisementsOptions: function WatchAdvertisementsOptions() {
+    },
+    BluetoothManufacturerDataMap: function BluetoothManufacturerDataMap() {
+    },
+    BluetoothServiceDataMap: function BluetoothServiceDataMap() {
+    },
+    BluetoothAdvertisingEvent: function BluetoothAdvertisingEvent() {
+    },
+    BluetoothAdvertisingEventInit: function BluetoothAdvertisingEventInit() {
+    },
+    BluetoothRemoteGATTServer: function BluetoothRemoteGATTServer() {
+    },
+    BluetoothRemoteGATTService: function BluetoothRemoteGATTService() {
+    },
+    BluetoothRemoteGATTCharacteristic: function BluetoothRemoteGATTCharacteristic() {
+    },
+    BluetoothCharacteristicProperties: function BluetoothCharacteristicProperties() {
+    },
+    BluetoothRemoteGATTDescriptor: function BluetoothRemoteGATTDescriptor() {
+    },
+    CharacteristicEventHandlers: function CharacteristicEventHandlers() {
+    },
+    BluetoothDeviceEventHandlers: function BluetoothDeviceEventHandlers() {
+    },
+    ServiceEventHandlers: function ServiceEventHandlers() {
+    },
+    BluetoothUUID: function BluetoothUUID() {
+    },
+    NavigatorLocks: function NavigatorLocks() {
+    },
+    LockManager: function LockManager() {
+    },
+    LockOptions: function LockOptions() {
+    },
+    LockManagerSnapshot: function LockManagerSnapshot() {
+    },
+    LockInfo: function LockInfo() {
+    },
+    Lock: function Lock() {
+    },
+    NDEFMessage: function NDEFMessage() {
+    },
+    NDEFMessageInit: function NDEFMessageInit() {
+    },
+    NDEFRecord: function NDEFRecord() {
+    },
+    NDEFRecordInit: function NDEFRecordInit() {
+    },
+    NDEFReader: function NDEFReader() {
+    },
+    NDEFReadingEvent: function NDEFReadingEvent() {
+    },
+    NDEFReadingEventInit: function NDEFReadingEventInit() {
+    },
+    NDEFWriteOptions: function NDEFWriteOptions() {
+    },
+    NDEFMakeReadOnlyOptions: function NDEFMakeReadOnlyOptions() {
+    },
+    NDEFScanOptions: function NDEFScanOptions() {
+    },
+    OTPCredential: function OTPCredential() {
+    },
+    OTPCredentialRequestOptions: function OTPCredentialRequestOptions() {
+    },
+    ShareData: function ShareData() {
     },
     BaseAudioContext: function BaseAudioContext() {
     },
+    AudioContext: function AudioContext() {
+    },
+    AudioContextOptions: function AudioContextOptions() {
+    },
+    AudioSinkOptions: function AudioSinkOptions() {
+    },
+    AudioSinkInfo: function AudioSinkInfo() {
+    },
+    AudioTimestamp: function AudioTimestamp() {
+    },
+    AudioRenderCapacity: function AudioRenderCapacity() {
+    },
+    AudioRenderCapacityOptions: function AudioRenderCapacityOptions() {
+    },
+    AudioRenderCapacityEvent: function AudioRenderCapacityEvent() {
+    },
+    AudioRenderCapacityEventInit: function AudioRenderCapacityEventInit() {
+    },
     OfflineAudioContext: function OfflineAudioContext() {
     },
-    _AudioParamMap_JavaScriptObject_MapMixin: function _AudioParamMap_JavaScriptObject_MapMixin() {
+    OfflineAudioContextOptions: function OfflineAudioContextOptions() {
     },
-    $Console: function $Console() {
+    OfflineAudioCompletionEvent: function OfflineAudioCompletionEvent() {
+    },
+    OfflineAudioCompletionEventInit: function OfflineAudioCompletionEventInit() {
+    },
+    AudioBuffer: function AudioBuffer() {
+    },
+    AudioBufferOptions: function AudioBufferOptions() {
+    },
+    AudioNode: function AudioNode() {
+    },
+    AudioNodeOptions: function AudioNodeOptions() {
+    },
+    AudioParam: function AudioParam() {
+    },
+    AudioScheduledSourceNode: function AudioScheduledSourceNode() {
+    },
+    AnalyserNode: function AnalyserNode() {
+    },
+    AnalyserOptions: function AnalyserOptions() {
+    },
+    AudioBufferSourceNode: function AudioBufferSourceNode() {
+    },
+    AudioBufferSourceOptions: function AudioBufferSourceOptions() {
+    },
+    AudioDestinationNode: function AudioDestinationNode() {
+    },
+    AudioListener: function AudioListener() {
+    },
+    AudioProcessingEvent: function AudioProcessingEvent() {
+    },
+    AudioProcessingEventInit: function AudioProcessingEventInit() {
+    },
+    BiquadFilterNode: function BiquadFilterNode() {
+    },
+    BiquadFilterOptions: function BiquadFilterOptions() {
+    },
+    ChannelMergerNode: function ChannelMergerNode() {
+    },
+    ChannelMergerOptions: function ChannelMergerOptions() {
+    },
+    ChannelSplitterNode: function ChannelSplitterNode() {
+    },
+    ChannelSplitterOptions: function ChannelSplitterOptions() {
+    },
+    ConstantSourceNode: function ConstantSourceNode() {
+    },
+    ConstantSourceOptions: function ConstantSourceOptions() {
+    },
+    ConvolverNode: function ConvolverNode() {
+    },
+    ConvolverOptions: function ConvolverOptions() {
+    },
+    DelayNode: function DelayNode() {
+    },
+    DelayOptions: function DelayOptions() {
+    },
+    DynamicsCompressorNode: function DynamicsCompressorNode() {
+    },
+    DynamicsCompressorOptions: function DynamicsCompressorOptions() {
+    },
+    GainNode: function GainNode() {
+    },
+    GainOptions: function GainOptions() {
+    },
+    IIRFilterNode: function IIRFilterNode() {
+    },
+    IIRFilterOptions: function IIRFilterOptions() {
+    },
+    MediaElementAudioSourceNode: function MediaElementAudioSourceNode() {
+    },
+    MediaElementAudioSourceOptions: function MediaElementAudioSourceOptions() {
+    },
+    MediaStreamAudioDestinationNode: function MediaStreamAudioDestinationNode() {
+    },
+    MediaStreamAudioSourceNode: function MediaStreamAudioSourceNode() {
+    },
+    MediaStreamAudioSourceOptions: function MediaStreamAudioSourceOptions() {
+    },
+    MediaStreamTrackAudioSourceNode: function MediaStreamTrackAudioSourceNode() {
+    },
+    MediaStreamTrackAudioSourceOptions: function MediaStreamTrackAudioSourceOptions() {
+    },
+    OscillatorNode: function OscillatorNode() {
+    },
+    OscillatorOptions: function OscillatorOptions() {
+    },
+    PannerNode: function PannerNode() {
+    },
+    PannerOptions: function PannerOptions() {
+    },
+    PeriodicWave: function PeriodicWave() {
+    },
+    PeriodicWaveConstraints: function PeriodicWaveConstraints() {
+    },
+    PeriodicWaveOptions: function PeriodicWaveOptions() {
+    },
+    ScriptProcessorNode: function ScriptProcessorNode() {
+    },
+    StereoPannerNode: function StereoPannerNode() {
+    },
+    StereoPannerOptions: function StereoPannerOptions() {
+    },
+    WaveShaperNode: function WaveShaperNode() {
+    },
+    WaveShaperOptions: function WaveShaperOptions() {
+    },
+    AudioWorklet: function AudioWorklet() {
+    },
+    AudioWorkletGlobalScope: function AudioWorkletGlobalScope() {
+    },
+    AudioParamMap: function AudioParamMap() {
+    },
+    AudioWorkletNode: function AudioWorkletNode() {
+    },
+    AudioWorkletNodeOptions: function AudioWorkletNodeOptions() {
+    },
+    AudioWorkletProcessor: function AudioWorkletProcessor() {
+    },
+    AudioParamDescriptor: function AudioParamDescriptor() {
+    },
+    PublicKeyCredential: function PublicKeyCredential() {
+    },
+    RegistrationResponseJSON: function RegistrationResponseJSON() {
+    },
+    AuthenticatorAttestationResponseJSON: function AuthenticatorAttestationResponseJSON() {
+    },
+    AuthenticationResponseJSON: function AuthenticationResponseJSON() {
+    },
+    AuthenticatorAssertionResponseJSON: function AuthenticatorAssertionResponseJSON() {
+    },
+    AuthenticationExtensionsClientOutputsJSON: function AuthenticationExtensionsClientOutputsJSON() {
+    },
+    PublicKeyCredentialCreationOptionsJSON: function PublicKeyCredentialCreationOptionsJSON() {
+    },
+    PublicKeyCredentialUserEntityJSON: function PublicKeyCredentialUserEntityJSON() {
+    },
+    PublicKeyCredentialDescriptorJSON: function PublicKeyCredentialDescriptorJSON() {
+    },
+    AuthenticationExtensionsClientInputsJSON: function AuthenticationExtensionsClientInputsJSON() {
+    },
+    PublicKeyCredentialRequestOptionsJSON: function PublicKeyCredentialRequestOptionsJSON() {
+    },
+    AuthenticatorResponse: function AuthenticatorResponse() {
+    },
+    AuthenticatorAttestationResponse: function AuthenticatorAttestationResponse() {
+    },
+    AuthenticatorAssertionResponse: function AuthenticatorAssertionResponse() {
+    },
+    PublicKeyCredentialParameters: function PublicKeyCredentialParameters() {
+    },
+    PublicKeyCredentialCreationOptions: function PublicKeyCredentialCreationOptions() {
+    },
+    PublicKeyCredentialEntity: function PublicKeyCredentialEntity() {
+    },
+    PublicKeyCredentialRpEntity: function PublicKeyCredentialRpEntity() {
+    },
+    PublicKeyCredentialUserEntity: function PublicKeyCredentialUserEntity() {
+    },
+    AuthenticatorSelectionCriteria: function AuthenticatorSelectionCriteria() {
+    },
+    PublicKeyCredentialRequestOptions: function PublicKeyCredentialRequestOptions() {
+    },
+    AuthenticationExtensionsClientInputs: function AuthenticationExtensionsClientInputs() {
+    },
+    AuthenticationExtensionsClientOutputs: function AuthenticationExtensionsClientOutputs() {
+    },
+    CollectedClientData: function CollectedClientData() {
+    },
+    TokenBinding: function TokenBinding() {
+    },
+    PublicKeyCredentialDescriptor: function PublicKeyCredentialDescriptor() {
+    },
+    CredentialPropertiesOutput: function CredentialPropertiesOutput() {
+    },
+    AuthenticationExtensionsPRFValues: function AuthenticationExtensionsPRFValues() {
+    },
+    AuthenticationExtensionsPRFInputs: function AuthenticationExtensionsPRFInputs() {
+    },
+    AuthenticationExtensionsPRFOutputs: function AuthenticationExtensionsPRFOutputs() {
+    },
+    AuthenticationExtensionsLargeBlobInputs: function AuthenticationExtensionsLargeBlobInputs() {
+    },
+    AuthenticationExtensionsLargeBlobOutputs: function AuthenticationExtensionsLargeBlobOutputs() {
+    },
+    AuthenticationExtensionsDevicePublicKeyInputs: function AuthenticationExtensionsDevicePublicKeyInputs() {
+    },
+    AuthenticationExtensionsDevicePublicKeyOutputs: function AuthenticationExtensionsDevicePublicKeyOutputs() {
+    },
+    AudioDecoder: function AudioDecoder() {
+    },
+    AudioDecoderInit: function AudioDecoderInit() {
+    },
+    VideoDecoder: function VideoDecoder() {
+    },
+    VideoDecoderInit: function VideoDecoderInit() {
+    },
+    AudioEncoder: function AudioEncoder() {
+    },
+    AudioEncoderInit: function AudioEncoderInit() {
+    },
+    EncodedAudioChunkMetadata: function EncodedAudioChunkMetadata() {
+    },
+    VideoEncoder: function VideoEncoder() {
+    },
+    VideoEncoderInit: function VideoEncoderInit() {
+    },
+    EncodedVideoChunkMetadata: function EncodedVideoChunkMetadata() {
+    },
+    SvcOutputMetadata: function SvcOutputMetadata() {
+    },
+    AudioDecoderSupport: function AudioDecoderSupport() {
+    },
+    VideoDecoderSupport: function VideoDecoderSupport() {
+    },
+    AudioEncoderSupport: function AudioEncoderSupport() {
+    },
+    VideoEncoderSupport: function VideoEncoderSupport() {
+    },
+    AudioDecoderConfig: function AudioDecoderConfig() {
+    },
+    VideoDecoderConfig: function VideoDecoderConfig() {
+    },
+    AudioEncoderConfig: function AudioEncoderConfig() {
+    },
+    VideoEncoderConfig: function VideoEncoderConfig() {
+    },
+    VideoEncoderEncodeOptions: function VideoEncoderEncodeOptions() {
+    },
+    EncodedAudioChunk: function EncodedAudioChunk() {
+    },
+    EncodedAudioChunkInit: function EncodedAudioChunkInit() {
+    },
+    EncodedVideoChunk: function EncodedVideoChunk() {
+    },
+    EncodedVideoChunkInit: function EncodedVideoChunkInit() {
+    },
+    AudioData: function AudioData() {
+    },
+    AudioDataInit: function AudioDataInit() {
+    },
+    AudioDataCopyToOptions: function AudioDataCopyToOptions() {
+    },
+    VideoFrame: function VideoFrame() {
+    },
+    VideoFrameInit: function VideoFrameInit() {
+    },
+    VideoFrameBufferInit: function VideoFrameBufferInit() {
+    },
+    VideoFrameMetadata: function VideoFrameMetadata() {
+    },
+    VideoFrameCopyToOptions: function VideoFrameCopyToOptions() {
+    },
+    PlaneLayout: function PlaneLayout() {
+    },
+    VideoColorSpace: function VideoColorSpace() {
+    },
+    VideoColorSpaceInit: function VideoColorSpaceInit() {
+    },
+    ImageDecoder: function ImageDecoder() {
+    },
+    ImageDecoderInit: function ImageDecoderInit() {
+    },
+    ImageDecodeOptions: function ImageDecodeOptions() {
+    },
+    ImageDecodeResult: function ImageDecodeResult() {
+    },
+    ImageTrackList: function ImageTrackList() {
+    },
+    ImageTrack: function ImageTrack() {
+    },
+    AacEncoderConfig: function AacEncoderConfig() {
+    },
+    AvcEncoderConfig: function AvcEncoderConfig() {
+    },
+    FlacEncoderConfig: function FlacEncoderConfig() {
+    },
+    HevcEncoderConfig: function HevcEncoderConfig() {
+    },
+    OpusEncoderConfig: function OpusEncoderConfig() {
+    },
+    Ed448Params: function Ed448Params() {
+    },
+    Crypto: function Crypto() {
+    },
+    Algorithm: function Algorithm() {
+    },
+    KeyAlgorithm: function KeyAlgorithm() {
+    },
+    CryptoKey: function CryptoKey() {
+    },
+    SubtleCrypto: function SubtleCrypto() {
+    },
+    RsaOtherPrimesInfo: function RsaOtherPrimesInfo() {
+    },
+    JsonWebKey: function JsonWebKey() {
+    },
+    CryptoKeyPair: function CryptoKeyPair() {
+    },
+    RsaKeyGenParams: function RsaKeyGenParams() {
+    },
+    RsaHashedKeyGenParams: function RsaHashedKeyGenParams() {
+    },
+    RsaKeyAlgorithm: function RsaKeyAlgorithm() {
+    },
+    RsaHashedKeyAlgorithm: function RsaHashedKeyAlgorithm() {
+    },
+    RsaHashedImportParams: function RsaHashedImportParams() {
+    },
+    RsaPssParams: function RsaPssParams() {
+    },
+    RsaOaepParams: function RsaOaepParams() {
+    },
+    EcdsaParams: function EcdsaParams() {
+    },
+    EcKeyGenParams: function EcKeyGenParams() {
+    },
+    EcKeyAlgorithm: function EcKeyAlgorithm() {
+    },
+    EcKeyImportParams: function EcKeyImportParams() {
+    },
+    EcdhKeyDeriveParams: function EcdhKeyDeriveParams() {
+    },
+    AesCtrParams: function AesCtrParams() {
+    },
+    AesKeyAlgorithm: function AesKeyAlgorithm() {
+    },
+    AesKeyGenParams: function AesKeyGenParams() {
+    },
+    AesDerivedKeyParams: function AesDerivedKeyParams() {
+    },
+    AesCbcParams: function AesCbcParams() {
+    },
+    AesGcmParams: function AesGcmParams() {
+    },
+    HmacImportParams: function HmacImportParams() {
+    },
+    HmacKeyAlgorithm: function HmacKeyAlgorithm() {
+    },
+    HmacKeyGenParams: function HmacKeyGenParams() {
+    },
+    HkdfParams: function HkdfParams() {
+    },
+    Pbkdf2Params: function Pbkdf2Params() {
+    },
+    NavigatorAutomationInformation: function NavigatorAutomationInformation() {
+    },
+    WebGLContextAttributes: function WebGLContextAttributes() {
+    },
+    WebGLObject: function WebGLObject() {
+    },
+    WebGLBuffer: function WebGLBuffer() {
+    },
+    WebGLFramebuffer: function WebGLFramebuffer() {
+    },
+    WebGLProgram: function WebGLProgram() {
+    },
+    WebGLRenderbuffer: function WebGLRenderbuffer() {
+    },
+    WebGLShader: function WebGLShader() {
+    },
+    WebGLTexture: function WebGLTexture() {
+    },
+    WebGLUniformLocation: function WebGLUniformLocation() {
+    },
+    WebGLActiveInfo: function WebGLActiveInfo() {
+    },
+    WebGLShaderPrecisionFormat: function WebGLShaderPrecisionFormat() {
+    },
+    WebGLRenderingContextBase: function WebGLRenderingContextBase() {
+    },
+    WebGLRenderingContextOverloads: function WebGLRenderingContextOverloads() {
+    },
+    WebGLRenderingContext: function WebGLRenderingContext() {
+    },
+    WebGLContextEvent: function WebGLContextEvent() {
+    },
+    WebGLContextEventInit: function WebGLContextEventInit() {
+    },
+    WebGLQuery: function WebGLQuery() {
+    },
+    WebGLSampler: function WebGLSampler() {
+    },
+    WebGLSync: function WebGLSync() {
+    },
+    WebGLTransformFeedback: function WebGLTransformFeedback() {
+    },
+    WebGLVertexArrayObject: function WebGLVertexArrayObject() {
+    },
+    WebGL2RenderingContextBase: function WebGL2RenderingContextBase() {
+    },
+    WebGL2RenderingContextOverloads: function WebGL2RenderingContextOverloads() {
+    },
+    WebGL2RenderingContext: function WebGL2RenderingContext() {
+    },
+    WEBGL_blend_equation_advanced_coherent: function WEBGL_blend_equation_advanced_coherent() {
+    },
+    WEBGL_clip_cull_distance: function WEBGL_clip_cull_distance() {
+    },
+    WEBGL_color_buffer_float: function WEBGL_color_buffer_float() {
+    },
+    WEBGL_compressed_texture_astc: function WEBGL_compressed_texture_astc() {
+    },
+    WEBGL_compressed_texture_etc: function WEBGL_compressed_texture_etc() {
+    },
+    WEBGL_compressed_texture_etc1: function WEBGL_compressed_texture_etc1() {
+    },
+    WEBGL_compressed_texture_pvrtc: function WEBGL_compressed_texture_pvrtc() {
+    },
+    WEBGL_compressed_texture_s3tc: function WEBGL_compressed_texture_s3tc() {
+    },
+    WEBGL_compressed_texture_s3tc_srgb: function WEBGL_compressed_texture_s3tc_srgb() {
+    },
+    WEBGL_debug_renderer_info: function WEBGL_debug_renderer_info() {
+    },
+    WEBGL_debug_shaders: function WEBGL_debug_shaders() {
+    },
+    WEBGL_depth_texture: function WEBGL_depth_texture() {
+    },
+    WEBGL_draw_buffers: function WEBGL_draw_buffers() {
+    },
+    WEBGL_draw_instanced_base_vertex_base_instance: function WEBGL_draw_instanced_base_vertex_base_instance() {
+    },
+    WEBGL_lose_context: function WEBGL_lose_context() {
+    },
+    WEBGL_multi_draw: function WEBGL_multi_draw() {
+    },
+    WEBGL_multi_draw_instanced_base_vertex_base_instance: function WEBGL_multi_draw_instanced_base_vertex_base_instance() {
+    },
+    WEBGL_provoking_vertex: function WEBGL_provoking_vertex() {
+    },
+    GPUObjectBase: function GPUObjectBase() {
+    },
+    GPUObjectDescriptorBase: function GPUObjectDescriptorBase() {
+    },
+    GPUSupportedLimits: function GPUSupportedLimits() {
+    },
+    GPUSupportedFeatures: function GPUSupportedFeatures() {
+    },
+    GPUAdapterInfo: function GPUAdapterInfo() {
+    },
+    NavigatorGPU: function NavigatorGPU() {
+    },
+    GPU: function GPU() {
+    },
+    GPURequestAdapterOptions: function GPURequestAdapterOptions() {
+    },
+    GPUAdapter: function GPUAdapter() {
+    },
+    GPUDeviceDescriptor: function GPUDeviceDescriptor() {
+    },
+    GPUDevice: function GPUDevice() {
+    },
+    GPUBuffer: function GPUBuffer() {
+    },
+    GPUBufferDescriptor: function GPUBufferDescriptor() {
+    },
+    $GPUBufferUsage: function $GPUBufferUsage() {
+    },
+    $GPUMapMode: function $GPUMapMode() {
+    },
+    GPUTexture: function GPUTexture() {
+    },
+    GPUTextureDescriptor: function GPUTextureDescriptor() {
+    },
+    $GPUTextureUsage: function $GPUTextureUsage() {
+    },
+    GPUTextureView: function GPUTextureView() {
+    },
+    GPUTextureViewDescriptor: function GPUTextureViewDescriptor() {
+    },
+    GPUExternalTexture: function GPUExternalTexture() {
+    },
+    GPUExternalTextureDescriptor: function GPUExternalTextureDescriptor() {
+    },
+    GPUSampler: function GPUSampler() {
+    },
+    GPUSamplerDescriptor: function GPUSamplerDescriptor() {
+    },
+    GPUBindGroupLayout: function GPUBindGroupLayout() {
+    },
+    GPUBindGroupLayoutDescriptor: function GPUBindGroupLayoutDescriptor() {
+    },
+    GPUBindGroupLayoutEntry: function GPUBindGroupLayoutEntry() {
+    },
+    $GPUShaderStage: function $GPUShaderStage() {
+    },
+    GPUBufferBindingLayout: function GPUBufferBindingLayout() {
+    },
+    GPUSamplerBindingLayout: function GPUSamplerBindingLayout() {
+    },
+    GPUTextureBindingLayout: function GPUTextureBindingLayout() {
+    },
+    GPUStorageTextureBindingLayout: function GPUStorageTextureBindingLayout() {
+    },
+    GPUExternalTextureBindingLayout: function GPUExternalTextureBindingLayout() {
+    },
+    GPUBindGroup: function GPUBindGroup() {
+    },
+    GPUBindGroupDescriptor: function GPUBindGroupDescriptor() {
+    },
+    GPUBindGroupEntry: function GPUBindGroupEntry() {
+    },
+    GPUBufferBinding: function GPUBufferBinding() {
+    },
+    GPUPipelineLayout: function GPUPipelineLayout() {
+    },
+    GPUPipelineLayoutDescriptor: function GPUPipelineLayoutDescriptor() {
+    },
+    GPUShaderModule: function GPUShaderModule() {
+    },
+    GPUShaderModuleDescriptor: function GPUShaderModuleDescriptor() {
+    },
+    GPUShaderModuleCompilationHint: function GPUShaderModuleCompilationHint() {
+    },
+    GPUCompilationMessage: function GPUCompilationMessage() {
+    },
+    GPUCompilationInfo: function GPUCompilationInfo() {
+    },
+    GPUPipelineError: function GPUPipelineError() {
+    },
+    GPUPipelineErrorInit: function GPUPipelineErrorInit() {
+    },
+    GPUPipelineDescriptorBase: function GPUPipelineDescriptorBase() {
+    },
+    GPUPipelineBase: function GPUPipelineBase() {
+    },
+    GPUProgrammableStage: function GPUProgrammableStage() {
+    },
+    GPUComputePipeline: function GPUComputePipeline() {
+    },
+    GPUComputePipelineDescriptor: function GPUComputePipelineDescriptor() {
+    },
+    GPURenderPipeline: function GPURenderPipeline() {
+    },
+    GPURenderPipelineDescriptor: function GPURenderPipelineDescriptor() {
+    },
+    GPUPrimitiveState: function GPUPrimitiveState() {
+    },
+    GPUMultisampleState: function GPUMultisampleState() {
+    },
+    GPUFragmentState: function GPUFragmentState() {
+    },
+    GPUColorTargetState: function GPUColorTargetState() {
+    },
+    GPUBlendState: function GPUBlendState() {
+    },
+    $GPUColorWrite: function $GPUColorWrite() {
+    },
+    GPUBlendComponent: function GPUBlendComponent() {
+    },
+    GPUDepthStencilState: function GPUDepthStencilState() {
+    },
+    GPUStencilFaceState: function GPUStencilFaceState() {
+    },
+    GPUVertexState: function GPUVertexState() {
+    },
+    GPUVertexBufferLayout: function GPUVertexBufferLayout() {
+    },
+    GPUVertexAttribute: function GPUVertexAttribute() {
+    },
+    GPUImageDataLayout: function GPUImageDataLayout() {
+    },
+    GPUImageCopyBuffer: function GPUImageCopyBuffer() {
+    },
+    GPUImageCopyTexture: function GPUImageCopyTexture() {
+    },
+    GPUImageCopyTextureTagged: function GPUImageCopyTextureTagged() {
+    },
+    GPUImageCopyExternalImage: function GPUImageCopyExternalImage() {
+    },
+    GPUCommandBuffer: function GPUCommandBuffer() {
+    },
+    GPUCommandBufferDescriptor: function GPUCommandBufferDescriptor() {
+    },
+    GPUCommandsMixin: function GPUCommandsMixin() {
+    },
+    GPUCommandEncoder: function GPUCommandEncoder() {
+    },
+    GPUCommandEncoderDescriptor: function GPUCommandEncoderDescriptor() {
+    },
+    GPUBindingCommandsMixin: function GPUBindingCommandsMixin() {
+    },
+    GPUDebugCommandsMixin: function GPUDebugCommandsMixin() {
+    },
+    GPUComputePassEncoder: function GPUComputePassEncoder() {
+    },
+    GPUComputePassTimestampWrite: function GPUComputePassTimestampWrite() {
+    },
+    GPUComputePassDescriptor: function GPUComputePassDescriptor() {
+    },
+    GPURenderPassEncoder: function GPURenderPassEncoder() {
+    },
+    GPURenderPassTimestampWrite: function GPURenderPassTimestampWrite() {
+    },
+    GPURenderPassDescriptor: function GPURenderPassDescriptor() {
+    },
+    GPURenderPassColorAttachment: function GPURenderPassColorAttachment() {
+    },
+    GPURenderPassDepthStencilAttachment: function GPURenderPassDepthStencilAttachment() {
+    },
+    GPURenderPassLayout: function GPURenderPassLayout() {
+    },
+    GPURenderCommandsMixin: function GPURenderCommandsMixin() {
+    },
+    GPURenderBundle: function GPURenderBundle() {
+    },
+    GPURenderBundleDescriptor: function GPURenderBundleDescriptor() {
+    },
+    GPURenderBundleEncoder: function GPURenderBundleEncoder() {
+    },
+    GPURenderBundleEncoderDescriptor: function GPURenderBundleEncoderDescriptor() {
+    },
+    GPUQueueDescriptor: function GPUQueueDescriptor() {
+    },
+    GPUQueue: function GPUQueue() {
+    },
+    GPUQuerySet: function GPUQuerySet() {
+    },
+    GPUQuerySetDescriptor: function GPUQuerySetDescriptor() {
+    },
+    GPUCanvasContext: function GPUCanvasContext() {
+    },
+    GPUCanvasConfiguration: function GPUCanvasConfiguration() {
+    },
+    GPUDeviceLostInfo: function GPUDeviceLostInfo() {
+    },
+    GPUError: function GPUError() {
+    },
+    GPUValidationError: function GPUValidationError() {
+    },
+    GPUOutOfMemoryError: function GPUOutOfMemoryError() {
+    },
+    GPUInternalError: function GPUInternalError() {
+    },
+    GPUUncapturedErrorEvent: function GPUUncapturedErrorEvent() {
+    },
+    GPUUncapturedErrorEventInit: function GPUUncapturedErrorEventInit() {
+    },
+    GPUColorDict: function GPUColorDict() {
+    },
+    GPUOrigin2DDict: function GPUOrigin2DDict() {
+    },
+    GPUOrigin3DDict: function GPUOrigin3DDict() {
+    },
+    GPUExtent3DDict: function GPUExtent3DDict() {
+    },
+    HID: function HID() {
+    },
+    HIDDeviceRequestOptions: function HIDDeviceRequestOptions() {
+    },
+    HIDDeviceFilter: function HIDDeviceFilter() {
+    },
+    HIDDevice: function HIDDevice() {
+    },
+    HIDConnectionEvent: function HIDConnectionEvent() {
+    },
+    HIDConnectionEventInit: function HIDConnectionEventInit() {
+    },
+    HIDInputReportEvent: function HIDInputReportEvent() {
+    },
+    HIDInputReportEventInit: function HIDInputReportEventInit() {
+    },
+    HIDCollectionInfo: function HIDCollectionInfo() {
+    },
+    HIDReportInfo: function HIDReportInfo() {
+    },
+    HIDReportItem: function HIDReportItem() {
+    },
+    DOMException: function DOMException() {
+    },
+    MidiPermissionDescriptor: function MidiPermissionDescriptor() {
+    },
+    MIDIOptions: function MIDIOptions() {
+    },
+    MIDIInputMap: function MIDIInputMap() {
+    },
+    MIDIOutputMap: function MIDIOutputMap() {
+    },
+    MIDIAccess: function MIDIAccess() {
+    },
+    MIDIPort: function MIDIPort() {
+    },
+    MIDIInput: function MIDIInput() {
+    },
+    MIDIOutput: function MIDIOutput() {
+    },
+    MIDIMessageEvent: function MIDIMessageEvent() {
+    },
+    MIDIMessageEventInit: function MIDIMessageEventInit() {
+    },
+    MIDIConnectionEvent: function MIDIConnectionEvent() {
+    },
+    MIDIConnectionEventInit: function MIDIConnectionEventInit() {
+    },
+    NavigatorML: function NavigatorML() {
+    },
+    MLContextOptions: function MLContextOptions() {
+    },
+    ML: function ML() {
+    },
+    MLGraph: function MLGraph() {
+    },
+    MLOperandDescriptor: function MLOperandDescriptor() {
+    },
+    MLOperand: function MLOperand() {
+    },
+    MLActivation: function MLActivation() {
+    },
+    MLContext: function MLContext() {
+    },
+    MLComputeResult: function MLComputeResult() {
+    },
+    MLCommandEncoder: function MLCommandEncoder() {
+    },
+    MLBufferResourceView: function MLBufferResourceView() {
+    },
+    MLGraphBuilder: function MLGraphBuilder() {
+    },
+    MLBatchNormalizationOptions: function MLBatchNormalizationOptions() {
+    },
+    MLClampOptions: function MLClampOptions() {
+    },
+    MLConv2dOptions: function MLConv2dOptions() {
+    },
+    MLConvTranspose2dOptions: function MLConvTranspose2dOptions() {
+    },
+    MLEluOptions: function MLEluOptions() {
+    },
+    MLGemmOptions: function MLGemmOptions() {
+    },
+    MLGruOptions: function MLGruOptions() {
+    },
+    MLGruCellOptions: function MLGruCellOptions() {
+    },
+    MLHardSigmoidOptions: function MLHardSigmoidOptions() {
+    },
+    MLInstanceNormalizationOptions: function MLInstanceNormalizationOptions() {
+    },
+    MLLeakyReluOptions: function MLLeakyReluOptions() {
+    },
+    MLLinearOptions: function MLLinearOptions() {
+    },
+    MLLstmOptions: function MLLstmOptions() {
+    },
+    MLLstmCellOptions: function MLLstmCellOptions() {
+    },
+    MLPadOptions: function MLPadOptions() {
+    },
+    MLPool2dOptions: function MLPool2dOptions() {
+    },
+    MLReduceOptions: function MLReduceOptions() {
+    },
+    MLResample2dOptions: function MLResample2dOptions() {
+    },
+    MLSliceOptions: function MLSliceOptions() {
+    },
+    MLSoftplusOptions: function MLSoftplusOptions() {
+    },
+    MLSplitOptions: function MLSplitOptions() {
+    },
+    MLSqueezeOptions: function MLSqueezeOptions() {
+    },
+    MLTransposeOptions: function MLTransposeOptions() {
+    },
+    RTCConfiguration: function RTCConfiguration() {
+    },
+    RTCIceServer: function RTCIceServer() {
+    },
+    RTCOfferAnswerOptions: function RTCOfferAnswerOptions() {
+    },
+    RTCOfferOptions: function RTCOfferOptions() {
+    },
+    RTCAnswerOptions: function RTCAnswerOptions() {
+    },
+    RTCPeerConnection: function RTCPeerConnection() {
+    },
+    RTCSessionDescription: function RTCSessionDescription() {
+    },
+    RTCSessionDescriptionInit: function RTCSessionDescriptionInit() {
+    },
+    RTCLocalSessionDescriptionInit: function RTCLocalSessionDescriptionInit() {
+    },
+    RTCIceCandidate: function RTCIceCandidate() {
+    },
+    RTCIceCandidateInit: function RTCIceCandidateInit() {
+    },
+    RTCPeerConnectionIceEvent: function RTCPeerConnectionIceEvent() {
+    },
+    RTCPeerConnectionIceEventInit: function RTCPeerConnectionIceEventInit() {
+    },
+    RTCPeerConnectionIceErrorEvent: function RTCPeerConnectionIceErrorEvent() {
+    },
+    RTCPeerConnectionIceErrorEventInit: function RTCPeerConnectionIceErrorEventInit() {
+    },
+    RTCCertificateExpiration: function RTCCertificateExpiration() {
+    },
+    RTCCertificate: function RTCCertificate() {
+    },
+    RTCRtpTransceiverInit: function RTCRtpTransceiverInit() {
+    },
+    RTCRtpSender: function RTCRtpSender() {
+    },
+    RTCRtpParameters: function RTCRtpParameters() {
+    },
+    RTCRtpSendParameters: function RTCRtpSendParameters() {
+    },
+    RTCRtpReceiveParameters: function RTCRtpReceiveParameters() {
+    },
+    RTCRtpCodingParameters: function RTCRtpCodingParameters() {
+    },
+    RTCRtpEncodingParameters: function RTCRtpEncodingParameters() {
+    },
+    RTCRtcpParameters: function RTCRtcpParameters() {
+    },
+    RTCRtpHeaderExtensionParameters: function RTCRtpHeaderExtensionParameters() {
+    },
+    RTCRtpCodecParameters: function RTCRtpCodecParameters() {
+    },
+    RTCRtpCapabilities: function RTCRtpCapabilities() {
+    },
+    RTCRtpCodecCapability: function RTCRtpCodecCapability() {
+    },
+    RTCRtpHeaderExtensionCapability: function RTCRtpHeaderExtensionCapability() {
+    },
+    RTCRtpReceiver: function RTCRtpReceiver() {
+    },
+    RTCRtpContributingSource: function RTCRtpContributingSource() {
+    },
+    RTCRtpSynchronizationSource: function RTCRtpSynchronizationSource() {
+    },
+    RTCRtpTransceiver: function RTCRtpTransceiver() {
+    },
+    RTCDtlsTransport: function RTCDtlsTransport() {
+    },
+    RTCDtlsFingerprint: function RTCDtlsFingerprint() {
+    },
+    RTCIceTransport: function RTCIceTransport() {
+    },
+    RTCIceParameters: function RTCIceParameters() {
+    },
+    RTCIceCandidatePair: function RTCIceCandidatePair() {
+    },
+    RTCTrackEvent: function RTCTrackEvent() {
+    },
+    RTCTrackEventInit: function RTCTrackEventInit() {
+    },
+    RTCSctpTransport: function RTCSctpTransport() {
+    },
+    RTCDataChannel: function RTCDataChannel() {
+    },
+    RTCDataChannelInit: function RTCDataChannelInit() {
+    },
+    RTCDataChannelEvent: function RTCDataChannelEvent() {
+    },
+    RTCDataChannelEventInit: function RTCDataChannelEventInit() {
+    },
+    RTCDTMFSender: function RTCDTMFSender() {
+    },
+    RTCDTMFToneChangeEvent: function RTCDTMFToneChangeEvent() {
+    },
+    RTCDTMFToneChangeEventInit: function RTCDTMFToneChangeEventInit() {
+    },
+    RTCStatsReport: function RTCStatsReport() {
+    },
+    RTCStats: function RTCStats() {
+    },
+    RTCError: function RTCError() {
+    },
+    RTCErrorInit: function RTCErrorInit() {
+    },
+    RTCErrorEvent: function RTCErrorEvent() {
+    },
+    RTCErrorEventInit: function RTCErrorEventInit() {
+    },
+    SFrameTransformOptions: function SFrameTransformOptions() {
+    },
+    SFrameTransform: function SFrameTransform() {
+    },
+    SFrameTransformErrorEvent: function SFrameTransformErrorEvent() {
+    },
+    SFrameTransformErrorEventInit: function SFrameTransformErrorEventInit() {
+    },
+    RTCEncodedVideoFrameMetadata: function RTCEncodedVideoFrameMetadata() {
+    },
+    RTCEncodedVideoFrame: function RTCEncodedVideoFrame() {
+    },
+    RTCEncodedAudioFrameMetadata: function RTCEncodedAudioFrameMetadata() {
+    },
+    RTCEncodedAudioFrame: function RTCEncodedAudioFrame() {
+    },
+    RTCTransformEvent: function RTCTransformEvent() {
+    },
+    RTCRtpScriptTransformer: function RTCRtpScriptTransformer() {
+    },
+    RTCRtpScriptTransform: function RTCRtpScriptTransform() {
+    },
+    RTCIceGatherOptions: function RTCIceGatherOptions() {
+    },
+    RTCIdentityProviderGlobalScope: function RTCIdentityProviderGlobalScope() {
+    },
+    RTCIdentityProviderRegistrar: function RTCIdentityProviderRegistrar() {
+    },
+    RTCIdentityProvider: function RTCIdentityProvider() {
+    },
+    RTCIdentityAssertionResult: function RTCIdentityAssertionResult() {
+    },
+    RTCIdentityProviderDetails: function RTCIdentityProviderDetails() {
+    },
+    RTCIdentityValidationResult: function RTCIdentityValidationResult() {
+    },
+    RTCIdentityProviderOptions: function RTCIdentityProviderOptions() {
+    },
+    RTCIdentityAssertion: function RTCIdentityAssertion() {
+    },
+    RTCRtpStreamStats: function RTCRtpStreamStats() {
+    },
+    RTCCodecStats: function RTCCodecStats() {
+    },
+    RTCReceivedRtpStreamStats: function RTCReceivedRtpStreamStats() {
+    },
+    RTCInboundRtpStreamStats: function RTCInboundRtpStreamStats() {
+    },
+    RTCRemoteInboundRtpStreamStats: function RTCRemoteInboundRtpStreamStats() {
+    },
+    RTCSentRtpStreamStats: function RTCSentRtpStreamStats() {
+    },
+    RTCOutboundRtpStreamStats: function RTCOutboundRtpStreamStats() {
+    },
+    RTCRemoteOutboundRtpStreamStats: function RTCRemoteOutboundRtpStreamStats() {
+    },
+    RTCMediaSourceStats: function RTCMediaSourceStats() {
+    },
+    RTCAudioSourceStats: function RTCAudioSourceStats() {
+    },
+    RTCVideoSourceStats: function RTCVideoSourceStats() {
+    },
+    RTCAudioPlayoutStats: function RTCAudioPlayoutStats() {
+    },
+    RTCPeerConnectionStats: function RTCPeerConnectionStats() {
+    },
+    RTCDataChannelStats: function RTCDataChannelStats() {
+    },
+    RTCTransportStats: function RTCTransportStats() {
+    },
+    RTCIceCandidateStats: function RTCIceCandidateStats() {
+    },
+    RTCIceCandidatePairStats: function RTCIceCandidatePairStats() {
+    },
+    RTCCertificateStats: function RTCCertificateStats() {
+    },
+    WebSocket: function WebSocket() {
+    },
+    CloseEvent: function CloseEvent() {
+    },
+    CloseEventInit: function CloseEventInit() {
+    },
+    WebTransportDatagramDuplexStream: function WebTransportDatagramDuplexStream() {
+    },
+    WebTransport: function WebTransport() {
+    },
+    WebTransportHash: function WebTransportHash() {
+    },
+    WebTransportOptions: function WebTransportOptions() {
+    },
+    WebTransportCloseInfo: function WebTransportCloseInfo() {
+    },
+    WebTransportSendStreamOptions: function WebTransportSendStreamOptions() {
+    },
+    WebTransportStats: function WebTransportStats() {
+    },
+    WebTransportDatagramStats: function WebTransportDatagramStats() {
+    },
+    WebTransportSendStream: function WebTransportSendStream() {
+    },
+    WebTransportSendStreamStats: function WebTransportSendStreamStats() {
+    },
+    WebTransportReceiveStream: function WebTransportReceiveStream() {
+    },
+    WebTransportReceiveStreamStats: function WebTransportReceiveStreamStats() {
+    },
+    WebTransportBidirectionalStream: function WebTransportBidirectionalStream() {
+    },
+    WebTransportError: function WebTransportError() {
+    },
+    WebTransportErrorInit: function WebTransportErrorInit() {
+    },
+    USBDeviceFilter: function USBDeviceFilter() {
+    },
+    USBDeviceRequestOptions: function USBDeviceRequestOptions() {
+    },
+    USB: function USB() {
+    },
+    USBConnectionEventInit: function USBConnectionEventInit() {
+    },
+    USBConnectionEvent: function USBConnectionEvent() {
+    },
+    USBInTransferResult: function USBInTransferResult() {
+    },
+    USBOutTransferResult: function USBOutTransferResult() {
+    },
+    USBIsochronousInTransferPacket: function USBIsochronousInTransferPacket() {
+    },
+    USBIsochronousInTransferResult: function USBIsochronousInTransferResult() {
+    },
+    USBIsochronousOutTransferPacket: function USBIsochronousOutTransferPacket() {
+    },
+    USBIsochronousOutTransferResult: function USBIsochronousOutTransferResult() {
+    },
+    USBDevice: function USBDevice() {
+    },
+    USBControlTransferParameters: function USBControlTransferParameters() {
+    },
+    USBConfiguration: function USBConfiguration() {
+    },
+    USBInterface: function USBInterface() {
+    },
+    USBAlternateInterface: function USBAlternateInterface() {
+    },
+    USBEndpoint: function USBEndpoint() {
+    },
+    USBPermissionDescriptor: function USBPermissionDescriptor() {
+    },
+    AllowedUSBDevice: function AllowedUSBDevice() {
+    },
+    USBPermissionStorage: function USBPermissionStorage() {
+    },
+    USBPermissionResult: function USBPermissionResult() {
+    },
+    VTTCue: function VTTCue() {
+    },
+    VTTRegion: function VTTRegion() {
+    },
+    XRSystem: function XRSystem() {
+    },
+    XRSessionInit: function XRSessionInit() {
+    },
+    XRSession: function XRSession() {
+    },
+    XRRenderStateInit: function XRRenderStateInit() {
+    },
+    XRRenderState: function XRRenderState() {
+    },
+    XRFrame: function XRFrame() {
+    },
+    XRSpace: function XRSpace() {
+    },
+    XRReferenceSpace: function XRReferenceSpace() {
+    },
+    XRBoundedReferenceSpace: function XRBoundedReferenceSpace() {
+    },
+    XRView: function XRView() {
+    },
+    XRViewport: function XRViewport() {
+    },
+    XRRigidTransform: function XRRigidTransform() {
+    },
+    XRPose: function XRPose() {
+    },
+    XRViewerPose: function XRViewerPose() {
+    },
+    XRInputSource: function XRInputSource() {
+    },
+    XRInputSourceArray: function XRInputSourceArray() {
+    },
+    XRLayer: function XRLayer() {
+    },
+    XRWebGLLayerInit: function XRWebGLLayerInit() {
+    },
+    XRWebGLLayer: function XRWebGLLayer() {
+    },
+    XRSessionEvent: function XRSessionEvent() {
+    },
+    XRSessionEventInit: function XRSessionEventInit() {
+    },
+    XRInputSourceEvent: function XRInputSourceEvent() {
+    },
+    XRInputSourceEventInit: function XRInputSourceEventInit() {
+    },
+    XRInputSourcesChangeEvent: function XRInputSourcesChangeEvent() {
+    },
+    XRInputSourcesChangeEventInit: function XRInputSourcesChangeEventInit() {
+    },
+    XRReferenceSpaceEvent: function XRReferenceSpaceEvent() {
+    },
+    XRReferenceSpaceEventInit: function XRReferenceSpaceEventInit() {
+    },
+    XRSessionSupportedPermissionDescriptor: function XRSessionSupportedPermissionDescriptor() {
+    },
+    XRPermissionDescriptor: function XRPermissionDescriptor() {
+    },
+    XRPermissionStatus: function XRPermissionStatus() {
+    },
+    XRDepthStateInit: function XRDepthStateInit() {
+    },
+    XRDepthInformation: function XRDepthInformation() {
+    },
+    XRCPUDepthInformation: function XRCPUDepthInformation() {
+    },
+    XRWebGLDepthInformation: function XRWebGLDepthInformation() {
+    },
+    XRDOMOverlayInit: function XRDOMOverlayInit() {
+    },
+    XRDOMOverlayState: function XRDOMOverlayState() {
+    },
+    XRHand: function XRHand() {
+    },
+    XRJointSpace: function XRJointSpace() {
+    },
+    XRJointPose: function XRJointPose() {
+    },
+    XRHitTestOptionsInit: function XRHitTestOptionsInit() {
+    },
+    XRTransientInputHitTestOptionsInit: function XRTransientInputHitTestOptionsInit() {
+    },
+    XRHitTestSource: function XRHitTestSource() {
+    },
+    XRTransientInputHitTestSource: function XRTransientInputHitTestSource() {
+    },
+    XRHitTestResult: function XRHitTestResult() {
+    },
+    XRTransientInputHitTestResult: function XRTransientInputHitTestResult() {
+    },
+    XRRayDirectionInit: function XRRayDirectionInit() {
+    },
+    XRRay: function XRRay() {
+    },
+    XRLightProbe: function XRLightProbe() {
+    },
+    XRLightEstimate: function XRLightEstimate() {
+    },
+    XRLightProbeInit: function XRLightProbeInit() {
+    },
+    XRCompositionLayer: function XRCompositionLayer() {
+    },
+    XRProjectionLayer: function XRProjectionLayer() {
+    },
+    XRQuadLayer: function XRQuadLayer() {
+    },
+    XRCylinderLayer: function XRCylinderLayer() {
+    },
+    XREquirectLayer: function XREquirectLayer() {
+    },
+    XRCubeLayer: function XRCubeLayer() {
+    },
+    XRSubImage: function XRSubImage() {
+    },
+    XRWebGLSubImage: function XRWebGLSubImage() {
+    },
+    XRProjectionLayerInit: function XRProjectionLayerInit() {
+    },
+    XRLayerInit: function XRLayerInit() {
+    },
+    XRQuadLayerInit: function XRQuadLayerInit() {
+    },
+    XRCylinderLayerInit: function XRCylinderLayerInit() {
+    },
+    XREquirectLayerInit: function XREquirectLayerInit() {
+    },
+    XRCubeLayerInit: function XRCubeLayerInit() {
+    },
+    XRWebGLBinding: function XRWebGLBinding() {
+    },
+    XRMediaLayerInit: function XRMediaLayerInit() {
+    },
+    XRMediaQuadLayerInit: function XRMediaQuadLayerInit() {
+    },
+    XRMediaCylinderLayerInit: function XRMediaCylinderLayerInit() {
+    },
+    XRMediaEquirectLayerInit: function XRMediaEquirectLayerInit() {
+    },
+    XRMediaBinding: function XRMediaBinding() {
+    },
+    XRLayerEvent: function XRLayerEvent() {
+    },
+    XRLayerEventInit: function XRLayerEventInit() {
+    },
+    WindowControlsOverlay: function WindowControlsOverlay() {
+    },
+    WindowControlsOverlayGeometryChangeEvent: function WindowControlsOverlayGeometryChangeEvent() {
+    },
+    WindowControlsOverlayGeometryChangeEventInit: function WindowControlsOverlayGeometryChangeEventInit() {
+    },
+    ScreenDetails: function ScreenDetails() {
+    },
+    ScreenDetailed: function ScreenDetailed() {
+    },
+    XMLHttpRequestEventTarget: function XMLHttpRequestEventTarget() {
+    },
+    XMLHttpRequestUpload: function XMLHttpRequestUpload() {
+    },
+    XMLHttpRequest: function XMLHttpRequest() {
+    },
+    FormData: function FormData() {
+    },
+    ProgressEvent: function ProgressEvent() {
+    },
+    ProgressEventInit: function ProgressEventInit() {
     },
     throwLateFieldADI(fieldName) {
       return A.throwExpression(new A.LateError("Field '" + fieldName + "' has been assigned during initialization."));
-    },
-    _convertNativeToDart_Value(value) {
-      var proto, t1, values, i;
-      if (value == null)
-        return value;
-      if (typeof value == "string" || typeof value == "number" || A._isBool(value))
-        return value;
-      proto = Object.getPrototypeOf(value);
-      t1 = proto === Object.prototype;
-      t1.toString;
-      if (!t1) {
-        t1 = proto === null;
-        t1.toString;
-      } else
-        t1 = true;
-      if (t1)
-        return A.convertNativeToDart_Dictionary(value);
-      t1 = Array.isArray(value);
-      t1.toString;
-      if (t1) {
-        values = [];
-        i = 0;
-        while (true) {
-          t1 = value.length;
-          t1.toString;
-          if (!(i < t1))
-            break;
-          values.push(A._convertNativeToDart_Value(value[i]));
-          ++i;
-        }
-        return values;
-      }
-      return value;
-    },
-    convertNativeToDart_Dictionary(object) {
-      var dict, keys, t1, _i, key, t2;
-      if (object == null)
-        return null;
-      dict = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic);
-      keys = Object.getOwnPropertyNames(object);
-      for (t1 = keys.length, _i = 0; _i < keys.length; keys.length === t1 || (0, A.throwConcurrentModificationError)(keys), ++_i) {
-        key = keys[_i];
-        t2 = key;
-        t2.toString;
-        dict.$indexSet(0, t2, A._convertNativeToDart_Value(object[key]));
-      }
-      return dict;
     },
     main() {
       var t1 = type$.JavaScriptObject._as(globalThis.console);
@@ -3095,43 +6255,11 @@
         return receiver;
       return J.getNativeInterceptor(receiver);
     },
-    getInterceptor$x(receiver) {
-      if (receiver == null)
-        return receiver;
-      if (typeof receiver != "object") {
-        if (typeof receiver == "function")
-          return J.JavaScriptFunction.prototype;
-        return receiver;
-      }
-      if (receiver instanceof A.Object)
-        return receiver;
-      return J.getNativeInterceptor(receiver);
-    },
-    get$hashCode$(receiver) {
-      return J.getInterceptor$(receiver).get$hashCode(receiver);
-    },
     get$iterator$ax(receiver) {
       return J.getInterceptor$ax(receiver).get$iterator(receiver);
     },
     get$length$asx(receiver) {
       return J.getInterceptor$asx(receiver).get$length(receiver);
-    },
-    $eq$(receiver, a0) {
-      if (receiver == null)
-        return a0 == null;
-      if (typeof receiver != "object")
-        return a0 != null && receiver === a0;
-      return J.getInterceptor$(receiver).$eq(receiver, a0);
-    },
-    $index$ax(receiver, a0) {
-      if (typeof a0 === "number")
-        if (receiver.constructor == Array || A.isJsIndexable(receiver, receiver[init.dispatchPropertyName]))
-          if (a0 >>> 0 === a0 && a0 < receiver.length)
-            return receiver[a0];
-      return J.getInterceptor$ax(receiver).$index(receiver, a0);
-    },
-    forEach$1$x(receiver, a0) {
-      return J.getInterceptor$x(receiver).forEach$1(receiver, a0);
     },
     toString$0$(receiver) {
       return J.getInterceptor$(receiver).toString$0(receiver);
@@ -3161,7 +6289,7 @@
     ArrayIterator: function ArrayIterator(t0, t1, t2) {
       var _ = this;
       _._iterable = t0;
-      _.__interceptors$_length = t1;
+      _._length = t1;
       _._index = 0;
       _._current = null;
       _.$ti = t2;
@@ -3180,12 +6308,6 @@
   var $ = {};
   A.JS_CONST.prototype = {};
   J.Interceptor.prototype = {
-    $eq(receiver, other) {
-      return receiver === other;
-    },
-    get$hashCode(receiver) {
-      return A.Primitives_objectHashCode(receiver);
-    },
     toString$0(receiver) {
       return "Instance of '" + A.Primitives_objectTypeName(receiver) + "'";
     }
@@ -3194,27 +6316,15 @@
     toString$0(receiver) {
       return String(receiver);
     },
-    get$hashCode(receiver) {
-      return receiver ? 519018 : 218159;
-    },
     $isbool: 1
   };
   J.JSNull.prototype = {
-    $eq(receiver, other) {
-      return null == other;
-    },
     toString$0(receiver) {
       return "null";
-    },
-    get$hashCode(receiver) {
-      return 0;
     }
   };
   J.JavaScriptObject.prototype = {};
   J.LegacyJavaScriptObject.prototype = {
-    get$hashCode(receiver) {
-      return 0;
-    },
     toString$0(receiver) {
       return String(receiver);
     }
@@ -3242,18 +6352,14 @@
     get$iterator(receiver) {
       return new J.ArrayIterator(receiver, receiver.length, A._arrayInstanceType(receiver)._eval$1("ArrayIterator<1>"));
     },
-    get$hashCode(receiver) {
-      return A.Primitives_objectHashCode(receiver);
-    },
     get$length(receiver) {
       return receiver.length;
     },
-    $isIterable: 1,
-    $isList: 1
+    $isIterable: 1
   };
   J.JSUnmodifiableArray.prototype = {};
   J.ArrayIterator.prototype = {
-    get$current(_) {
+    get$current() {
       var t1 = this._current;
       return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
     },
@@ -3261,7 +6367,7 @@
       var t2, _this = this,
         t1 = _this._iterable,
         $length = t1.length;
-      if (_this.__interceptors$_length !== $length) {
+      if (_this._length !== $length) {
         t1 = A.throwConcurrentModificationError(t1);
         throw A.wrapException(t1);
       }
@@ -3285,17 +6391,6 @@
       else
         return "" + receiver;
     },
-    get$hashCode(receiver) {
-      var absolute, floorLog2, factor, scaled,
-        intValue = receiver | 0;
-      if (receiver === intValue)
-        return intValue & 536870911;
-      absolute = Math.abs(receiver);
-      floorLog2 = Math.log(absolute) / 0.6931471805599453 | 0;
-      factor = Math.pow(2, floorLog2);
-      scaled = absolute < 1 ? absolute / factor : factor / absolute;
-      return ((scaled * 9007199254740992 | 0) + (scaled * 3542243181176521 | 0)) * 599197 + floorLog2 * 1259 & 536870911;
-    },
     $isdouble: 1,
     $isnum: 1
   };
@@ -3308,17 +6403,6 @@
     toString$0(receiver) {
       return receiver;
     },
-    get$hashCode(receiver) {
-      var t1, hash, i;
-      for (t1 = receiver.length, hash = 0, i = 0; i < t1; ++i) {
-        hash = hash + receiver.charCodeAt(i) & 536870911;
-        hash = hash + ((hash & 524287) << 10) & 536870911;
-        hash ^= hash >> 6;
-      }
-      hash = hash + ((hash & 67108863) << 3) & 536870911;
-      hash ^= hash >> 11;
-      return hash + ((hash & 16383) << 15) & 536870911;
-    },
     get$length(receiver) {
       return receiver.length;
     },
@@ -3329,10 +6413,8 @@
       return "LateInitializationError: " + this._message;
     }
   };
-  A.SentinelValue.prototype = {};
-  A.EfficientLengthIterable.prototype = {};
   A.ListIterator.prototype = {
-    get$current(_) {
+    get$current() {
       var t1 = this.__internal$_current;
       return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
     },
@@ -3348,7 +6430,7 @@
         _this.set$__internal$_current(null);
         return false;
       }
-      _this.set$__internal$_current(t2.elementAt$1(t1, t3));
+      _this.set$__internal$_current(t2.$index(t1, t3));
       ++_this.__internal$_index;
       return true;
     },
@@ -3381,18 +6463,6 @@
     }
   };
   A.BoundClosure.prototype = {
-    $eq(_, other) {
-      if (other == null)
-        return false;
-      if (this === other)
-        return true;
-      if (!(other instanceof A.BoundClosure))
-        return false;
-      return this.$_target === other.$_target && this._receiver === other._receiver;
-    },
-    get$hashCode(_) {
-      return (A.objectHashCode(this._receiver) ^ A.Primitives_objectHashCode(this.$_target)) >>> 0;
-    },
     toString$0(_) {
       return "Closure '" + this.$_name + "' of " + ("Instance of '" + A.Primitives_objectTypeName(this._receiver) + "'");
     }
@@ -3407,178 +6477,23 @@
       return "RuntimeError: " + this.message;
     }
   };
-  A.JsLinkedHashMap.prototype = {
-    get$length(_) {
-      return this._length;
-    },
-    get$keys(_) {
-      return new A.LinkedHashMapKeyIterable(this, this.$ti._eval$1("LinkedHashMapKeyIterable<1>"));
-    },
-    $index(_, key) {
-      var strings, cell, t1, nums, _null = null;
-      if (typeof key == "string") {
-        strings = this._strings;
-        if (strings == null)
-          return _null;
-        cell = strings[key];
-        t1 = cell == null ? _null : cell.hashMapCellValue;
-        return t1;
-      } else if (typeof key == "number" && (key & 0x3fffffff) === key) {
-        nums = this._nums;
-        if (nums == null)
-          return _null;
-        cell = nums[key];
-        t1 = cell == null ? _null : cell.hashMapCellValue;
-        return t1;
-      } else
-        return this.internalGet$1(key);
-    },
-    internalGet$1(key) {
-      var bucket, index,
-        rest = this.__js_helper$_rest;
-      if (rest == null)
-        return null;
-      bucket = rest[J.get$hashCode$(key) & 0x3fffffff];
-      index = this.internalFindBucketIndex$2(bucket, key);
-      if (index < 0)
-        return null;
-      return bucket[index].hashMapCellValue;
-    },
-    $indexSet(_, key, value) {
-      var strings, nums, rest, hash, bucket, index, _this = this,
-        t1 = _this.$ti;
-      t1._precomputed1._as(key);
-      t1._rest[1]._as(value);
-      if (typeof key == "string") {
-        strings = _this._strings;
-        _this._addHashTableEntry$3(strings == null ? _this._strings = _this._newHashTable$0() : strings, key, value);
-      } else if (typeof key == "number" && (key & 0x3fffffff) === key) {
-        nums = _this._nums;
-        _this._addHashTableEntry$3(nums == null ? _this._nums = _this._newHashTable$0() : nums, key, value);
-      } else {
-        rest = _this.__js_helper$_rest;
-        if (rest == null)
-          rest = _this.__js_helper$_rest = _this._newHashTable$0();
-        hash = J.get$hashCode$(key) & 0x3fffffff;
-        bucket = rest[hash];
-        if (bucket == null)
-          rest[hash] = [_this._newLinkedCell$2(key, value)];
-        else {
-          index = _this.internalFindBucketIndex$2(bucket, key);
-          if (index >= 0)
-            bucket[index].hashMapCellValue = value;
-          else
-            bucket.push(_this._newLinkedCell$2(key, value));
-        }
-      }
-    },
-    forEach$1(_, action) {
-      var cell, modifications, _this = this;
-      _this.$ti._eval$1("~(1,2)")._as(action);
-      cell = _this._first;
-      modifications = _this._modifications;
-      for (; cell != null;) {
-        action.call$2(cell.hashMapCellKey, cell.hashMapCellValue);
-        if (modifications !== _this._modifications)
-          throw A.wrapException(A.ConcurrentModificationError$(_this));
-        cell = cell._next;
-      }
-    },
-    _addHashTableEntry$3(table, key, value) {
-      var cell,
-        t1 = this.$ti;
-      t1._precomputed1._as(key);
-      t1._rest[1]._as(value);
-      cell = table[key];
-      if (cell == null)
-        table[key] = this._newLinkedCell$2(key, value);
-      else
-        cell.hashMapCellValue = value;
-    },
-    _newLinkedCell$2(key, value) {
-      var _this = this,
-        t1 = _this.$ti,
-        cell = new A.LinkedHashMapCell(t1._precomputed1._as(key), t1._rest[1]._as(value));
-      if (_this._first == null)
-        _this._first = _this._last = cell;
-      else
-        _this._last = _this._last._next = cell;
-      ++_this._length;
-      _this._modifications = _this._modifications + 1 & 1073741823;
-      return cell;
-    },
-    internalFindBucketIndex$2(bucket, key) {
-      var $length, i;
-      if (bucket == null)
-        return -1;
-      $length = bucket.length;
-      for (i = 0; i < $length; ++i)
-        if (J.$eq$(bucket[i].hashMapCellKey, key))
-          return i;
-      return -1;
-    },
-    toString$0(_) {
-      return A.MapBase_mapToString(this);
-    },
-    _newHashTable$0() {
-      var table = Object.create(null);
-      table["<non-identifier-key>"] = table;
-      delete table["<non-identifier-key>"];
-      return table;
-    }
-  };
-  A.LinkedHashMapCell.prototype = {};
-  A.LinkedHashMapKeyIterable.prototype = {
-    get$length(_) {
-      return this._map._length;
-    },
-    get$iterator(_) {
-      var t1 = this._map,
-        t2 = new A.LinkedHashMapKeyIterator(t1, t1._modifications, this.$ti._eval$1("LinkedHashMapKeyIterator<1>"));
-      t2._cell = t1._first;
-      return t2;
-    }
-  };
-  A.LinkedHashMapKeyIterator.prototype = {
-    get$current(_) {
-      return this.__js_helper$_current;
-    },
-    moveNext$0() {
-      var cell, _this = this,
-        t1 = _this._map;
-      if (_this._modifications !== t1._modifications)
-        throw A.wrapException(A.ConcurrentModificationError$(t1));
-      cell = _this._cell;
-      if (cell == null) {
-        _this.set$__js_helper$_current(null);
-        return false;
-      } else {
-        _this.set$__js_helper$_current(cell.hashMapCellKey);
-        _this._cell = cell._next;
-        return true;
-      }
-    },
-    set$__js_helper$_current(_current) {
-      this.__js_helper$_current = this.$ti._eval$1("1?")._as(_current);
-    }
-  };
   A.initHooks_closure.prototype = {
     call$1(o) {
       return this.getTag(o);
     },
-    $signature: 1
+    $signature: 0
   };
   A.initHooks_closure0.prototype = {
     call$2(o, tag) {
       return this.getUnknownTag(o, tag);
     },
-    $signature: 2
+    $signature: 1
   };
   A.initHooks_closure1.prototype = {
     call$1(tag) {
       return this.prototypeForTag(A._asString(tag));
     },
-    $signature: 3
+    $signature: 2
   };
   A.JSPromise.prototype = {};
   A.NativeTypedData.prototype = {};
@@ -3593,10 +6508,9 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isIterable: 1,
-    $isList: 1
+    $isIterable: 1
   };
-  A.NativeTypedArrayOfInt.prototype = {$isIterable: 1, $isList: 1};
+  A.NativeTypedArrayOfInt.prototype = {$isIterable: 1};
   A.NativeInt16List.prototype = {
     $index(receiver, index) {
       A._checkValidIndex(index, receiver, receiver.length);
@@ -3658,11 +6572,6 @@
     }
   };
   A._FunctionParameters.prototype = {};
-  A._Type.prototype = {
-    toString$0(_) {
-      return A._rtiToString(this._rti, null);
-    }
-  };
   A._Error.prototype = {
     toString$0(_) {
       return this.__rti$_message;
@@ -3673,44 +6582,8 @@
     get$iterator(receiver) {
       return new A.ListIterator(receiver, this.get$length(receiver), A.instanceType(receiver)._eval$1("ListIterator<ListMixin.E>"));
     },
-    elementAt$1(receiver, index) {
-      return this.$index(receiver, index);
-    },
     toString$0(receiver) {
       return A.IterableBase_iterableToFullString(receiver, "[", "]");
-    }
-  };
-  A.MapBase.prototype = {};
-  A.MapBase_mapToString_closure.prototype = {
-    call$2(k, v) {
-      var t2,
-        t1 = this._box_0;
-      if (!t1.first)
-        this.result._contents += ", ";
-      t1.first = false;
-      t1 = this.result;
-      t2 = t1._contents += A.S(k);
-      t1._contents = t2 + ": ";
-      t1._contents += A.S(v);
-    },
-    $signature: 4
-  };
-  A.MapMixin.prototype = {
-    forEach$1(receiver, action) {
-      var t2, key, t3,
-        t1 = A.instanceType(receiver);
-      t1._eval$1("~(MapMixin.K,MapMixin.V)")._as(action);
-      for (t2 = J.get$iterator$ax(this.get$keys(receiver)), t1 = t1._eval$1("MapMixin.V"); t2.moveNext$0();) {
-        key = t2.get$current(t2);
-        t3 = this.$index(receiver, key);
-        action.call$2(key, t3 == null ? t1._as(t3) : t3);
-      }
-    },
-    get$length(receiver) {
-      return J.get$length$asx(this.get$keys(receiver));
-    },
-    toString$0(receiver) {
-      return A.MapBase_mapToString(receiver);
     }
   };
   A.Error.prototype = {};
@@ -3798,40 +6671,15 @@
   };
   A.ConcurrentModificationError.prototype = {
     toString$0(_) {
-      var t1 = this.modifiedObject;
-      if (t1 == null)
-        return "Concurrent modification during iteration.";
-      return "Concurrent modification during iteration: " + A.Error_safeToString(t1) + ".";
-    }
-  };
-  A.Iterable.prototype = {
-    get$length(_) {
-      var count,
-        t1 = this._map,
-        it = A.LinkedHashMapKeyIterator$(t1, t1._modifications, this.$ti._precomputed1);
-      for (count = 0; it.moveNext$0();)
-        ++count;
-      return count;
-    },
-    toString$0(_) {
-      return A.IterableBase_iterableToShortString(this, "(", ")");
+      return "Concurrent modification during iteration: " + A.Error_safeToString(this.modifiedObject) + ".";
     }
   };
   A.Null.prototype = {
-    get$hashCode(_) {
-      return A.Object.prototype.get$hashCode.call(this, this);
-    },
     toString$0(_) {
       return "null";
     }
   };
   A.Object.prototype = {$isObject: 1,
-    $eq(_, other) {
-      return this === other;
-    },
-    get$hashCode(_) {
-      return A.Primitives_objectHashCode(this);
-    },
     toString$0(_) {
       return "Instance of '" + A.Primitives_objectTypeName(this) + "'";
     },
@@ -3848,1102 +6696,1864 @@
       return t1.charCodeAt(0) == 0 ? t1 : t1;
     }
   };
-  A.HtmlElement.prototype = {};
-  A.AccessibleNodeList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.AnchorElement.prototype = {
-    toString$0(receiver) {
-      var t1 = String(receiver);
-      t1.toString;
-      return t1;
-    }
-  };
-  A.AreaElement.prototype = {
-    toString$0(receiver) {
-      var t1 = String(receiver);
-      t1.toString;
-      return t1;
-    }
-  };
-  A.Blob.prototype = {};
-  A.CharacterData.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.CssPerspective.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.CssRule.prototype = {$isCssRule: 1};
-  A.CssStyleDeclaration.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.CssStyleDeclarationBase.prototype = {};
-  A.CssStyleValue.prototype = {};
-  A.CssTransformComponent.prototype = {};
-  A.CssTransformValue.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.CssUnparsedValue.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.DataTransferItemList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.DomException.prototype = {
-    toString$0(receiver) {
-      var t1 = String(receiver);
-      t1.toString;
-      return t1;
-    }
-  };
-  A.DomRectList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.DomRectReadOnly.prototype = {
-    toString$0(receiver) {
-      var t2,
-        t1 = receiver.left;
-      t1.toString;
-      t2 = receiver.top;
-      t2.toString;
-      return "Rectangle (" + A.S(t1) + ", " + A.S(t2) + ") " + A.S(this.get$width(receiver)) + " x " + A.S(this.get$height(receiver));
-    },
-    $eq(receiver, other) {
-      var t1, t2;
-      if (other == null)
-        return false;
-      if (type$.Rectangle_num._is(other)) {
-        t1 = receiver.left;
-        t1.toString;
-        t2 = other.left;
-        t2.toString;
-        if (t1 === t2) {
-          t1 = receiver.top;
-          t1.toString;
-          t2 = other.top;
-          t2.toString;
-          if (t1 === t2) {
-            t1 = J.getInterceptor$x(other);
-            t1 = this.get$width(receiver) === t1.get$width(other) && this.get$height(receiver) === t1.get$height(other);
-          } else
-            t1 = false;
-        } else
-          t1 = false;
-      } else
-        t1 = false;
-      return t1;
-    },
-    get$hashCode(receiver) {
-      var t2,
-        t1 = receiver.left;
-      t1.toString;
-      t2 = receiver.top;
-      t2.toString;
-      return A.Object_hash(t1, t2, this.get$width(receiver), this.get$height(receiver));
-    },
-    get$_height(receiver) {
-      return receiver.height;
-    },
-    get$height(receiver) {
-      var t1 = this.get$_height(receiver);
-      t1.toString;
-      return t1;
-    },
-    get$_width(receiver) {
-      return receiver.width;
-    },
-    get$width(receiver) {
-      var t1 = this.get$_width(receiver);
-      t1.toString;
-      return t1;
-    },
-    $isRectangle: 1
-  };
-  A.DomStringList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.DomTokenList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.Element.prototype = {
-    toString$0(receiver) {
-      var t1 = receiver.localName;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.EventTarget.prototype = {};
-  A.File.prototype = {$isFile: 1};
-  A.FileList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.FileWriter.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.FormElement.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.Gamepad.prototype = {$isGamepad: 1};
-  A.History.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.HtmlCollection.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.Location.prototype = {
-    toString$0(receiver) {
-      var t1 = String(receiver);
-      t1.toString;
-      return t1;
-    }
-  };
-  A.MediaList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.MidiInputMap.prototype = {
-    $index(receiver, key) {
-      return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
-    },
-    forEach$1(receiver, f) {
-      var entries, entry, t1;
-      type$.void_Function_String_dynamic._as(f);
-      entries = receiver.entries();
-      for (; true;) {
-        entry = entries.next();
-        t1 = entry.done;
-        t1.toString;
-        if (t1)
-          return;
-        t1 = entry.value[0];
-        t1.toString;
-        f.call$2(t1, A.convertNativeToDart_Dictionary(entry.value[1]));
-      }
-    },
-    get$keys(receiver) {
-      var keys = A._setArrayType([], type$.JSArray_String);
-      this.forEach$1(receiver, new A.MidiInputMap_keys_closure(keys));
-      return keys;
-    },
-    get$length(receiver) {
-      var t1 = receiver.size;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.MidiInputMap_keys_closure.prototype = {
-    call$2(k, v) {
-      return B.JSArray_methods.add$1(this.keys, k);
-    },
-    $signature: 0
-  };
-  A.MidiOutputMap.prototype = {
-    $index(receiver, key) {
-      return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
-    },
-    forEach$1(receiver, f) {
-      var entries, entry, t1;
-      type$.void_Function_String_dynamic._as(f);
-      entries = receiver.entries();
-      for (; true;) {
-        entry = entries.next();
-        t1 = entry.done;
-        t1.toString;
-        if (t1)
-          return;
-        t1 = entry.value[0];
-        t1.toString;
-        f.call$2(t1, A.convertNativeToDart_Dictionary(entry.value[1]));
-      }
-    },
-    get$keys(receiver) {
-      var keys = A._setArrayType([], type$.JSArray_String);
-      this.forEach$1(receiver, new A.MidiOutputMap_keys_closure(keys));
-      return keys;
-    },
-    get$length(receiver) {
-      var t1 = receiver.size;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.MidiOutputMap_keys_closure.prototype = {
-    call$2(k, v) {
-      return B.JSArray_methods.add$1(this.keys, k);
-    },
-    $signature: 0
-  };
-  A.MimeType.prototype = {$isMimeType: 1};
-  A.MimeTypeArray.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.Node.prototype = {
-    toString$0(receiver) {
-      var value = receiver.nodeValue;
-      return value == null ? this.super$Interceptor$toString(receiver) : value;
-    },
-    $isNode: 1
-  };
-  A.NodeList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.Plugin.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    },
-    $isPlugin: 1
-  };
-  A.PluginArray.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.RtcStatsReport.prototype = {
-    $index(receiver, key) {
-      return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
-    },
-    forEach$1(receiver, f) {
-      var entries, entry, t1;
-      type$.void_Function_String_dynamic._as(f);
-      entries = receiver.entries();
-      for (; true;) {
-        entry = entries.next();
-        t1 = entry.done;
-        t1.toString;
-        if (t1)
-          return;
-        t1 = entry.value[0];
-        t1.toString;
-        f.call$2(t1, A.convertNativeToDart_Dictionary(entry.value[1]));
-      }
-    },
-    get$keys(receiver) {
-      var keys = A._setArrayType([], type$.JSArray_String);
-      this.forEach$1(receiver, new A.RtcStatsReport_keys_closure(keys));
-      return keys;
-    },
-    get$length(receiver) {
-      var t1 = receiver.size;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.RtcStatsReport_keys_closure.prototype = {
-    call$2(k, v) {
-      return B.JSArray_methods.add$1(this.keys, k);
-    },
-    $signature: 0
-  };
-  A.SelectElement.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.SourceBuffer.prototype = {$isSourceBuffer: 1};
-  A.SourceBufferList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.SpeechGrammar.prototype = {$isSpeechGrammar: 1};
-  A.SpeechGrammarList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.SpeechRecognitionResult.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    },
-    $isSpeechRecognitionResult: 1
-  };
-  A.Storage.prototype = {
-    $index(receiver, key) {
-      return receiver.getItem(A._asString(key));
-    },
-    forEach$1(receiver, f) {
-      var i, key, t1;
-      type$.void_Function_String_String._as(f);
-      for (i = 0; true; ++i) {
-        key = receiver.key(i);
-        if (key == null)
-          return;
-        t1 = receiver.getItem(key);
-        t1.toString;
-        f.call$2(key, t1);
-      }
-    },
-    get$keys(receiver) {
-      var keys = A._setArrayType([], type$.JSArray_String);
-      this.forEach$1(receiver, new A.Storage_keys_closure(keys));
-      return keys;
-    },
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.Storage_keys_closure.prototype = {
-    call$2(k, v) {
-      return B.JSArray_methods.add$1(this.keys, k);
-    },
-    $signature: 5
-  };
-  A.StyleSheet.prototype = {$isStyleSheet: 1};
-  A.TextTrack.prototype = {$isTextTrack: 1};
-  A.TextTrackCue.prototype = {$isTextTrackCue: 1};
-  A.TextTrackCueList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.TextTrackList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.TimeRanges.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.Touch.prototype = {$isTouch: 1};
-  A.TouchList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.TrackDefaultList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.Url.prototype = {
-    toString$0(receiver) {
-      var t1 = String(receiver);
-      t1.toString;
-      return t1;
-    }
-  };
-  A.VideoTrackList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A._CssRuleList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A._DomRect.prototype = {
-    toString$0(receiver) {
-      var t2, t3, t4,
-        t1 = receiver.left;
-      t1.toString;
-      t2 = receiver.top;
-      t2.toString;
-      t3 = receiver.width;
-      t3.toString;
-      t4 = receiver.height;
-      t4.toString;
-      return "Rectangle (" + A.S(t1) + ", " + A.S(t2) + ") " + A.S(t3) + " x " + A.S(t4);
-    },
-    $eq(receiver, other) {
-      var t1, t2;
-      if (other == null)
-        return false;
-      if (type$.Rectangle_num._is(other)) {
-        t1 = receiver.left;
-        t1.toString;
-        t2 = other.left;
-        t2.toString;
-        if (t1 === t2) {
-          t1 = receiver.top;
-          t1.toString;
-          t2 = other.top;
-          t2.toString;
-          if (t1 === t2) {
-            t1 = receiver.width;
-            t1.toString;
-            t2 = J.getInterceptor$x(other);
-            if (t1 === t2.get$width(other)) {
-              t1 = receiver.height;
-              t1.toString;
-              t2 = t1 === t2.get$height(other);
-              t1 = t2;
-            } else
-              t1 = false;
-          } else
-            t1 = false;
-        } else
-          t1 = false;
-      } else
-        t1 = false;
-      return t1;
-    },
-    get$hashCode(receiver) {
-      var t2, t3, t4,
-        t1 = receiver.left;
-      t1.toString;
-      t2 = receiver.top;
-      t2.toString;
-      t3 = receiver.width;
-      t3.toString;
-      t4 = receiver.height;
-      t4.toString;
-      return A.Object_hash(t1, t2, t3, t4);
-    },
-    get$_height(receiver) {
-      return receiver.height;
-    },
-    get$height(receiver) {
-      var t1 = receiver.height;
-      t1.toString;
-      return t1;
-    },
-    get$_width(receiver) {
-      return receiver.width;
-    },
-    get$width(receiver) {
-      var t1 = receiver.width;
-      t1.toString;
-      return t1;
-    }
-  };
-  A._GamepadList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      return receiver[index];
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A._NamedNodeMap.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A._SpeechRecognitionResultList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A._StyleSheetList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length,
-        t2 = index >>> 0 !== index || index >= t1;
-      t2.toString;
-      if (t2)
-        throw A.wrapException(A.IndexError$withLength(index, t1, receiver, null));
-      t1 = receiver[index];
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
-        return A.ioore(receiver, index);
-      return receiver[index];
-    },
-    $isJavaScriptIndexingBehavior: 1,
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.ImmutableListMixin.prototype = {
-    get$iterator(receiver) {
-      return new A.FixedSizeListIterator(receiver, this.get$length(receiver), A.instanceType(receiver)._eval$1("FixedSizeListIterator<ImmutableListMixin.E>"));
-    }
-  };
-  A.FixedSizeListIterator.prototype = {
-    moveNext$0() {
-      var _this = this,
-        nextPosition = _this._position + 1,
-        t1 = _this._html$_length;
-      if (nextPosition < t1) {
-        _this.set$_html$_current(J.$index$ax(_this._array, nextPosition));
-        _this._position = nextPosition;
-        return true;
-      }
-      _this.set$_html$_current(null);
-      _this._position = t1;
-      return false;
-    },
-    get$current(_) {
-      var t1 = this._html$_current;
-      return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
-    },
-    set$_html$_current(_current) {
-      this._html$_current = this.$ti._eval$1("1?")._as(_current);
-    }
-  };
-  A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase.prototype = {};
-  A._DomRectList_JavaScriptObject_ListMixin.prototype = {};
-  A._DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._DomStringList_JavaScriptObject_ListMixin.prototype = {};
-  A._DomStringList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._FileList_JavaScriptObject_ListMixin.prototype = {};
-  A._FileList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._HtmlCollection_JavaScriptObject_ListMixin.prototype = {};
-  A._HtmlCollection_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._MidiInputMap_JavaScriptObject_MapMixin.prototype = {};
-  A._MidiOutputMap_JavaScriptObject_MapMixin.prototype = {};
-  A._MimeTypeArray_JavaScriptObject_ListMixin.prototype = {};
-  A._MimeTypeArray_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._NodeList_JavaScriptObject_ListMixin.prototype = {};
-  A._NodeList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._PluginArray_JavaScriptObject_ListMixin.prototype = {};
-  A._PluginArray_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._RtcStatsReport_JavaScriptObject_MapMixin.prototype = {};
-  A._SourceBufferList_EventTarget_ListMixin.prototype = {};
-  A._SourceBufferList_EventTarget_ListMixin_ImmutableListMixin.prototype = {};
-  A._SpeechGrammarList_JavaScriptObject_ListMixin.prototype = {};
-  A._SpeechGrammarList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._Storage_JavaScriptObject_MapMixin.prototype = {};
-  A._TextTrackCueList_JavaScriptObject_ListMixin.prototype = {};
-  A._TextTrackCueList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._TextTrackList_EventTarget_ListMixin.prototype = {};
-  A._TextTrackList_EventTarget_ListMixin_ImmutableListMixin.prototype = {};
-  A._TouchList_JavaScriptObject_ListMixin.prototype = {};
-  A._TouchList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.__CssRuleList_JavaScriptObject_ListMixin.prototype = {};
-  A.__CssRuleList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.__GamepadList_JavaScriptObject_ListMixin.prototype = {};
-  A.__GamepadList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.__NamedNodeMap_JavaScriptObject_ListMixin.prototype = {};
-  A.__NamedNodeMap_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin.prototype = {};
-  A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.__StyleSheetList_JavaScriptObject_ListMixin.prototype = {};
-  A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.Length.prototype = {$isLength: 1};
-  A.LengthList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length;
-      t1.toString;
-      t1 = index >>> 0 !== index || index >= t1;
-      t1.toString;
-      if (t1)
-        throw A.wrapException(A.IndexError$withLength(index, this.get$length(receiver), receiver, null));
-      t1 = receiver.getItem(index);
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      return this.$index(receiver, index);
-    },
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.Number.prototype = {$isNumber: 1};
-  A.NumberList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length;
-      t1.toString;
-      t1 = index >>> 0 !== index || index >= t1;
-      t1.toString;
-      if (t1)
-        throw A.wrapException(A.IndexError$withLength(index, this.get$length(receiver), receiver, null));
-      t1 = receiver.getItem(index);
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      return this.$index(receiver, index);
-    },
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.PointList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.StringList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length;
-      t1.toString;
-      t1 = index >>> 0 !== index || index >= t1;
-      t1.toString;
-      if (t1)
-        throw A.wrapException(A.IndexError$withLength(index, this.get$length(receiver), receiver, null));
-      t1 = receiver.getItem(index);
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      return this.$index(receiver, index);
-    },
-    $isIterable: 1,
-    $isList: 1
-  };
-  A.Transform.prototype = {$isTransform: 1};
-  A.TransformList.prototype = {
-    get$length(receiver) {
-      var t1 = receiver.length;
-      t1.toString;
-      return t1;
-    },
-    $index(receiver, index) {
-      var t1 = receiver.length;
-      t1.toString;
-      t1 = index >>> 0 !== index || index >= t1;
-      t1.toString;
-      if (t1)
-        throw A.wrapException(A.IndexError$withLength(index, this.get$length(receiver), receiver, null));
-      t1 = receiver.getItem(index);
-      t1.toString;
-      return t1;
-    },
-    elementAt$1(receiver, index) {
-      return this.$index(receiver, index);
-    },
-    $isIterable: 1,
-    $isList: 1
-  };
-  A._LengthList_JavaScriptObject_ListMixin.prototype = {};
-  A._LengthList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._NumberList_JavaScriptObject_ListMixin.prototype = {};
-  A._NumberList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._StringList_JavaScriptObject_ListMixin.prototype = {};
-  A._StringList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A._TransformList_JavaScriptObject_ListMixin.prototype = {};
-  A._TransformList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.AudioBuffer.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.AudioParamMap.prototype = {
-    $index(receiver, key) {
-      return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
-    },
-    forEach$1(receiver, f) {
-      var entries, entry, t1;
-      type$.void_Function_String_dynamic._as(f);
-      entries = receiver.entries();
-      for (; true;) {
-        entry = entries.next();
-        t1 = entry.done;
-        t1.toString;
-        if (t1)
-          return;
-        t1 = entry.value[0];
-        t1.toString;
-        f.call$2(t1, A.convertNativeToDart_Dictionary(entry.value[1]));
-      }
-    },
-    get$keys(receiver) {
-      var keys = A._setArrayType([], type$.JSArray_String);
-      this.forEach$1(receiver, new A.AudioParamMap_keys_closure(keys));
-      return keys;
-    },
-    get$length(receiver) {
-      var t1 = receiver.size;
-      t1.toString;
-      return t1;
-    }
-  };
-  A.AudioParamMap_keys_closure.prototype = {
-    call$2(k, v) {
-      return B.JSArray_methods.add$1(this.keys, k);
-    },
-    $signature: 0
-  };
-  A.AudioTrackList.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A.BaseAudioContext.prototype = {};
-  A.OfflineAudioContext.prototype = {
-    get$length(receiver) {
-      return receiver.length;
-    }
-  };
-  A._AudioParamMap_JavaScriptObject_MapMixin.prototype = {};
+  A.Accelerometer.prototype = {};
+  A.AccelerometerSensorOptions.prototype = {};
+  A.LinearAccelerationSensor.prototype = {};
+  A.GravitySensor.prototype = {};
+  A.AccelerometerReadingValues.prototype = {};
+  A.LinearAccelerationReadingValues.prototype = {};
+  A.GravityReadingValues.prototype = {};
+  A.AmbientLightSensor.prototype = {};
+  A.AmbientLightReadingValues.prototype = {};
+  A.XRAnchor.prototype = {};
+  A.XRAnchorSet.prototype = {};
+  A.ANGLE_instanced_arrays.prototype = {};
+  A.HTMLAttributionSrcElementUtils.prototype = {};
+  A.AudioOutputOptions.prototype = {};
+  A.BackgroundFetchManager.prototype = {};
+  A.BackgroundFetchUIOptions.prototype = {};
+  A.BackgroundFetchOptions.prototype = {};
+  A.BackgroundFetchRegistration.prototype = {};
+  A.BackgroundFetchRecord.prototype = {};
+  A.BackgroundFetchEvent.prototype = {};
+  A.BackgroundFetchEventInit.prototype = {};
+  A.BackgroundFetchUpdateUIEvent.prototype = {};
+  A.SyncManager.prototype = {};
+  A.SyncEvent.prototype = {};
+  A.SyncEventInit.prototype = {};
+  A.NavigatorBadge.prototype = {};
+  A.BatteryManager.prototype = {};
+  A.CaptureHandleConfig.prototype = {};
+  A.CaptureHandle.prototype = {};
+  A.ClipboardEventInit.prototype = {};
+  A.ClipboardEvent.prototype = {};
+  A.ClipboardItem.prototype = {};
+  A.ClipboardItemOptions.prototype = {};
+  A.Clipboard.prototype = {};
+  A.ClipboardPermissionDescriptor.prototype = {};
+  A.CloseWatcher.prototype = {};
+  A.CloseWatcherOptions.prototype = {};
+  A.CompressionStream.prototype = {};
+  A.DecompressionStream.prototype = {};
+  A.PressureObserver.prototype = {};
+  A.PressureRecord.prototype = {};
+  A.PressureObserverOptions.prototype = {};
   A.$Console.prototype = {};
+  A.ContactAddress.prototype = {};
+  A.ContactInfo.prototype = {};
+  A.ContactsSelectOptions.prototype = {};
+  A.ContactsManager.prototype = {};
+  A.ContentDescription.prototype = {};
+  A.ContentIndex.prototype = {};
+  A.ContentIndexEventInit.prototype = {};
+  A.ContentIndexEvent.prototype = {};
+  A.CookieStore.prototype = {};
+  A.CookieStoreGetOptions.prototype = {};
+  A.CookieInit.prototype = {};
+  A.CookieStoreDeleteOptions.prototype = {};
+  A.CookieListItem.prototype = {};
+  A.CookieStoreManager.prototype = {};
+  A.CookieChangeEvent.prototype = {};
+  A.CookieChangeEventInit.prototype = {};
+  A.ExtendableCookieChangeEvent.prototype = {};
+  A.ExtendableCookieChangeEventInit.prototype = {};
+  A.CrashReportBody.prototype = {};
+  A.Credential.prototype = {};
+  A.CredentialUserData.prototype = {};
+  A.CredentialsContainer.prototype = {};
+  A.CredentialData.prototype = {};
+  A.CredentialRequestOptions.prototype = {};
+  A.CredentialCreationOptions.prototype = {};
+  A.PasswordCredential.prototype = {};
+  A.PasswordCredentialData.prototype = {};
+  A.FederatedCredential.prototype = {};
+  A.FederatedCredentialRequestOptions.prototype = {};
+  A.FederatedCredentialInit.prototype = {};
+  A.CSPViolationReportBody.prototype = {};
+  A.SecurityPolicyViolationEvent.prototype = {};
+  A.SecurityPolicyViolationEventInit.prototype = {};
+  A.ScriptingPolicyReportBody.prototype = {};
+  A.AnimationWorkletGlobalScope.prototype = {};
+  A.WorkletAnimationEffect.prototype = {};
+  A.WorkletAnimation.prototype = {};
+  A.WorkletGroupEffect.prototype = {};
+  A.AnimationEvent.prototype = {};
+  A.AnimationEventInit.prototype = {};
+  A.CSSKeyframeRule.prototype = {};
+  A.CSSKeyframesRule.prototype = {};
+  A.CSSAnimation.prototype = {};
+  A.CSSLayerBlockRule.prototype = {};
+  A.CSSLayerStatementRule.prototype = {};
+  A.CSSColorProfileRule.prototype = {};
+  A.CSSConditionRule.prototype = {};
+  A.CSSMediaRule.prototype = {};
+  A.CSSSupportsRule.prototype = {};
+  A.ContentVisibilityAutoStateChangedEvent.prototype = {};
+  A.ContentVisibilityAutoStateChangedEventInit.prototype = {};
+  A.CSSContainerRule.prototype = {};
+  A.CSSCounterStyleRule.prototype = {};
+  A.FontFaceDescriptors.prototype = {};
+  A.FontFace.prototype = {};
+  A.FontFaceFeatures.prototype = {};
+  A.FontFaceVariationAxis.prototype = {};
+  A.FontFaceVariations.prototype = {};
+  A.FontFacePalette.prototype = {};
+  A.FontFacePalettes.prototype = {};
+  A.FontFaceSetLoadEventInit.prototype = {};
+  A.FontFaceSetLoadEvent.prototype = {};
+  A.FontFaceSet.prototype = {};
+  A.FontFaceSource.prototype = {};
+  A.CSSFontFaceRule.prototype = {};
+  A.CSSFontFeatureValuesRule.prototype = {};
+  A.CSSFontFeatureValuesMap.prototype = {};
+  A.CSSFontPaletteValuesRule.prototype = {};
+  A.Highlight.prototype = {};
+  A.HighlightRegistry.prototype = {};
+  A.LayoutWorkletGlobalScope.prototype = {};
+  A.LayoutOptions.prototype = {};
+  A.LayoutChild.prototype = {};
+  A.LayoutFragment.prototype = {};
+  A.IntrinsicSizes.prototype = {};
+  A.LayoutConstraints.prototype = {};
+  A.LayoutConstraintsOptions.prototype = {};
+  A.ChildBreakToken.prototype = {};
+  A.BreakToken.prototype = {};
+  A.BreakTokenOptions.prototype = {};
+  A.LayoutEdges.prototype = {};
+  A.FragmentResultOptions.prototype = {};
+  A.FragmentResult.prototype = {};
+  A.IntrinsicSizesResultOptions.prototype = {};
+  A.SVGClipPathElement.prototype = {};
+  A.SVGMaskElement.prototype = {};
+  A.FocusableAreasOption.prototype = {};
+  A.SpatialNavigationSearchOptions.prototype = {};
+  A.NavigationEvent.prototype = {};
+  A.NavigationEventInit.prototype = {};
+  A.PaintWorkletGlobalScope.prototype = {};
+  A.PaintRenderingContext2DSettings.prototype = {};
+  A.PaintRenderingContext2D.prototype = {};
+  A.PaintSize.prototype = {};
+  A.CSSParserOptions.prototype = {};
+  A.CSSParserRule.prototype = {};
+  A.CSSParserAtRule.prototype = {};
+  A.CSSParserQualifiedRule.prototype = {};
+  A.CSSParserDeclaration.prototype = {};
+  A.CSSParserValue.prototype = {};
+  A.CSSParserBlock.prototype = {};
+  A.CSSParserFunction.prototype = {};
+  A.PropertyDefinition.prototype = {};
+  A.CSSPropertyRule.prototype = {};
+  A.CSSPseudoElement.prototype = {};
+  A.NamedFlowMap.prototype = {};
+  A.NamedFlow.prototype = {};
+  A.Region.prototype = {};
+  A.TransitionEvent.prototype = {};
+  A.TransitionEventInit.prototype = {};
+  A.CSSTransition.prototype = {};
+  A.CSSStyleValue.prototype = {};
+  A.StylePropertyMapReadOnly.prototype = {};
+  A.StylePropertyMap.prototype = {};
+  A.CSSUnparsedValue.prototype = {};
+  A.CSSVariableReferenceValue.prototype = {};
+  A.CSSKeywordValue.prototype = {};
+  A.CSSNumericType.prototype = {};
+  A.CSSNumericValue.prototype = {};
+  A.CSSUnitValue.prototype = {};
+  A.CSSMathValue.prototype = {};
+  A.CSSMathSum.prototype = {};
+  A.CSSMathProduct.prototype = {};
+  A.CSSMathNegate.prototype = {};
+  A.CSSMathInvert.prototype = {};
+  A.CSSMathMin.prototype = {};
+  A.CSSMathMax.prototype = {};
+  A.CSSMathClamp.prototype = {};
+  A.CSSNumericArray.prototype = {};
+  A.CSSTransformValue.prototype = {};
+  A.CSSTransformComponent.prototype = {};
+  A.CSSTranslate.prototype = {};
+  A.CSSRotate.prototype = {};
+  A.CSSScale.prototype = {};
+  A.CSSSkew.prototype = {};
+  A.CSSSkewX.prototype = {};
+  A.CSSSkewY.prototype = {};
+  A.CSSPerspective.prototype = {};
+  A.CSSMatrixComponent.prototype = {};
+  A.CSSMatrixComponentOptions.prototype = {};
+  A.CSSImageValue.prototype = {};
+  A.CSSColorValue.prototype = {};
+  A.CSSRGB.prototype = {};
+  A.CSSHSL.prototype = {};
+  A.CSSHWB.prototype = {};
+  A.CSSLab.prototype = {};
+  A.CSSLCH.prototype = {};
+  A.CSSOKLab.prototype = {};
+  A.CSSOKLCH.prototype = {};
+  A.CSSColor.prototype = {};
+  A.ViewTransition.prototype = {};
+  A.MediaList.prototype = {};
+  A.StyleSheet.prototype = {};
+  A.CSSStyleSheet.prototype = {};
+  A.CSSStyleSheetInit.prototype = {};
+  A.StyleSheetList.prototype = {};
+  A.LinkStyle.prototype = {};
+  A.CSSRuleList.prototype = {};
+  A.CSSRule.prototype = {};
+  A.CSSStyleRule.prototype = {};
+  A.CSSImportRule.prototype = {};
+  A.CSSGroupingRule.prototype = {};
+  A.CSSPageRule.prototype = {};
+  A.CSSMarginRule.prototype = {};
+  A.CSSNamespaceRule.prototype = {};
+  A.CSSStyleDeclaration.prototype = {};
+  A.ElementCSSInlineStyle.prototype = {};
+  A.$CSS.prototype = {};
+  A.ScrollOptions.prototype = {};
+  A.ScrollToOptions.prototype = {};
+  A.MediaQueryList.prototype = {};
+  A.MediaQueryListEvent.prototype = {};
+  A.MediaQueryListEventInit.prototype = {};
+  A.Screen.prototype = {};
+  A.CaretPosition.prototype = {};
+  A.ScrollIntoViewOptions.prototype = {};
+  A.CheckVisibilityOptions.prototype = {};
+  A.BoxQuadOptions.prototype = {};
+  A.ConvertCoordinateOptions.prototype = {};
+  A.GeometryUtils.prototype = {};
+  A.VisualViewport.prototype = {};
+  A.CustomStateSet.prototype = {};
+  A.DataCue.prototype = {};
+  A.DeprecationReportBody.prototype = {};
+  A.NavigatorDeviceMemory.prototype = {};
+  A.DevicePosture.prototype = {};
+  A.DigitalGoodsService.prototype = {};
+  A.ItemDetails.prototype = {};
+  A.PurchaseDetails.prototype = {};
+  A.Event.prototype = {};
+  A.EventInit.prototype = {};
+  A.CustomEvent.prototype = {};
+  A.CustomEventInit.prototype = {};
+  A.EventTarget.prototype = {};
+  A.EventListenerOptions.prototype = {};
+  A.AddEventListenerOptions.prototype = {};
+  A.AbortController.prototype = {};
+  A.AbortSignal.prototype = {};
+  A.NonElementParentNode.prototype = {};
+  A.DocumentOrShadowRoot.prototype = {};
+  A.ParentNode.prototype = {};
+  A.NonDocumentTypeChildNode.prototype = {};
+  A.ChildNode.prototype = {};
+  A.Slottable.prototype = {};
+  A.NodeList.prototype = {};
+  A.HTMLCollection.prototype = {};
+  A.MutationObserver.prototype = {};
+  A.MutationObserverInit.prototype = {};
+  A.MutationRecord.prototype = {};
+  A.Node.prototype = {};
+  A.GetRootNodeOptions.prototype = {};
+  A.Document.prototype = {};
+  A.XMLDocument.prototype = {};
+  A.ElementCreationOptions.prototype = {};
+  A.DOMImplementation.prototype = {};
+  A.DocumentType.prototype = {};
+  A.DocumentFragment.prototype = {};
+  A.ShadowRoot.prototype = {};
+  A.Element.prototype = {};
+  A.ShadowRootInit.prototype = {};
+  A.NamedNodeMap.prototype = {};
+  A.Attr.prototype = {};
+  A.CharacterData.prototype = {};
+  A.Text.prototype = {};
+  A.CDATASection.prototype = {};
+  A.ProcessingInstruction.prototype = {};
+  A.Comment.prototype = {};
+  A.AbstractRange.prototype = {};
+  A.StaticRangeInit.prototype = {};
+  A.StaticRange.prototype = {};
+  A.Range.prototype = {};
+  A.NodeIterator.prototype = {};
+  A.TreeWalker.prototype = {};
+  A.DOMTokenList.prototype = {};
+  A.XPathResult.prototype = {};
+  A.XPathExpression.prototype = {};
+  A.XPathEvaluatorBase.prototype = {};
+  A.XPathEvaluator.prototype = {};
+  A.XSLTProcessor.prototype = {};
+  A.XMLSerializer.prototype = {};
+  A.InnerHTML.prototype = {};
+  A.EditContextInit.prototype = {};
+  A.EditContext.prototype = {};
+  A.TextUpdateEventInit.prototype = {};
+  A.TextUpdateEvent.prototype = {};
+  A.TextFormatInit.prototype = {};
+  A.TextFormat.prototype = {};
+  A.TextFormatUpdateEventInit.prototype = {};
+  A.TextFormatUpdateEvent.prototype = {};
+  A.CharacterBoundsUpdateEventInit.prototype = {};
+  A.CharacterBoundsUpdateEvent.prototype = {};
+  A.PerformanceElementTiming.prototype = {};
+  A.TextDecoderCommon.prototype = {};
+  A.TextDecoderOptions.prototype = {};
+  A.TextDecodeOptions.prototype = {};
+  A.TextDecoder.prototype = {};
+  A.TextEncoderCommon.prototype = {};
+  A.TextEncoderEncodeIntoResult.prototype = {};
+  A.TextEncoder.prototype = {};
+  A.TextDecoderStream.prototype = {};
+  A.TextEncoderStream.prototype = {};
+  A.MediaKeySystemConfiguration.prototype = {};
+  A.MediaKeySystemMediaCapability.prototype = {};
+  A.MediaKeySystemAccess.prototype = {};
+  A.MediaKeys.prototype = {};
+  A.MediaKeySession.prototype = {};
+  A.MediaKeyStatusMap.prototype = {};
+  A.MediaKeyMessageEvent.prototype = {};
+  A.MediaKeyMessageEventInit.prototype = {};
+  A.MediaEncryptedEvent.prototype = {};
+  A.MediaEncryptedEventInit.prototype = {};
+  A.FileSystemEntry.prototype = {};
+  A.FileSystemDirectoryEntry.prototype = {};
+  A.FileSystemFlags.prototype = {};
+  A.FileSystemDirectoryReader.prototype = {};
+  A.FileSystemFileEntry.prototype = {};
+  A.FileSystem.prototype = {};
+  A.PerformanceEventTiming.prototype = {};
+  A.EventCounts.prototype = {};
+  A.EXT_blend_minmax.prototype = {};
+  A.EXT_color_buffer_float.prototype = {};
+  A.EXT_color_buffer_half_float.prototype = {};
+  A.WebGLTimerQueryEXT.prototype = {};
+  A.EXT_disjoint_timer_query.prototype = {};
+  A.EXT_disjoint_timer_query_webgl2.prototype = {};
+  A.EXT_float_blend.prototype = {};
+  A.EXT_frag_depth.prototype = {};
+  A.EXT_shader_texture_lod.prototype = {};
+  A.EXT_sRGB.prototype = {};
+  A.EXT_texture_compression_bptc.prototype = {};
+  A.EXT_texture_compression_rgtc.prototype = {};
+  A.EXT_texture_filter_anisotropic.prototype = {};
+  A.EXT_texture_norm16.prototype = {};
+  A.ColorSelectionResult.prototype = {};
+  A.ColorSelectionOptions.prototype = {};
+  A.EyeDropper.prototype = {};
+  A.IdentityProviderWellKnown.prototype = {};
+  A.IdentityProviderIcon.prototype = {};
+  A.IdentityProviderBranding.prototype = {};
+  A.IdentityProviderAPIConfig.prototype = {};
+  A.IdentityProviderAccount.prototype = {};
+  A.IdentityProviderAccountList.prototype = {};
+  A.IdentityProviderClientMetadata.prototype = {};
+  A.IdentityProviderToken.prototype = {};
+  A.IdentityCredential.prototype = {};
+  A.IdentityCredentialRequestOptions.prototype = {};
+  A.IdentityProviderConfig.prototype = {};
+  A.IdentityCredentialLogoutRPsRequest.prototype = {};
+  A.IdentityProvider.prototype = {};
+  A.Headers.prototype = {};
+  A.Body.prototype = {};
+  A.Request.prototype = {};
+  A.RequestInit.prototype = {};
+  A.Response.prototype = {};
+  A.ResponseInit.prototype = {};
+  A.HMACGetSecretInput.prototype = {};
+  A.HMACGetSecretOutput.prototype = {};
+  A.FileSystemPermissionDescriptor.prototype = {};
+  A.FileSystemHandlePermissionDescriptor.prototype = {};
+  A.FilePickerAcceptType.prototype = {};
+  A.FilePickerOptions.prototype = {};
+  A.OpenFilePickerOptions.prototype = {};
+  A.SaveFilePickerOptions.prototype = {};
+  A.DirectoryPickerOptions.prototype = {};
+  A.Blob.prototype = {};
+  A.BlobPropertyBag.prototype = {};
+  A.File.prototype = {};
+  A.FilePropertyBag.prototype = {};
+  A.FileList.prototype = {};
+  A.FileReader.prototype = {};
+  A.FileReaderSync.prototype = {};
+  A.SVGFilterElement.prototype = {};
+  A.SVGFilterPrimitiveStandardAttributes.prototype = {};
+  A.SVGFEBlendElement.prototype = {};
+  A.SVGFEColorMatrixElement.prototype = {};
+  A.SVGFEComponentTransferElement.prototype = {};
+  A.SVGComponentTransferFunctionElement.prototype = {};
+  A.SVGFEFuncRElement.prototype = {};
+  A.SVGFEFuncGElement.prototype = {};
+  A.SVGFEFuncBElement.prototype = {};
+  A.SVGFEFuncAElement.prototype = {};
+  A.SVGFECompositeElement.prototype = {};
+  A.SVGFEConvolveMatrixElement.prototype = {};
+  A.SVGFEDiffuseLightingElement.prototype = {};
+  A.SVGFEDistantLightElement.prototype = {};
+  A.SVGFEPointLightElement.prototype = {};
+  A.SVGFESpotLightElement.prototype = {};
+  A.SVGFEDisplacementMapElement.prototype = {};
+  A.SVGFEDropShadowElement.prototype = {};
+  A.SVGFEFloodElement.prototype = {};
+  A.SVGFEGaussianBlurElement.prototype = {};
+  A.SVGFEImageElement.prototype = {};
+  A.SVGFEMergeElement.prototype = {};
+  A.SVGFEMergeNodeElement.prototype = {};
+  A.SVGFEMorphologyElement.prototype = {};
+  A.SVGFEOffsetElement.prototype = {};
+  A.SVGFESpecularLightingElement.prototype = {};
+  A.SVGFETileElement.prototype = {};
+  A.SVGFETurbulenceElement.prototype = {};
+  A.FontMetrics.prototype = {};
+  A.Baseline.prototype = {};
+  A.Font.prototype = {};
+  A.FileSystemHandle.prototype = {};
+  A.FileSystemCreateWritableOptions.prototype = {};
+  A.FileSystemFileHandle.prototype = {};
+  A.FileSystemGetFileOptions.prototype = {};
+  A.FileSystemGetDirectoryOptions.prototype = {};
+  A.FileSystemRemoveOptions.prototype = {};
+  A.FileSystemDirectoryHandle.prototype = {};
+  A.WriteParams.prototype = {};
+  A.FileSystemWritableFileStream.prototype = {};
+  A.FileSystemReadWriteOptions.prototype = {};
+  A.FileSystemSyncAccessHandle.prototype = {};
+  A.FullscreenOptions.prototype = {};
+  A.Gamepad.prototype = {};
+  A.GamepadButton.prototype = {};
+  A.GamepadEvent.prototype = {};
+  A.GamepadEventInit.prototype = {};
+  A.GamepadHapticActuator.prototype = {};
+  A.GamepadEffectParameters.prototype = {};
+  A.GamepadPose.prototype = {};
+  A.GamepadTouch.prototype = {};
+  A.Sensor.prototype = {};
+  A.SensorOptions.prototype = {};
+  A.SensorErrorEvent.prototype = {};
+  A.SensorErrorEventInit.prototype = {};
+  A.MockSensorConfiguration.prototype = {};
+  A.MockSensor.prototype = {};
+  A.MockSensorReadingValues.prototype = {};
+  A.Geolocation.prototype = {};
+  A.PositionOptions.prototype = {};
+  A.GeolocationPosition.prototype = {};
+  A.GeolocationCoordinates.prototype = {};
+  A.GeolocationPositionError.prototype = {};
+  A.GeolocationSensor.prototype = {};
+  A.GeolocationSensorOptions.prototype = {};
+  A.ReadOptions.prototype = {};
+  A.GeolocationSensorReading.prototype = {};
+  A.GeolocationReadingValues.prototype = {};
+  A.DOMPointReadOnly.prototype = {};
+  A.DOMPoint.prototype = {};
+  A.DOMPointInit.prototype = {};
+  A.DOMRectReadOnly.prototype = {};
+  A.DOMRect.prototype = {};
+  A.DOMRectInit.prototype = {};
+  A.DOMRectList.prototype = {};
+  A.DOMQuad.prototype = {};
+  A.DOMQuadInit.prototype = {};
+  A.DOMMatrixReadOnly.prototype = {};
+  A.DOMMatrix.prototype = {};
+  A.DOMMatrix2DInit.prototype = {};
+  A.DOMMatrixInit.prototype = {};
+  A.RelatedApplication.prototype = {};
+  A.GlobalPrivacyControl.prototype = {};
+  A.Gyroscope.prototype = {};
+  A.GyroscopeSensorOptions.prototype = {};
+  A.GyroscopeReadingValues.prototype = {};
+  A.Performance.prototype = {};
+  A.HTMLAllCollection.prototype = {};
+  A.HTMLFormControlsCollection.prototype = {};
+  A.RadioNodeList.prototype = {};
+  A.HTMLOptionsCollection.prototype = {};
+  A.DOMStringList.prototype = {};
+  A.HTMLElement.prototype = {};
+  A.HTMLUnknownElement.prototype = {};
+  A.HTMLOrSVGElement.prototype = {};
+  A.DOMStringMap.prototype = {};
+  A.HTMLHtmlElement.prototype = {};
+  A.HTMLHeadElement.prototype = {};
+  A.HTMLTitleElement.prototype = {};
+  A.HTMLBaseElement.prototype = {};
+  A.HTMLLinkElement.prototype = {};
+  A.HTMLMetaElement.prototype = {};
+  A.HTMLStyleElement.prototype = {};
+  A.HTMLBodyElement.prototype = {};
+  A.HTMLHeadingElement.prototype = {};
+  A.HTMLParagraphElement.prototype = {};
+  A.HTMLHRElement.prototype = {};
+  A.HTMLPreElement.prototype = {};
+  A.HTMLQuoteElement.prototype = {};
+  A.HTMLOListElement.prototype = {};
+  A.HTMLUListElement.prototype = {};
+  A.HTMLMenuElement.prototype = {};
+  A.HTMLLIElement.prototype = {};
+  A.HTMLDListElement.prototype = {};
+  A.HTMLDivElement.prototype = {};
+  A.HTMLAnchorElement.prototype = {};
+  A.HTMLDataElement.prototype = {};
+  A.HTMLTimeElement.prototype = {};
+  A.HTMLSpanElement.prototype = {};
+  A.HTMLBRElement.prototype = {};
+  A.HTMLHyperlinkElementUtils.prototype = {};
+  A.HTMLModElement.prototype = {};
+  A.HTMLPictureElement.prototype = {};
+  A.HTMLSourceElement.prototype = {};
+  A.HTMLImageElement.prototype = {};
+  A.HTMLIFrameElement.prototype = {};
+  A.HTMLEmbedElement.prototype = {};
+  A.HTMLObjectElement.prototype = {};
+  A.HTMLVideoElement.prototype = {};
+  A.HTMLAudioElement.prototype = {};
+  A.HTMLTrackElement.prototype = {};
+  A.HTMLMediaElement.prototype = {};
+  A.MediaError.prototype = {};
+  A.AudioTrackList.prototype = {};
+  A.AudioTrack.prototype = {};
+  A.VideoTrackList.prototype = {};
+  A.VideoTrack.prototype = {};
+  A.TextTrackList.prototype = {};
+  A.TextTrack.prototype = {};
+  A.TextTrackCueList.prototype = {};
+  A.TextTrackCue.prototype = {};
+  A.TimeRanges.prototype = {};
+  A.TrackEvent.prototype = {};
+  A.TrackEventInit.prototype = {};
+  A.HTMLMapElement.prototype = {};
+  A.HTMLAreaElement.prototype = {};
+  A.HTMLTableElement.prototype = {};
+  A.HTMLTableCaptionElement.prototype = {};
+  A.HTMLTableColElement.prototype = {};
+  A.HTMLTableSectionElement.prototype = {};
+  A.HTMLTableRowElement.prototype = {};
+  A.HTMLTableCellElement.prototype = {};
+  A.HTMLFormElement.prototype = {};
+  A.HTMLLabelElement.prototype = {};
+  A.HTMLInputElement.prototype = {};
+  A.HTMLButtonElement.prototype = {};
+  A.HTMLSelectElement.prototype = {};
+  A.HTMLDataListElement.prototype = {};
+  A.HTMLOptGroupElement.prototype = {};
+  A.HTMLOptionElement.prototype = {};
+  A.HTMLTextAreaElement.prototype = {};
+  A.HTMLOutputElement.prototype = {};
+  A.HTMLProgressElement.prototype = {};
+  A.HTMLMeterElement.prototype = {};
+  A.HTMLFieldSetElement.prototype = {};
+  A.HTMLLegendElement.prototype = {};
+  A.ValidityState.prototype = {};
+  A.SubmitEvent.prototype = {};
+  A.SubmitEventInit.prototype = {};
+  A.FormDataEvent.prototype = {};
+  A.FormDataEventInit.prototype = {};
+  A.HTMLDetailsElement.prototype = {};
+  A.HTMLDialogElement.prototype = {};
+  A.HTMLScriptElement.prototype = {};
+  A.HTMLTemplateElement.prototype = {};
+  A.HTMLSlotElement.prototype = {};
+  A.AssignedNodesOptions.prototype = {};
+  A.HTMLCanvasElement.prototype = {};
+  A.CanvasRenderingContext2DSettings.prototype = {};
+  A.CanvasRenderingContext2D.prototype = {};
+  A.CanvasState.prototype = {};
+  A.CanvasTransform.prototype = {};
+  A.CanvasCompositing.prototype = {};
+  A.CanvasImageSmoothing.prototype = {};
+  A.CanvasFillStrokeStyles.prototype = {};
+  A.CanvasShadowStyles.prototype = {};
+  A.CanvasFilters.prototype = {};
+  A.CanvasRect.prototype = {};
+  A.CanvasDrawPath.prototype = {};
+  A.CanvasUserInterface.prototype = {};
+  A.CanvasText.prototype = {};
+  A.CanvasDrawImage.prototype = {};
+  A.CanvasImageData.prototype = {};
+  A.CanvasPathDrawingStyles.prototype = {};
+  A.CanvasTextDrawingStyles.prototype = {};
+  A.CanvasPath.prototype = {};
+  A.CanvasGradient.prototype = {};
+  A.CanvasPattern.prototype = {};
+  A.TextMetrics.prototype = {};
+  A.ImageDataSettings.prototype = {};
+  A.ImageData.prototype = {};
+  A.Path2D.prototype = {};
+  A.ImageBitmapRenderingContext.prototype = {};
+  A.ImageBitmapRenderingContextSettings.prototype = {};
+  A.ImageEncodeOptions.prototype = {};
+  A.OffscreenCanvas.prototype = {};
+  A.OffscreenCanvasRenderingContext2D.prototype = {};
+  A.CustomElementRegistry.prototype = {};
+  A.ElementDefinitionOptions.prototype = {};
+  A.ElementInternals.prototype = {};
+  A.ValidityStateFlags.prototype = {};
+  A.UserActivation.prototype = {};
+  A.FocusOptions.prototype = {};
+  A.ElementContentEditable.prototype = {};
+  A.DataTransfer.prototype = {};
+  A.DataTransferItemList.prototype = {};
+  A.DataTransferItem.prototype = {};
+  A.DragEvent.prototype = {};
+  A.DragEventInit.prototype = {};
+  A.PopoverTargetElement.prototype = {};
+  A.ToggleEvent.prototype = {};
+  A.ToggleEventInit.prototype = {};
+  A.Window.prototype = {};
+  A.WindowPostMessageOptions.prototype = {};
+  A.BarProp.prototype = {};
+  A.Location.prototype = {};
+  A.History.prototype = {};
+  A.PopStateEvent.prototype = {};
+  A.PopStateEventInit.prototype = {};
+  A.HashChangeEvent.prototype = {};
+  A.HashChangeEventInit.prototype = {};
+  A.PageTransitionEvent.prototype = {};
+  A.PageTransitionEventInit.prototype = {};
+  A.BeforeUnloadEvent.prototype = {};
+  A.ErrorEvent.prototype = {};
+  A.ErrorEventInit.prototype = {};
+  A.PromiseRejectionEvent.prototype = {};
+  A.PromiseRejectionEventInit.prototype = {};
+  A.GlobalEventHandlers.prototype = {};
+  A.WindowEventHandlers.prototype = {};
+  A.WindowOrWorkerGlobalScope.prototype = {};
+  A.DOMParser.prototype = {};
+  A.Navigator.prototype = {};
+  A.NavigatorID.prototype = {};
+  A.NavigatorLanguage.prototype = {};
+  A.NavigatorOnLine.prototype = {};
+  A.NavigatorContentUtils.prototype = {};
+  A.NavigatorCookies.prototype = {};
+  A.NavigatorPlugins.prototype = {};
+  A.PluginArray.prototype = {};
+  A.MimeTypeArray.prototype = {};
+  A.Plugin.prototype = {};
+  A.MimeType.prototype = {};
+  A.ImageBitmap.prototype = {};
+  A.ImageBitmapOptions.prototype = {};
+  A.AnimationFrameProvider.prototype = {};
+  A.MessageEvent.prototype = {};
+  A.MessageEventInit.prototype = {};
+  A.EventSource.prototype = {};
+  A.EventSourceInit.prototype = {};
+  A.MessageChannel.prototype = {};
+  A.MessagePort.prototype = {};
+  A.StructuredSerializeOptions.prototype = {};
+  A.BroadcastChannel.prototype = {};
+  A.WorkerGlobalScope.prototype = {};
+  A.DedicatedWorkerGlobalScope.prototype = {};
+  A.SharedWorkerGlobalScope.prototype = {};
+  A.AbstractWorker.prototype = {};
+  A.Worker.prototype = {};
+  A.WorkerOptions.prototype = {};
+  A.SharedWorker.prototype = {};
+  A.NavigatorConcurrentHardware.prototype = {};
+  A.WorkerNavigator.prototype = {};
+  A.WorkerLocation.prototype = {};
+  A.WorkletGlobalScope.prototype = {};
+  A.Worklet.prototype = {};
+  A.WorkletOptions.prototype = {};
+  A.Storage.prototype = {};
+  A.WindowSessionStorage.prototype = {};
+  A.WindowLocalStorage.prototype = {};
+  A.StorageEvent.prototype = {};
+  A.StorageEventInit.prototype = {};
+  A.HTMLMarqueeElement.prototype = {};
+  A.HTMLFrameSetElement.prototype = {};
+  A.HTMLFrameElement.prototype = {};
+  A.HTMLDirectoryElement.prototype = {};
+  A.HTMLFontElement.prototype = {};
+  A.HTMLParamElement.prototype = {};
+  A.External.prototype = {};
+  A.IdleOptions.prototype = {};
+  A.IdleDetector.prototype = {};
+  A.ImageCapture.prototype = {};
+  A.PhotoCapabilities.prototype = {};
+  A.PhotoSettings.prototype = {};
+  A.MediaSettingsRange.prototype = {};
+  A.ConstrainPoint2DParameters.prototype = {};
+  A.Point2D.prototype = {};
+  A.ImageResource.prototype = {};
+  A.IDBRequest.prototype = {};
+  A.IDBOpenDBRequest.prototype = {};
+  A.IDBVersionChangeEvent.prototype = {};
+  A.IDBVersionChangeEventInit.prototype = {};
+  A.IDBFactory.prototype = {};
+  A.IDBDatabaseInfo.prototype = {};
+  A.IDBDatabase.prototype = {};
+  A.IDBTransactionOptions.prototype = {};
+  A.IDBObjectStoreParameters.prototype = {};
+  A.IDBObjectStore.prototype = {};
+  A.IDBIndexParameters.prototype = {};
+  A.IDBIndex.prototype = {};
+  A.IDBKeyRange.prototype = {};
+  A.IDBCursor.prototype = {};
+  A.IDBCursorWithValue.prototype = {};
+  A.IDBTransaction.prototype = {};
+  A.Ink.prototype = {};
+  A.InkPresenterParam.prototype = {};
+  A.InkPresenter.prototype = {};
+  A.InkTrailStyle.prototype = {};
+  A.InputDeviceCapabilities.prototype = {};
+  A.InputDeviceCapabilitiesInit.prototype = {};
+  A.IntersectionObserver.prototype = {};
+  A.IntersectionObserverEntry.prototype = {};
+  A.IntersectionObserverEntryInit.prototype = {};
+  A.IntersectionObserverInit.prototype = {};
+  A.InterventionReportBody.prototype = {};
+  A.IsInputPendingOptions.prototype = {};
+  A.Scheduling.prototype = {};
+  A.Profiler.prototype = {};
+  A.ProfilerTrace.prototype = {};
+  A.ProfilerSample.prototype = {};
+  A.ProfilerStack.prototype = {};
+  A.ProfilerFrame.prototype = {};
+  A.ProfilerInitOptions.prototype = {};
+  A.Keyboard.prototype = {};
+  A.KeyboardLayoutMap.prototype = {};
+  A.KHR_parallel_shader_compile.prototype = {};
+  A.LargestContentfulPaint.prototype = {};
+  A.LayoutShift.prototype = {};
+  A.LayoutShiftAttribution.prototype = {};
+  A.QueryOptions.prototype = {};
+  A.FontData.prototype = {};
+  A.PerformanceLongTaskTiming.prototype = {};
+  A.TaskAttributionTiming.prototype = {};
+  A.Magnetometer.prototype = {};
+  A.MagnetometerSensorOptions.prototype = {};
+  A.UncalibratedMagnetometer.prototype = {};
+  A.MagnetometerReadingValues.prototype = {};
+  A.UncalibratedMagnetometerReadingValues.prototype = {};
+  A.BeforeInstallPromptEvent.prototype = {};
+  A.PromptResponseObject.prototype = {};
+  A.MathMLElement.prototype = {};
+  A.MediaConfiguration.prototype = {};
+  A.MediaDecodingConfiguration.prototype = {};
+  A.MediaEncodingConfiguration.prototype = {};
+  A.VideoConfiguration.prototype = {};
+  A.AudioConfiguration.prototype = {};
+  A.MediaCapabilitiesKeySystemConfiguration.prototype = {};
+  A.KeySystemTrackConfiguration.prototype = {};
+  A.MediaCapabilitiesInfo.prototype = {};
+  A.MediaCapabilitiesDecodingInfo.prototype = {};
+  A.MediaCapabilitiesEncodingInfo.prototype = {};
+  A.MediaCapabilities.prototype = {};
+  A.VideoPlaybackQuality.prototype = {};
+  A.MediaSource.prototype = {};
+  A.MediaSourceHandle.prototype = {};
+  A.SourceBuffer.prototype = {};
+  A.SourceBufferList.prototype = {};
+  A.MockCapturePromptResultConfiguration.prototype = {};
+  A.MockCaptureDeviceConfiguration.prototype = {};
+  A.MockCameraConfiguration.prototype = {};
+  A.MockMicrophoneConfiguration.prototype = {};
+  A.CanvasCaptureMediaStreamTrack.prototype = {};
+  A.CaptureActionEvent.prototype = {};
+  A.CaptureActionEventInit.prototype = {};
+  A.CropTarget.prototype = {};
+  A.BrowserCaptureMediaStreamTrack.prototype = {};
+  A.MediaStream.prototype = {};
+  A.MediaStreamTrack.prototype = {};
+  A.MediaTrackSupportedConstraints.prototype = {};
+  A.MediaTrackCapabilities.prototype = {};
+  A.MediaTrackConstraints.prototype = {};
+  A.MediaTrackConstraintSet.prototype = {};
+  A.MediaTrackSettings.prototype = {};
+  A.MediaStreamTrackEvent.prototype = {};
+  A.MediaStreamTrackEventInit.prototype = {};
+  A.OverconstrainedError.prototype = {};
+  A.MediaDevices.prototype = {};
+  A.MediaDeviceInfo.prototype = {};
+  A.InputDeviceInfo.prototype = {};
+  A.MediaStreamConstraints.prototype = {};
+  A.DoubleRange.prototype = {};
+  A.ConstrainDoubleRange.prototype = {};
+  A.ULongRange.prototype = {};
+  A.ConstrainULongRange.prototype = {};
+  A.ConstrainBooleanParameters.prototype = {};
+  A.ConstrainDOMStringParameters.prototype = {};
+  A.DevicePermissionDescriptor.prototype = {};
+  A.CameraDevicePermissionDescriptor.prototype = {};
+  A.MediaStreamTrackProcessor.prototype = {};
+  A.MediaStreamTrackProcessorInit.prototype = {};
+  A.VideoTrackGenerator.prototype = {};
+  A.ViewportMediaStreamConstraints.prototype = {};
+  A.MediaSession.prototype = {};
+  A.MediaMetadata.prototype = {};
+  A.MediaMetadataInit.prototype = {};
+  A.MediaImage.prototype = {};
+  A.MediaPositionState.prototype = {};
+  A.MediaSessionActionDetails.prototype = {};
+  A.MediaRecorder.prototype = {};
+  A.MediaRecorderOptions.prototype = {};
+  A.BlobEvent.prototype = {};
+  A.BlobEventInit.prototype = {};
+  A.HTMLModelElement.prototype = {};
+  A.Navigation.prototype = {};
+  A.NavigationUpdateCurrentEntryOptions.prototype = {};
+  A.NavigationOptions.prototype = {};
+  A.NavigationNavigateOptions.prototype = {};
+  A.NavigationReloadOptions.prototype = {};
+  A.NavigationResult.prototype = {};
+  A.NavigationCurrentEntryChangeEvent.prototype = {};
+  A.NavigationCurrentEntryChangeEventInit.prototype = {};
+  A.NavigationTransition.prototype = {};
+  A.NavigateEvent.prototype = {};
+  A.NavigateEventInit.prototype = {};
+  A.NavigationInterceptOptions.prototype = {};
+  A.NavigationDestination.prototype = {};
+  A.NavigationHistoryEntry.prototype = {};
+  A.PerformanceNavigationTiming.prototype = {};
+  A.PerformanceTiming.prototype = {};
+  A.PerformanceNavigation.prototype = {};
+  A.NavigatorNetworkInformation.prototype = {};
+  A.NetworkInformation.prototype = {};
+  A.Notification.prototype = {};
+  A.NotificationOptions.prototype = {};
+  A.NotificationAction.prototype = {};
+  A.GetNotificationOptions.prototype = {};
+  A.NotificationEvent.prototype = {};
+  A.NotificationEventInit.prototype = {};
+  A.OES_draw_buffers_indexed.prototype = {};
+  A.OES_element_index_uint.prototype = {};
+  A.OES_fbo_render_mipmap.prototype = {};
+  A.OES_standard_derivatives.prototype = {};
+  A.OES_texture_float.prototype = {};
+  A.OES_texture_float_linear.prototype = {};
+  A.OES_texture_half_float.prototype = {};
+  A.OES_texture_half_float_linear.prototype = {};
+  A.WebGLVertexArrayObjectOES.prototype = {};
+  A.OES_vertex_array_object.prototype = {};
+  A.DeviceOrientationEvent.prototype = {};
+  A.DeviceOrientationEventInit.prototype = {};
+  A.DeviceMotionEventAcceleration.prototype = {};
+  A.DeviceMotionEventRotationRate.prototype = {};
+  A.DeviceMotionEvent.prototype = {};
+  A.DeviceMotionEventAccelerationInit.prototype = {};
+  A.DeviceMotionEventRotationRateInit.prototype = {};
+  A.DeviceMotionEventInit.prototype = {};
+  A.OrientationSensor.prototype = {};
+  A.OrientationSensorOptions.prototype = {};
+  A.AbsoluteOrientationSensor.prototype = {};
+  A.RelativeOrientationSensor.prototype = {};
+  A.AbsoluteOrientationReadingValues.prototype = {};
+  A.RelativeOrientationReadingValues.prototype = {};
+  A.OVR_multiview2.prototype = {};
+  A.PerformancePaintTiming.prototype = {};
+  A.PaymentManager.prototype = {};
+  A.CanMakePaymentEvent.prototype = {};
+  A.PaymentRequestDetailsUpdate.prototype = {};
+  A.PaymentRequestEvent.prototype = {};
+  A.PaymentRequestEventInit.prototype = {};
+  A.PaymentHandlerResponse.prototype = {};
+  A.AddressInit.prototype = {};
+  A.PaymentOptions.prototype = {};
+  A.PaymentShippingOption.prototype = {};
+  A.AddressErrors.prototype = {};
+  A.PaymentRequest.prototype = {};
+  A.PaymentMethodData.prototype = {};
+  A.PaymentCurrencyAmount.prototype = {};
+  A.PaymentDetailsBase.prototype = {};
+  A.PaymentDetailsInit.prototype = {};
+  A.PaymentDetailsUpdate.prototype = {};
+  A.PaymentDetailsModifier.prototype = {};
+  A.PaymentItem.prototype = {};
+  A.PaymentCompleteDetails.prototype = {};
+  A.PaymentResponse.prototype = {};
+  A.PaymentValidationErrors.prototype = {};
+  A.PaymentMethodChangeEvent.prototype = {};
+  A.PaymentMethodChangeEventInit.prototype = {};
+  A.PaymentRequestUpdateEvent.prototype = {};
+  A.PaymentRequestUpdateEventInit.prototype = {};
+  A.MemoryMeasurement.prototype = {};
+  A.MemoryBreakdownEntry.prototype = {};
+  A.MemoryAttribution.prototype = {};
+  A.MemoryAttributionContainer.prototype = {};
+  A.PerformanceEntry.prototype = {};
+  A.PerformanceObserver.prototype = {};
+  A.PerformanceObserverCallbackOptions.prototype = {};
+  A.PerformanceObserverInit.prototype = {};
+  A.PerformanceObserverEntryList.prototype = {};
+  A.PeriodicSyncManager.prototype = {};
+  A.BackgroundSyncOptions.prototype = {};
+  A.PeriodicSyncEventInit.prototype = {};
+  A.PeriodicSyncEvent.prototype = {};
+  A.Permissions.prototype = {};
+  A.PermissionDescriptor.prototype = {};
+  A.PermissionStatus.prototype = {};
+  A.PermissionSetParameters.prototype = {};
+  A.PermissionsPolicy.prototype = {};
+  A.PermissionsPolicyViolationReportBody.prototype = {};
+  A.PictureInPictureWindow.prototype = {};
+  A.PictureInPictureEvent.prototype = {};
+  A.PictureInPictureEventInit.prototype = {};
+  A.PointerEventInit.prototype = {};
+  A.PointerEvent.prototype = {};
+  A.HTMLPortalElement.prototype = {};
+  A.PortalActivateOptions.prototype = {};
+  A.PortalHost.prototype = {};
+  A.PortalActivateEvent.prototype = {};
+  A.PortalActivateEventInit.prototype = {};
+  A.Presentation.prototype = {};
+  A.PresentationRequest.prototype = {};
+  A.PresentationAvailability.prototype = {};
+  A.PresentationConnectionAvailableEvent.prototype = {};
+  A.PresentationConnectionAvailableEventInit.prototype = {};
+  A.PresentationConnection.prototype = {};
+  A.PresentationConnectionCloseEvent.prototype = {};
+  A.PresentationConnectionCloseEventInit.prototype = {};
+  A.PresentationReceiver.prototype = {};
+  A.PresentationConnectionList.prototype = {};
+  A.ProximitySensor.prototype = {};
+  A.ProximityReadingValues.prototype = {};
+  A.PushPermissionDescriptor.prototype = {};
+  A.PushManager.prototype = {};
+  A.PushSubscriptionOptions.prototype = {};
+  A.PushSubscriptionOptionsInit.prototype = {};
+  A.PushSubscription.prototype = {};
+  A.PushSubscriptionJSON.prototype = {};
+  A.PushMessageData.prototype = {};
+  A.PushEvent.prototype = {};
+  A.PushEventInit.prototype = {};
+  A.PushSubscriptionChangeEvent.prototype = {};
+  A.PushSubscriptionChangeEventInit.prototype = {};
+  A.XRCamera.prototype = {};
+  A.RemotePlayback.prototype = {};
+  A.ReportBody.prototype = {};
+  A.Report.prototype = {};
+  A.ReportingObserver.prototype = {};
+  A.ReportingObserverOptions.prototype = {};
+  A.GenerateTestReportParameters.prototype = {};
+  A.IdleRequestOptions.prototype = {};
+  A.IdleDeadline.prototype = {};
+  A.TopLevelStorageAccessPermissionDescriptor.prototype = {};
+  A.ResizeObserverOptions.prototype = {};
+  A.ResizeObserver.prototype = {};
+  A.ResizeObserverEntry.prototype = {};
+  A.ResizeObserverSize.prototype = {};
+  A.PerformanceResourceTiming.prototype = {};
+  A.Sanitizer.prototype = {};
+  A.SetHTMLOptions.prototype = {};
+  A.SanitizerConfig.prototype = {};
+  A.NetworkInformationSaveData.prototype = {};
+  A.SchedulerPostTaskOptions.prototype = {};
+  A.Scheduler.prototype = {};
+  A.TaskPriorityChangeEvent.prototype = {};
+  A.TaskPriorityChangeEventInit.prototype = {};
+  A.TaskControllerInit.prototype = {};
+  A.TaskController.prototype = {};
+  A.TaskSignal.prototype = {};
+  A.CaptureController.prototype = {};
+  A.DisplayMediaStreamOptions.prototype = {};
+  A.ScreenOrientation.prototype = {};
+  A.WakeLock.prototype = {};
+  A.WakeLockSentinel.prototype = {};
+  A.ScrollTimelineOptions.prototype = {};
+  A.ScrollTimeline.prototype = {};
+  A.ViewTimelineOptions.prototype = {};
+  A.ViewTimeline.prototype = {};
+  A.FragmentDirective.prototype = {};
+  A.SecurePaymentConfirmationRequest.prototype = {};
+  A.AuthenticationExtensionsPaymentInputs.prototype = {};
+  A.CollectedClientPaymentData.prototype = {};
+  A.CollectedClientAdditionalPaymentData.prototype = {};
+  A.PaymentCredentialInstrument.prototype = {};
+  A.Selection.prototype = {};
+  A.Serial.prototype = {};
+  A.SerialPortRequestOptions.prototype = {};
+  A.SerialPortFilter.prototype = {};
+  A.SerialPort.prototype = {};
+  A.SerialPortInfo.prototype = {};
+  A.SerialOptions.prototype = {};
+  A.SerialOutputSignals.prototype = {};
+  A.SerialInputSignals.prototype = {};
+  A.PerformanceServerTiming.prototype = {};
+  A.ServiceWorker.prototype = {};
+  A.ServiceWorkerRegistration.prototype = {};
+  A.ServiceWorkerContainer.prototype = {};
+  A.RegistrationOptions.prototype = {};
+  A.NavigationPreloadManager.prototype = {};
+  A.NavigationPreloadState.prototype = {};
+  A.ServiceWorkerGlobalScope.prototype = {};
+  A.Client.prototype = {};
+  A.WindowClient.prototype = {};
+  A.Clients.prototype = {};
+  A.ClientQueryOptions.prototype = {};
+  A.ExtendableEvent.prototype = {};
+  A.ExtendableEventInit.prototype = {};
+  A.FetchEvent.prototype = {};
+  A.FetchEventInit.prototype = {};
+  A.ExtendableMessageEvent.prototype = {};
+  A.ExtendableMessageEventInit.prototype = {};
+  A.Cache.prototype = {};
+  A.CacheQueryOptions.prototype = {};
+  A.CacheStorage.prototype = {};
+  A.MultiCacheQueryOptions.prototype = {};
+  A.FaceDetector.prototype = {};
+  A.FaceDetectorOptions.prototype = {};
+  A.DetectedFace.prototype = {};
+  A.Landmark.prototype = {};
+  A.BarcodeDetector.prototype = {};
+  A.BarcodeDetectorOptions.prototype = {};
+  A.DetectedBarcode.prototype = {};
+  A.SpeechRecognition.prototype = {};
+  A.SpeechRecognitionErrorEvent.prototype = {};
+  A.SpeechRecognitionErrorEventInit.prototype = {};
+  A.SpeechRecognitionAlternative.prototype = {};
+  A.SpeechRecognitionResult.prototype = {};
+  A.SpeechRecognitionResultList.prototype = {};
+  A.SpeechRecognitionEvent.prototype = {};
+  A.SpeechRecognitionEventInit.prototype = {};
+  A.SpeechGrammar.prototype = {};
+  A.SpeechGrammarList.prototype = {};
+  A.SpeechSynthesis.prototype = {};
+  A.SpeechSynthesisUtterance.prototype = {};
+  A.SpeechSynthesisEvent.prototype = {};
+  A.SpeechSynthesisEventInit.prototype = {};
+  A.SpeechSynthesisErrorEvent.prototype = {};
+  A.SpeechSynthesisErrorEventInit.prototype = {};
+  A.SpeechSynthesisVoice.prototype = {};
+  A.NavigatorStorage.prototype = {};
+  A.StorageManager.prototype = {};
+  A.StorageEstimate.prototype = {};
+  A.ReadableStream.prototype = {};
+  A.ReadableStreamGetReaderOptions.prototype = {};
+  A.ReadableStreamIteratorOptions.prototype = {};
+  A.ReadableWritablePair.prototype = {};
+  A.StreamPipeOptions.prototype = {};
+  A.UnderlyingSource.prototype = {};
+  A.ReadableStreamGenericReader.prototype = {};
+  A.ReadableStreamDefaultReader.prototype = {};
+  A.ReadableStreamReadResult.prototype = {};
+  A.ReadableStreamBYOBReader.prototype = {};
+  A.ReadableStreamDefaultController.prototype = {};
+  A.ReadableByteStreamController.prototype = {};
+  A.ReadableStreamBYOBRequest.prototype = {};
+  A.WritableStream.prototype = {};
+  A.UnderlyingSink.prototype = {};
+  A.WritableStreamDefaultWriter.prototype = {};
+  A.WritableStreamDefaultController.prototype = {};
+  A.TransformStream.prototype = {};
+  A.Transformer.prototype = {};
+  A.TransformStreamDefaultController.prototype = {};
+  A.QueuingStrategy.prototype = {};
+  A.QueuingStrategyInit.prototype = {};
+  A.ByteLengthQueuingStrategy.prototype = {};
+  A.CountQueuingStrategy.prototype = {};
+  A.GenericTransformStream.prototype = {};
+  A.SVGElement.prototype = {};
+  A.SVGBoundingBoxOptions.prototype = {};
+  A.SVGGraphicsElement.prototype = {};
+  A.SVGGeometryElement.prototype = {};
+  A.SVGNumber.prototype = {};
+  A.SVGLength.prototype = {};
+  A.SVGAngle.prototype = {};
+  A.SVGNumberList.prototype = {};
+  A.SVGLengthList.prototype = {};
+  A.SVGStringList.prototype = {};
+  A.SVGAnimatedBoolean.prototype = {};
+  A.SVGAnimatedEnumeration.prototype = {};
+  A.SVGAnimatedInteger.prototype = {};
+  A.SVGAnimatedNumber.prototype = {};
+  A.SVGAnimatedLength.prototype = {};
+  A.SVGAnimatedAngle.prototype = {};
+  A.SVGAnimatedString.prototype = {};
+  A.SVGAnimatedRect.prototype = {};
+  A.SVGAnimatedNumberList.prototype = {};
+  A.SVGAnimatedLengthList.prototype = {};
+  A.SVGUnitTypes.prototype = {};
+  A.SVGTests.prototype = {};
+  A.SVGFitToViewBox.prototype = {};
+  A.SVGURIReference.prototype = {};
+  A.SVGSVGElement.prototype = {};
+  A.SVGGElement.prototype = {};
+  A.SVGDefsElement.prototype = {};
+  A.SVGDescElement.prototype = {};
+  A.SVGMetadataElement.prototype = {};
+  A.SVGTitleElement.prototype = {};
+  A.SVGSymbolElement.prototype = {};
+  A.SVGUseElement.prototype = {};
+  A.SVGUseElementShadowRoot.prototype = {};
+  A.SVGElementInstance.prototype = {};
+  A.ShadowAnimation.prototype = {};
+  A.SVGSwitchElement.prototype = {};
+  A.GetSVGDocument.prototype = {};
+  A.SVGStyleElement.prototype = {};
+  A.SVGTransform.prototype = {};
+  A.SVGTransformList.prototype = {};
+  A.SVGAnimatedTransformList.prototype = {};
+  A.SVGPreserveAspectRatio.prototype = {};
+  A.SVGAnimatedPreserveAspectRatio.prototype = {};
+  A.SVGPathElement.prototype = {};
+  A.SVGRectElement.prototype = {};
+  A.SVGCircleElement.prototype = {};
+  A.SVGEllipseElement.prototype = {};
+  A.SVGLineElement.prototype = {};
+  A.SVGAnimatedPoints.prototype = {};
+  A.SVGPointList.prototype = {};
+  A.SVGPolylineElement.prototype = {};
+  A.SVGPolygonElement.prototype = {};
+  A.SVGTextContentElement.prototype = {};
+  A.SVGTextPositioningElement.prototype = {};
+  A.SVGTextElement.prototype = {};
+  A.SVGTSpanElement.prototype = {};
+  A.SVGTextPathElement.prototype = {};
+  A.SVGImageElement.prototype = {};
+  A.SVGForeignObjectElement.prototype = {};
+  A.SVGMarkerElement.prototype = {};
+  A.SVGGradientElement.prototype = {};
+  A.SVGLinearGradientElement.prototype = {};
+  A.SVGRadialGradientElement.prototype = {};
+  A.SVGStopElement.prototype = {};
+  A.SVGPatternElement.prototype = {};
+  A.SVGScriptElement.prototype = {};
+  A.SVGAElement.prototype = {};
+  A.SVGViewElement.prototype = {};
+  A.TimeEvent.prototype = {};
+  A.SVGAnimationElement.prototype = {};
+  A.SVGAnimateElement.prototype = {};
+  A.SVGSetElement.prototype = {};
+  A.SVGAnimateMotionElement.prototype = {};
+  A.SVGMPathElement.prototype = {};
+  A.SVGAnimateTransformElement.prototype = {};
+  A.SVGDiscardElement.prototype = {};
+  A.$TestUtils.prototype = {};
+  A.TextDetector.prototype = {};
+  A.DetectedText.prototype = {};
+  A.TouchInit.prototype = {};
+  A.Touch.prototype = {};
+  A.TouchList.prototype = {};
+  A.TouchEventInit.prototype = {};
+  A.TouchEvent.prototype = {};
+  A.TrustedHTML.prototype = {};
+  A.TrustedScript.prototype = {};
+  A.TrustedScriptURL.prototype = {};
+  A.TrustedTypePolicyFactory.prototype = {};
+  A.TrustedTypePolicy.prototype = {};
+  A.TrustedTypePolicyOptions.prototype = {};
+  A.NavigatorUABrandVersion.prototype = {};
+  A.UADataValues.prototype = {};
+  A.UALowEntropyJSON.prototype = {};
+  A.NavigatorUAData.prototype = {};
+  A.NavigatorUA.prototype = {};
+  A.UIEvent.prototype = {};
+  A.UIEventInit.prototype = {};
+  A.FocusEvent.prototype = {};
+  A.FocusEventInit.prototype = {};
+  A.MouseEvent.prototype = {};
+  A.MouseEventInit.prototype = {};
+  A.EventModifierInit.prototype = {};
+  A.WheelEvent.prototype = {};
+  A.WheelEventInit.prototype = {};
+  A.InputEvent.prototype = {};
+  A.InputEventInit.prototype = {};
+  A.KeyboardEvent.prototype = {};
+  A.KeyboardEventInit.prototype = {};
+  A.CompositionEvent.prototype = {};
+  A.CompositionEventInit.prototype = {};
+  A.MutationEvent.prototype = {};
+  A.URL.prototype = {};
+  A.URLSearchParams.prototype = {};
+  A.URLPattern.prototype = {};
+  A.URLPatternInit.prototype = {};
+  A.URLPatternOptions.prototype = {};
+  A.URLPatternResult.prototype = {};
+  A.URLPatternComponentResult.prototype = {};
+  A.PerformanceMarkOptions.prototype = {};
+  A.PerformanceMeasureOptions.prototype = {};
+  A.PerformanceMark.prototype = {};
+  A.PerformanceMeasure.prototype = {};
+  A.VideoFrameCallbackMetadata.prototype = {};
+  A.VirtualKeyboard.prototype = {};
+  A.ARIAMixin.prototype = {};
+  A.WebAssemblyInstantiatedSource.prototype = {};
+  A.$WebAssembly.prototype = {};
+  A.ModuleExportDescriptor.prototype = {};
+  A.ModuleImportDescriptor.prototype = {};
+  A.Module.prototype = {};
+  A.Instance.prototype = {};
+  A.MemoryDescriptor.prototype = {};
+  A.Memory.prototype = {};
+  A.TableDescriptor.prototype = {};
+  A.Table.prototype = {};
+  A.GlobalDescriptor.prototype = {};
+  A.Global.prototype = {};
+  A.AnimationTimeline.prototype = {};
+  A.DocumentTimelineOptions.prototype = {};
+  A.DocumentTimeline.prototype = {};
+  A.Animation.prototype = {};
+  A.AnimationEffect.prototype = {};
+  A.EffectTiming.prototype = {};
+  A.OptionalEffectTiming.prototype = {};
+  A.ComputedEffectTiming.prototype = {};
+  A.KeyframeEffect.prototype = {};
+  A.BaseComputedKeyframe.prototype = {};
+  A.BasePropertyIndexedKeyframe.prototype = {};
+  A.BaseKeyframe.prototype = {};
+  A.KeyframeEffectOptions.prototype = {};
+  A.Animatable.prototype = {};
+  A.KeyframeAnimationOptions.prototype = {};
+  A.GetAnimationsOptions.prototype = {};
+  A.GroupEffect.prototype = {};
+  A.AnimationNodeList.prototype = {};
+  A.SequenceEffect.prototype = {};
+  A.AnimationPlaybackEvent.prototype = {};
+  A.AnimationPlaybackEventInit.prototype = {};
+  A.LaunchParams.prototype = {};
+  A.LaunchQueue.prototype = {};
+  A.BluetoothDataFilterInit.prototype = {};
+  A.BluetoothManufacturerDataFilterInit.prototype = {};
+  A.BluetoothServiceDataFilterInit.prototype = {};
+  A.BluetoothLEScanFilterInit.prototype = {};
+  A.RequestDeviceOptions.prototype = {};
+  A.Bluetooth.prototype = {};
+  A.BluetoothPermissionDescriptor.prototype = {};
+  A.AllowedBluetoothDevice.prototype = {};
+  A.BluetoothPermissionStorage.prototype = {};
+  A.BluetoothPermissionResult.prototype = {};
+  A.ValueEvent.prototype = {};
+  A.ValueEventInit.prototype = {};
+  A.BluetoothDevice.prototype = {};
+  A.WatchAdvertisementsOptions.prototype = {};
+  A.BluetoothManufacturerDataMap.prototype = {};
+  A.BluetoothServiceDataMap.prototype = {};
+  A.BluetoothAdvertisingEvent.prototype = {};
+  A.BluetoothAdvertisingEventInit.prototype = {};
+  A.BluetoothRemoteGATTServer.prototype = {};
+  A.BluetoothRemoteGATTService.prototype = {};
+  A.BluetoothRemoteGATTCharacteristic.prototype = {};
+  A.BluetoothCharacteristicProperties.prototype = {};
+  A.BluetoothRemoteGATTDescriptor.prototype = {};
+  A.CharacteristicEventHandlers.prototype = {};
+  A.BluetoothDeviceEventHandlers.prototype = {};
+  A.ServiceEventHandlers.prototype = {};
+  A.BluetoothUUID.prototype = {};
+  A.NavigatorLocks.prototype = {};
+  A.LockManager.prototype = {};
+  A.LockOptions.prototype = {};
+  A.LockManagerSnapshot.prototype = {};
+  A.LockInfo.prototype = {};
+  A.Lock.prototype = {};
+  A.NDEFMessage.prototype = {};
+  A.NDEFMessageInit.prototype = {};
+  A.NDEFRecord.prototype = {};
+  A.NDEFRecordInit.prototype = {};
+  A.NDEFReader.prototype = {};
+  A.NDEFReadingEvent.prototype = {};
+  A.NDEFReadingEventInit.prototype = {};
+  A.NDEFWriteOptions.prototype = {};
+  A.NDEFMakeReadOnlyOptions.prototype = {};
+  A.NDEFScanOptions.prototype = {};
+  A.OTPCredential.prototype = {};
+  A.OTPCredentialRequestOptions.prototype = {};
+  A.ShareData.prototype = {};
+  A.BaseAudioContext.prototype = {};
+  A.AudioContext.prototype = {};
+  A.AudioContextOptions.prototype = {};
+  A.AudioSinkOptions.prototype = {};
+  A.AudioSinkInfo.prototype = {};
+  A.AudioTimestamp.prototype = {};
+  A.AudioRenderCapacity.prototype = {};
+  A.AudioRenderCapacityOptions.prototype = {};
+  A.AudioRenderCapacityEvent.prototype = {};
+  A.AudioRenderCapacityEventInit.prototype = {};
+  A.OfflineAudioContext.prototype = {};
+  A.OfflineAudioContextOptions.prototype = {};
+  A.OfflineAudioCompletionEvent.prototype = {};
+  A.OfflineAudioCompletionEventInit.prototype = {};
+  A.AudioBuffer.prototype = {};
+  A.AudioBufferOptions.prototype = {};
+  A.AudioNode.prototype = {};
+  A.AudioNodeOptions.prototype = {};
+  A.AudioParam.prototype = {};
+  A.AudioScheduledSourceNode.prototype = {};
+  A.AnalyserNode.prototype = {};
+  A.AnalyserOptions.prototype = {};
+  A.AudioBufferSourceNode.prototype = {};
+  A.AudioBufferSourceOptions.prototype = {};
+  A.AudioDestinationNode.prototype = {};
+  A.AudioListener.prototype = {};
+  A.AudioProcessingEvent.prototype = {};
+  A.AudioProcessingEventInit.prototype = {};
+  A.BiquadFilterNode.prototype = {};
+  A.BiquadFilterOptions.prototype = {};
+  A.ChannelMergerNode.prototype = {};
+  A.ChannelMergerOptions.prototype = {};
+  A.ChannelSplitterNode.prototype = {};
+  A.ChannelSplitterOptions.prototype = {};
+  A.ConstantSourceNode.prototype = {};
+  A.ConstantSourceOptions.prototype = {};
+  A.ConvolverNode.prototype = {};
+  A.ConvolverOptions.prototype = {};
+  A.DelayNode.prototype = {};
+  A.DelayOptions.prototype = {};
+  A.DynamicsCompressorNode.prototype = {};
+  A.DynamicsCompressorOptions.prototype = {};
+  A.GainNode.prototype = {};
+  A.GainOptions.prototype = {};
+  A.IIRFilterNode.prototype = {};
+  A.IIRFilterOptions.prototype = {};
+  A.MediaElementAudioSourceNode.prototype = {};
+  A.MediaElementAudioSourceOptions.prototype = {};
+  A.MediaStreamAudioDestinationNode.prototype = {};
+  A.MediaStreamAudioSourceNode.prototype = {};
+  A.MediaStreamAudioSourceOptions.prototype = {};
+  A.MediaStreamTrackAudioSourceNode.prototype = {};
+  A.MediaStreamTrackAudioSourceOptions.prototype = {};
+  A.OscillatorNode.prototype = {};
+  A.OscillatorOptions.prototype = {};
+  A.PannerNode.prototype = {};
+  A.PannerOptions.prototype = {};
+  A.PeriodicWave.prototype = {};
+  A.PeriodicWaveConstraints.prototype = {};
+  A.PeriodicWaveOptions.prototype = {};
+  A.ScriptProcessorNode.prototype = {};
+  A.StereoPannerNode.prototype = {};
+  A.StereoPannerOptions.prototype = {};
+  A.WaveShaperNode.prototype = {};
+  A.WaveShaperOptions.prototype = {};
+  A.AudioWorklet.prototype = {};
+  A.AudioWorkletGlobalScope.prototype = {};
+  A.AudioParamMap.prototype = {};
+  A.AudioWorkletNode.prototype = {};
+  A.AudioWorkletNodeOptions.prototype = {};
+  A.AudioWorkletProcessor.prototype = {};
+  A.AudioParamDescriptor.prototype = {};
+  A.PublicKeyCredential.prototype = {};
+  A.RegistrationResponseJSON.prototype = {};
+  A.AuthenticatorAttestationResponseJSON.prototype = {};
+  A.AuthenticationResponseJSON.prototype = {};
+  A.AuthenticatorAssertionResponseJSON.prototype = {};
+  A.AuthenticationExtensionsClientOutputsJSON.prototype = {};
+  A.PublicKeyCredentialCreationOptionsJSON.prototype = {};
+  A.PublicKeyCredentialUserEntityJSON.prototype = {};
+  A.PublicKeyCredentialDescriptorJSON.prototype = {};
+  A.AuthenticationExtensionsClientInputsJSON.prototype = {};
+  A.PublicKeyCredentialRequestOptionsJSON.prototype = {};
+  A.AuthenticatorResponse.prototype = {};
+  A.AuthenticatorAttestationResponse.prototype = {};
+  A.AuthenticatorAssertionResponse.prototype = {};
+  A.PublicKeyCredentialParameters.prototype = {};
+  A.PublicKeyCredentialCreationOptions.prototype = {};
+  A.PublicKeyCredentialEntity.prototype = {};
+  A.PublicKeyCredentialRpEntity.prototype = {};
+  A.PublicKeyCredentialUserEntity.prototype = {};
+  A.AuthenticatorSelectionCriteria.prototype = {};
+  A.PublicKeyCredentialRequestOptions.prototype = {};
+  A.AuthenticationExtensionsClientInputs.prototype = {};
+  A.AuthenticationExtensionsClientOutputs.prototype = {};
+  A.CollectedClientData.prototype = {};
+  A.TokenBinding.prototype = {};
+  A.PublicKeyCredentialDescriptor.prototype = {};
+  A.CredentialPropertiesOutput.prototype = {};
+  A.AuthenticationExtensionsPRFValues.prototype = {};
+  A.AuthenticationExtensionsPRFInputs.prototype = {};
+  A.AuthenticationExtensionsPRFOutputs.prototype = {};
+  A.AuthenticationExtensionsLargeBlobInputs.prototype = {};
+  A.AuthenticationExtensionsLargeBlobOutputs.prototype = {};
+  A.AuthenticationExtensionsDevicePublicKeyInputs.prototype = {};
+  A.AuthenticationExtensionsDevicePublicKeyOutputs.prototype = {};
+  A.AudioDecoder.prototype = {};
+  A.AudioDecoderInit.prototype = {};
+  A.VideoDecoder.prototype = {};
+  A.VideoDecoderInit.prototype = {};
+  A.AudioEncoder.prototype = {};
+  A.AudioEncoderInit.prototype = {};
+  A.EncodedAudioChunkMetadata.prototype = {};
+  A.VideoEncoder.prototype = {};
+  A.VideoEncoderInit.prototype = {};
+  A.EncodedVideoChunkMetadata.prototype = {};
+  A.SvcOutputMetadata.prototype = {};
+  A.AudioDecoderSupport.prototype = {};
+  A.VideoDecoderSupport.prototype = {};
+  A.AudioEncoderSupport.prototype = {};
+  A.VideoEncoderSupport.prototype = {};
+  A.AudioDecoderConfig.prototype = {};
+  A.VideoDecoderConfig.prototype = {};
+  A.AudioEncoderConfig.prototype = {};
+  A.VideoEncoderConfig.prototype = {};
+  A.VideoEncoderEncodeOptions.prototype = {};
+  A.EncodedAudioChunk.prototype = {};
+  A.EncodedAudioChunkInit.prototype = {};
+  A.EncodedVideoChunk.prototype = {};
+  A.EncodedVideoChunkInit.prototype = {};
+  A.AudioData.prototype = {};
+  A.AudioDataInit.prototype = {};
+  A.AudioDataCopyToOptions.prototype = {};
+  A.VideoFrame.prototype = {};
+  A.VideoFrameInit.prototype = {};
+  A.VideoFrameBufferInit.prototype = {};
+  A.VideoFrameMetadata.prototype = {};
+  A.VideoFrameCopyToOptions.prototype = {};
+  A.PlaneLayout.prototype = {};
+  A.VideoColorSpace.prototype = {};
+  A.VideoColorSpaceInit.prototype = {};
+  A.ImageDecoder.prototype = {};
+  A.ImageDecoderInit.prototype = {};
+  A.ImageDecodeOptions.prototype = {};
+  A.ImageDecodeResult.prototype = {};
+  A.ImageTrackList.prototype = {};
+  A.ImageTrack.prototype = {};
+  A.AacEncoderConfig.prototype = {};
+  A.AvcEncoderConfig.prototype = {};
+  A.FlacEncoderConfig.prototype = {};
+  A.HevcEncoderConfig.prototype = {};
+  A.OpusEncoderConfig.prototype = {};
+  A.Ed448Params.prototype = {};
+  A.Crypto.prototype = {};
+  A.Algorithm.prototype = {};
+  A.KeyAlgorithm.prototype = {};
+  A.CryptoKey.prototype = {};
+  A.SubtleCrypto.prototype = {};
+  A.RsaOtherPrimesInfo.prototype = {};
+  A.JsonWebKey.prototype = {};
+  A.CryptoKeyPair.prototype = {};
+  A.RsaKeyGenParams.prototype = {};
+  A.RsaHashedKeyGenParams.prototype = {};
+  A.RsaKeyAlgorithm.prototype = {};
+  A.RsaHashedKeyAlgorithm.prototype = {};
+  A.RsaHashedImportParams.prototype = {};
+  A.RsaPssParams.prototype = {};
+  A.RsaOaepParams.prototype = {};
+  A.EcdsaParams.prototype = {};
+  A.EcKeyGenParams.prototype = {};
+  A.EcKeyAlgorithm.prototype = {};
+  A.EcKeyImportParams.prototype = {};
+  A.EcdhKeyDeriveParams.prototype = {};
+  A.AesCtrParams.prototype = {};
+  A.AesKeyAlgorithm.prototype = {};
+  A.AesKeyGenParams.prototype = {};
+  A.AesDerivedKeyParams.prototype = {};
+  A.AesCbcParams.prototype = {};
+  A.AesGcmParams.prototype = {};
+  A.HmacImportParams.prototype = {};
+  A.HmacKeyAlgorithm.prototype = {};
+  A.HmacKeyGenParams.prototype = {};
+  A.HkdfParams.prototype = {};
+  A.Pbkdf2Params.prototype = {};
+  A.NavigatorAutomationInformation.prototype = {};
+  A.WebGLContextAttributes.prototype = {};
+  A.WebGLObject.prototype = {};
+  A.WebGLBuffer.prototype = {};
+  A.WebGLFramebuffer.prototype = {};
+  A.WebGLProgram.prototype = {};
+  A.WebGLRenderbuffer.prototype = {};
+  A.WebGLShader.prototype = {};
+  A.WebGLTexture.prototype = {};
+  A.WebGLUniformLocation.prototype = {};
+  A.WebGLActiveInfo.prototype = {};
+  A.WebGLShaderPrecisionFormat.prototype = {};
+  A.WebGLRenderingContextBase.prototype = {};
+  A.WebGLRenderingContextOverloads.prototype = {};
+  A.WebGLRenderingContext.prototype = {};
+  A.WebGLContextEvent.prototype = {};
+  A.WebGLContextEventInit.prototype = {};
+  A.WebGLQuery.prototype = {};
+  A.WebGLSampler.prototype = {};
+  A.WebGLSync.prototype = {};
+  A.WebGLTransformFeedback.prototype = {};
+  A.WebGLVertexArrayObject.prototype = {};
+  A.WebGL2RenderingContextBase.prototype = {};
+  A.WebGL2RenderingContextOverloads.prototype = {};
+  A.WebGL2RenderingContext.prototype = {};
+  A.WEBGL_blend_equation_advanced_coherent.prototype = {};
+  A.WEBGL_clip_cull_distance.prototype = {};
+  A.WEBGL_color_buffer_float.prototype = {};
+  A.WEBGL_compressed_texture_astc.prototype = {};
+  A.WEBGL_compressed_texture_etc.prototype = {};
+  A.WEBGL_compressed_texture_etc1.prototype = {};
+  A.WEBGL_compressed_texture_pvrtc.prototype = {};
+  A.WEBGL_compressed_texture_s3tc.prototype = {};
+  A.WEBGL_compressed_texture_s3tc_srgb.prototype = {};
+  A.WEBGL_debug_renderer_info.prototype = {};
+  A.WEBGL_debug_shaders.prototype = {};
+  A.WEBGL_depth_texture.prototype = {};
+  A.WEBGL_draw_buffers.prototype = {};
+  A.WEBGL_draw_instanced_base_vertex_base_instance.prototype = {};
+  A.WEBGL_lose_context.prototype = {};
+  A.WEBGL_multi_draw.prototype = {};
+  A.WEBGL_multi_draw_instanced_base_vertex_base_instance.prototype = {};
+  A.WEBGL_provoking_vertex.prototype = {};
+  A.GPUObjectBase.prototype = {};
+  A.GPUObjectDescriptorBase.prototype = {};
+  A.GPUSupportedLimits.prototype = {};
+  A.GPUSupportedFeatures.prototype = {};
+  A.GPUAdapterInfo.prototype = {};
+  A.NavigatorGPU.prototype = {};
+  A.GPU.prototype = {};
+  A.GPURequestAdapterOptions.prototype = {};
+  A.GPUAdapter.prototype = {};
+  A.GPUDeviceDescriptor.prototype = {};
+  A.GPUDevice.prototype = {};
+  A.GPUBuffer.prototype = {};
+  A.GPUBufferDescriptor.prototype = {};
+  A.$GPUBufferUsage.prototype = {};
+  A.$GPUMapMode.prototype = {};
+  A.GPUTexture.prototype = {};
+  A.GPUTextureDescriptor.prototype = {};
+  A.$GPUTextureUsage.prototype = {};
+  A.GPUTextureView.prototype = {};
+  A.GPUTextureViewDescriptor.prototype = {};
+  A.GPUExternalTexture.prototype = {};
+  A.GPUExternalTextureDescriptor.prototype = {};
+  A.GPUSampler.prototype = {};
+  A.GPUSamplerDescriptor.prototype = {};
+  A.GPUBindGroupLayout.prototype = {};
+  A.GPUBindGroupLayoutDescriptor.prototype = {};
+  A.GPUBindGroupLayoutEntry.prototype = {};
+  A.$GPUShaderStage.prototype = {};
+  A.GPUBufferBindingLayout.prototype = {};
+  A.GPUSamplerBindingLayout.prototype = {};
+  A.GPUTextureBindingLayout.prototype = {};
+  A.GPUStorageTextureBindingLayout.prototype = {};
+  A.GPUExternalTextureBindingLayout.prototype = {};
+  A.GPUBindGroup.prototype = {};
+  A.GPUBindGroupDescriptor.prototype = {};
+  A.GPUBindGroupEntry.prototype = {};
+  A.GPUBufferBinding.prototype = {};
+  A.GPUPipelineLayout.prototype = {};
+  A.GPUPipelineLayoutDescriptor.prototype = {};
+  A.GPUShaderModule.prototype = {};
+  A.GPUShaderModuleDescriptor.prototype = {};
+  A.GPUShaderModuleCompilationHint.prototype = {};
+  A.GPUCompilationMessage.prototype = {};
+  A.GPUCompilationInfo.prototype = {};
+  A.GPUPipelineError.prototype = {};
+  A.GPUPipelineErrorInit.prototype = {};
+  A.GPUPipelineDescriptorBase.prototype = {};
+  A.GPUPipelineBase.prototype = {};
+  A.GPUProgrammableStage.prototype = {};
+  A.GPUComputePipeline.prototype = {};
+  A.GPUComputePipelineDescriptor.prototype = {};
+  A.GPURenderPipeline.prototype = {};
+  A.GPURenderPipelineDescriptor.prototype = {};
+  A.GPUPrimitiveState.prototype = {};
+  A.GPUMultisampleState.prototype = {};
+  A.GPUFragmentState.prototype = {};
+  A.GPUColorTargetState.prototype = {};
+  A.GPUBlendState.prototype = {};
+  A.$GPUColorWrite.prototype = {};
+  A.GPUBlendComponent.prototype = {};
+  A.GPUDepthStencilState.prototype = {};
+  A.GPUStencilFaceState.prototype = {};
+  A.GPUVertexState.prototype = {};
+  A.GPUVertexBufferLayout.prototype = {};
+  A.GPUVertexAttribute.prototype = {};
+  A.GPUImageDataLayout.prototype = {};
+  A.GPUImageCopyBuffer.prototype = {};
+  A.GPUImageCopyTexture.prototype = {};
+  A.GPUImageCopyTextureTagged.prototype = {};
+  A.GPUImageCopyExternalImage.prototype = {};
+  A.GPUCommandBuffer.prototype = {};
+  A.GPUCommandBufferDescriptor.prototype = {};
+  A.GPUCommandsMixin.prototype = {};
+  A.GPUCommandEncoder.prototype = {};
+  A.GPUCommandEncoderDescriptor.prototype = {};
+  A.GPUBindingCommandsMixin.prototype = {};
+  A.GPUDebugCommandsMixin.prototype = {};
+  A.GPUComputePassEncoder.prototype = {};
+  A.GPUComputePassTimestampWrite.prototype = {};
+  A.GPUComputePassDescriptor.prototype = {};
+  A.GPURenderPassEncoder.prototype = {};
+  A.GPURenderPassTimestampWrite.prototype = {};
+  A.GPURenderPassDescriptor.prototype = {};
+  A.GPURenderPassColorAttachment.prototype = {};
+  A.GPURenderPassDepthStencilAttachment.prototype = {};
+  A.GPURenderPassLayout.prototype = {};
+  A.GPURenderCommandsMixin.prototype = {};
+  A.GPURenderBundle.prototype = {};
+  A.GPURenderBundleDescriptor.prototype = {};
+  A.GPURenderBundleEncoder.prototype = {};
+  A.GPURenderBundleEncoderDescriptor.prototype = {};
+  A.GPUQueueDescriptor.prototype = {};
+  A.GPUQueue.prototype = {};
+  A.GPUQuerySet.prototype = {};
+  A.GPUQuerySetDescriptor.prototype = {};
+  A.GPUCanvasContext.prototype = {};
+  A.GPUCanvasConfiguration.prototype = {};
+  A.GPUDeviceLostInfo.prototype = {};
+  A.GPUError.prototype = {};
+  A.GPUValidationError.prototype = {};
+  A.GPUOutOfMemoryError.prototype = {};
+  A.GPUInternalError.prototype = {};
+  A.GPUUncapturedErrorEvent.prototype = {};
+  A.GPUUncapturedErrorEventInit.prototype = {};
+  A.GPUColorDict.prototype = {};
+  A.GPUOrigin2DDict.prototype = {};
+  A.GPUOrigin3DDict.prototype = {};
+  A.GPUExtent3DDict.prototype = {};
+  A.HID.prototype = {};
+  A.HIDDeviceRequestOptions.prototype = {};
+  A.HIDDeviceFilter.prototype = {};
+  A.HIDDevice.prototype = {};
+  A.HIDConnectionEvent.prototype = {};
+  A.HIDConnectionEventInit.prototype = {};
+  A.HIDInputReportEvent.prototype = {};
+  A.HIDInputReportEventInit.prototype = {};
+  A.HIDCollectionInfo.prototype = {};
+  A.HIDReportInfo.prototype = {};
+  A.HIDReportItem.prototype = {};
+  A.DOMException.prototype = {};
+  A.MidiPermissionDescriptor.prototype = {};
+  A.MIDIOptions.prototype = {};
+  A.MIDIInputMap.prototype = {};
+  A.MIDIOutputMap.prototype = {};
+  A.MIDIAccess.prototype = {};
+  A.MIDIPort.prototype = {};
+  A.MIDIInput.prototype = {};
+  A.MIDIOutput.prototype = {};
+  A.MIDIMessageEvent.prototype = {};
+  A.MIDIMessageEventInit.prototype = {};
+  A.MIDIConnectionEvent.prototype = {};
+  A.MIDIConnectionEventInit.prototype = {};
+  A.NavigatorML.prototype = {};
+  A.MLContextOptions.prototype = {};
+  A.ML.prototype = {};
+  A.MLGraph.prototype = {};
+  A.MLOperandDescriptor.prototype = {};
+  A.MLOperand.prototype = {};
+  A.MLActivation.prototype = {};
+  A.MLContext.prototype = {};
+  A.MLComputeResult.prototype = {};
+  A.MLCommandEncoder.prototype = {};
+  A.MLBufferResourceView.prototype = {};
+  A.MLGraphBuilder.prototype = {};
+  A.MLBatchNormalizationOptions.prototype = {};
+  A.MLClampOptions.prototype = {};
+  A.MLConv2dOptions.prototype = {};
+  A.MLConvTranspose2dOptions.prototype = {};
+  A.MLEluOptions.prototype = {};
+  A.MLGemmOptions.prototype = {};
+  A.MLGruOptions.prototype = {};
+  A.MLGruCellOptions.prototype = {};
+  A.MLHardSigmoidOptions.prototype = {};
+  A.MLInstanceNormalizationOptions.prototype = {};
+  A.MLLeakyReluOptions.prototype = {};
+  A.MLLinearOptions.prototype = {};
+  A.MLLstmOptions.prototype = {};
+  A.MLLstmCellOptions.prototype = {};
+  A.MLPadOptions.prototype = {};
+  A.MLPool2dOptions.prototype = {};
+  A.MLReduceOptions.prototype = {};
+  A.MLResample2dOptions.prototype = {};
+  A.MLSliceOptions.prototype = {};
+  A.MLSoftplusOptions.prototype = {};
+  A.MLSplitOptions.prototype = {};
+  A.MLSqueezeOptions.prototype = {};
+  A.MLTransposeOptions.prototype = {};
+  A.RTCConfiguration.prototype = {};
+  A.RTCIceServer.prototype = {};
+  A.RTCOfferAnswerOptions.prototype = {};
+  A.RTCOfferOptions.prototype = {};
+  A.RTCAnswerOptions.prototype = {};
+  A.RTCPeerConnection.prototype = {};
+  A.RTCSessionDescription.prototype = {};
+  A.RTCSessionDescriptionInit.prototype = {};
+  A.RTCLocalSessionDescriptionInit.prototype = {};
+  A.RTCIceCandidate.prototype = {};
+  A.RTCIceCandidateInit.prototype = {};
+  A.RTCPeerConnectionIceEvent.prototype = {};
+  A.RTCPeerConnectionIceEventInit.prototype = {};
+  A.RTCPeerConnectionIceErrorEvent.prototype = {};
+  A.RTCPeerConnectionIceErrorEventInit.prototype = {};
+  A.RTCCertificateExpiration.prototype = {};
+  A.RTCCertificate.prototype = {};
+  A.RTCRtpTransceiverInit.prototype = {};
+  A.RTCRtpSender.prototype = {};
+  A.RTCRtpParameters.prototype = {};
+  A.RTCRtpSendParameters.prototype = {};
+  A.RTCRtpReceiveParameters.prototype = {};
+  A.RTCRtpCodingParameters.prototype = {};
+  A.RTCRtpEncodingParameters.prototype = {};
+  A.RTCRtcpParameters.prototype = {};
+  A.RTCRtpHeaderExtensionParameters.prototype = {};
+  A.RTCRtpCodecParameters.prototype = {};
+  A.RTCRtpCapabilities.prototype = {};
+  A.RTCRtpCodecCapability.prototype = {};
+  A.RTCRtpHeaderExtensionCapability.prototype = {};
+  A.RTCRtpReceiver.prototype = {};
+  A.RTCRtpContributingSource.prototype = {};
+  A.RTCRtpSynchronizationSource.prototype = {};
+  A.RTCRtpTransceiver.prototype = {};
+  A.RTCDtlsTransport.prototype = {};
+  A.RTCDtlsFingerprint.prototype = {};
+  A.RTCIceTransport.prototype = {};
+  A.RTCIceParameters.prototype = {};
+  A.RTCIceCandidatePair.prototype = {};
+  A.RTCTrackEvent.prototype = {};
+  A.RTCTrackEventInit.prototype = {};
+  A.RTCSctpTransport.prototype = {};
+  A.RTCDataChannel.prototype = {};
+  A.RTCDataChannelInit.prototype = {};
+  A.RTCDataChannelEvent.prototype = {};
+  A.RTCDataChannelEventInit.prototype = {};
+  A.RTCDTMFSender.prototype = {};
+  A.RTCDTMFToneChangeEvent.prototype = {};
+  A.RTCDTMFToneChangeEventInit.prototype = {};
+  A.RTCStatsReport.prototype = {};
+  A.RTCStats.prototype = {};
+  A.RTCError.prototype = {};
+  A.RTCErrorInit.prototype = {};
+  A.RTCErrorEvent.prototype = {};
+  A.RTCErrorEventInit.prototype = {};
+  A.SFrameTransformOptions.prototype = {};
+  A.SFrameTransform.prototype = {};
+  A.SFrameTransformErrorEvent.prototype = {};
+  A.SFrameTransformErrorEventInit.prototype = {};
+  A.RTCEncodedVideoFrameMetadata.prototype = {};
+  A.RTCEncodedVideoFrame.prototype = {};
+  A.RTCEncodedAudioFrameMetadata.prototype = {};
+  A.RTCEncodedAudioFrame.prototype = {};
+  A.RTCTransformEvent.prototype = {};
+  A.RTCRtpScriptTransformer.prototype = {};
+  A.RTCRtpScriptTransform.prototype = {};
+  A.RTCIceGatherOptions.prototype = {};
+  A.RTCIdentityProviderGlobalScope.prototype = {};
+  A.RTCIdentityProviderRegistrar.prototype = {};
+  A.RTCIdentityProvider.prototype = {};
+  A.RTCIdentityAssertionResult.prototype = {};
+  A.RTCIdentityProviderDetails.prototype = {};
+  A.RTCIdentityValidationResult.prototype = {};
+  A.RTCIdentityProviderOptions.prototype = {};
+  A.RTCIdentityAssertion.prototype = {};
+  A.RTCRtpStreamStats.prototype = {};
+  A.RTCCodecStats.prototype = {};
+  A.RTCReceivedRtpStreamStats.prototype = {};
+  A.RTCInboundRtpStreamStats.prototype = {};
+  A.RTCRemoteInboundRtpStreamStats.prototype = {};
+  A.RTCSentRtpStreamStats.prototype = {};
+  A.RTCOutboundRtpStreamStats.prototype = {};
+  A.RTCRemoteOutboundRtpStreamStats.prototype = {};
+  A.RTCMediaSourceStats.prototype = {};
+  A.RTCAudioSourceStats.prototype = {};
+  A.RTCVideoSourceStats.prototype = {};
+  A.RTCAudioPlayoutStats.prototype = {};
+  A.RTCPeerConnectionStats.prototype = {};
+  A.RTCDataChannelStats.prototype = {};
+  A.RTCTransportStats.prototype = {};
+  A.RTCIceCandidateStats.prototype = {};
+  A.RTCIceCandidatePairStats.prototype = {};
+  A.RTCCertificateStats.prototype = {};
+  A.WebSocket.prototype = {};
+  A.CloseEvent.prototype = {};
+  A.CloseEventInit.prototype = {};
+  A.WebTransportDatagramDuplexStream.prototype = {};
+  A.WebTransport.prototype = {};
+  A.WebTransportHash.prototype = {};
+  A.WebTransportOptions.prototype = {};
+  A.WebTransportCloseInfo.prototype = {};
+  A.WebTransportSendStreamOptions.prototype = {};
+  A.WebTransportStats.prototype = {};
+  A.WebTransportDatagramStats.prototype = {};
+  A.WebTransportSendStream.prototype = {};
+  A.WebTransportSendStreamStats.prototype = {};
+  A.WebTransportReceiveStream.prototype = {};
+  A.WebTransportReceiveStreamStats.prototype = {};
+  A.WebTransportBidirectionalStream.prototype = {};
+  A.WebTransportError.prototype = {};
+  A.WebTransportErrorInit.prototype = {};
+  A.USBDeviceFilter.prototype = {};
+  A.USBDeviceRequestOptions.prototype = {};
+  A.USB.prototype = {};
+  A.USBConnectionEventInit.prototype = {};
+  A.USBConnectionEvent.prototype = {};
+  A.USBInTransferResult.prototype = {};
+  A.USBOutTransferResult.prototype = {};
+  A.USBIsochronousInTransferPacket.prototype = {};
+  A.USBIsochronousInTransferResult.prototype = {};
+  A.USBIsochronousOutTransferPacket.prototype = {};
+  A.USBIsochronousOutTransferResult.prototype = {};
+  A.USBDevice.prototype = {};
+  A.USBControlTransferParameters.prototype = {};
+  A.USBConfiguration.prototype = {};
+  A.USBInterface.prototype = {};
+  A.USBAlternateInterface.prototype = {};
+  A.USBEndpoint.prototype = {};
+  A.USBPermissionDescriptor.prototype = {};
+  A.AllowedUSBDevice.prototype = {};
+  A.USBPermissionStorage.prototype = {};
+  A.USBPermissionResult.prototype = {};
+  A.VTTCue.prototype = {};
+  A.VTTRegion.prototype = {};
+  A.XRSystem.prototype = {};
+  A.XRSessionInit.prototype = {};
+  A.XRSession.prototype = {};
+  A.XRRenderStateInit.prototype = {};
+  A.XRRenderState.prototype = {};
+  A.XRFrame.prototype = {};
+  A.XRSpace.prototype = {};
+  A.XRReferenceSpace.prototype = {};
+  A.XRBoundedReferenceSpace.prototype = {};
+  A.XRView.prototype = {};
+  A.XRViewport.prototype = {};
+  A.XRRigidTransform.prototype = {};
+  A.XRPose.prototype = {};
+  A.XRViewerPose.prototype = {};
+  A.XRInputSource.prototype = {};
+  A.XRInputSourceArray.prototype = {};
+  A.XRLayer.prototype = {};
+  A.XRWebGLLayerInit.prototype = {};
+  A.XRWebGLLayer.prototype = {};
+  A.XRSessionEvent.prototype = {};
+  A.XRSessionEventInit.prototype = {};
+  A.XRInputSourceEvent.prototype = {};
+  A.XRInputSourceEventInit.prototype = {};
+  A.XRInputSourcesChangeEvent.prototype = {};
+  A.XRInputSourcesChangeEventInit.prototype = {};
+  A.XRReferenceSpaceEvent.prototype = {};
+  A.XRReferenceSpaceEventInit.prototype = {};
+  A.XRSessionSupportedPermissionDescriptor.prototype = {};
+  A.XRPermissionDescriptor.prototype = {};
+  A.XRPermissionStatus.prototype = {};
+  A.XRDepthStateInit.prototype = {};
+  A.XRDepthInformation.prototype = {};
+  A.XRCPUDepthInformation.prototype = {};
+  A.XRWebGLDepthInformation.prototype = {};
+  A.XRDOMOverlayInit.prototype = {};
+  A.XRDOMOverlayState.prototype = {};
+  A.XRHand.prototype = {};
+  A.XRJointSpace.prototype = {};
+  A.XRJointPose.prototype = {};
+  A.XRHitTestOptionsInit.prototype = {};
+  A.XRTransientInputHitTestOptionsInit.prototype = {};
+  A.XRHitTestSource.prototype = {};
+  A.XRTransientInputHitTestSource.prototype = {};
+  A.XRHitTestResult.prototype = {};
+  A.XRTransientInputHitTestResult.prototype = {};
+  A.XRRayDirectionInit.prototype = {};
+  A.XRRay.prototype = {};
+  A.XRLightProbe.prototype = {};
+  A.XRLightEstimate.prototype = {};
+  A.XRLightProbeInit.prototype = {};
+  A.XRCompositionLayer.prototype = {};
+  A.XRProjectionLayer.prototype = {};
+  A.XRQuadLayer.prototype = {};
+  A.XRCylinderLayer.prototype = {};
+  A.XREquirectLayer.prototype = {};
+  A.XRCubeLayer.prototype = {};
+  A.XRSubImage.prototype = {};
+  A.XRWebGLSubImage.prototype = {};
+  A.XRProjectionLayerInit.prototype = {};
+  A.XRLayerInit.prototype = {};
+  A.XRQuadLayerInit.prototype = {};
+  A.XRCylinderLayerInit.prototype = {};
+  A.XREquirectLayerInit.prototype = {};
+  A.XRCubeLayerInit.prototype = {};
+  A.XRWebGLBinding.prototype = {};
+  A.XRMediaLayerInit.prototype = {};
+  A.XRMediaQuadLayerInit.prototype = {};
+  A.XRMediaCylinderLayerInit.prototype = {};
+  A.XRMediaEquirectLayerInit.prototype = {};
+  A.XRMediaBinding.prototype = {};
+  A.XRLayerEvent.prototype = {};
+  A.XRLayerEventInit.prototype = {};
+  A.WindowControlsOverlay.prototype = {};
+  A.WindowControlsOverlayGeometryChangeEvent.prototype = {};
+  A.WindowControlsOverlayGeometryChangeEventInit.prototype = {};
+  A.ScreenDetails.prototype = {};
+  A.ScreenDetailed.prototype = {};
+  A.XMLHttpRequestEventTarget.prototype = {};
+  A.XMLHttpRequestUpload.prototype = {};
+  A.XMLHttpRequest.prototype = {};
+  A.FormData.prototype = {};
+  A.ProgressEvent.prototype = {};
+  A.ProgressEventInit.prototype = {};
   (function aliases() {
-    var _ = J.Interceptor.prototype;
-    _.super$Interceptor$toString = _.toString$0;
-    _ = J.LegacyJavaScriptObject.prototype;
+    var _ = J.LegacyJavaScriptObject.prototype;
     _.super$LegacyJavaScriptObject$toString = _.toString$0;
   })();
   (function inheritance() {
@@ -4951,20 +8561,16 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(A.Object, null);
-    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, J.ArrayIterator, A.Error, A.SentinelValue, A.Iterable, A.ListIterator, A.FixedLengthListMixin, A.Closure, A.MapMixin, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.Rti, A._FunctionParameters, A._Type, A.ListMixin, A.Null, A.StringBuffer, A.CssStyleDeclarationBase, A.ImmutableListMixin, A.FixedSizeListIterator]);
+    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, J.ArrayIterator, A.Error, A.ListIterator, A.FixedLengthListMixin, A.Closure, A.Rti, A._FunctionParameters, A.ListMixin, A.Null, A.StringBuffer]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSNumber, J.JSString]);
-    _inheritMany(J.JavaScriptObject, [J.LegacyJavaScriptObject, J.JSArray, A.NativeTypedData, A.EventTarget, A.AccessibleNodeList, A.Blob, A.CssTransformComponent, A.CssRule, A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase, A.CssStyleValue, A.DataTransferItemList, A.DomException, A._DomRectList_JavaScriptObject_ListMixin, A.DomRectReadOnly, A._DomStringList_JavaScriptObject_ListMixin, A.DomTokenList, A._FileList_JavaScriptObject_ListMixin, A.Gamepad, A.History, A._HtmlCollection_JavaScriptObject_ListMixin, A.Location, A.MediaList, A._MidiInputMap_JavaScriptObject_MapMixin, A._MidiOutputMap_JavaScriptObject_MapMixin, A.MimeType, A._MimeTypeArray_JavaScriptObject_ListMixin, A._NodeList_JavaScriptObject_ListMixin, A.Plugin, A._PluginArray_JavaScriptObject_ListMixin, A._RtcStatsReport_JavaScriptObject_MapMixin, A.SpeechGrammar, A._SpeechGrammarList_JavaScriptObject_ListMixin, A.SpeechRecognitionResult, A._Storage_JavaScriptObject_MapMixin, A.StyleSheet, A._TextTrackCueList_JavaScriptObject_ListMixin, A.TimeRanges, A.Touch, A._TouchList_JavaScriptObject_ListMixin, A.TrackDefaultList, A.Url, A.__CssRuleList_JavaScriptObject_ListMixin, A.__GamepadList_JavaScriptObject_ListMixin, A.__NamedNodeMap_JavaScriptObject_ListMixin, A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin, A.__StyleSheetList_JavaScriptObject_ListMixin, A.Length, A._LengthList_JavaScriptObject_ListMixin, A.Number, A._NumberList_JavaScriptObject_ListMixin, A.PointList, A._StringList_JavaScriptObject_ListMixin, A.Transform, A._TransformList_JavaScriptObject_ListMixin, A.AudioBuffer, A._AudioParamMap_JavaScriptObject_MapMixin]);
-    _inheritMany(J.LegacyJavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, A.JSPromise, A.$Console]);
+    _inheritMany(J.JavaScriptObject, [J.LegacyJavaScriptObject, J.JSArray, A.NativeTypedData]);
+    _inheritMany(J.LegacyJavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, A.JSPromise, A.EventTarget, A.SensorOptions, A.AccelerometerReadingValues, A.AmbientLightReadingValues, A.XRAnchor, A.XRAnchorSet, A.ANGLE_instanced_arrays, A.HTMLAttributionSrcElementUtils, A.AudioOutputOptions, A.BackgroundFetchManager, A.BackgroundFetchUIOptions, A.BackgroundFetchRecord, A.Event, A.EventInit, A.SyncManager, A.NavigatorBadge, A.CaptureHandleConfig, A.CaptureHandle, A.ClipboardItem, A.ClipboardItemOptions, A.PermissionDescriptor, A.CloseWatcherOptions, A.CompressionStream, A.DecompressionStream, A.PressureObserver, A.PressureRecord, A.PressureObserverOptions, A.$Console, A.ContactAddress, A.ContactInfo, A.ContactsSelectOptions, A.ContactsManager, A.ContentDescription, A.ContentIndex, A.CookieStoreGetOptions, A.CookieInit, A.CookieStoreDeleteOptions, A.CookieListItem, A.CookieStoreManager, A.ReportBody, A.Credential, A.CredentialUserData, A.CredentialsContainer, A.CredentialData, A.CredentialRequestOptions, A.CredentialCreationOptions, A.FederatedCredentialRequestOptions, A.WorkletGlobalScope, A.WorkletAnimationEffect, A.WorkletGroupEffect, A.CSSRule, A.FontFaceDescriptors, A.FontFace, A.FontFaceFeatures, A.FontFaceVariationAxis, A.FontFaceVariations, A.FontFacePalette, A.FontFacePalettes, A.FontFaceSource, A.CSSFontFeatureValuesMap, A.Highlight, A.HighlightRegistry, A.LayoutOptions, A.LayoutChild, A.LayoutFragment, A.IntrinsicSizes, A.LayoutConstraints, A.LayoutConstraintsOptions, A.ChildBreakToken, A.BreakToken, A.BreakTokenOptions, A.LayoutEdges, A.FragmentResultOptions, A.FragmentResult, A.IntrinsicSizesResultOptions, A.FocusableAreasOption, A.SpatialNavigationSearchOptions, A.PaintRenderingContext2DSettings, A.PaintRenderingContext2D, A.PaintSize, A.CSSParserOptions, A.CSSParserRule, A.CSSParserValue, A.PropertyDefinition, A.NamedFlowMap, A.Region, A.CSSStyleValue, A.StylePropertyMapReadOnly, A.CSSVariableReferenceValue, A.CSSNumericType, A.CSSNumericArray, A.CSSTransformComponent, A.CSSMatrixComponentOptions, A.ViewTransition, A.MediaList, A.StyleSheet, A.CSSStyleSheetInit, A.StyleSheetList, A.LinkStyle, A.CSSRuleList, A.CSSStyleDeclaration, A.ElementCSSInlineStyle, A.$CSS, A.ScrollOptions, A.Screen, A.CaretPosition, A.CheckVisibilityOptions, A.BoxQuadOptions, A.ConvertCoordinateOptions, A.GeometryUtils, A.CustomStateSet, A.NavigatorDeviceMemory, A.DigitalGoodsService, A.ItemDetails, A.PurchaseDetails, A.EventListenerOptions, A.AbortController, A.NonElementParentNode, A.DocumentOrShadowRoot, A.ParentNode, A.NonDocumentTypeChildNode, A.ChildNode, A.Slottable, A.NodeList, A.HTMLCollection, A.MutationObserver, A.MutationObserverInit, A.MutationRecord, A.GetRootNodeOptions, A.ElementCreationOptions, A.DOMImplementation, A.ShadowRootInit, A.NamedNodeMap, A.AbstractRange, A.StaticRangeInit, A.NodeIterator, A.TreeWalker, A.DOMTokenList, A.XPathResult, A.XPathExpression, A.XPathEvaluatorBase, A.XPathEvaluator, A.XSLTProcessor, A.XMLSerializer, A.InnerHTML, A.EditContextInit, A.TextUpdateEventInit, A.TextFormatInit, A.TextFormat, A.TextFormatUpdateEventInit, A.CharacterBoundsUpdateEventInit, A.PerformanceEntry, A.TextDecoderCommon, A.TextDecoderOptions, A.TextDecodeOptions, A.TextDecoder, A.TextEncoderCommon, A.TextEncoderEncodeIntoResult, A.TextEncoder, A.TextDecoderStream, A.TextEncoderStream, A.MediaKeySystemConfiguration, A.MediaKeySystemMediaCapability, A.MediaKeySystemAccess, A.MediaKeys, A.MediaKeyStatusMap, A.FileSystemEntry, A.FileSystemFlags, A.FileSystemDirectoryReader, A.FileSystem, A.EventCounts, A.EXT_blend_minmax, A.EXT_color_buffer_float, A.EXT_color_buffer_half_float, A.WebGLObject, A.EXT_disjoint_timer_query, A.EXT_disjoint_timer_query_webgl2, A.EXT_float_blend, A.EXT_frag_depth, A.EXT_shader_texture_lod, A.EXT_sRGB, A.EXT_texture_compression_bptc, A.EXT_texture_compression_rgtc, A.EXT_texture_filter_anisotropic, A.EXT_texture_norm16, A.ColorSelectionResult, A.ColorSelectionOptions, A.EyeDropper, A.IdentityProviderWellKnown, A.IdentityProviderIcon, A.IdentityProviderBranding, A.IdentityProviderAPIConfig, A.IdentityProviderAccount, A.IdentityProviderAccountList, A.IdentityProviderClientMetadata, A.IdentityProviderToken, A.IdentityCredentialRequestOptions, A.IdentityProviderConfig, A.IdentityCredentialLogoutRPsRequest, A.IdentityProvider, A.Headers, A.Body, A.Request, A.RequestInit, A.Response, A.ResponseInit, A.HMACGetSecretInput, A.HMACGetSecretOutput, A.FileSystemHandlePermissionDescriptor, A.FilePickerAcceptType, A.FilePickerOptions, A.DirectoryPickerOptions, A.Blob, A.BlobPropertyBag, A.FileList, A.FileReaderSync, A.SVGFilterPrimitiveStandardAttributes, A.FontMetrics, A.Baseline, A.Font, A.FileSystemHandle, A.FileSystemCreateWritableOptions, A.FileSystemGetFileOptions, A.FileSystemGetDirectoryOptions, A.FileSystemRemoveOptions, A.WriteParams, A.WritableStream, A.FileSystemReadWriteOptions, A.FileSystemSyncAccessHandle, A.FullscreenOptions, A.Gamepad, A.GamepadButton, A.GamepadHapticActuator, A.GamepadEffectParameters, A.GamepadPose, A.GamepadTouch, A.MockSensorConfiguration, A.MockSensor, A.MockSensorReadingValues, A.Geolocation, A.PositionOptions, A.GeolocationPosition, A.GeolocationCoordinates, A.GeolocationPositionError, A.GeolocationSensorReading, A.GeolocationReadingValues, A.DOMPointReadOnly, A.DOMPointInit, A.DOMRectReadOnly, A.DOMRectInit, A.DOMRectList, A.DOMQuad, A.DOMQuadInit, A.DOMMatrixReadOnly, A.DOMMatrix2DInit, A.RelatedApplication, A.GlobalPrivacyControl, A.GyroscopeReadingValues, A.HTMLAllCollection, A.DOMStringList, A.HTMLOrSVGElement, A.DOMStringMap, A.HTMLHyperlinkElementUtils, A.MediaError, A.AudioTrack, A.VideoTrack, A.TextTrackCueList, A.TimeRanges, A.ValidityState, A.AssignedNodesOptions, A.CanvasRenderingContext2DSettings, A.CanvasRenderingContext2D, A.CanvasState, A.CanvasTransform, A.CanvasCompositing, A.CanvasImageSmoothing, A.CanvasFillStrokeStyles, A.CanvasShadowStyles, A.CanvasFilters, A.CanvasRect, A.CanvasDrawPath, A.CanvasUserInterface, A.CanvasText, A.CanvasDrawImage, A.CanvasImageData, A.CanvasPathDrawingStyles, A.CanvasTextDrawingStyles, A.CanvasPath, A.CanvasGradient, A.CanvasPattern, A.TextMetrics, A.ImageDataSettings, A.ImageData, A.Path2D, A.ImageBitmapRenderingContext, A.ImageBitmapRenderingContextSettings, A.ImageEncodeOptions, A.OffscreenCanvasRenderingContext2D, A.CustomElementRegistry, A.ElementDefinitionOptions, A.ElementInternals, A.ValidityStateFlags, A.UserActivation, A.FocusOptions, A.ElementContentEditable, A.DataTransfer, A.DataTransferItemList, A.DataTransferItem, A.PopoverTargetElement, A.StructuredSerializeOptions, A.BarProp, A.Location, A.History, A.GlobalEventHandlers, A.WindowEventHandlers, A.WindowOrWorkerGlobalScope, A.DOMParser, A.Navigator, A.NavigatorID, A.NavigatorLanguage, A.NavigatorOnLine, A.NavigatorContentUtils, A.NavigatorCookies, A.NavigatorPlugins, A.PluginArray, A.MimeTypeArray, A.Plugin, A.MimeType, A.ImageBitmap, A.ImageBitmapOptions, A.AnimationFrameProvider, A.EventSourceInit, A.MessageChannel, A.AbstractWorker, A.WorkerOptions, A.NavigatorConcurrentHardware, A.WorkerNavigator, A.WorkerLocation, A.Worklet, A.WorkletOptions, A.Storage, A.WindowSessionStorage, A.WindowLocalStorage, A.External, A.IdleOptions, A.ImageCapture, A.PhotoCapabilities, A.PhotoSettings, A.MediaSettingsRange, A.ConstrainPoint2DParameters, A.Point2D, A.ImageResource, A.IDBFactory, A.IDBDatabaseInfo, A.IDBTransactionOptions, A.IDBObjectStoreParameters, A.IDBObjectStore, A.IDBIndexParameters, A.IDBIndex, A.IDBKeyRange, A.IDBCursor, A.Ink, A.InkPresenterParam, A.InkPresenter, A.InkTrailStyle, A.InputDeviceCapabilities, A.InputDeviceCapabilitiesInit, A.IntersectionObserver, A.IntersectionObserverEntry, A.IntersectionObserverEntryInit, A.IntersectionObserverInit, A.IsInputPendingOptions, A.Scheduling, A.ProfilerTrace, A.ProfilerSample, A.ProfilerStack, A.ProfilerFrame, A.ProfilerInitOptions, A.KeyboardLayoutMap, A.KHR_parallel_shader_compile, A.LayoutShiftAttribution, A.QueryOptions, A.FontData, A.MagnetometerReadingValues, A.UncalibratedMagnetometerReadingValues, A.PromptResponseObject, A.MediaConfiguration, A.VideoConfiguration, A.AudioConfiguration, A.MediaCapabilitiesKeySystemConfiguration, A.KeySystemTrackConfiguration, A.MediaCapabilitiesInfo, A.MediaCapabilities, A.VideoPlaybackQuality, A.MediaSourceHandle, A.MockCapturePromptResultConfiguration, A.MockCaptureDeviceConfiguration, A.CropTarget, A.MediaTrackSupportedConstraints, A.MediaTrackCapabilities, A.MediaTrackConstraintSet, A.MediaTrackSettings, A.DOMException, A.MediaDeviceInfo, A.MediaStreamConstraints, A.DoubleRange, A.ULongRange, A.ConstrainBooleanParameters, A.ConstrainDOMStringParameters, A.MediaStreamTrackProcessor, A.MediaStreamTrackProcessorInit, A.VideoTrackGenerator, A.ViewportMediaStreamConstraints, A.MediaSession, A.MediaMetadata, A.MediaMetadataInit, A.MediaImage, A.MediaPositionState, A.MediaSessionActionDetails, A.MediaRecorderOptions, A.BlobEventInit, A.NavigationUpdateCurrentEntryOptions, A.NavigationOptions, A.NavigationResult, A.NavigationTransition, A.NavigationInterceptOptions, A.NavigationDestination, A.PerformanceTiming, A.PerformanceNavigation, A.NavigatorNetworkInformation, A.NotificationOptions, A.NotificationAction, A.GetNotificationOptions, A.OES_draw_buffers_indexed, A.OES_element_index_uint, A.OES_fbo_render_mipmap, A.OES_standard_derivatives, A.OES_texture_float, A.OES_texture_float_linear, A.OES_texture_half_float, A.OES_texture_half_float_linear, A.OES_vertex_array_object, A.DeviceMotionEventAcceleration, A.DeviceMotionEventRotationRate, A.DeviceMotionEventAccelerationInit, A.DeviceMotionEventRotationRateInit, A.AbsoluteOrientationReadingValues, A.OVR_multiview2, A.PaymentManager, A.PaymentRequestDetailsUpdate, A.PaymentHandlerResponse, A.AddressInit, A.PaymentOptions, A.PaymentShippingOption, A.AddressErrors, A.PaymentMethodData, A.PaymentCurrencyAmount, A.PaymentDetailsBase, A.PaymentDetailsModifier, A.PaymentItem, A.PaymentCompleteDetails, A.PaymentValidationErrors, A.MemoryMeasurement, A.MemoryBreakdownEntry, A.MemoryAttribution, A.MemoryAttributionContainer, A.PerformanceObserver, A.PerformanceObserverCallbackOptions, A.PerformanceObserverInit, A.PerformanceObserverEntryList, A.PeriodicSyncManager, A.BackgroundSyncOptions, A.Permissions, A.PermissionSetParameters, A.PermissionsPolicy, A.Presentation, A.PresentationReceiver, A.ProximityReadingValues, A.PushManager, A.PushSubscriptionOptions, A.PushSubscriptionOptionsInit, A.PushSubscription, A.PushSubscriptionJSON, A.PushMessageData, A.XRCamera, A.Report, A.ReportingObserver, A.ReportingObserverOptions, A.GenerateTestReportParameters, A.IdleRequestOptions, A.IdleDeadline, A.ResizeObserverOptions, A.ResizeObserver, A.ResizeObserverEntry, A.ResizeObserverSize, A.Sanitizer, A.SetHTMLOptions, A.SanitizerConfig, A.NetworkInformationSaveData, A.SchedulerPostTaskOptions, A.Scheduler, A.TaskControllerInit, A.CaptureController, A.DisplayMediaStreamOptions, A.WakeLock, A.ScrollTimelineOptions, A.AnimationTimeline, A.ViewTimelineOptions, A.FragmentDirective, A.SecurePaymentConfirmationRequest, A.AuthenticationExtensionsPaymentInputs, A.CollectedClientData, A.CollectedClientAdditionalPaymentData, A.PaymentCredentialInstrument, A.Selection, A.SerialPortRequestOptions, A.SerialPortFilter, A.SerialPortInfo, A.SerialOptions, A.SerialOutputSignals, A.SerialInputSignals, A.PerformanceServerTiming, A.RegistrationOptions, A.NavigationPreloadManager, A.NavigationPreloadState, A.Client, A.Clients, A.ClientQueryOptions, A.Cache, A.CacheQueryOptions, A.CacheStorage, A.FaceDetector, A.FaceDetectorOptions, A.DetectedFace, A.Landmark, A.BarcodeDetector, A.BarcodeDetectorOptions, A.DetectedBarcode, A.SpeechRecognitionAlternative, A.SpeechRecognitionResult, A.SpeechRecognitionResultList, A.SpeechGrammar, A.SpeechGrammarList, A.SpeechSynthesisVoice, A.NavigatorStorage, A.StorageManager, A.StorageEstimate, A.ReadableStream, A.ReadableStreamGetReaderOptions, A.ReadableStreamIteratorOptions, A.ReadableWritablePair, A.StreamPipeOptions, A.UnderlyingSource, A.ReadableStreamGenericReader, A.ReadableStreamDefaultReader, A.ReadableStreamReadResult, A.ReadableStreamBYOBReader, A.ReadableStreamDefaultController, A.ReadableByteStreamController, A.ReadableStreamBYOBRequest, A.UnderlyingSink, A.WritableStreamDefaultWriter, A.WritableStreamDefaultController, A.TransformStream, A.Transformer, A.TransformStreamDefaultController, A.QueuingStrategy, A.QueuingStrategyInit, A.ByteLengthQueuingStrategy, A.CountQueuingStrategy, A.GenericTransformStream, A.SVGBoundingBoxOptions, A.SVGNumber, A.SVGLength, A.SVGAngle, A.SVGNumberList, A.SVGLengthList, A.SVGStringList, A.SVGAnimatedBoolean, A.SVGAnimatedEnumeration, A.SVGAnimatedInteger, A.SVGAnimatedNumber, A.SVGAnimatedLength, A.SVGAnimatedAngle, A.SVGAnimatedString, A.SVGAnimatedRect, A.SVGAnimatedNumberList, A.SVGAnimatedLengthList, A.SVGUnitTypes, A.SVGTests, A.SVGFitToViewBox, A.SVGURIReference, A.SVGElementInstance, A.GetSVGDocument, A.SVGTransform, A.SVGTransformList, A.SVGAnimatedTransformList, A.SVGPreserveAspectRatio, A.SVGAnimatedPreserveAspectRatio, A.SVGAnimatedPoints, A.SVGPointList, A.$TestUtils, A.TextDetector, A.DetectedText, A.TouchInit, A.Touch, A.TouchList, A.TrustedHTML, A.TrustedScript, A.TrustedScriptURL, A.TrustedTypePolicyFactory, A.TrustedTypePolicy, A.TrustedTypePolicyOptions, A.NavigatorUABrandVersion, A.UADataValues, A.UALowEntropyJSON, A.NavigatorUAData, A.NavigatorUA, A.URL, A.URLSearchParams, A.URLPattern, A.URLPatternInit, A.URLPatternOptions, A.URLPatternResult, A.URLPatternComponentResult, A.PerformanceMarkOptions, A.PerformanceMeasureOptions, A.VideoFrameCallbackMetadata, A.ARIAMixin, A.WebAssemblyInstantiatedSource, A.$WebAssembly, A.ModuleExportDescriptor, A.ModuleImportDescriptor, A.Module, A.Instance, A.MemoryDescriptor, A.Memory, A.TableDescriptor, A.Table, A.GlobalDescriptor, A.Global, A.DocumentTimelineOptions, A.AnimationEffect, A.EffectTiming, A.OptionalEffectTiming, A.BaseComputedKeyframe, A.BasePropertyIndexedKeyframe, A.BaseKeyframe, A.Animatable, A.GetAnimationsOptions, A.GroupEffect, A.AnimationNodeList, A.LaunchParams, A.LaunchQueue, A.BluetoothDataFilterInit, A.BluetoothLEScanFilterInit, A.RequestDeviceOptions, A.AllowedBluetoothDevice, A.BluetoothPermissionStorage, A.WatchAdvertisementsOptions, A.BluetoothManufacturerDataMap, A.BluetoothServiceDataMap, A.BluetoothRemoteGATTServer, A.BluetoothCharacteristicProperties, A.BluetoothRemoteGATTDescriptor, A.CharacteristicEventHandlers, A.BluetoothDeviceEventHandlers, A.ServiceEventHandlers, A.BluetoothUUID, A.NavigatorLocks, A.LockManager, A.LockOptions, A.LockManagerSnapshot, A.LockInfo, A.Lock, A.NDEFMessage, A.NDEFMessageInit, A.NDEFRecord, A.NDEFRecordInit, A.NDEFWriteOptions, A.NDEFMakeReadOnlyOptions, A.NDEFScanOptions, A.OTPCredentialRequestOptions, A.ShareData, A.AudioContextOptions, A.AudioSinkOptions, A.AudioSinkInfo, A.AudioTimestamp, A.AudioRenderCapacityOptions, A.OfflineAudioContextOptions, A.AudioBuffer, A.AudioBufferOptions, A.AudioNodeOptions, A.AudioParam, A.AudioBufferSourceOptions, A.AudioListener, A.ConstantSourceOptions, A.MediaElementAudioSourceOptions, A.MediaStreamAudioSourceOptions, A.MediaStreamTrackAudioSourceOptions, A.PeriodicWave, A.PeriodicWaveConstraints, A.AudioParamMap, A.AudioWorkletProcessor, A.AudioParamDescriptor, A.RegistrationResponseJSON, A.AuthenticatorAttestationResponseJSON, A.AuthenticationResponseJSON, A.AuthenticatorAssertionResponseJSON, A.AuthenticationExtensionsClientOutputsJSON, A.PublicKeyCredentialCreationOptionsJSON, A.PublicKeyCredentialUserEntityJSON, A.PublicKeyCredentialDescriptorJSON, A.AuthenticationExtensionsClientInputsJSON, A.PublicKeyCredentialRequestOptionsJSON, A.AuthenticatorResponse, A.PublicKeyCredentialParameters, A.PublicKeyCredentialCreationOptions, A.PublicKeyCredentialEntity, A.AuthenticatorSelectionCriteria, A.PublicKeyCredentialRequestOptions, A.AuthenticationExtensionsClientInputs, A.AuthenticationExtensionsClientOutputs, A.TokenBinding, A.PublicKeyCredentialDescriptor, A.CredentialPropertiesOutput, A.AuthenticationExtensionsPRFValues, A.AuthenticationExtensionsPRFInputs, A.AuthenticationExtensionsPRFOutputs, A.AuthenticationExtensionsLargeBlobInputs, A.AuthenticationExtensionsLargeBlobOutputs, A.AuthenticationExtensionsDevicePublicKeyInputs, A.AuthenticationExtensionsDevicePublicKeyOutputs, A.AudioDecoder, A.AudioDecoderInit, A.VideoDecoder, A.VideoDecoderInit, A.AudioEncoder, A.AudioEncoderInit, A.EncodedAudioChunkMetadata, A.VideoEncoder, A.VideoEncoderInit, A.EncodedVideoChunkMetadata, A.SvcOutputMetadata, A.AudioDecoderSupport, A.VideoDecoderSupport, A.AudioEncoderSupport, A.VideoEncoderSupport, A.AudioDecoderConfig, A.VideoDecoderConfig, A.AudioEncoderConfig, A.VideoEncoderConfig, A.VideoEncoderEncodeOptions, A.EncodedAudioChunk, A.EncodedAudioChunkInit, A.EncodedVideoChunk, A.EncodedVideoChunkInit, A.AudioData, A.AudioDataInit, A.AudioDataCopyToOptions, A.VideoFrame, A.VideoFrameInit, A.VideoFrameBufferInit, A.VideoFrameMetadata, A.VideoFrameCopyToOptions, A.PlaneLayout, A.VideoColorSpace, A.VideoColorSpaceInit, A.ImageDecoder, A.ImageDecoderInit, A.ImageDecodeOptions, A.ImageDecodeResult, A.ImageTrackList, A.ImageTrack, A.AacEncoderConfig, A.AvcEncoderConfig, A.FlacEncoderConfig, A.HevcEncoderConfig, A.OpusEncoderConfig, A.Algorithm, A.Crypto, A.KeyAlgorithm, A.CryptoKey, A.SubtleCrypto, A.RsaOtherPrimesInfo, A.JsonWebKey, A.CryptoKeyPair, A.NavigatorAutomationInformation, A.WebGLContextAttributes, A.WebGLUniformLocation, A.WebGLActiveInfo, A.WebGLShaderPrecisionFormat, A.WebGLRenderingContextBase, A.WebGLRenderingContextOverloads, A.WebGLRenderingContext, A.WebGL2RenderingContextBase, A.WebGL2RenderingContextOverloads, A.WebGL2RenderingContext, A.WEBGL_blend_equation_advanced_coherent, A.WEBGL_clip_cull_distance, A.WEBGL_color_buffer_float, A.WEBGL_compressed_texture_astc, A.WEBGL_compressed_texture_etc, A.WEBGL_compressed_texture_etc1, A.WEBGL_compressed_texture_pvrtc, A.WEBGL_compressed_texture_s3tc, A.WEBGL_compressed_texture_s3tc_srgb, A.WEBGL_debug_renderer_info, A.WEBGL_debug_shaders, A.WEBGL_depth_texture, A.WEBGL_draw_buffers, A.WEBGL_draw_instanced_base_vertex_base_instance, A.WEBGL_lose_context, A.WEBGL_multi_draw, A.WEBGL_multi_draw_instanced_base_vertex_base_instance, A.WEBGL_provoking_vertex, A.GPUObjectBase, A.GPUObjectDescriptorBase, A.GPUSupportedLimits, A.GPUSupportedFeatures, A.GPUAdapterInfo, A.NavigatorGPU, A.GPU, A.GPURequestAdapterOptions, A.GPUAdapter, A.GPUBuffer, A.$GPUBufferUsage, A.$GPUMapMode, A.GPUTexture, A.$GPUTextureUsage, A.GPUTextureView, A.GPUExternalTexture, A.GPUSampler, A.GPUBindGroupLayout, A.GPUBindGroupLayoutEntry, A.$GPUShaderStage, A.GPUBufferBindingLayout, A.GPUSamplerBindingLayout, A.GPUTextureBindingLayout, A.GPUStorageTextureBindingLayout, A.GPUExternalTextureBindingLayout, A.GPUBindGroup, A.GPUBindGroupEntry, A.GPUBufferBinding, A.GPUPipelineLayout, A.GPUShaderModule, A.GPUShaderModuleCompilationHint, A.GPUCompilationMessage, A.GPUCompilationInfo, A.GPUPipelineErrorInit, A.GPUPipelineBase, A.GPUProgrammableStage, A.GPUComputePipeline, A.GPURenderPipeline, A.GPUPrimitiveState, A.GPUMultisampleState, A.GPUColorTargetState, A.GPUBlendState, A.$GPUColorWrite, A.GPUBlendComponent, A.GPUDepthStencilState, A.GPUStencilFaceState, A.GPUVertexBufferLayout, A.GPUVertexAttribute, A.GPUImageDataLayout, A.GPUImageCopyTexture, A.GPUImageCopyExternalImage, A.GPUCommandBuffer, A.GPUCommandsMixin, A.GPUCommandEncoder, A.GPUBindingCommandsMixin, A.GPUDebugCommandsMixin, A.GPUComputePassEncoder, A.GPUComputePassTimestampWrite, A.GPURenderPassEncoder, A.GPURenderPassTimestampWrite, A.GPURenderPassColorAttachment, A.GPURenderPassDepthStencilAttachment, A.GPURenderCommandsMixin, A.GPURenderBundle, A.GPURenderBundleEncoder, A.GPUQueue, A.GPUQuerySet, A.GPUCanvasContext, A.GPUCanvasConfiguration, A.GPUDeviceLostInfo, A.GPUError, A.GPUColorDict, A.GPUOrigin2DDict, A.GPUOrigin3DDict, A.GPUExtent3DDict, A.HIDDeviceRequestOptions, A.HIDDeviceFilter, A.HIDCollectionInfo, A.HIDReportInfo, A.HIDReportItem, A.MIDIOptions, A.MIDIInputMap, A.MIDIOutputMap, A.NavigatorML, A.MLContextOptions, A.ML, A.MLGraph, A.MLOperandDescriptor, A.MLOperand, A.MLActivation, A.MLContext, A.MLComputeResult, A.MLCommandEncoder, A.MLBufferResourceView, A.MLGraphBuilder, A.MLBatchNormalizationOptions, A.MLClampOptions, A.MLConv2dOptions, A.MLConvTranspose2dOptions, A.MLEluOptions, A.MLGemmOptions, A.MLGruOptions, A.MLGruCellOptions, A.MLHardSigmoidOptions, A.MLInstanceNormalizationOptions, A.MLLeakyReluOptions, A.MLLinearOptions, A.MLLstmOptions, A.MLLstmCellOptions, A.MLPadOptions, A.MLPool2dOptions, A.MLReduceOptions, A.MLResample2dOptions, A.MLSliceOptions, A.MLSoftplusOptions, A.MLSplitOptions, A.MLSqueezeOptions, A.MLTransposeOptions, A.RTCConfiguration, A.RTCIceServer, A.RTCOfferAnswerOptions, A.RTCSessionDescription, A.RTCSessionDescriptionInit, A.RTCLocalSessionDescriptionInit, A.RTCIceCandidate, A.RTCIceCandidateInit, A.RTCCertificateExpiration, A.RTCCertificate, A.RTCRtpTransceiverInit, A.RTCRtpSender, A.RTCRtpParameters, A.RTCRtpCodingParameters, A.RTCRtcpParameters, A.RTCRtpHeaderExtensionParameters, A.RTCRtpCodecParameters, A.RTCRtpCapabilities, A.RTCRtpCodecCapability, A.RTCRtpHeaderExtensionCapability, A.RTCRtpReceiver, A.RTCRtpContributingSource, A.RTCRtpTransceiver, A.RTCDtlsFingerprint, A.RTCIceParameters, A.RTCIceCandidatePair, A.RTCDataChannelInit, A.RTCStatsReport, A.RTCStats, A.RTCErrorInit, A.SFrameTransformOptions, A.SFrameTransform, A.RTCEncodedVideoFrameMetadata, A.RTCEncodedVideoFrame, A.RTCEncodedAudioFrameMetadata, A.RTCEncodedAudioFrame, A.RTCRtpScriptTransformer, A.RTCRtpScriptTransform, A.RTCIceGatherOptions, A.RTCIdentityProviderRegistrar, A.RTCIdentityProvider, A.RTCIdentityAssertionResult, A.RTCIdentityProviderDetails, A.RTCIdentityValidationResult, A.RTCIdentityProviderOptions, A.RTCIdentityAssertion, A.WebTransportDatagramDuplexStream, A.WebTransport, A.WebTransportHash, A.WebTransportOptions, A.WebTransportCloseInfo, A.WebTransportSendStreamOptions, A.WebTransportStats, A.WebTransportDatagramStats, A.WebTransportSendStreamStats, A.WebTransportReceiveStreamStats, A.WebTransportBidirectionalStream, A.WebTransportErrorInit, A.USBDeviceFilter, A.USBDeviceRequestOptions, A.USBInTransferResult, A.USBOutTransferResult, A.USBIsochronousInTransferPacket, A.USBIsochronousInTransferResult, A.USBIsochronousOutTransferPacket, A.USBIsochronousOutTransferResult, A.USBDevice, A.USBControlTransferParameters, A.USBConfiguration, A.USBInterface, A.USBAlternateInterface, A.USBEndpoint, A.AllowedUSBDevice, A.USBPermissionStorage, A.VTTRegion, A.XRSessionInit, A.XRRenderStateInit, A.XRRenderState, A.XRFrame, A.XRView, A.XRViewport, A.XRRigidTransform, A.XRPose, A.XRInputSource, A.XRInputSourceArray, A.XRWebGLLayerInit, A.XRDepthStateInit, A.XRDepthInformation, A.XRDOMOverlayInit, A.XRDOMOverlayState, A.XRHand, A.XRHitTestOptionsInit, A.XRTransientInputHitTestOptionsInit, A.XRHitTestSource, A.XRTransientInputHitTestSource, A.XRHitTestResult, A.XRTransientInputHitTestResult, A.XRRayDirectionInit, A.XRRay, A.XRLightEstimate, A.XRLightProbeInit, A.XRSubImage, A.XRProjectionLayerInit, A.XRLayerInit, A.XRWebGLBinding, A.XRMediaLayerInit, A.XRMediaBinding, A.FormData]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
     _inheritMany(A.Error, [A.LateError, A._CyclicInitializationError, A.RuntimeError, A._Error, A.AssertionError, A.TypeError, A.ArgumentError, A.UnsupportedError, A.UnimplementedError, A.ConcurrentModificationError]);
-    _inherit(A.EfficientLengthIterable, A.Iterable);
     _inheritMany(A.Closure, [A.Closure2Args, A.TearOffClosure, A.initHooks_closure, A.initHooks_closure1]);
     _inheritMany(A.TearOffClosure, [A.StaticClosure, A.BoundClosure]);
-    _inherit(A.MapBase, A.MapMixin);
-    _inherit(A.JsLinkedHashMap, A.MapBase);
-    _inherit(A.LinkedHashMapKeyIterable, A.EfficientLengthIterable);
-    _inheritMany(A.Closure2Args, [A.initHooks_closure0, A.MapBase_mapToString_closure, A.MidiInputMap_keys_closure, A.MidiOutputMap_keys_closure, A.RtcStatsReport_keys_closure, A.Storage_keys_closure, A.AudioParamMap_keys_closure]);
+    _inherit(A.initHooks_closure0, A.Closure2Args);
     _inherit(A.NativeTypedArray, A.NativeTypedData);
     _inheritMany(A.NativeTypedArray, [A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
     _inherit(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
@@ -4974,132 +8580,173 @@
     _inheritMany(A.NativeTypedArrayOfInt, [A.NativeInt16List, A.NativeInt32List, A.NativeInt8List, A.NativeUint16List, A.NativeUint32List, A.NativeUint8ClampedList, A.NativeUint8List]);
     _inherit(A._TypeError, A._Error);
     _inheritMany(A.ArgumentError, [A.RangeError, A.IndexError]);
-    _inheritMany(A.EventTarget, [A.Node, A.FileWriter, A.SourceBuffer, A._SourceBufferList_EventTarget_ListMixin, A.TextTrack, A.TextTrackCue, A._TextTrackList_EventTarget_ListMixin, A.VideoTrackList, A.AudioTrackList, A.BaseAudioContext]);
-    _inheritMany(A.Node, [A.Element, A.CharacterData]);
-    _inherit(A.HtmlElement, A.Element);
-    _inheritMany(A.HtmlElement, [A.AnchorElement, A.AreaElement, A.FormElement, A.SelectElement]);
-    _inherit(A.CssPerspective, A.CssTransformComponent);
-    _inherit(A.CssStyleDeclaration, A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase);
-    _inheritMany(A.CssStyleValue, [A.CssTransformValue, A.CssUnparsedValue]);
-    _inherit(A._DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin, A._DomRectList_JavaScriptObject_ListMixin);
-    _inherit(A.DomRectList, A._DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._DomStringList_JavaScriptObject_ListMixin_ImmutableListMixin, A._DomStringList_JavaScriptObject_ListMixin);
-    _inherit(A.DomStringList, A._DomStringList_JavaScriptObject_ListMixin_ImmutableListMixin);
+    _inheritMany(A.EventTarget, [A.Sensor, A.BackgroundFetchRegistration, A.BatteryManager, A.Clipboard, A.CloseWatcher, A.CookieStore, A.Animation, A.FontFaceSet, A.Node, A.CSSPseudoElement, A.NamedFlow, A.MediaQueryList, A.VisualViewport, A.TextTrackCue, A.DevicePosture, A.AbortSignal, A.EditContext, A.MediaKeySession, A.FileReader, A.Performance, A.AudioTrackList, A.VideoTrackList, A.TextTrackList, A.TextTrack, A.OffscreenCanvas, A.Window, A.EventSource, A.MessagePort, A.BroadcastChannel, A.WorkerGlobalScope, A.Worker, A.SharedWorker, A.IdleDetector, A.IDBRequest, A.IDBDatabase, A.IDBTransaction, A.Profiler, A.Keyboard, A.MediaSource, A.SourceBuffer, A.SourceBufferList, A.MediaStreamTrack, A.MediaStream, A.MediaDevices, A.MediaRecorder, A.Navigation, A.NavigationHistoryEntry, A.NetworkInformation, A.Notification, A.PaymentRequest, A.PaymentResponse, A.PermissionStatus, A.PictureInPictureWindow, A.PortalHost, A.PresentationRequest, A.PresentationAvailability, A.PresentationConnection, A.PresentationConnectionList, A.RemotePlayback, A.ScreenOrientation, A.WakeLockSentinel, A.Serial, A.SerialPort, A.ServiceWorker, A.ServiceWorkerRegistration, A.ServiceWorkerContainer, A.SpeechRecognition, A.SpeechSynthesis, A.SpeechSynthesisUtterance, A.VirtualKeyboard, A.Bluetooth, A.BluetoothDevice, A.BluetoothRemoteGATTService, A.BluetoothRemoteGATTCharacteristic, A.NDEFReader, A.BaseAudioContext, A.AudioRenderCapacity, A.AudioNode, A.GPUDevice, A.HID, A.HIDDevice, A.MIDIAccess, A.MIDIPort, A.RTCPeerConnection, A.RTCDtlsTransport, A.RTCIceTransport, A.RTCSctpTransport, A.RTCDataChannel, A.RTCDTMFSender, A.WebSocket, A.USB, A.XRSystem, A.XRSession, A.XRSpace, A.XRLayer, A.XRLightProbe, A.WindowControlsOverlay, A.ScreenDetails, A.XMLHttpRequestEventTarget]);
+    _inheritMany(A.Sensor, [A.Accelerometer, A.AmbientLightSensor, A.GeolocationSensor, A.Gyroscope, A.Magnetometer, A.UncalibratedMagnetometer, A.OrientationSensor, A.ProximitySensor]);
+    _inheritMany(A.SensorOptions, [A.AccelerometerSensorOptions, A.GeolocationSensorOptions, A.GyroscopeSensorOptions, A.MagnetometerSensorOptions, A.OrientationSensorOptions]);
+    _inheritMany(A.Accelerometer, [A.LinearAccelerationSensor, A.GravitySensor]);
+    _inheritMany(A.AccelerometerReadingValues, [A.LinearAccelerationReadingValues, A.GravityReadingValues]);
+    _inherit(A.BackgroundFetchOptions, A.BackgroundFetchUIOptions);
+    _inheritMany(A.Event, [A.ExtendableEvent, A.ClipboardEvent, A.CookieChangeEvent, A.SecurityPolicyViolationEvent, A.AnimationEvent, A.ContentVisibilityAutoStateChangedEvent, A.FontFaceSetLoadEvent, A.UIEvent, A.TransitionEvent, A.MediaQueryListEvent, A.CustomEvent, A.TextUpdateEvent, A.TextFormatUpdateEvent, A.CharacterBoundsUpdateEvent, A.MediaKeyMessageEvent, A.MediaEncryptedEvent, A.GamepadEvent, A.SensorErrorEvent, A.TrackEvent, A.SubmitEvent, A.FormDataEvent, A.ToggleEvent, A.PopStateEvent, A.HashChangeEvent, A.PageTransitionEvent, A.BeforeUnloadEvent, A.ErrorEvent, A.PromiseRejectionEvent, A.MessageEvent, A.StorageEvent, A.IDBVersionChangeEvent, A.BeforeInstallPromptEvent, A.CaptureActionEvent, A.MediaStreamTrackEvent, A.BlobEvent, A.NavigationCurrentEntryChangeEvent, A.NavigateEvent, A.DeviceOrientationEvent, A.DeviceMotionEvent, A.PaymentRequestUpdateEvent, A.PictureInPictureEvent, A.PortalActivateEvent, A.PresentationConnectionAvailableEvent, A.PresentationConnectionCloseEvent, A.TaskPriorityChangeEvent, A.SpeechRecognitionErrorEvent, A.SpeechRecognitionEvent, A.SpeechSynthesisEvent, A.TimeEvent, A.MutationEvent, A.AnimationPlaybackEvent, A.ValueEvent, A.BluetoothAdvertisingEvent, A.NDEFReadingEvent, A.AudioRenderCapacityEvent, A.OfflineAudioCompletionEvent, A.AudioProcessingEvent, A.WebGLContextEvent, A.GPUUncapturedErrorEvent, A.HIDConnectionEvent, A.HIDInputReportEvent, A.MIDIMessageEvent, A.MIDIConnectionEvent, A.RTCPeerConnectionIceEvent, A.RTCPeerConnectionIceErrorEvent, A.RTCTrackEvent, A.RTCDataChannelEvent, A.RTCDTMFToneChangeEvent, A.RTCErrorEvent, A.SFrameTransformErrorEvent, A.RTCTransformEvent, A.CloseEvent, A.USBConnectionEvent, A.XRSessionEvent, A.XRInputSourceEvent, A.XRInputSourcesChangeEvent, A.XRReferenceSpaceEvent, A.XRLayerEvent, A.WindowControlsOverlayGeometryChangeEvent, A.ProgressEvent]);
+    _inheritMany(A.ExtendableEvent, [A.BackgroundFetchEvent, A.SyncEvent, A.ContentIndexEvent, A.ExtendableCookieChangeEvent, A.NotificationEvent, A.CanMakePaymentEvent, A.PaymentRequestEvent, A.PeriodicSyncEvent, A.PushEvent, A.PushSubscriptionChangeEvent, A.FetchEvent, A.ExtendableMessageEvent]);
+    _inheritMany(A.EventInit, [A.ExtendableEventInit, A.ClipboardEventInit, A.CookieChangeEventInit, A.SecurityPolicyViolationEventInit, A.AnimationEventInit, A.ContentVisibilityAutoStateChangedEventInit, A.FontFaceSetLoadEventInit, A.UIEventInit, A.TransitionEventInit, A.MediaQueryListEventInit, A.CustomEventInit, A.MediaKeyMessageEventInit, A.MediaEncryptedEventInit, A.GamepadEventInit, A.SensorErrorEventInit, A.TrackEventInit, A.SubmitEventInit, A.FormDataEventInit, A.ToggleEventInit, A.PopStateEventInit, A.HashChangeEventInit, A.PageTransitionEventInit, A.ErrorEventInit, A.PromiseRejectionEventInit, A.MessageEventInit, A.StorageEventInit, A.IDBVersionChangeEventInit, A.CaptureActionEventInit, A.MediaStreamTrackEventInit, A.NavigationCurrentEntryChangeEventInit, A.NavigateEventInit, A.DeviceOrientationEventInit, A.DeviceMotionEventInit, A.PaymentRequestUpdateEventInit, A.PictureInPictureEventInit, A.PortalActivateEventInit, A.PresentationConnectionAvailableEventInit, A.PresentationConnectionCloseEventInit, A.TaskPriorityChangeEventInit, A.SpeechRecognitionErrorEventInit, A.SpeechRecognitionEventInit, A.SpeechSynthesisEventInit, A.AnimationPlaybackEventInit, A.ValueEventInit, A.BluetoothAdvertisingEventInit, A.NDEFReadingEventInit, A.AudioRenderCapacityEventInit, A.OfflineAudioCompletionEventInit, A.AudioProcessingEventInit, A.WebGLContextEventInit, A.GPUUncapturedErrorEventInit, A.HIDConnectionEventInit, A.HIDInputReportEventInit, A.MIDIMessageEventInit, A.MIDIConnectionEventInit, A.RTCPeerConnectionIceEventInit, A.RTCPeerConnectionIceErrorEventInit, A.RTCTrackEventInit, A.RTCDataChannelEventInit, A.RTCDTMFToneChangeEventInit, A.RTCErrorEventInit, A.SFrameTransformErrorEventInit, A.CloseEventInit, A.USBConnectionEventInit, A.XRSessionEventInit, A.XRInputSourceEventInit, A.XRInputSourcesChangeEventInit, A.XRReferenceSpaceEventInit, A.XRLayerEventInit, A.WindowControlsOverlayGeometryChangeEventInit, A.ProgressEventInit]);
+    _inheritMany(A.ExtendableEventInit, [A.BackgroundFetchEventInit, A.SyncEventInit, A.ContentIndexEventInit, A.ExtendableCookieChangeEventInit, A.NotificationEventInit, A.PaymentRequestEventInit, A.PeriodicSyncEventInit, A.PushEventInit, A.PushSubscriptionChangeEventInit, A.FetchEventInit, A.ExtendableMessageEventInit]);
+    _inherit(A.BackgroundFetchUpdateUIEvent, A.BackgroundFetchEvent);
+    _inheritMany(A.PermissionDescriptor, [A.ClipboardPermissionDescriptor, A.FileSystemPermissionDescriptor, A.DevicePermissionDescriptor, A.PushPermissionDescriptor, A.TopLevelStorageAccessPermissionDescriptor, A.BluetoothPermissionDescriptor, A.MidiPermissionDescriptor, A.USBPermissionDescriptor, A.XRSessionSupportedPermissionDescriptor, A.XRPermissionDescriptor]);
+    _inheritMany(A.ReportBody, [A.CrashReportBody, A.CSPViolationReportBody, A.ScriptingPolicyReportBody, A.DeprecationReportBody, A.InterventionReportBody, A.PermissionsPolicyViolationReportBody]);
+    _inheritMany(A.Credential, [A.PasswordCredential, A.FederatedCredential, A.IdentityCredential, A.OTPCredential, A.PublicKeyCredential]);
+    _inheritMany(A.CredentialData, [A.PasswordCredentialData, A.FederatedCredentialInit]);
+    _inheritMany(A.WorkletGlobalScope, [A.AnimationWorkletGlobalScope, A.LayoutWorkletGlobalScope, A.PaintWorkletGlobalScope, A.AudioWorkletGlobalScope]);
+    _inheritMany(A.Animation, [A.WorkletAnimation, A.CSSAnimation, A.CSSTransition, A.ShadowAnimation]);
+    _inheritMany(A.CSSRule, [A.CSSKeyframeRule, A.CSSKeyframesRule, A.CSSGroupingRule, A.CSSLayerStatementRule, A.CSSColorProfileRule, A.CSSCounterStyleRule, A.CSSFontFaceRule, A.CSSFontFeatureValuesRule, A.CSSFontPaletteValuesRule, A.CSSPropertyRule, A.CSSStyleRule, A.CSSImportRule, A.CSSMarginRule, A.CSSNamespaceRule]);
+    _inheritMany(A.CSSGroupingRule, [A.CSSLayerBlockRule, A.CSSConditionRule, A.CSSPageRule]);
+    _inheritMany(A.CSSConditionRule, [A.CSSMediaRule, A.CSSSupportsRule, A.CSSContainerRule]);
+    _inheritMany(A.Node, [A.Element, A.Document, A.DocumentType, A.DocumentFragment, A.Attr, A.CharacterData]);
+    _inheritMany(A.Element, [A.SVGElement, A.HTMLElement, A.MathMLElement]);
+    _inheritMany(A.SVGElement, [A.SVGClipPathElement, A.SVGMaskElement, A.SVGFilterElement, A.SVGFEBlendElement, A.SVGFEColorMatrixElement, A.SVGFEComponentTransferElement, A.SVGComponentTransferFunctionElement, A.SVGFECompositeElement, A.SVGFEConvolveMatrixElement, A.SVGFEDiffuseLightingElement, A.SVGFEDistantLightElement, A.SVGFEPointLightElement, A.SVGFESpotLightElement, A.SVGFEDisplacementMapElement, A.SVGFEDropShadowElement, A.SVGFEFloodElement, A.SVGFEGaussianBlurElement, A.SVGFEImageElement, A.SVGFEMergeElement, A.SVGFEMergeNodeElement, A.SVGFEMorphologyElement, A.SVGFEOffsetElement, A.SVGFESpecularLightingElement, A.SVGFETileElement, A.SVGFETurbulenceElement, A.SVGGraphicsElement, A.SVGDescElement, A.SVGMetadataElement, A.SVGTitleElement, A.SVGStyleElement, A.SVGMarkerElement, A.SVGGradientElement, A.SVGStopElement, A.SVGPatternElement, A.SVGScriptElement, A.SVGViewElement, A.SVGAnimationElement, A.SVGMPathElement]);
+    _inheritMany(A.UIEvent, [A.NavigationEvent, A.MouseEvent, A.TouchEvent, A.FocusEvent, A.InputEvent, A.KeyboardEvent, A.CompositionEvent]);
+    _inheritMany(A.UIEventInit, [A.NavigationEventInit, A.EventModifierInit, A.FocusEventInit, A.InputEventInit, A.CompositionEventInit]);
+    _inheritMany(A.CSSParserRule, [A.CSSParserAtRule, A.CSSParserQualifiedRule, A.CSSParserDeclaration]);
+    _inheritMany(A.CSSParserValue, [A.CSSParserBlock, A.CSSParserFunction]);
+    _inherit(A.StylePropertyMap, A.StylePropertyMapReadOnly);
+    _inheritMany(A.CSSStyleValue, [A.CSSUnparsedValue, A.CSSKeywordValue, A.CSSNumericValue, A.CSSTransformValue, A.CSSImageValue, A.CSSColorValue]);
+    _inheritMany(A.CSSNumericValue, [A.CSSUnitValue, A.CSSMathValue]);
+    _inheritMany(A.CSSMathValue, [A.CSSMathSum, A.CSSMathProduct, A.CSSMathNegate, A.CSSMathInvert, A.CSSMathMin, A.CSSMathMax, A.CSSMathClamp]);
+    _inheritMany(A.CSSTransformComponent, [A.CSSTranslate, A.CSSRotate, A.CSSScale, A.CSSSkew, A.CSSSkewX, A.CSSSkewY, A.CSSPerspective, A.CSSMatrixComponent]);
+    _inheritMany(A.CSSColorValue, [A.CSSRGB, A.CSSHSL, A.CSSHWB, A.CSSLab, A.CSSLCH, A.CSSOKLab, A.CSSOKLCH, A.CSSColor]);
+    _inherit(A.CSSStyleSheet, A.StyleSheet);
+    _inheritMany(A.ScrollOptions, [A.ScrollToOptions, A.ScrollIntoViewOptions]);
+    _inheritMany(A.TextTrackCue, [A.DataCue, A.VTTCue]);
+    _inherit(A.AddEventListenerOptions, A.EventListenerOptions);
+    _inherit(A.XMLDocument, A.Document);
+    _inherit(A.ShadowRoot, A.DocumentFragment);
+    _inheritMany(A.CharacterData, [A.Text, A.ProcessingInstruction, A.Comment]);
+    _inherit(A.CDATASection, A.Text);
+    _inheritMany(A.AbstractRange, [A.StaticRange, A.Range]);
+    _inheritMany(A.PerformanceEntry, [A.PerformanceElementTiming, A.PerformanceEventTiming, A.LargestContentfulPaint, A.LayoutShift, A.PerformanceLongTaskTiming, A.TaskAttributionTiming, A.PerformanceResourceTiming, A.PerformancePaintTiming, A.PerformanceMark, A.PerformanceMeasure]);
+    _inheritMany(A.FileSystemEntry, [A.FileSystemDirectoryEntry, A.FileSystemFileEntry]);
+    _inheritMany(A.WebGLObject, [A.WebGLTimerQueryEXT, A.WebGLVertexArrayObjectOES, A.WebGLBuffer, A.WebGLFramebuffer, A.WebGLProgram, A.WebGLRenderbuffer, A.WebGLShader, A.WebGLTexture, A.WebGLQuery, A.WebGLSampler, A.WebGLSync, A.WebGLTransformFeedback, A.WebGLVertexArrayObject]);
+    _inheritMany(A.FilePickerOptions, [A.OpenFilePickerOptions, A.SaveFilePickerOptions]);
     _inherit(A.File, A.Blob);
-    _inherit(A._FileList_JavaScriptObject_ListMixin_ImmutableListMixin, A._FileList_JavaScriptObject_ListMixin);
-    _inherit(A.FileList, A._FileList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._HtmlCollection_JavaScriptObject_ListMixin_ImmutableListMixin, A._HtmlCollection_JavaScriptObject_ListMixin);
-    _inherit(A.HtmlCollection, A._HtmlCollection_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.MidiInputMap, A._MidiInputMap_JavaScriptObject_MapMixin);
-    _inherit(A.MidiOutputMap, A._MidiOutputMap_JavaScriptObject_MapMixin);
-    _inherit(A._MimeTypeArray_JavaScriptObject_ListMixin_ImmutableListMixin, A._MimeTypeArray_JavaScriptObject_ListMixin);
-    _inherit(A.MimeTypeArray, A._MimeTypeArray_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._NodeList_JavaScriptObject_ListMixin_ImmutableListMixin, A._NodeList_JavaScriptObject_ListMixin);
-    _inherit(A.NodeList, A._NodeList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._PluginArray_JavaScriptObject_ListMixin_ImmutableListMixin, A._PluginArray_JavaScriptObject_ListMixin);
-    _inherit(A.PluginArray, A._PluginArray_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.RtcStatsReport, A._RtcStatsReport_JavaScriptObject_MapMixin);
-    _inherit(A._SourceBufferList_EventTarget_ListMixin_ImmutableListMixin, A._SourceBufferList_EventTarget_ListMixin);
-    _inherit(A.SourceBufferList, A._SourceBufferList_EventTarget_ListMixin_ImmutableListMixin);
-    _inherit(A._SpeechGrammarList_JavaScriptObject_ListMixin_ImmutableListMixin, A._SpeechGrammarList_JavaScriptObject_ListMixin);
-    _inherit(A.SpeechGrammarList, A._SpeechGrammarList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.Storage, A._Storage_JavaScriptObject_MapMixin);
-    _inherit(A._TextTrackCueList_JavaScriptObject_ListMixin_ImmutableListMixin, A._TextTrackCueList_JavaScriptObject_ListMixin);
-    _inherit(A.TextTrackCueList, A._TextTrackCueList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._TextTrackList_EventTarget_ListMixin_ImmutableListMixin, A._TextTrackList_EventTarget_ListMixin);
-    _inherit(A.TextTrackList, A._TextTrackList_EventTarget_ListMixin_ImmutableListMixin);
-    _inherit(A._TouchList_JavaScriptObject_ListMixin_ImmutableListMixin, A._TouchList_JavaScriptObject_ListMixin);
-    _inherit(A.TouchList, A._TouchList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.__CssRuleList_JavaScriptObject_ListMixin_ImmutableListMixin, A.__CssRuleList_JavaScriptObject_ListMixin);
-    _inherit(A._CssRuleList, A.__CssRuleList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._DomRect, A.DomRectReadOnly);
-    _inherit(A.__GamepadList_JavaScriptObject_ListMixin_ImmutableListMixin, A.__GamepadList_JavaScriptObject_ListMixin);
-    _inherit(A._GamepadList, A.__GamepadList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.__NamedNodeMap_JavaScriptObject_ListMixin_ImmutableListMixin, A.__NamedNodeMap_JavaScriptObject_ListMixin);
-    _inherit(A._NamedNodeMap, A.__NamedNodeMap_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin, A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin);
-    _inherit(A._SpeechRecognitionResultList, A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin, A.__StyleSheetList_JavaScriptObject_ListMixin);
-    _inherit(A._StyleSheetList, A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._LengthList_JavaScriptObject_ListMixin_ImmutableListMixin, A._LengthList_JavaScriptObject_ListMixin);
-    _inherit(A.LengthList, A._LengthList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._NumberList_JavaScriptObject_ListMixin_ImmutableListMixin, A._NumberList_JavaScriptObject_ListMixin);
-    _inherit(A.NumberList, A._NumberList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._StringList_JavaScriptObject_ListMixin_ImmutableListMixin, A._StringList_JavaScriptObject_ListMixin);
-    _inherit(A.StringList, A._StringList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A._TransformList_JavaScriptObject_ListMixin_ImmutableListMixin, A._TransformList_JavaScriptObject_ListMixin);
-    _inherit(A.TransformList, A._TransformList_JavaScriptObject_ListMixin_ImmutableListMixin);
-    _inherit(A.AudioParamMap, A._AudioParamMap_JavaScriptObject_MapMixin);
-    _inherit(A.OfflineAudioContext, A.BaseAudioContext);
+    _inherit(A.FilePropertyBag, A.BlobPropertyBag);
+    _inheritMany(A.SVGComponentTransferFunctionElement, [A.SVGFEFuncRElement, A.SVGFEFuncGElement, A.SVGFEFuncBElement, A.SVGFEFuncAElement]);
+    _inheritMany(A.FileSystemHandle, [A.FileSystemFileHandle, A.FileSystemDirectoryHandle]);
+    _inheritMany(A.WritableStream, [A.FileSystemWritableFileStream, A.WebTransportSendStream]);
+    _inherit(A.ReadOptions, A.GeolocationSensorOptions);
+    _inherit(A.DOMPoint, A.DOMPointReadOnly);
+    _inherit(A.DOMRect, A.DOMRectReadOnly);
+    _inherit(A.DOMMatrix, A.DOMMatrixReadOnly);
+    _inherit(A.DOMMatrixInit, A.DOMMatrix2DInit);
+    _inheritMany(A.HTMLCollection, [A.HTMLFormControlsCollection, A.HTMLOptionsCollection]);
+    _inherit(A.RadioNodeList, A.NodeList);
+    _inheritMany(A.HTMLElement, [A.HTMLUnknownElement, A.HTMLHtmlElement, A.HTMLHeadElement, A.HTMLTitleElement, A.HTMLBaseElement, A.HTMLLinkElement, A.HTMLMetaElement, A.HTMLStyleElement, A.HTMLBodyElement, A.HTMLHeadingElement, A.HTMLParagraphElement, A.HTMLHRElement, A.HTMLPreElement, A.HTMLQuoteElement, A.HTMLOListElement, A.HTMLUListElement, A.HTMLMenuElement, A.HTMLLIElement, A.HTMLDListElement, A.HTMLDivElement, A.HTMLAnchorElement, A.HTMLDataElement, A.HTMLTimeElement, A.HTMLSpanElement, A.HTMLBRElement, A.HTMLModElement, A.HTMLPictureElement, A.HTMLSourceElement, A.HTMLImageElement, A.HTMLIFrameElement, A.HTMLEmbedElement, A.HTMLObjectElement, A.HTMLMediaElement, A.HTMLTrackElement, A.HTMLMapElement, A.HTMLAreaElement, A.HTMLTableElement, A.HTMLTableCaptionElement, A.HTMLTableColElement, A.HTMLTableSectionElement, A.HTMLTableRowElement, A.HTMLTableCellElement, A.HTMLFormElement, A.HTMLLabelElement, A.HTMLInputElement, A.HTMLButtonElement, A.HTMLSelectElement, A.HTMLDataListElement, A.HTMLOptGroupElement, A.HTMLOptionElement, A.HTMLTextAreaElement, A.HTMLOutputElement, A.HTMLProgressElement, A.HTMLMeterElement, A.HTMLFieldSetElement, A.HTMLLegendElement, A.HTMLDetailsElement, A.HTMLDialogElement, A.HTMLScriptElement, A.HTMLTemplateElement, A.HTMLSlotElement, A.HTMLCanvasElement, A.HTMLMarqueeElement, A.HTMLFrameSetElement, A.HTMLFrameElement, A.HTMLDirectoryElement, A.HTMLFontElement, A.HTMLParamElement, A.HTMLModelElement, A.HTMLPortalElement]);
+    _inheritMany(A.HTMLMediaElement, [A.HTMLVideoElement, A.HTMLAudioElement]);
+    _inheritMany(A.MouseEvent, [A.DragEvent, A.PointerEvent, A.WheelEvent]);
+    _inheritMany(A.EventModifierInit, [A.MouseEventInit, A.TouchEventInit, A.KeyboardEventInit]);
+    _inheritMany(A.MouseEventInit, [A.DragEventInit, A.PointerEventInit, A.WheelEventInit]);
+    _inheritMany(A.StructuredSerializeOptions, [A.WindowPostMessageOptions, A.PortalActivateOptions]);
+    _inheritMany(A.WorkerGlobalScope, [A.DedicatedWorkerGlobalScope, A.SharedWorkerGlobalScope, A.ServiceWorkerGlobalScope, A.RTCIdentityProviderGlobalScope]);
+    _inherit(A.IDBOpenDBRequest, A.IDBRequest);
+    _inherit(A.IDBCursorWithValue, A.IDBCursor);
+    _inheritMany(A.MediaConfiguration, [A.MediaDecodingConfiguration, A.MediaEncodingConfiguration]);
+    _inheritMany(A.MediaCapabilitiesInfo, [A.MediaCapabilitiesDecodingInfo, A.MediaCapabilitiesEncodingInfo]);
+    _inheritMany(A.MockCaptureDeviceConfiguration, [A.MockCameraConfiguration, A.MockMicrophoneConfiguration]);
+    _inheritMany(A.MediaStreamTrack, [A.CanvasCaptureMediaStreamTrack, A.BrowserCaptureMediaStreamTrack]);
+    _inherit(A.MediaTrackConstraints, A.MediaTrackConstraintSet);
+    _inheritMany(A.DOMException, [A.OverconstrainedError, A.GPUPipelineError, A.RTCError, A.WebTransportError]);
+    _inherit(A.InputDeviceInfo, A.MediaDeviceInfo);
+    _inherit(A.ConstrainDoubleRange, A.DoubleRange);
+    _inherit(A.ConstrainULongRange, A.ULongRange);
+    _inherit(A.CameraDevicePermissionDescriptor, A.DevicePermissionDescriptor);
+    _inheritMany(A.NavigationOptions, [A.NavigationNavigateOptions, A.NavigationReloadOptions]);
+    _inherit(A.PerformanceNavigationTiming, A.PerformanceResourceTiming);
+    _inheritMany(A.OrientationSensor, [A.AbsoluteOrientationSensor, A.RelativeOrientationSensor]);
+    _inherit(A.RelativeOrientationReadingValues, A.AbsoluteOrientationReadingValues);
+    _inheritMany(A.PaymentDetailsBase, [A.PaymentDetailsInit, A.PaymentDetailsUpdate]);
+    _inherit(A.PaymentMethodChangeEvent, A.PaymentRequestUpdateEvent);
+    _inherit(A.PaymentMethodChangeEventInit, A.PaymentRequestUpdateEventInit);
+    _inherit(A.TaskController, A.AbortController);
+    _inherit(A.TaskSignal, A.AbortSignal);
+    _inheritMany(A.AnimationTimeline, [A.ScrollTimeline, A.DocumentTimeline]);
+    _inherit(A.ViewTimeline, A.ScrollTimeline);
+    _inherit(A.CollectedClientPaymentData, A.CollectedClientData);
+    _inherit(A.WindowClient, A.Client);
+    _inherit(A.MultiCacheQueryOptions, A.CacheQueryOptions);
+    _inherit(A.SpeechSynthesisErrorEvent, A.SpeechSynthesisEvent);
+    _inherit(A.SpeechSynthesisErrorEventInit, A.SpeechSynthesisEventInit);
+    _inheritMany(A.SVGGraphicsElement, [A.SVGGeometryElement, A.SVGSVGElement, A.SVGGElement, A.SVGDefsElement, A.SVGSymbolElement, A.SVGUseElement, A.SVGSwitchElement, A.SVGTextContentElement, A.SVGImageElement, A.SVGForeignObjectElement, A.SVGAElement]);
+    _inherit(A.SVGUseElementShadowRoot, A.ShadowRoot);
+    _inheritMany(A.SVGGeometryElement, [A.SVGPathElement, A.SVGRectElement, A.SVGCircleElement, A.SVGEllipseElement, A.SVGLineElement, A.SVGPolylineElement, A.SVGPolygonElement]);
+    _inheritMany(A.SVGTextContentElement, [A.SVGTextPositioningElement, A.SVGTextPathElement]);
+    _inheritMany(A.SVGTextPositioningElement, [A.SVGTextElement, A.SVGTSpanElement]);
+    _inheritMany(A.SVGGradientElement, [A.SVGLinearGradientElement, A.SVGRadialGradientElement]);
+    _inheritMany(A.SVGAnimationElement, [A.SVGAnimateElement, A.SVGSetElement, A.SVGAnimateMotionElement, A.SVGAnimateTransformElement, A.SVGDiscardElement]);
+    _inheritMany(A.EffectTiming, [A.ComputedEffectTiming, A.KeyframeEffectOptions]);
+    _inherit(A.KeyframeEffect, A.AnimationEffect);
+    _inherit(A.KeyframeAnimationOptions, A.KeyframeEffectOptions);
+    _inherit(A.SequenceEffect, A.GroupEffect);
+    _inheritMany(A.BluetoothDataFilterInit, [A.BluetoothManufacturerDataFilterInit, A.BluetoothServiceDataFilterInit]);
+    _inheritMany(A.PermissionStatus, [A.BluetoothPermissionResult, A.USBPermissionResult, A.XRPermissionStatus]);
+    _inheritMany(A.BaseAudioContext, [A.AudioContext, A.OfflineAudioContext]);
+    _inheritMany(A.AudioNode, [A.AudioScheduledSourceNode, A.AnalyserNode, A.AudioDestinationNode, A.BiquadFilterNode, A.ChannelMergerNode, A.ChannelSplitterNode, A.ConvolverNode, A.DelayNode, A.DynamicsCompressorNode, A.GainNode, A.IIRFilterNode, A.MediaElementAudioSourceNode, A.MediaStreamAudioDestinationNode, A.MediaStreamAudioSourceNode, A.MediaStreamTrackAudioSourceNode, A.PannerNode, A.ScriptProcessorNode, A.StereoPannerNode, A.WaveShaperNode, A.AudioWorkletNode]);
+    _inheritMany(A.AudioNodeOptions, [A.AnalyserOptions, A.BiquadFilterOptions, A.ChannelMergerOptions, A.ChannelSplitterOptions, A.ConvolverOptions, A.DelayOptions, A.DynamicsCompressorOptions, A.GainOptions, A.IIRFilterOptions, A.OscillatorOptions, A.PannerOptions, A.StereoPannerOptions, A.WaveShaperOptions, A.AudioWorkletNodeOptions]);
+    _inheritMany(A.AudioScheduledSourceNode, [A.AudioBufferSourceNode, A.ConstantSourceNode, A.OscillatorNode]);
+    _inherit(A.PeriodicWaveOptions, A.PeriodicWaveConstraints);
+    _inherit(A.AudioWorklet, A.Worklet);
+    _inheritMany(A.AuthenticatorResponse, [A.AuthenticatorAttestationResponse, A.AuthenticatorAssertionResponse]);
+    _inheritMany(A.PublicKeyCredentialEntity, [A.PublicKeyCredentialRpEntity, A.PublicKeyCredentialUserEntity]);
+    _inheritMany(A.Algorithm, [A.Ed448Params, A.RsaKeyGenParams, A.RsaHashedImportParams, A.RsaPssParams, A.RsaOaepParams, A.EcdsaParams, A.EcKeyGenParams, A.EcKeyImportParams, A.EcdhKeyDeriveParams, A.AesCtrParams, A.AesKeyGenParams, A.AesDerivedKeyParams, A.AesCbcParams, A.AesGcmParams, A.HmacImportParams, A.HmacKeyGenParams, A.HkdfParams, A.Pbkdf2Params]);
+    _inherit(A.RsaHashedKeyGenParams, A.RsaKeyGenParams);
+    _inheritMany(A.KeyAlgorithm, [A.RsaKeyAlgorithm, A.EcKeyAlgorithm, A.AesKeyAlgorithm, A.HmacKeyAlgorithm]);
+    _inherit(A.RsaHashedKeyAlgorithm, A.RsaKeyAlgorithm);
+    _inheritMany(A.GPUObjectDescriptorBase, [A.GPUDeviceDescriptor, A.GPUBufferDescriptor, A.GPUTextureDescriptor, A.GPUTextureViewDescriptor, A.GPUExternalTextureDescriptor, A.GPUSamplerDescriptor, A.GPUBindGroupLayoutDescriptor, A.GPUBindGroupDescriptor, A.GPUPipelineLayoutDescriptor, A.GPUShaderModuleDescriptor, A.GPUPipelineDescriptorBase, A.GPUCommandBufferDescriptor, A.GPUCommandEncoderDescriptor, A.GPUComputePassDescriptor, A.GPURenderPassDescriptor, A.GPURenderPassLayout, A.GPURenderBundleDescriptor, A.GPUQueueDescriptor, A.GPUQuerySetDescriptor]);
+    _inheritMany(A.GPUPipelineDescriptorBase, [A.GPUComputePipelineDescriptor, A.GPURenderPipelineDescriptor]);
+    _inheritMany(A.GPUProgrammableStage, [A.GPUFragmentState, A.GPUVertexState]);
+    _inherit(A.GPUImageCopyBuffer, A.GPUImageDataLayout);
+    _inherit(A.GPUImageCopyTextureTagged, A.GPUImageCopyTexture);
+    _inherit(A.GPURenderBundleEncoderDescriptor, A.GPURenderPassLayout);
+    _inheritMany(A.GPUError, [A.GPUValidationError, A.GPUOutOfMemoryError, A.GPUInternalError]);
+    _inheritMany(A.MIDIPort, [A.MIDIInput, A.MIDIOutput]);
+    _inheritMany(A.RTCOfferAnswerOptions, [A.RTCOfferOptions, A.RTCAnswerOptions]);
+    _inheritMany(A.RTCRtpParameters, [A.RTCRtpSendParameters, A.RTCRtpReceiveParameters]);
+    _inherit(A.RTCRtpEncodingParameters, A.RTCRtpCodingParameters);
+    _inherit(A.RTCRtpSynchronizationSource, A.RTCRtpContributingSource);
+    _inheritMany(A.RTCStats, [A.RTCRtpStreamStats, A.RTCCodecStats, A.RTCMediaSourceStats, A.RTCAudioPlayoutStats, A.RTCPeerConnectionStats, A.RTCDataChannelStats, A.RTCTransportStats, A.RTCIceCandidateStats, A.RTCIceCandidatePairStats, A.RTCCertificateStats]);
+    _inheritMany(A.RTCRtpStreamStats, [A.RTCReceivedRtpStreamStats, A.RTCSentRtpStreamStats]);
+    _inheritMany(A.RTCReceivedRtpStreamStats, [A.RTCInboundRtpStreamStats, A.RTCRemoteInboundRtpStreamStats]);
+    _inheritMany(A.RTCSentRtpStreamStats, [A.RTCOutboundRtpStreamStats, A.RTCRemoteOutboundRtpStreamStats]);
+    _inheritMany(A.RTCMediaSourceStats, [A.RTCAudioSourceStats, A.RTCVideoSourceStats]);
+    _inherit(A.WebTransportReceiveStream, A.ReadableStream);
+    _inheritMany(A.XRSpace, [A.XRReferenceSpace, A.XRJointSpace]);
+    _inherit(A.XRBoundedReferenceSpace, A.XRReferenceSpace);
+    _inheritMany(A.XRPose, [A.XRViewerPose, A.XRJointPose]);
+    _inheritMany(A.XRLayer, [A.XRWebGLLayer, A.XRCompositionLayer]);
+    _inheritMany(A.XRDepthInformation, [A.XRCPUDepthInformation, A.XRWebGLDepthInformation]);
+    _inheritMany(A.XRCompositionLayer, [A.XRProjectionLayer, A.XRQuadLayer, A.XRCylinderLayer, A.XREquirectLayer, A.XRCubeLayer]);
+    _inherit(A.XRWebGLSubImage, A.XRSubImage);
+    _inheritMany(A.XRLayerInit, [A.XRQuadLayerInit, A.XRCylinderLayerInit, A.XREquirectLayerInit, A.XRCubeLayerInit]);
+    _inheritMany(A.XRMediaLayerInit, [A.XRMediaQuadLayerInit, A.XRMediaCylinderLayerInit, A.XRMediaEquirectLayerInit]);
+    _inherit(A.ScreenDetailed, A.Screen);
+    _inheritMany(A.XMLHttpRequestEventTarget, [A.XMLHttpRequestUpload, A.XMLHttpRequest]);
     _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A.ListMixin);
     _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
     _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, A.ListMixin);
     _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
-    _mixin(A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase, A.CssStyleDeclarationBase);
-    _mixin(A._DomRectList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._DomStringList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._DomStringList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._FileList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._FileList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._HtmlCollection_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._HtmlCollection_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._MidiInputMap_JavaScriptObject_MapMixin, A.MapMixin);
-    _mixin(A._MidiOutputMap_JavaScriptObject_MapMixin, A.MapMixin);
-    _mixin(A._MimeTypeArray_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._MimeTypeArray_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._NodeList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._NodeList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._PluginArray_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._PluginArray_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._RtcStatsReport_JavaScriptObject_MapMixin, A.MapMixin);
-    _mixin(A._SourceBufferList_EventTarget_ListMixin, A.ListMixin);
-    _mixin(A._SourceBufferList_EventTarget_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._SpeechGrammarList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._SpeechGrammarList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._Storage_JavaScriptObject_MapMixin, A.MapMixin);
-    _mixin(A._TextTrackCueList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._TextTrackCueList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._TextTrackList_EventTarget_ListMixin, A.ListMixin);
-    _mixin(A._TextTrackList_EventTarget_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._TouchList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._TouchList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A.__CssRuleList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A.__CssRuleList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A.__GamepadList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A.__GamepadList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A.__NamedNodeMap_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A.__NamedNodeMap_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A.__StyleSheetList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._LengthList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._LengthList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._NumberList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._NumberList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._StringList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._StringList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._TransformList_JavaScriptObject_ListMixin, A.ListMixin);
-    _mixin(A._TransformList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
-    _mixin(A._AudioParamMap_JavaScriptObject_MapMixin, A.MapMixin);
   })();
   var init = {
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~(String,@)", "@(@)", "@(@,String)", "@(String)", "~(Object?,Object?)", "~(String,String)"],
+    types: ["@(@)", "@(@,String)", "@(String)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")
   };
-  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","JSPromise":"LegacyJavaScriptObject","$Console":"LegacyJavaScriptObject","NativeByteBuffer":"JavaScriptObject","AudioContext":"BaseAudioContext","AbsoluteOrientationSensor":"EventTarget","OrientationSensor":"EventTarget","Sensor":"EventTarget","MathMLElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssMatrixComponent":"CssTransformComponent","CssStyleSheet":"StyleSheet","CssurlImageValue":"CssStyleValue","CssImageValue":"CssStyleValue","CssResourceValue":"CssStyleValue","NativeFloat32List":"NativeTypedArrayOfDouble","NativeByteData":"NativeTypedData","JSBool":{"bool":[]},"LegacyJavaScriptObject":{"JavaScriptObject":[]},"JSArray":{"List":["1"],"JavaScriptObject":[],"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"JavaScriptObject":[],"Iterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"EfficientLengthIterable":{"Iterable":["1"]},"JsLinkedHashMap":{"MapMixin":["1","2"],"MapMixin.K":"1","MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"Iterable":["1"]},"NativeTypedData":{"JavaScriptObject":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JavaScriptObject":[]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"JavaScriptObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"ListMixin.E":"double"},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"MapBase":{"MapMixin":["1","2"]},"double":{"num":[]},"int":{"num":[]},"CssRule":{"JavaScriptObject":[]},"File":{"JavaScriptObject":[]},"Gamepad":{"JavaScriptObject":[]},"MimeType":{"JavaScriptObject":[]},"Node":{"JavaScriptObject":[]},"Plugin":{"JavaScriptObject":[]},"SourceBuffer":{"JavaScriptObject":[]},"SpeechGrammar":{"JavaScriptObject":[]},"SpeechRecognitionResult":{"JavaScriptObject":[]},"StyleSheet":{"JavaScriptObject":[]},"TextTrack":{"JavaScriptObject":[]},"TextTrackCue":{"JavaScriptObject":[]},"Touch":{"JavaScriptObject":[]},"HtmlElement":{"Node":[],"JavaScriptObject":[]},"AccessibleNodeList":{"JavaScriptObject":[]},"AnchorElement":{"Node":[],"JavaScriptObject":[]},"AreaElement":{"Node":[],"JavaScriptObject":[]},"Blob":{"JavaScriptObject":[]},"CharacterData":{"Node":[],"JavaScriptObject":[]},"CssPerspective":{"JavaScriptObject":[]},"CssStyleDeclaration":{"JavaScriptObject":[]},"CssStyleValue":{"JavaScriptObject":[]},"CssTransformComponent":{"JavaScriptObject":[]},"CssTransformValue":{"JavaScriptObject":[]},"CssUnparsedValue":{"JavaScriptObject":[]},"DataTransferItemList":{"JavaScriptObject":[]},"DomException":{"JavaScriptObject":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"ImmutableListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"JavaScriptObject":[],"Iterable":["Rectangle<num>"],"ImmutableListMixin.E":"Rectangle<num>","ListMixin.E":"Rectangle<num>"},"DomRectReadOnly":{"JavaScriptObject":[],"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"ImmutableListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"JavaScriptObject":[],"Iterable":["String"],"ImmutableListMixin.E":"String","ListMixin.E":"String"},"DomTokenList":{"JavaScriptObject":[]},"Element":{"Node":[],"JavaScriptObject":[]},"EventTarget":{"JavaScriptObject":[]},"FileList":{"ListMixin":["File"],"ImmutableListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"JavaScriptObject":[],"Iterable":["File"],"ImmutableListMixin.E":"File","ListMixin.E":"File"},"FileWriter":{"JavaScriptObject":[]},"FormElement":{"Node":[],"JavaScriptObject":[]},"History":{"JavaScriptObject":[]},"HtmlCollection":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"JavaScriptObject":[],"Iterable":["Node"],"ImmutableListMixin.E":"Node","ListMixin.E":"Node"},"Location":{"JavaScriptObject":[]},"MediaList":{"JavaScriptObject":[]},"MidiInputMap":{"JavaScriptObject":[],"MapMixin":["String","@"],"MapMixin.K":"String","MapMixin.V":"@"},"MidiOutputMap":{"JavaScriptObject":[],"MapMixin":["String","@"],"MapMixin.K":"String","MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"ImmutableListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"JavaScriptObject":[],"Iterable":["MimeType"],"ImmutableListMixin.E":"MimeType","ListMixin.E":"MimeType"},"NodeList":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"JavaScriptObject":[],"Iterable":["Node"],"ImmutableListMixin.E":"Node","ListMixin.E":"Node"},"PluginArray":{"ListMixin":["Plugin"],"ImmutableListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"JavaScriptObject":[],"Iterable":["Plugin"],"ImmutableListMixin.E":"Plugin","ListMixin.E":"Plugin"},"RtcStatsReport":{"JavaScriptObject":[],"MapMixin":["String","@"],"MapMixin.K":"String","MapMixin.V":"@"},"SelectElement":{"Node":[],"JavaScriptObject":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"ImmutableListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"JavaScriptObject":[],"Iterable":["SourceBuffer"],"ImmutableListMixin.E":"SourceBuffer","ListMixin.E":"SourceBuffer"},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"ImmutableListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"JavaScriptObject":[],"Iterable":["SpeechGrammar"],"ImmutableListMixin.E":"SpeechGrammar","ListMixin.E":"SpeechGrammar"},"Storage":{"JavaScriptObject":[],"MapMixin":["String","String"],"MapMixin.K":"String","MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"ImmutableListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"JavaScriptObject":[],"Iterable":["TextTrackCue"],"ImmutableListMixin.E":"TextTrackCue","ListMixin.E":"TextTrackCue"},"TextTrackList":{"ListMixin":["TextTrack"],"ImmutableListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"JavaScriptObject":[],"Iterable":["TextTrack"],"ImmutableListMixin.E":"TextTrack","ListMixin.E":"TextTrack"},"TimeRanges":{"JavaScriptObject":[]},"TouchList":{"ListMixin":["Touch"],"ImmutableListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"JavaScriptObject":[],"Iterable":["Touch"],"ImmutableListMixin.E":"Touch","ListMixin.E":"Touch"},"TrackDefaultList":{"JavaScriptObject":[]},"Url":{"JavaScriptObject":[]},"VideoTrackList":{"JavaScriptObject":[]},"_CssRuleList":{"ListMixin":["CssRule"],"ImmutableListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"JavaScriptObject":[],"Iterable":["CssRule"],"ImmutableListMixin.E":"CssRule","ListMixin.E":"CssRule"},"_DomRect":{"JavaScriptObject":[],"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"ImmutableListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"JavaScriptObject":[],"Iterable":["Gamepad?"],"ImmutableListMixin.E":"Gamepad?","ListMixin.E":"Gamepad?"},"_NamedNodeMap":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"JavaScriptObject":[],"Iterable":["Node"],"ImmutableListMixin.E":"Node","ListMixin.E":"Node"},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"ImmutableListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"JavaScriptObject":[],"Iterable":["SpeechRecognitionResult"],"ImmutableListMixin.E":"SpeechRecognitionResult","ListMixin.E":"SpeechRecognitionResult"},"_StyleSheetList":{"ListMixin":["StyleSheet"],"ImmutableListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"JavaScriptObject":[],"Iterable":["StyleSheet"],"ImmutableListMixin.E":"StyleSheet","ListMixin.E":"StyleSheet"},"Length":{"JavaScriptObject":[]},"Number":{"JavaScriptObject":[]},"Transform":{"JavaScriptObject":[]},"LengthList":{"ListMixin":["Length"],"ImmutableListMixin":["Length"],"List":["Length"],"JavaScriptObject":[],"Iterable":["Length"],"ImmutableListMixin.E":"Length","ListMixin.E":"Length"},"NumberList":{"ListMixin":["Number"],"ImmutableListMixin":["Number"],"List":["Number"],"JavaScriptObject":[],"Iterable":["Number"],"ImmutableListMixin.E":"Number","ListMixin.E":"Number"},"PointList":{"JavaScriptObject":[]},"StringList":{"ListMixin":["String"],"ImmutableListMixin":["String"],"List":["String"],"JavaScriptObject":[],"Iterable":["String"],"ImmutableListMixin.E":"String","ListMixin.E":"String"},"TransformList":{"ListMixin":["Transform"],"ImmutableListMixin":["Transform"],"List":["Transform"],"JavaScriptObject":[],"Iterable":["Transform"],"ImmutableListMixin.E":"Transform","ListMixin.E":"Transform"},"AudioBuffer":{"JavaScriptObject":[]},"AudioParamMap":{"JavaScriptObject":[],"MapMixin":["String","@"],"MapMixin.K":"String","MapMixin.V":"@"},"AudioTrackList":{"JavaScriptObject":[]},"BaseAudioContext":{"JavaScriptObject":[]},"OfflineAudioContext":{"JavaScriptObject":[]}}'));
-  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"NativeTypedArray":1,"MapBase":2}'));
+  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","JSPromise":"LegacyJavaScriptObject","Accelerometer":"LegacyJavaScriptObject","AccelerometerSensorOptions":"LegacyJavaScriptObject","LinearAccelerationSensor":"LegacyJavaScriptObject","GravitySensor":"LegacyJavaScriptObject","AccelerometerReadingValues":"LegacyJavaScriptObject","LinearAccelerationReadingValues":"LegacyJavaScriptObject","GravityReadingValues":"LegacyJavaScriptObject","AmbientLightSensor":"LegacyJavaScriptObject","AmbientLightReadingValues":"LegacyJavaScriptObject","XRAnchor":"LegacyJavaScriptObject","XRAnchorSet":"LegacyJavaScriptObject","ANGLE_instanced_arrays":"LegacyJavaScriptObject","HTMLAttributionSrcElementUtils":"LegacyJavaScriptObject","AudioOutputOptions":"LegacyJavaScriptObject","BackgroundFetchManager":"LegacyJavaScriptObject","BackgroundFetchUIOptions":"LegacyJavaScriptObject","BackgroundFetchOptions":"LegacyJavaScriptObject","BackgroundFetchRegistration":"LegacyJavaScriptObject","BackgroundFetchRecord":"LegacyJavaScriptObject","BackgroundFetchEvent":"LegacyJavaScriptObject","BackgroundFetchEventInit":"LegacyJavaScriptObject","BackgroundFetchUpdateUIEvent":"LegacyJavaScriptObject","SyncManager":"LegacyJavaScriptObject","SyncEvent":"LegacyJavaScriptObject","SyncEventInit":"LegacyJavaScriptObject","NavigatorBadge":"LegacyJavaScriptObject","BatteryManager":"LegacyJavaScriptObject","CaptureHandleConfig":"LegacyJavaScriptObject","CaptureHandle":"LegacyJavaScriptObject","ClipboardEventInit":"LegacyJavaScriptObject","ClipboardEvent":"LegacyJavaScriptObject","ClipboardItem":"LegacyJavaScriptObject","ClipboardItemOptions":"LegacyJavaScriptObject","Clipboard":"LegacyJavaScriptObject","ClipboardPermissionDescriptor":"LegacyJavaScriptObject","CloseWatcher":"LegacyJavaScriptObject","CloseWatcherOptions":"LegacyJavaScriptObject","CompressionStream":"LegacyJavaScriptObject","DecompressionStream":"LegacyJavaScriptObject","PressureObserver":"LegacyJavaScriptObject","PressureRecord":"LegacyJavaScriptObject","PressureObserverOptions":"LegacyJavaScriptObject","$Console":"LegacyJavaScriptObject","ContactAddress":"LegacyJavaScriptObject","ContactInfo":"LegacyJavaScriptObject","ContactsSelectOptions":"LegacyJavaScriptObject","ContactsManager":"LegacyJavaScriptObject","ContentDescription":"LegacyJavaScriptObject","ContentIndex":"LegacyJavaScriptObject","ContentIndexEventInit":"LegacyJavaScriptObject","ContentIndexEvent":"LegacyJavaScriptObject","CookieStore":"LegacyJavaScriptObject","CookieStoreGetOptions":"LegacyJavaScriptObject","CookieInit":"LegacyJavaScriptObject","CookieStoreDeleteOptions":"LegacyJavaScriptObject","CookieListItem":"LegacyJavaScriptObject","CookieStoreManager":"LegacyJavaScriptObject","CookieChangeEvent":"LegacyJavaScriptObject","CookieChangeEventInit":"LegacyJavaScriptObject","ExtendableCookieChangeEvent":"LegacyJavaScriptObject","ExtendableCookieChangeEventInit":"LegacyJavaScriptObject","CrashReportBody":"LegacyJavaScriptObject","Credential":"LegacyJavaScriptObject","CredentialUserData":"LegacyJavaScriptObject","CredentialsContainer":"LegacyJavaScriptObject","CredentialData":"LegacyJavaScriptObject","CredentialRequestOptions":"LegacyJavaScriptObject","CredentialCreationOptions":"LegacyJavaScriptObject","PasswordCredential":"LegacyJavaScriptObject","PasswordCredentialData":"LegacyJavaScriptObject","FederatedCredential":"LegacyJavaScriptObject","FederatedCredentialRequestOptions":"LegacyJavaScriptObject","FederatedCredentialInit":"LegacyJavaScriptObject","CSPViolationReportBody":"LegacyJavaScriptObject","SecurityPolicyViolationEvent":"LegacyJavaScriptObject","SecurityPolicyViolationEventInit":"LegacyJavaScriptObject","ScriptingPolicyReportBody":"LegacyJavaScriptObject","AnimationWorkletGlobalScope":"LegacyJavaScriptObject","WorkletAnimationEffect":"LegacyJavaScriptObject","WorkletAnimation":"LegacyJavaScriptObject","WorkletGroupEffect":"LegacyJavaScriptObject","AnimationEvent":"LegacyJavaScriptObject","AnimationEventInit":"LegacyJavaScriptObject","CSSKeyframeRule":"LegacyJavaScriptObject","CSSKeyframesRule":"LegacyJavaScriptObject","CSSAnimation":"LegacyJavaScriptObject","CSSLayerBlockRule":"LegacyJavaScriptObject","CSSLayerStatementRule":"LegacyJavaScriptObject","CSSColorProfileRule":"LegacyJavaScriptObject","CSSConditionRule":"LegacyJavaScriptObject","CSSMediaRule":"LegacyJavaScriptObject","CSSSupportsRule":"LegacyJavaScriptObject","ContentVisibilityAutoStateChangedEvent":"LegacyJavaScriptObject","ContentVisibilityAutoStateChangedEventInit":"LegacyJavaScriptObject","CSSContainerRule":"LegacyJavaScriptObject","CSSCounterStyleRule":"LegacyJavaScriptObject","FontFaceDescriptors":"LegacyJavaScriptObject","FontFace":"LegacyJavaScriptObject","FontFaceFeatures":"LegacyJavaScriptObject","FontFaceVariationAxis":"LegacyJavaScriptObject","FontFaceVariations":"LegacyJavaScriptObject","FontFacePalette":"LegacyJavaScriptObject","FontFacePalettes":"LegacyJavaScriptObject","FontFaceSetLoadEventInit":"LegacyJavaScriptObject","FontFaceSetLoadEvent":"LegacyJavaScriptObject","FontFaceSet":"LegacyJavaScriptObject","FontFaceSource":"LegacyJavaScriptObject","CSSFontFaceRule":"LegacyJavaScriptObject","CSSFontFeatureValuesRule":"LegacyJavaScriptObject","CSSFontFeatureValuesMap":"LegacyJavaScriptObject","CSSFontPaletteValuesRule":"LegacyJavaScriptObject","Highlight":"LegacyJavaScriptObject","HighlightRegistry":"LegacyJavaScriptObject","LayoutWorkletGlobalScope":"LegacyJavaScriptObject","LayoutOptions":"LegacyJavaScriptObject","LayoutChild":"LegacyJavaScriptObject","LayoutFragment":"LegacyJavaScriptObject","IntrinsicSizes":"LegacyJavaScriptObject","LayoutConstraints":"LegacyJavaScriptObject","LayoutConstraintsOptions":"LegacyJavaScriptObject","ChildBreakToken":"LegacyJavaScriptObject","BreakToken":"LegacyJavaScriptObject","BreakTokenOptions":"LegacyJavaScriptObject","LayoutEdges":"LegacyJavaScriptObject","FragmentResultOptions":"LegacyJavaScriptObject","FragmentResult":"LegacyJavaScriptObject","IntrinsicSizesResultOptions":"LegacyJavaScriptObject","SVGClipPathElement":"LegacyJavaScriptObject","SVGMaskElement":"LegacyJavaScriptObject","FocusableAreasOption":"LegacyJavaScriptObject","SpatialNavigationSearchOptions":"LegacyJavaScriptObject","NavigationEvent":"LegacyJavaScriptObject","NavigationEventInit":"LegacyJavaScriptObject","PaintWorkletGlobalScope":"LegacyJavaScriptObject","PaintRenderingContext2DSettings":"LegacyJavaScriptObject","PaintRenderingContext2D":"LegacyJavaScriptObject","PaintSize":"LegacyJavaScriptObject","CSSParserOptions":"LegacyJavaScriptObject","CSSParserRule":"LegacyJavaScriptObject","CSSParserAtRule":"LegacyJavaScriptObject","CSSParserQualifiedRule":"LegacyJavaScriptObject","CSSParserDeclaration":"LegacyJavaScriptObject","CSSParserValue":"LegacyJavaScriptObject","CSSParserBlock":"LegacyJavaScriptObject","CSSParserFunction":"LegacyJavaScriptObject","PropertyDefinition":"LegacyJavaScriptObject","CSSPropertyRule":"LegacyJavaScriptObject","CSSPseudoElement":"LegacyJavaScriptObject","NamedFlowMap":"LegacyJavaScriptObject","NamedFlow":"LegacyJavaScriptObject","Region":"LegacyJavaScriptObject","TransitionEvent":"LegacyJavaScriptObject","TransitionEventInit":"LegacyJavaScriptObject","CSSTransition":"LegacyJavaScriptObject","CSSStyleValue":"LegacyJavaScriptObject","StylePropertyMapReadOnly":"LegacyJavaScriptObject","StylePropertyMap":"LegacyJavaScriptObject","CSSUnparsedValue":"LegacyJavaScriptObject","CSSVariableReferenceValue":"LegacyJavaScriptObject","CSSKeywordValue":"LegacyJavaScriptObject","CSSNumericType":"LegacyJavaScriptObject","CSSNumericValue":"LegacyJavaScriptObject","CSSUnitValue":"LegacyJavaScriptObject","CSSMathValue":"LegacyJavaScriptObject","CSSMathSum":"LegacyJavaScriptObject","CSSMathProduct":"LegacyJavaScriptObject","CSSMathNegate":"LegacyJavaScriptObject","CSSMathInvert":"LegacyJavaScriptObject","CSSMathMin":"LegacyJavaScriptObject","CSSMathMax":"LegacyJavaScriptObject","CSSMathClamp":"LegacyJavaScriptObject","CSSNumericArray":"LegacyJavaScriptObject","CSSTransformValue":"LegacyJavaScriptObject","CSSTransformComponent":"LegacyJavaScriptObject","CSSTranslate":"LegacyJavaScriptObject","CSSRotate":"LegacyJavaScriptObject","CSSScale":"LegacyJavaScriptObject","CSSSkew":"LegacyJavaScriptObject","CSSSkewX":"LegacyJavaScriptObject","CSSSkewY":"LegacyJavaScriptObject","CSSPerspective":"LegacyJavaScriptObject","CSSMatrixComponent":"LegacyJavaScriptObject","CSSMatrixComponentOptions":"LegacyJavaScriptObject","CSSImageValue":"LegacyJavaScriptObject","CSSColorValue":"LegacyJavaScriptObject","CSSRGB":"LegacyJavaScriptObject","CSSHSL":"LegacyJavaScriptObject","CSSHWB":"LegacyJavaScriptObject","CSSLab":"LegacyJavaScriptObject","CSSLCH":"LegacyJavaScriptObject","CSSOKLab":"LegacyJavaScriptObject","CSSOKLCH":"LegacyJavaScriptObject","CSSColor":"LegacyJavaScriptObject","ViewTransition":"LegacyJavaScriptObject","MediaList":"LegacyJavaScriptObject","StyleSheet":"LegacyJavaScriptObject","CSSStyleSheet":"LegacyJavaScriptObject","CSSStyleSheetInit":"LegacyJavaScriptObject","StyleSheetList":"LegacyJavaScriptObject","LinkStyle":"LegacyJavaScriptObject","CSSRuleList":"LegacyJavaScriptObject","CSSRule":"LegacyJavaScriptObject","CSSStyleRule":"LegacyJavaScriptObject","CSSImportRule":"LegacyJavaScriptObject","CSSGroupingRule":"LegacyJavaScriptObject","CSSPageRule":"LegacyJavaScriptObject","CSSMarginRule":"LegacyJavaScriptObject","CSSNamespaceRule":"LegacyJavaScriptObject","CSSStyleDeclaration":"LegacyJavaScriptObject","ElementCSSInlineStyle":"LegacyJavaScriptObject","$CSS":"LegacyJavaScriptObject","ScrollOptions":"LegacyJavaScriptObject","ScrollToOptions":"LegacyJavaScriptObject","MediaQueryList":"LegacyJavaScriptObject","MediaQueryListEvent":"LegacyJavaScriptObject","MediaQueryListEventInit":"LegacyJavaScriptObject","Screen":"LegacyJavaScriptObject","CaretPosition":"LegacyJavaScriptObject","ScrollIntoViewOptions":"LegacyJavaScriptObject","CheckVisibilityOptions":"LegacyJavaScriptObject","BoxQuadOptions":"LegacyJavaScriptObject","ConvertCoordinateOptions":"LegacyJavaScriptObject","GeometryUtils":"LegacyJavaScriptObject","VisualViewport":"LegacyJavaScriptObject","CustomStateSet":"LegacyJavaScriptObject","DataCue":"LegacyJavaScriptObject","DeprecationReportBody":"LegacyJavaScriptObject","NavigatorDeviceMemory":"LegacyJavaScriptObject","DevicePosture":"LegacyJavaScriptObject","DigitalGoodsService":"LegacyJavaScriptObject","ItemDetails":"LegacyJavaScriptObject","PurchaseDetails":"LegacyJavaScriptObject","Event":"LegacyJavaScriptObject","EventInit":"LegacyJavaScriptObject","CustomEvent":"LegacyJavaScriptObject","CustomEventInit":"LegacyJavaScriptObject","EventTarget":"LegacyJavaScriptObject","EventListenerOptions":"LegacyJavaScriptObject","AddEventListenerOptions":"LegacyJavaScriptObject","AbortController":"LegacyJavaScriptObject","AbortSignal":"LegacyJavaScriptObject","NonElementParentNode":"LegacyJavaScriptObject","DocumentOrShadowRoot":"LegacyJavaScriptObject","ParentNode":"LegacyJavaScriptObject","NonDocumentTypeChildNode":"LegacyJavaScriptObject","ChildNode":"LegacyJavaScriptObject","Slottable":"LegacyJavaScriptObject","NodeList":"LegacyJavaScriptObject","HTMLCollection":"LegacyJavaScriptObject","MutationObserver":"LegacyJavaScriptObject","MutationObserverInit":"LegacyJavaScriptObject","MutationRecord":"LegacyJavaScriptObject","Node":"LegacyJavaScriptObject","GetRootNodeOptions":"LegacyJavaScriptObject","Document":"LegacyJavaScriptObject","XMLDocument":"LegacyJavaScriptObject","ElementCreationOptions":"LegacyJavaScriptObject","DOMImplementation":"LegacyJavaScriptObject","DocumentType":"LegacyJavaScriptObject","DocumentFragment":"LegacyJavaScriptObject","ShadowRoot":"LegacyJavaScriptObject","Element":"LegacyJavaScriptObject","ShadowRootInit":"LegacyJavaScriptObject","NamedNodeMap":"LegacyJavaScriptObject","Attr":"LegacyJavaScriptObject","CharacterData":"LegacyJavaScriptObject","Text":"LegacyJavaScriptObject","CDATASection":"LegacyJavaScriptObject","ProcessingInstruction":"LegacyJavaScriptObject","Comment":"LegacyJavaScriptObject","AbstractRange":"LegacyJavaScriptObject","StaticRangeInit":"LegacyJavaScriptObject","StaticRange":"LegacyJavaScriptObject","Range":"LegacyJavaScriptObject","NodeIterator":"LegacyJavaScriptObject","TreeWalker":"LegacyJavaScriptObject","DOMTokenList":"LegacyJavaScriptObject","XPathResult":"LegacyJavaScriptObject","XPathExpression":"LegacyJavaScriptObject","XPathEvaluatorBase":"LegacyJavaScriptObject","XPathEvaluator":"LegacyJavaScriptObject","XSLTProcessor":"LegacyJavaScriptObject","XMLSerializer":"LegacyJavaScriptObject","InnerHTML":"LegacyJavaScriptObject","EditContextInit":"LegacyJavaScriptObject","EditContext":"LegacyJavaScriptObject","TextUpdateEventInit":"LegacyJavaScriptObject","TextUpdateEvent":"LegacyJavaScriptObject","TextFormatInit":"LegacyJavaScriptObject","TextFormat":"LegacyJavaScriptObject","TextFormatUpdateEventInit":"LegacyJavaScriptObject","TextFormatUpdateEvent":"LegacyJavaScriptObject","CharacterBoundsUpdateEventInit":"LegacyJavaScriptObject","CharacterBoundsUpdateEvent":"LegacyJavaScriptObject","PerformanceElementTiming":"LegacyJavaScriptObject","TextDecoderCommon":"LegacyJavaScriptObject","TextDecoderOptions":"LegacyJavaScriptObject","TextDecodeOptions":"LegacyJavaScriptObject","TextDecoder":"LegacyJavaScriptObject","TextEncoderCommon":"LegacyJavaScriptObject","TextEncoderEncodeIntoResult":"LegacyJavaScriptObject","TextEncoder":"LegacyJavaScriptObject","TextDecoderStream":"LegacyJavaScriptObject","TextEncoderStream":"LegacyJavaScriptObject","MediaKeySystemConfiguration":"LegacyJavaScriptObject","MediaKeySystemMediaCapability":"LegacyJavaScriptObject","MediaKeySystemAccess":"LegacyJavaScriptObject","MediaKeys":"LegacyJavaScriptObject","MediaKeySession":"LegacyJavaScriptObject","MediaKeyStatusMap":"LegacyJavaScriptObject","MediaKeyMessageEvent":"LegacyJavaScriptObject","MediaKeyMessageEventInit":"LegacyJavaScriptObject","MediaEncryptedEvent":"LegacyJavaScriptObject","MediaEncryptedEventInit":"LegacyJavaScriptObject","FileSystemEntry":"LegacyJavaScriptObject","FileSystemDirectoryEntry":"LegacyJavaScriptObject","FileSystemFlags":"LegacyJavaScriptObject","FileSystemDirectoryReader":"LegacyJavaScriptObject","FileSystemFileEntry":"LegacyJavaScriptObject","FileSystem":"LegacyJavaScriptObject","PerformanceEventTiming":"LegacyJavaScriptObject","EventCounts":"LegacyJavaScriptObject","EXT_blend_minmax":"LegacyJavaScriptObject","EXT_color_buffer_float":"LegacyJavaScriptObject","EXT_color_buffer_half_float":"LegacyJavaScriptObject","WebGLTimerQueryEXT":"LegacyJavaScriptObject","EXT_disjoint_timer_query":"LegacyJavaScriptObject","EXT_disjoint_timer_query_webgl2":"LegacyJavaScriptObject","EXT_float_blend":"LegacyJavaScriptObject","EXT_frag_depth":"LegacyJavaScriptObject","EXT_shader_texture_lod":"LegacyJavaScriptObject","EXT_sRGB":"LegacyJavaScriptObject","EXT_texture_compression_bptc":"LegacyJavaScriptObject","EXT_texture_compression_rgtc":"LegacyJavaScriptObject","EXT_texture_filter_anisotropic":"LegacyJavaScriptObject","EXT_texture_norm16":"LegacyJavaScriptObject","ColorSelectionResult":"LegacyJavaScriptObject","ColorSelectionOptions":"LegacyJavaScriptObject","EyeDropper":"LegacyJavaScriptObject","IdentityProviderWellKnown":"LegacyJavaScriptObject","IdentityProviderIcon":"LegacyJavaScriptObject","IdentityProviderBranding":"LegacyJavaScriptObject","IdentityProviderAPIConfig":"LegacyJavaScriptObject","IdentityProviderAccount":"LegacyJavaScriptObject","IdentityProviderAccountList":"LegacyJavaScriptObject","IdentityProviderClientMetadata":"LegacyJavaScriptObject","IdentityProviderToken":"LegacyJavaScriptObject","IdentityCredential":"LegacyJavaScriptObject","IdentityCredentialRequestOptions":"LegacyJavaScriptObject","IdentityProviderConfig":"LegacyJavaScriptObject","IdentityCredentialLogoutRPsRequest":"LegacyJavaScriptObject","IdentityProvider":"LegacyJavaScriptObject","Headers":"LegacyJavaScriptObject","Body":"LegacyJavaScriptObject","Request":"LegacyJavaScriptObject","RequestInit":"LegacyJavaScriptObject","Response":"LegacyJavaScriptObject","ResponseInit":"LegacyJavaScriptObject","HMACGetSecretInput":"LegacyJavaScriptObject","HMACGetSecretOutput":"LegacyJavaScriptObject","FileSystemPermissionDescriptor":"LegacyJavaScriptObject","FileSystemHandlePermissionDescriptor":"LegacyJavaScriptObject","FilePickerAcceptType":"LegacyJavaScriptObject","FilePickerOptions":"LegacyJavaScriptObject","OpenFilePickerOptions":"LegacyJavaScriptObject","SaveFilePickerOptions":"LegacyJavaScriptObject","DirectoryPickerOptions":"LegacyJavaScriptObject","Blob":"LegacyJavaScriptObject","BlobPropertyBag":"LegacyJavaScriptObject","File":"LegacyJavaScriptObject","FilePropertyBag":"LegacyJavaScriptObject","FileList":"LegacyJavaScriptObject","FileReader":"LegacyJavaScriptObject","FileReaderSync":"LegacyJavaScriptObject","SVGFilterElement":"LegacyJavaScriptObject","SVGFilterPrimitiveStandardAttributes":"LegacyJavaScriptObject","SVGFEBlendElement":"LegacyJavaScriptObject","SVGFEColorMatrixElement":"LegacyJavaScriptObject","SVGFEComponentTransferElement":"LegacyJavaScriptObject","SVGComponentTransferFunctionElement":"LegacyJavaScriptObject","SVGFEFuncRElement":"LegacyJavaScriptObject","SVGFEFuncGElement":"LegacyJavaScriptObject","SVGFEFuncBElement":"LegacyJavaScriptObject","SVGFEFuncAElement":"LegacyJavaScriptObject","SVGFECompositeElement":"LegacyJavaScriptObject","SVGFEConvolveMatrixElement":"LegacyJavaScriptObject","SVGFEDiffuseLightingElement":"LegacyJavaScriptObject","SVGFEDistantLightElement":"LegacyJavaScriptObject","SVGFEPointLightElement":"LegacyJavaScriptObject","SVGFESpotLightElement":"LegacyJavaScriptObject","SVGFEDisplacementMapElement":"LegacyJavaScriptObject","SVGFEDropShadowElement":"LegacyJavaScriptObject","SVGFEFloodElement":"LegacyJavaScriptObject","SVGFEGaussianBlurElement":"LegacyJavaScriptObject","SVGFEImageElement":"LegacyJavaScriptObject","SVGFEMergeElement":"LegacyJavaScriptObject","SVGFEMergeNodeElement":"LegacyJavaScriptObject","SVGFEMorphologyElement":"LegacyJavaScriptObject","SVGFEOffsetElement":"LegacyJavaScriptObject","SVGFESpecularLightingElement":"LegacyJavaScriptObject","SVGFETileElement":"LegacyJavaScriptObject","SVGFETurbulenceElement":"LegacyJavaScriptObject","FontMetrics":"LegacyJavaScriptObject","Baseline":"LegacyJavaScriptObject","Font":"LegacyJavaScriptObject","FileSystemHandle":"LegacyJavaScriptObject","FileSystemCreateWritableOptions":"LegacyJavaScriptObject","FileSystemFileHandle":"LegacyJavaScriptObject","FileSystemGetFileOptions":"LegacyJavaScriptObject","FileSystemGetDirectoryOptions":"LegacyJavaScriptObject","FileSystemRemoveOptions":"LegacyJavaScriptObject","FileSystemDirectoryHandle":"LegacyJavaScriptObject","WriteParams":"LegacyJavaScriptObject","FileSystemWritableFileStream":"LegacyJavaScriptObject","FileSystemReadWriteOptions":"LegacyJavaScriptObject","FileSystemSyncAccessHandle":"LegacyJavaScriptObject","FullscreenOptions":"LegacyJavaScriptObject","Gamepad":"LegacyJavaScriptObject","GamepadButton":"LegacyJavaScriptObject","GamepadEvent":"LegacyJavaScriptObject","GamepadEventInit":"LegacyJavaScriptObject","GamepadHapticActuator":"LegacyJavaScriptObject","GamepadEffectParameters":"LegacyJavaScriptObject","GamepadPose":"LegacyJavaScriptObject","GamepadTouch":"LegacyJavaScriptObject","Sensor":"LegacyJavaScriptObject","SensorOptions":"LegacyJavaScriptObject","SensorErrorEvent":"LegacyJavaScriptObject","SensorErrorEventInit":"LegacyJavaScriptObject","MockSensorConfiguration":"LegacyJavaScriptObject","MockSensor":"LegacyJavaScriptObject","MockSensorReadingValues":"LegacyJavaScriptObject","Geolocation":"LegacyJavaScriptObject","PositionOptions":"LegacyJavaScriptObject","GeolocationPosition":"LegacyJavaScriptObject","GeolocationCoordinates":"LegacyJavaScriptObject","GeolocationPositionError":"LegacyJavaScriptObject","GeolocationSensor":"LegacyJavaScriptObject","GeolocationSensorOptions":"LegacyJavaScriptObject","ReadOptions":"LegacyJavaScriptObject","GeolocationSensorReading":"LegacyJavaScriptObject","GeolocationReadingValues":"LegacyJavaScriptObject","DOMPointReadOnly":"LegacyJavaScriptObject","DOMPoint":"LegacyJavaScriptObject","DOMPointInit":"LegacyJavaScriptObject","DOMRectReadOnly":"LegacyJavaScriptObject","DOMRect":"LegacyJavaScriptObject","DOMRectInit":"LegacyJavaScriptObject","DOMRectList":"LegacyJavaScriptObject","DOMQuad":"LegacyJavaScriptObject","DOMQuadInit":"LegacyJavaScriptObject","DOMMatrixReadOnly":"LegacyJavaScriptObject","DOMMatrix":"LegacyJavaScriptObject","DOMMatrix2DInit":"LegacyJavaScriptObject","DOMMatrixInit":"LegacyJavaScriptObject","RelatedApplication":"LegacyJavaScriptObject","GlobalPrivacyControl":"LegacyJavaScriptObject","Gyroscope":"LegacyJavaScriptObject","GyroscopeSensorOptions":"LegacyJavaScriptObject","GyroscopeReadingValues":"LegacyJavaScriptObject","Performance":"LegacyJavaScriptObject","HTMLAllCollection":"LegacyJavaScriptObject","HTMLFormControlsCollection":"LegacyJavaScriptObject","RadioNodeList":"LegacyJavaScriptObject","HTMLOptionsCollection":"LegacyJavaScriptObject","DOMStringList":"LegacyJavaScriptObject","HTMLElement":"LegacyJavaScriptObject","HTMLUnknownElement":"LegacyJavaScriptObject","HTMLOrSVGElement":"LegacyJavaScriptObject","DOMStringMap":"LegacyJavaScriptObject","HTMLHtmlElement":"LegacyJavaScriptObject","HTMLHeadElement":"LegacyJavaScriptObject","HTMLTitleElement":"LegacyJavaScriptObject","HTMLBaseElement":"LegacyJavaScriptObject","HTMLLinkElement":"LegacyJavaScriptObject","HTMLMetaElement":"LegacyJavaScriptObject","HTMLStyleElement":"LegacyJavaScriptObject","HTMLBodyElement":"LegacyJavaScriptObject","HTMLHeadingElement":"LegacyJavaScriptObject","HTMLParagraphElement":"LegacyJavaScriptObject","HTMLHRElement":"LegacyJavaScriptObject","HTMLPreElement":"LegacyJavaScriptObject","HTMLQuoteElement":"LegacyJavaScriptObject","HTMLOListElement":"LegacyJavaScriptObject","HTMLUListElement":"LegacyJavaScriptObject","HTMLMenuElement":"LegacyJavaScriptObject","HTMLLIElement":"LegacyJavaScriptObject","HTMLDListElement":"LegacyJavaScriptObject","HTMLDivElement":"LegacyJavaScriptObject","HTMLAnchorElement":"LegacyJavaScriptObject","HTMLDataElement":"LegacyJavaScriptObject","HTMLTimeElement":"LegacyJavaScriptObject","HTMLSpanElement":"LegacyJavaScriptObject","HTMLBRElement":"LegacyJavaScriptObject","HTMLHyperlinkElementUtils":"LegacyJavaScriptObject","HTMLModElement":"LegacyJavaScriptObject","HTMLPictureElement":"LegacyJavaScriptObject","HTMLSourceElement":"LegacyJavaScriptObject","HTMLImageElement":"LegacyJavaScriptObject","HTMLIFrameElement":"LegacyJavaScriptObject","HTMLEmbedElement":"LegacyJavaScriptObject","HTMLObjectElement":"LegacyJavaScriptObject","HTMLVideoElement":"LegacyJavaScriptObject","HTMLAudioElement":"LegacyJavaScriptObject","HTMLTrackElement":"LegacyJavaScriptObject","HTMLMediaElement":"LegacyJavaScriptObject","MediaError":"LegacyJavaScriptObject","AudioTrackList":"LegacyJavaScriptObject","AudioTrack":"LegacyJavaScriptObject","VideoTrackList":"LegacyJavaScriptObject","VideoTrack":"LegacyJavaScriptObject","TextTrackList":"LegacyJavaScriptObject","TextTrack":"LegacyJavaScriptObject","TextTrackCueList":"LegacyJavaScriptObject","TextTrackCue":"LegacyJavaScriptObject","TimeRanges":"LegacyJavaScriptObject","TrackEvent":"LegacyJavaScriptObject","TrackEventInit":"LegacyJavaScriptObject","HTMLMapElement":"LegacyJavaScriptObject","HTMLAreaElement":"LegacyJavaScriptObject","HTMLTableElement":"LegacyJavaScriptObject","HTMLTableCaptionElement":"LegacyJavaScriptObject","HTMLTableColElement":"LegacyJavaScriptObject","HTMLTableSectionElement":"LegacyJavaScriptObject","HTMLTableRowElement":"LegacyJavaScriptObject","HTMLTableCellElement":"LegacyJavaScriptObject","HTMLFormElement":"LegacyJavaScriptObject","HTMLLabelElement":"LegacyJavaScriptObject","HTMLInputElement":"LegacyJavaScriptObject","HTMLButtonElement":"LegacyJavaScriptObject","HTMLSelectElement":"LegacyJavaScriptObject","HTMLDataListElement":"LegacyJavaScriptObject","HTMLOptGroupElement":"LegacyJavaScriptObject","HTMLOptionElement":"LegacyJavaScriptObject","HTMLTextAreaElement":"LegacyJavaScriptObject","HTMLOutputElement":"LegacyJavaScriptObject","HTMLProgressElement":"LegacyJavaScriptObject","HTMLMeterElement":"LegacyJavaScriptObject","HTMLFieldSetElement":"LegacyJavaScriptObject","HTMLLegendElement":"LegacyJavaScriptObject","ValidityState":"LegacyJavaScriptObject","SubmitEvent":"LegacyJavaScriptObject","SubmitEventInit":"LegacyJavaScriptObject","FormDataEvent":"LegacyJavaScriptObject","FormDataEventInit":"LegacyJavaScriptObject","HTMLDetailsElement":"LegacyJavaScriptObject","HTMLDialogElement":"LegacyJavaScriptObject","HTMLScriptElement":"LegacyJavaScriptObject","HTMLTemplateElement":"LegacyJavaScriptObject","HTMLSlotElement":"LegacyJavaScriptObject","AssignedNodesOptions":"LegacyJavaScriptObject","HTMLCanvasElement":"LegacyJavaScriptObject","CanvasRenderingContext2DSettings":"LegacyJavaScriptObject","CanvasRenderingContext2D":"LegacyJavaScriptObject","CanvasState":"LegacyJavaScriptObject","CanvasTransform":"LegacyJavaScriptObject","CanvasCompositing":"LegacyJavaScriptObject","CanvasImageSmoothing":"LegacyJavaScriptObject","CanvasFillStrokeStyles":"LegacyJavaScriptObject","CanvasShadowStyles":"LegacyJavaScriptObject","CanvasFilters":"LegacyJavaScriptObject","CanvasRect":"LegacyJavaScriptObject","CanvasDrawPath":"LegacyJavaScriptObject","CanvasUserInterface":"LegacyJavaScriptObject","CanvasText":"LegacyJavaScriptObject","CanvasDrawImage":"LegacyJavaScriptObject","CanvasImageData":"LegacyJavaScriptObject","CanvasPathDrawingStyles":"LegacyJavaScriptObject","CanvasTextDrawingStyles":"LegacyJavaScriptObject","CanvasPath":"LegacyJavaScriptObject","CanvasGradient":"LegacyJavaScriptObject","CanvasPattern":"LegacyJavaScriptObject","TextMetrics":"LegacyJavaScriptObject","ImageDataSettings":"LegacyJavaScriptObject","ImageData":"LegacyJavaScriptObject","Path2D":"LegacyJavaScriptObject","ImageBitmapRenderingContext":"LegacyJavaScriptObject","ImageBitmapRenderingContextSettings":"LegacyJavaScriptObject","ImageEncodeOptions":"LegacyJavaScriptObject","OffscreenCanvas":"LegacyJavaScriptObject","OffscreenCanvasRenderingContext2D":"LegacyJavaScriptObject","CustomElementRegistry":"LegacyJavaScriptObject","ElementDefinitionOptions":"LegacyJavaScriptObject","ElementInternals":"LegacyJavaScriptObject","ValidityStateFlags":"LegacyJavaScriptObject","UserActivation":"LegacyJavaScriptObject","FocusOptions":"LegacyJavaScriptObject","ElementContentEditable":"LegacyJavaScriptObject","DataTransfer":"LegacyJavaScriptObject","DataTransferItemList":"LegacyJavaScriptObject","DataTransferItem":"LegacyJavaScriptObject","DragEvent":"LegacyJavaScriptObject","DragEventInit":"LegacyJavaScriptObject","PopoverTargetElement":"LegacyJavaScriptObject","ToggleEvent":"LegacyJavaScriptObject","ToggleEventInit":"LegacyJavaScriptObject","Window":"LegacyJavaScriptObject","WindowPostMessageOptions":"LegacyJavaScriptObject","BarProp":"LegacyJavaScriptObject","Location":"LegacyJavaScriptObject","History":"LegacyJavaScriptObject","PopStateEvent":"LegacyJavaScriptObject","PopStateEventInit":"LegacyJavaScriptObject","HashChangeEvent":"LegacyJavaScriptObject","HashChangeEventInit":"LegacyJavaScriptObject","PageTransitionEvent":"LegacyJavaScriptObject","PageTransitionEventInit":"LegacyJavaScriptObject","BeforeUnloadEvent":"LegacyJavaScriptObject","ErrorEvent":"LegacyJavaScriptObject","ErrorEventInit":"LegacyJavaScriptObject","PromiseRejectionEvent":"LegacyJavaScriptObject","PromiseRejectionEventInit":"LegacyJavaScriptObject","GlobalEventHandlers":"LegacyJavaScriptObject","WindowEventHandlers":"LegacyJavaScriptObject","WindowOrWorkerGlobalScope":"LegacyJavaScriptObject","DOMParser":"LegacyJavaScriptObject","Navigator":"LegacyJavaScriptObject","NavigatorID":"LegacyJavaScriptObject","NavigatorLanguage":"LegacyJavaScriptObject","NavigatorOnLine":"LegacyJavaScriptObject","NavigatorContentUtils":"LegacyJavaScriptObject","NavigatorCookies":"LegacyJavaScriptObject","NavigatorPlugins":"LegacyJavaScriptObject","PluginArray":"LegacyJavaScriptObject","MimeTypeArray":"LegacyJavaScriptObject","Plugin":"LegacyJavaScriptObject","MimeType":"LegacyJavaScriptObject","ImageBitmap":"LegacyJavaScriptObject","ImageBitmapOptions":"LegacyJavaScriptObject","AnimationFrameProvider":"LegacyJavaScriptObject","MessageEvent":"LegacyJavaScriptObject","MessageEventInit":"LegacyJavaScriptObject","EventSource":"LegacyJavaScriptObject","EventSourceInit":"LegacyJavaScriptObject","MessageChannel":"LegacyJavaScriptObject","MessagePort":"LegacyJavaScriptObject","StructuredSerializeOptions":"LegacyJavaScriptObject","BroadcastChannel":"LegacyJavaScriptObject","WorkerGlobalScope":"LegacyJavaScriptObject","DedicatedWorkerGlobalScope":"LegacyJavaScriptObject","SharedWorkerGlobalScope":"LegacyJavaScriptObject","AbstractWorker":"LegacyJavaScriptObject","Worker":"LegacyJavaScriptObject","WorkerOptions":"LegacyJavaScriptObject","SharedWorker":"LegacyJavaScriptObject","NavigatorConcurrentHardware":"LegacyJavaScriptObject","WorkerNavigator":"LegacyJavaScriptObject","WorkerLocation":"LegacyJavaScriptObject","WorkletGlobalScope":"LegacyJavaScriptObject","Worklet":"LegacyJavaScriptObject","WorkletOptions":"LegacyJavaScriptObject","Storage":"LegacyJavaScriptObject","WindowSessionStorage":"LegacyJavaScriptObject","WindowLocalStorage":"LegacyJavaScriptObject","StorageEvent":"LegacyJavaScriptObject","StorageEventInit":"LegacyJavaScriptObject","HTMLMarqueeElement":"LegacyJavaScriptObject","HTMLFrameSetElement":"LegacyJavaScriptObject","HTMLFrameElement":"LegacyJavaScriptObject","HTMLDirectoryElement":"LegacyJavaScriptObject","HTMLFontElement":"LegacyJavaScriptObject","HTMLParamElement":"LegacyJavaScriptObject","External":"LegacyJavaScriptObject","IdleOptions":"LegacyJavaScriptObject","IdleDetector":"LegacyJavaScriptObject","ImageCapture":"LegacyJavaScriptObject","PhotoCapabilities":"LegacyJavaScriptObject","PhotoSettings":"LegacyJavaScriptObject","MediaSettingsRange":"LegacyJavaScriptObject","ConstrainPoint2DParameters":"LegacyJavaScriptObject","Point2D":"LegacyJavaScriptObject","ImageResource":"LegacyJavaScriptObject","IDBRequest":"LegacyJavaScriptObject","IDBOpenDBRequest":"LegacyJavaScriptObject","IDBVersionChangeEvent":"LegacyJavaScriptObject","IDBVersionChangeEventInit":"LegacyJavaScriptObject","IDBFactory":"LegacyJavaScriptObject","IDBDatabaseInfo":"LegacyJavaScriptObject","IDBDatabase":"LegacyJavaScriptObject","IDBTransactionOptions":"LegacyJavaScriptObject","IDBObjectStoreParameters":"LegacyJavaScriptObject","IDBObjectStore":"LegacyJavaScriptObject","IDBIndexParameters":"LegacyJavaScriptObject","IDBIndex":"LegacyJavaScriptObject","IDBKeyRange":"LegacyJavaScriptObject","IDBCursor":"LegacyJavaScriptObject","IDBCursorWithValue":"LegacyJavaScriptObject","IDBTransaction":"LegacyJavaScriptObject","Ink":"LegacyJavaScriptObject","InkPresenterParam":"LegacyJavaScriptObject","InkPresenter":"LegacyJavaScriptObject","InkTrailStyle":"LegacyJavaScriptObject","InputDeviceCapabilities":"LegacyJavaScriptObject","InputDeviceCapabilitiesInit":"LegacyJavaScriptObject","IntersectionObserver":"LegacyJavaScriptObject","IntersectionObserverEntry":"LegacyJavaScriptObject","IntersectionObserverEntryInit":"LegacyJavaScriptObject","IntersectionObserverInit":"LegacyJavaScriptObject","InterventionReportBody":"LegacyJavaScriptObject","IsInputPendingOptions":"LegacyJavaScriptObject","Scheduling":"LegacyJavaScriptObject","Profiler":"LegacyJavaScriptObject","ProfilerTrace":"LegacyJavaScriptObject","ProfilerSample":"LegacyJavaScriptObject","ProfilerStack":"LegacyJavaScriptObject","ProfilerFrame":"LegacyJavaScriptObject","ProfilerInitOptions":"LegacyJavaScriptObject","Keyboard":"LegacyJavaScriptObject","KeyboardLayoutMap":"LegacyJavaScriptObject","KHR_parallel_shader_compile":"LegacyJavaScriptObject","LargestContentfulPaint":"LegacyJavaScriptObject","LayoutShift":"LegacyJavaScriptObject","LayoutShiftAttribution":"LegacyJavaScriptObject","QueryOptions":"LegacyJavaScriptObject","FontData":"LegacyJavaScriptObject","PerformanceLongTaskTiming":"LegacyJavaScriptObject","TaskAttributionTiming":"LegacyJavaScriptObject","Magnetometer":"LegacyJavaScriptObject","MagnetometerSensorOptions":"LegacyJavaScriptObject","UncalibratedMagnetometer":"LegacyJavaScriptObject","MagnetometerReadingValues":"LegacyJavaScriptObject","UncalibratedMagnetometerReadingValues":"LegacyJavaScriptObject","BeforeInstallPromptEvent":"LegacyJavaScriptObject","PromptResponseObject":"LegacyJavaScriptObject","MathMLElement":"LegacyJavaScriptObject","MediaConfiguration":"LegacyJavaScriptObject","MediaDecodingConfiguration":"LegacyJavaScriptObject","MediaEncodingConfiguration":"LegacyJavaScriptObject","VideoConfiguration":"LegacyJavaScriptObject","AudioConfiguration":"LegacyJavaScriptObject","MediaCapabilitiesKeySystemConfiguration":"LegacyJavaScriptObject","KeySystemTrackConfiguration":"LegacyJavaScriptObject","MediaCapabilitiesInfo":"LegacyJavaScriptObject","MediaCapabilitiesDecodingInfo":"LegacyJavaScriptObject","MediaCapabilitiesEncodingInfo":"LegacyJavaScriptObject","MediaCapabilities":"LegacyJavaScriptObject","VideoPlaybackQuality":"LegacyJavaScriptObject","MediaSource":"LegacyJavaScriptObject","MediaSourceHandle":"LegacyJavaScriptObject","SourceBuffer":"LegacyJavaScriptObject","SourceBufferList":"LegacyJavaScriptObject","MockCapturePromptResultConfiguration":"LegacyJavaScriptObject","MockCaptureDeviceConfiguration":"LegacyJavaScriptObject","MockCameraConfiguration":"LegacyJavaScriptObject","MockMicrophoneConfiguration":"LegacyJavaScriptObject","CanvasCaptureMediaStreamTrack":"LegacyJavaScriptObject","CaptureActionEvent":"LegacyJavaScriptObject","CaptureActionEventInit":"LegacyJavaScriptObject","CropTarget":"LegacyJavaScriptObject","BrowserCaptureMediaStreamTrack":"LegacyJavaScriptObject","MediaStream":"LegacyJavaScriptObject","MediaStreamTrack":"LegacyJavaScriptObject","MediaTrackSupportedConstraints":"LegacyJavaScriptObject","MediaTrackCapabilities":"LegacyJavaScriptObject","MediaTrackConstraints":"LegacyJavaScriptObject","MediaTrackConstraintSet":"LegacyJavaScriptObject","MediaTrackSettings":"LegacyJavaScriptObject","MediaStreamTrackEvent":"LegacyJavaScriptObject","MediaStreamTrackEventInit":"LegacyJavaScriptObject","OverconstrainedError":"LegacyJavaScriptObject","MediaDevices":"LegacyJavaScriptObject","MediaDeviceInfo":"LegacyJavaScriptObject","InputDeviceInfo":"LegacyJavaScriptObject","MediaStreamConstraints":"LegacyJavaScriptObject","DoubleRange":"LegacyJavaScriptObject","ConstrainDoubleRange":"LegacyJavaScriptObject","ULongRange":"LegacyJavaScriptObject","ConstrainULongRange":"LegacyJavaScriptObject","ConstrainBooleanParameters":"LegacyJavaScriptObject","ConstrainDOMStringParameters":"LegacyJavaScriptObject","DevicePermissionDescriptor":"LegacyJavaScriptObject","CameraDevicePermissionDescriptor":"LegacyJavaScriptObject","MediaStreamTrackProcessor":"LegacyJavaScriptObject","MediaStreamTrackProcessorInit":"LegacyJavaScriptObject","VideoTrackGenerator":"LegacyJavaScriptObject","ViewportMediaStreamConstraints":"LegacyJavaScriptObject","MediaSession":"LegacyJavaScriptObject","MediaMetadata":"LegacyJavaScriptObject","MediaMetadataInit":"LegacyJavaScriptObject","MediaImage":"LegacyJavaScriptObject","MediaPositionState":"LegacyJavaScriptObject","MediaSessionActionDetails":"LegacyJavaScriptObject","MediaRecorder":"LegacyJavaScriptObject","MediaRecorderOptions":"LegacyJavaScriptObject","BlobEvent":"LegacyJavaScriptObject","BlobEventInit":"LegacyJavaScriptObject","HTMLModelElement":"LegacyJavaScriptObject","Navigation":"LegacyJavaScriptObject","NavigationUpdateCurrentEntryOptions":"LegacyJavaScriptObject","NavigationOptions":"LegacyJavaScriptObject","NavigationNavigateOptions":"LegacyJavaScriptObject","NavigationReloadOptions":"LegacyJavaScriptObject","NavigationResult":"LegacyJavaScriptObject","NavigationCurrentEntryChangeEvent":"LegacyJavaScriptObject","NavigationCurrentEntryChangeEventInit":"LegacyJavaScriptObject","NavigationTransition":"LegacyJavaScriptObject","NavigateEvent":"LegacyJavaScriptObject","NavigateEventInit":"LegacyJavaScriptObject","NavigationInterceptOptions":"LegacyJavaScriptObject","NavigationDestination":"LegacyJavaScriptObject","NavigationHistoryEntry":"LegacyJavaScriptObject","PerformanceNavigationTiming":"LegacyJavaScriptObject","PerformanceTiming":"LegacyJavaScriptObject","PerformanceNavigation":"LegacyJavaScriptObject","NavigatorNetworkInformation":"LegacyJavaScriptObject","NetworkInformation":"LegacyJavaScriptObject","Notification":"LegacyJavaScriptObject","NotificationOptions":"LegacyJavaScriptObject","NotificationAction":"LegacyJavaScriptObject","GetNotificationOptions":"LegacyJavaScriptObject","NotificationEvent":"LegacyJavaScriptObject","NotificationEventInit":"LegacyJavaScriptObject","OES_draw_buffers_indexed":"LegacyJavaScriptObject","OES_element_index_uint":"LegacyJavaScriptObject","OES_fbo_render_mipmap":"LegacyJavaScriptObject","OES_standard_derivatives":"LegacyJavaScriptObject","OES_texture_float":"LegacyJavaScriptObject","OES_texture_float_linear":"LegacyJavaScriptObject","OES_texture_half_float":"LegacyJavaScriptObject","OES_texture_half_float_linear":"LegacyJavaScriptObject","WebGLVertexArrayObjectOES":"LegacyJavaScriptObject","OES_vertex_array_object":"LegacyJavaScriptObject","DeviceOrientationEvent":"LegacyJavaScriptObject","DeviceOrientationEventInit":"LegacyJavaScriptObject","DeviceMotionEventAcceleration":"LegacyJavaScriptObject","DeviceMotionEventRotationRate":"LegacyJavaScriptObject","DeviceMotionEvent":"LegacyJavaScriptObject","DeviceMotionEventAccelerationInit":"LegacyJavaScriptObject","DeviceMotionEventRotationRateInit":"LegacyJavaScriptObject","DeviceMotionEventInit":"LegacyJavaScriptObject","OrientationSensor":"LegacyJavaScriptObject","OrientationSensorOptions":"LegacyJavaScriptObject","AbsoluteOrientationSensor":"LegacyJavaScriptObject","RelativeOrientationSensor":"LegacyJavaScriptObject","AbsoluteOrientationReadingValues":"LegacyJavaScriptObject","RelativeOrientationReadingValues":"LegacyJavaScriptObject","OVR_multiview2":"LegacyJavaScriptObject","PerformancePaintTiming":"LegacyJavaScriptObject","PaymentManager":"LegacyJavaScriptObject","CanMakePaymentEvent":"LegacyJavaScriptObject","PaymentRequestDetailsUpdate":"LegacyJavaScriptObject","PaymentRequestEvent":"LegacyJavaScriptObject","PaymentRequestEventInit":"LegacyJavaScriptObject","PaymentHandlerResponse":"LegacyJavaScriptObject","AddressInit":"LegacyJavaScriptObject","PaymentOptions":"LegacyJavaScriptObject","PaymentShippingOption":"LegacyJavaScriptObject","AddressErrors":"LegacyJavaScriptObject","PaymentRequest":"LegacyJavaScriptObject","PaymentMethodData":"LegacyJavaScriptObject","PaymentCurrencyAmount":"LegacyJavaScriptObject","PaymentDetailsBase":"LegacyJavaScriptObject","PaymentDetailsInit":"LegacyJavaScriptObject","PaymentDetailsUpdate":"LegacyJavaScriptObject","PaymentDetailsModifier":"LegacyJavaScriptObject","PaymentItem":"LegacyJavaScriptObject","PaymentCompleteDetails":"LegacyJavaScriptObject","PaymentResponse":"LegacyJavaScriptObject","PaymentValidationErrors":"LegacyJavaScriptObject","PaymentMethodChangeEvent":"LegacyJavaScriptObject","PaymentMethodChangeEventInit":"LegacyJavaScriptObject","PaymentRequestUpdateEvent":"LegacyJavaScriptObject","PaymentRequestUpdateEventInit":"LegacyJavaScriptObject","MemoryMeasurement":"LegacyJavaScriptObject","MemoryBreakdownEntry":"LegacyJavaScriptObject","MemoryAttribution":"LegacyJavaScriptObject","MemoryAttributionContainer":"LegacyJavaScriptObject","PerformanceEntry":"LegacyJavaScriptObject","PerformanceObserver":"LegacyJavaScriptObject","PerformanceObserverCallbackOptions":"LegacyJavaScriptObject","PerformanceObserverInit":"LegacyJavaScriptObject","PerformanceObserverEntryList":"LegacyJavaScriptObject","PeriodicSyncManager":"LegacyJavaScriptObject","BackgroundSyncOptions":"LegacyJavaScriptObject","PeriodicSyncEventInit":"LegacyJavaScriptObject","PeriodicSyncEvent":"LegacyJavaScriptObject","Permissions":"LegacyJavaScriptObject","PermissionDescriptor":"LegacyJavaScriptObject","PermissionStatus":"LegacyJavaScriptObject","PermissionSetParameters":"LegacyJavaScriptObject","PermissionsPolicy":"LegacyJavaScriptObject","PermissionsPolicyViolationReportBody":"LegacyJavaScriptObject","PictureInPictureWindow":"LegacyJavaScriptObject","PictureInPictureEvent":"LegacyJavaScriptObject","PictureInPictureEventInit":"LegacyJavaScriptObject","PointerEventInit":"LegacyJavaScriptObject","PointerEvent":"LegacyJavaScriptObject","HTMLPortalElement":"LegacyJavaScriptObject","PortalActivateOptions":"LegacyJavaScriptObject","PortalHost":"LegacyJavaScriptObject","PortalActivateEvent":"LegacyJavaScriptObject","PortalActivateEventInit":"LegacyJavaScriptObject","Presentation":"LegacyJavaScriptObject","PresentationRequest":"LegacyJavaScriptObject","PresentationAvailability":"LegacyJavaScriptObject","PresentationConnectionAvailableEvent":"LegacyJavaScriptObject","PresentationConnectionAvailableEventInit":"LegacyJavaScriptObject","PresentationConnection":"LegacyJavaScriptObject","PresentationConnectionCloseEvent":"LegacyJavaScriptObject","PresentationConnectionCloseEventInit":"LegacyJavaScriptObject","PresentationReceiver":"LegacyJavaScriptObject","PresentationConnectionList":"LegacyJavaScriptObject","ProximitySensor":"LegacyJavaScriptObject","ProximityReadingValues":"LegacyJavaScriptObject","PushPermissionDescriptor":"LegacyJavaScriptObject","PushManager":"LegacyJavaScriptObject","PushSubscriptionOptions":"LegacyJavaScriptObject","PushSubscriptionOptionsInit":"LegacyJavaScriptObject","PushSubscription":"LegacyJavaScriptObject","PushSubscriptionJSON":"LegacyJavaScriptObject","PushMessageData":"LegacyJavaScriptObject","PushEvent":"LegacyJavaScriptObject","PushEventInit":"LegacyJavaScriptObject","PushSubscriptionChangeEvent":"LegacyJavaScriptObject","PushSubscriptionChangeEventInit":"LegacyJavaScriptObject","XRCamera":"LegacyJavaScriptObject","RemotePlayback":"LegacyJavaScriptObject","ReportBody":"LegacyJavaScriptObject","Report":"LegacyJavaScriptObject","ReportingObserver":"LegacyJavaScriptObject","ReportingObserverOptions":"LegacyJavaScriptObject","GenerateTestReportParameters":"LegacyJavaScriptObject","IdleRequestOptions":"LegacyJavaScriptObject","IdleDeadline":"LegacyJavaScriptObject","TopLevelStorageAccessPermissionDescriptor":"LegacyJavaScriptObject","ResizeObserverOptions":"LegacyJavaScriptObject","ResizeObserver":"LegacyJavaScriptObject","ResizeObserverEntry":"LegacyJavaScriptObject","ResizeObserverSize":"LegacyJavaScriptObject","PerformanceResourceTiming":"LegacyJavaScriptObject","Sanitizer":"LegacyJavaScriptObject","SetHTMLOptions":"LegacyJavaScriptObject","SanitizerConfig":"LegacyJavaScriptObject","NetworkInformationSaveData":"LegacyJavaScriptObject","SchedulerPostTaskOptions":"LegacyJavaScriptObject","Scheduler":"LegacyJavaScriptObject","TaskPriorityChangeEvent":"LegacyJavaScriptObject","TaskPriorityChangeEventInit":"LegacyJavaScriptObject","TaskControllerInit":"LegacyJavaScriptObject","TaskController":"LegacyJavaScriptObject","TaskSignal":"LegacyJavaScriptObject","CaptureController":"LegacyJavaScriptObject","DisplayMediaStreamOptions":"LegacyJavaScriptObject","ScreenOrientation":"LegacyJavaScriptObject","WakeLock":"LegacyJavaScriptObject","WakeLockSentinel":"LegacyJavaScriptObject","ScrollTimelineOptions":"LegacyJavaScriptObject","ScrollTimeline":"LegacyJavaScriptObject","ViewTimelineOptions":"LegacyJavaScriptObject","ViewTimeline":"LegacyJavaScriptObject","FragmentDirective":"LegacyJavaScriptObject","SecurePaymentConfirmationRequest":"LegacyJavaScriptObject","AuthenticationExtensionsPaymentInputs":"LegacyJavaScriptObject","CollectedClientPaymentData":"LegacyJavaScriptObject","CollectedClientAdditionalPaymentData":"LegacyJavaScriptObject","PaymentCredentialInstrument":"LegacyJavaScriptObject","Selection":"LegacyJavaScriptObject","Serial":"LegacyJavaScriptObject","SerialPortRequestOptions":"LegacyJavaScriptObject","SerialPortFilter":"LegacyJavaScriptObject","SerialPort":"LegacyJavaScriptObject","SerialPortInfo":"LegacyJavaScriptObject","SerialOptions":"LegacyJavaScriptObject","SerialOutputSignals":"LegacyJavaScriptObject","SerialInputSignals":"LegacyJavaScriptObject","PerformanceServerTiming":"LegacyJavaScriptObject","ServiceWorker":"LegacyJavaScriptObject","ServiceWorkerRegistration":"LegacyJavaScriptObject","ServiceWorkerContainer":"LegacyJavaScriptObject","RegistrationOptions":"LegacyJavaScriptObject","NavigationPreloadManager":"LegacyJavaScriptObject","NavigationPreloadState":"LegacyJavaScriptObject","ServiceWorkerGlobalScope":"LegacyJavaScriptObject","Client":"LegacyJavaScriptObject","WindowClient":"LegacyJavaScriptObject","Clients":"LegacyJavaScriptObject","ClientQueryOptions":"LegacyJavaScriptObject","ExtendableEvent":"LegacyJavaScriptObject","ExtendableEventInit":"LegacyJavaScriptObject","FetchEvent":"LegacyJavaScriptObject","FetchEventInit":"LegacyJavaScriptObject","ExtendableMessageEvent":"LegacyJavaScriptObject","ExtendableMessageEventInit":"LegacyJavaScriptObject","Cache":"LegacyJavaScriptObject","CacheQueryOptions":"LegacyJavaScriptObject","CacheStorage":"LegacyJavaScriptObject","MultiCacheQueryOptions":"LegacyJavaScriptObject","FaceDetector":"LegacyJavaScriptObject","FaceDetectorOptions":"LegacyJavaScriptObject","DetectedFace":"LegacyJavaScriptObject","Landmark":"LegacyJavaScriptObject","BarcodeDetector":"LegacyJavaScriptObject","BarcodeDetectorOptions":"LegacyJavaScriptObject","DetectedBarcode":"LegacyJavaScriptObject","SpeechRecognition":"LegacyJavaScriptObject","SpeechRecognitionErrorEvent":"LegacyJavaScriptObject","SpeechRecognitionErrorEventInit":"LegacyJavaScriptObject","SpeechRecognitionAlternative":"LegacyJavaScriptObject","SpeechRecognitionResult":"LegacyJavaScriptObject","SpeechRecognitionResultList":"LegacyJavaScriptObject","SpeechRecognitionEvent":"LegacyJavaScriptObject","SpeechRecognitionEventInit":"LegacyJavaScriptObject","SpeechGrammar":"LegacyJavaScriptObject","SpeechGrammarList":"LegacyJavaScriptObject","SpeechSynthesis":"LegacyJavaScriptObject","SpeechSynthesisUtterance":"LegacyJavaScriptObject","SpeechSynthesisEvent":"LegacyJavaScriptObject","SpeechSynthesisEventInit":"LegacyJavaScriptObject","SpeechSynthesisErrorEvent":"LegacyJavaScriptObject","SpeechSynthesisErrorEventInit":"LegacyJavaScriptObject","SpeechSynthesisVoice":"LegacyJavaScriptObject","NavigatorStorage":"LegacyJavaScriptObject","StorageManager":"LegacyJavaScriptObject","StorageEstimate":"LegacyJavaScriptObject","ReadableStream":"LegacyJavaScriptObject","ReadableStreamGetReaderOptions":"LegacyJavaScriptObject","ReadableStreamIteratorOptions":"LegacyJavaScriptObject","ReadableWritablePair":"LegacyJavaScriptObject","StreamPipeOptions":"LegacyJavaScriptObject","UnderlyingSource":"LegacyJavaScriptObject","ReadableStreamGenericReader":"LegacyJavaScriptObject","ReadableStreamDefaultReader":"LegacyJavaScriptObject","ReadableStreamReadResult":"LegacyJavaScriptObject","ReadableStreamBYOBReader":"LegacyJavaScriptObject","ReadableStreamDefaultController":"LegacyJavaScriptObject","ReadableByteStreamController":"LegacyJavaScriptObject","ReadableStreamBYOBRequest":"LegacyJavaScriptObject","WritableStream":"LegacyJavaScriptObject","UnderlyingSink":"LegacyJavaScriptObject","WritableStreamDefaultWriter":"LegacyJavaScriptObject","WritableStreamDefaultController":"LegacyJavaScriptObject","TransformStream":"LegacyJavaScriptObject","Transformer":"LegacyJavaScriptObject","TransformStreamDefaultController":"LegacyJavaScriptObject","QueuingStrategy":"LegacyJavaScriptObject","QueuingStrategyInit":"LegacyJavaScriptObject","ByteLengthQueuingStrategy":"LegacyJavaScriptObject","CountQueuingStrategy":"LegacyJavaScriptObject","GenericTransformStream":"LegacyJavaScriptObject","SVGElement":"LegacyJavaScriptObject","SVGBoundingBoxOptions":"LegacyJavaScriptObject","SVGGraphicsElement":"LegacyJavaScriptObject","SVGGeometryElement":"LegacyJavaScriptObject","SVGNumber":"LegacyJavaScriptObject","SVGLength":"LegacyJavaScriptObject","SVGAngle":"LegacyJavaScriptObject","SVGNumberList":"LegacyJavaScriptObject","SVGLengthList":"LegacyJavaScriptObject","SVGStringList":"LegacyJavaScriptObject","SVGAnimatedBoolean":"LegacyJavaScriptObject","SVGAnimatedEnumeration":"LegacyJavaScriptObject","SVGAnimatedInteger":"LegacyJavaScriptObject","SVGAnimatedNumber":"LegacyJavaScriptObject","SVGAnimatedLength":"LegacyJavaScriptObject","SVGAnimatedAngle":"LegacyJavaScriptObject","SVGAnimatedString":"LegacyJavaScriptObject","SVGAnimatedRect":"LegacyJavaScriptObject","SVGAnimatedNumberList":"LegacyJavaScriptObject","SVGAnimatedLengthList":"LegacyJavaScriptObject","SVGUnitTypes":"LegacyJavaScriptObject","SVGTests":"LegacyJavaScriptObject","SVGFitToViewBox":"LegacyJavaScriptObject","SVGURIReference":"LegacyJavaScriptObject","SVGSVGElement":"LegacyJavaScriptObject","SVGGElement":"LegacyJavaScriptObject","SVGDefsElement":"LegacyJavaScriptObject","SVGDescElement":"LegacyJavaScriptObject","SVGMetadataElement":"LegacyJavaScriptObject","SVGTitleElement":"LegacyJavaScriptObject","SVGSymbolElement":"LegacyJavaScriptObject","SVGUseElement":"LegacyJavaScriptObject","SVGUseElementShadowRoot":"LegacyJavaScriptObject","SVGElementInstance":"LegacyJavaScriptObject","ShadowAnimation":"LegacyJavaScriptObject","SVGSwitchElement":"LegacyJavaScriptObject","GetSVGDocument":"LegacyJavaScriptObject","SVGStyleElement":"LegacyJavaScriptObject","SVGTransform":"LegacyJavaScriptObject","SVGTransformList":"LegacyJavaScriptObject","SVGAnimatedTransformList":"LegacyJavaScriptObject","SVGPreserveAspectRatio":"LegacyJavaScriptObject","SVGAnimatedPreserveAspectRatio":"LegacyJavaScriptObject","SVGPathElement":"LegacyJavaScriptObject","SVGRectElement":"LegacyJavaScriptObject","SVGCircleElement":"LegacyJavaScriptObject","SVGEllipseElement":"LegacyJavaScriptObject","SVGLineElement":"LegacyJavaScriptObject","SVGAnimatedPoints":"LegacyJavaScriptObject","SVGPointList":"LegacyJavaScriptObject","SVGPolylineElement":"LegacyJavaScriptObject","SVGPolygonElement":"LegacyJavaScriptObject","SVGTextContentElement":"LegacyJavaScriptObject","SVGTextPositioningElement":"LegacyJavaScriptObject","SVGTextElement":"LegacyJavaScriptObject","SVGTSpanElement":"LegacyJavaScriptObject","SVGTextPathElement":"LegacyJavaScriptObject","SVGImageElement":"LegacyJavaScriptObject","SVGForeignObjectElement":"LegacyJavaScriptObject","SVGMarkerElement":"LegacyJavaScriptObject","SVGGradientElement":"LegacyJavaScriptObject","SVGLinearGradientElement":"LegacyJavaScriptObject","SVGRadialGradientElement":"LegacyJavaScriptObject","SVGStopElement":"LegacyJavaScriptObject","SVGPatternElement":"LegacyJavaScriptObject","SVGScriptElement":"LegacyJavaScriptObject","SVGAElement":"LegacyJavaScriptObject","SVGViewElement":"LegacyJavaScriptObject","TimeEvent":"LegacyJavaScriptObject","SVGAnimationElement":"LegacyJavaScriptObject","SVGAnimateElement":"LegacyJavaScriptObject","SVGSetElement":"LegacyJavaScriptObject","SVGAnimateMotionElement":"LegacyJavaScriptObject","SVGMPathElement":"LegacyJavaScriptObject","SVGAnimateTransformElement":"LegacyJavaScriptObject","SVGDiscardElement":"LegacyJavaScriptObject","$TestUtils":"LegacyJavaScriptObject","TextDetector":"LegacyJavaScriptObject","DetectedText":"LegacyJavaScriptObject","TouchInit":"LegacyJavaScriptObject","Touch":"LegacyJavaScriptObject","TouchList":"LegacyJavaScriptObject","TouchEventInit":"LegacyJavaScriptObject","TouchEvent":"LegacyJavaScriptObject","TrustedHTML":"LegacyJavaScriptObject","TrustedScript":"LegacyJavaScriptObject","TrustedScriptURL":"LegacyJavaScriptObject","TrustedTypePolicyFactory":"LegacyJavaScriptObject","TrustedTypePolicy":"LegacyJavaScriptObject","TrustedTypePolicyOptions":"LegacyJavaScriptObject","NavigatorUABrandVersion":"LegacyJavaScriptObject","UADataValues":"LegacyJavaScriptObject","UALowEntropyJSON":"LegacyJavaScriptObject","NavigatorUAData":"LegacyJavaScriptObject","NavigatorUA":"LegacyJavaScriptObject","UIEvent":"LegacyJavaScriptObject","UIEventInit":"LegacyJavaScriptObject","FocusEvent":"LegacyJavaScriptObject","FocusEventInit":"LegacyJavaScriptObject","MouseEvent":"LegacyJavaScriptObject","MouseEventInit":"LegacyJavaScriptObject","EventModifierInit":"LegacyJavaScriptObject","WheelEvent":"LegacyJavaScriptObject","WheelEventInit":"LegacyJavaScriptObject","InputEvent":"LegacyJavaScriptObject","InputEventInit":"LegacyJavaScriptObject","KeyboardEvent":"LegacyJavaScriptObject","KeyboardEventInit":"LegacyJavaScriptObject","CompositionEvent":"LegacyJavaScriptObject","CompositionEventInit":"LegacyJavaScriptObject","MutationEvent":"LegacyJavaScriptObject","URL":"LegacyJavaScriptObject","URLSearchParams":"LegacyJavaScriptObject","URLPattern":"LegacyJavaScriptObject","URLPatternInit":"LegacyJavaScriptObject","URLPatternOptions":"LegacyJavaScriptObject","URLPatternResult":"LegacyJavaScriptObject","URLPatternComponentResult":"LegacyJavaScriptObject","PerformanceMarkOptions":"LegacyJavaScriptObject","PerformanceMeasureOptions":"LegacyJavaScriptObject","PerformanceMark":"LegacyJavaScriptObject","PerformanceMeasure":"LegacyJavaScriptObject","VideoFrameCallbackMetadata":"LegacyJavaScriptObject","VirtualKeyboard":"LegacyJavaScriptObject","ARIAMixin":"LegacyJavaScriptObject","WebAssemblyInstantiatedSource":"LegacyJavaScriptObject","$WebAssembly":"LegacyJavaScriptObject","ModuleExportDescriptor":"LegacyJavaScriptObject","ModuleImportDescriptor":"LegacyJavaScriptObject","Module":"LegacyJavaScriptObject","Instance":"LegacyJavaScriptObject","MemoryDescriptor":"LegacyJavaScriptObject","Memory":"LegacyJavaScriptObject","TableDescriptor":"LegacyJavaScriptObject","Table":"LegacyJavaScriptObject","GlobalDescriptor":"LegacyJavaScriptObject","Global":"LegacyJavaScriptObject","AnimationTimeline":"LegacyJavaScriptObject","DocumentTimelineOptions":"LegacyJavaScriptObject","DocumentTimeline":"LegacyJavaScriptObject","Animation":"LegacyJavaScriptObject","AnimationEffect":"LegacyJavaScriptObject","EffectTiming":"LegacyJavaScriptObject","OptionalEffectTiming":"LegacyJavaScriptObject","ComputedEffectTiming":"LegacyJavaScriptObject","KeyframeEffect":"LegacyJavaScriptObject","BaseComputedKeyframe":"LegacyJavaScriptObject","BasePropertyIndexedKeyframe":"LegacyJavaScriptObject","BaseKeyframe":"LegacyJavaScriptObject","KeyframeEffectOptions":"LegacyJavaScriptObject","Animatable":"LegacyJavaScriptObject","KeyframeAnimationOptions":"LegacyJavaScriptObject","GetAnimationsOptions":"LegacyJavaScriptObject","GroupEffect":"LegacyJavaScriptObject","AnimationNodeList":"LegacyJavaScriptObject","SequenceEffect":"LegacyJavaScriptObject","AnimationPlaybackEvent":"LegacyJavaScriptObject","AnimationPlaybackEventInit":"LegacyJavaScriptObject","LaunchParams":"LegacyJavaScriptObject","LaunchQueue":"LegacyJavaScriptObject","BluetoothDataFilterInit":"LegacyJavaScriptObject","BluetoothManufacturerDataFilterInit":"LegacyJavaScriptObject","BluetoothServiceDataFilterInit":"LegacyJavaScriptObject","BluetoothLEScanFilterInit":"LegacyJavaScriptObject","RequestDeviceOptions":"LegacyJavaScriptObject","Bluetooth":"LegacyJavaScriptObject","BluetoothPermissionDescriptor":"LegacyJavaScriptObject","AllowedBluetoothDevice":"LegacyJavaScriptObject","BluetoothPermissionStorage":"LegacyJavaScriptObject","BluetoothPermissionResult":"LegacyJavaScriptObject","ValueEvent":"LegacyJavaScriptObject","ValueEventInit":"LegacyJavaScriptObject","BluetoothDevice":"LegacyJavaScriptObject","WatchAdvertisementsOptions":"LegacyJavaScriptObject","BluetoothManufacturerDataMap":"LegacyJavaScriptObject","BluetoothServiceDataMap":"LegacyJavaScriptObject","BluetoothAdvertisingEvent":"LegacyJavaScriptObject","BluetoothAdvertisingEventInit":"LegacyJavaScriptObject","BluetoothRemoteGATTServer":"LegacyJavaScriptObject","BluetoothRemoteGATTService":"LegacyJavaScriptObject","BluetoothRemoteGATTCharacteristic":"LegacyJavaScriptObject","BluetoothCharacteristicProperties":"LegacyJavaScriptObject","BluetoothRemoteGATTDescriptor":"LegacyJavaScriptObject","CharacteristicEventHandlers":"LegacyJavaScriptObject","BluetoothDeviceEventHandlers":"LegacyJavaScriptObject","ServiceEventHandlers":"LegacyJavaScriptObject","BluetoothUUID":"LegacyJavaScriptObject","NavigatorLocks":"LegacyJavaScriptObject","LockManager":"LegacyJavaScriptObject","LockOptions":"LegacyJavaScriptObject","LockManagerSnapshot":"LegacyJavaScriptObject","LockInfo":"LegacyJavaScriptObject","Lock":"LegacyJavaScriptObject","NDEFMessage":"LegacyJavaScriptObject","NDEFMessageInit":"LegacyJavaScriptObject","NDEFRecord":"LegacyJavaScriptObject","NDEFRecordInit":"LegacyJavaScriptObject","NDEFReader":"LegacyJavaScriptObject","NDEFReadingEvent":"LegacyJavaScriptObject","NDEFReadingEventInit":"LegacyJavaScriptObject","NDEFWriteOptions":"LegacyJavaScriptObject","NDEFMakeReadOnlyOptions":"LegacyJavaScriptObject","NDEFScanOptions":"LegacyJavaScriptObject","OTPCredential":"LegacyJavaScriptObject","OTPCredentialRequestOptions":"LegacyJavaScriptObject","ShareData":"LegacyJavaScriptObject","BaseAudioContext":"LegacyJavaScriptObject","AudioContext":"LegacyJavaScriptObject","AudioContextOptions":"LegacyJavaScriptObject","AudioSinkOptions":"LegacyJavaScriptObject","AudioSinkInfo":"LegacyJavaScriptObject","AudioTimestamp":"LegacyJavaScriptObject","AudioRenderCapacity":"LegacyJavaScriptObject","AudioRenderCapacityOptions":"LegacyJavaScriptObject","AudioRenderCapacityEvent":"LegacyJavaScriptObject","AudioRenderCapacityEventInit":"LegacyJavaScriptObject","OfflineAudioContext":"LegacyJavaScriptObject","OfflineAudioContextOptions":"LegacyJavaScriptObject","OfflineAudioCompletionEvent":"LegacyJavaScriptObject","OfflineAudioCompletionEventInit":"LegacyJavaScriptObject","AudioBuffer":"LegacyJavaScriptObject","AudioBufferOptions":"LegacyJavaScriptObject","AudioNode":"LegacyJavaScriptObject","AudioNodeOptions":"LegacyJavaScriptObject","AudioParam":"LegacyJavaScriptObject","AudioScheduledSourceNode":"LegacyJavaScriptObject","AnalyserNode":"LegacyJavaScriptObject","AnalyserOptions":"LegacyJavaScriptObject","AudioBufferSourceNode":"LegacyJavaScriptObject","AudioBufferSourceOptions":"LegacyJavaScriptObject","AudioDestinationNode":"LegacyJavaScriptObject","AudioListener":"LegacyJavaScriptObject","AudioProcessingEvent":"LegacyJavaScriptObject","AudioProcessingEventInit":"LegacyJavaScriptObject","BiquadFilterNode":"LegacyJavaScriptObject","BiquadFilterOptions":"LegacyJavaScriptObject","ChannelMergerNode":"LegacyJavaScriptObject","ChannelMergerOptions":"LegacyJavaScriptObject","ChannelSplitterNode":"LegacyJavaScriptObject","ChannelSplitterOptions":"LegacyJavaScriptObject","ConstantSourceNode":"LegacyJavaScriptObject","ConstantSourceOptions":"LegacyJavaScriptObject","ConvolverNode":"LegacyJavaScriptObject","ConvolverOptions":"LegacyJavaScriptObject","DelayNode":"LegacyJavaScriptObject","DelayOptions":"LegacyJavaScriptObject","DynamicsCompressorNode":"LegacyJavaScriptObject","DynamicsCompressorOptions":"LegacyJavaScriptObject","GainNode":"LegacyJavaScriptObject","GainOptions":"LegacyJavaScriptObject","IIRFilterNode":"LegacyJavaScriptObject","IIRFilterOptions":"LegacyJavaScriptObject","MediaElementAudioSourceNode":"LegacyJavaScriptObject","MediaElementAudioSourceOptions":"LegacyJavaScriptObject","MediaStreamAudioDestinationNode":"LegacyJavaScriptObject","MediaStreamAudioSourceNode":"LegacyJavaScriptObject","MediaStreamAudioSourceOptions":"LegacyJavaScriptObject","MediaStreamTrackAudioSourceNode":"LegacyJavaScriptObject","MediaStreamTrackAudioSourceOptions":"LegacyJavaScriptObject","OscillatorNode":"LegacyJavaScriptObject","OscillatorOptions":"LegacyJavaScriptObject","PannerNode":"LegacyJavaScriptObject","PannerOptions":"LegacyJavaScriptObject","PeriodicWave":"LegacyJavaScriptObject","PeriodicWaveConstraints":"LegacyJavaScriptObject","PeriodicWaveOptions":"LegacyJavaScriptObject","ScriptProcessorNode":"LegacyJavaScriptObject","StereoPannerNode":"LegacyJavaScriptObject","StereoPannerOptions":"LegacyJavaScriptObject","WaveShaperNode":"LegacyJavaScriptObject","WaveShaperOptions":"LegacyJavaScriptObject","AudioWorklet":"LegacyJavaScriptObject","AudioWorkletGlobalScope":"LegacyJavaScriptObject","AudioParamMap":"LegacyJavaScriptObject","AudioWorkletNode":"LegacyJavaScriptObject","AudioWorkletNodeOptions":"LegacyJavaScriptObject","AudioWorkletProcessor":"LegacyJavaScriptObject","AudioParamDescriptor":"LegacyJavaScriptObject","PublicKeyCredential":"LegacyJavaScriptObject","RegistrationResponseJSON":"LegacyJavaScriptObject","AuthenticatorAttestationResponseJSON":"LegacyJavaScriptObject","AuthenticationResponseJSON":"LegacyJavaScriptObject","AuthenticatorAssertionResponseJSON":"LegacyJavaScriptObject","AuthenticationExtensionsClientOutputsJSON":"LegacyJavaScriptObject","PublicKeyCredentialCreationOptionsJSON":"LegacyJavaScriptObject","PublicKeyCredentialUserEntityJSON":"LegacyJavaScriptObject","PublicKeyCredentialDescriptorJSON":"LegacyJavaScriptObject","AuthenticationExtensionsClientInputsJSON":"LegacyJavaScriptObject","PublicKeyCredentialRequestOptionsJSON":"LegacyJavaScriptObject","AuthenticatorResponse":"LegacyJavaScriptObject","AuthenticatorAttestationResponse":"LegacyJavaScriptObject","AuthenticatorAssertionResponse":"LegacyJavaScriptObject","PublicKeyCredentialParameters":"LegacyJavaScriptObject","PublicKeyCredentialCreationOptions":"LegacyJavaScriptObject","PublicKeyCredentialEntity":"LegacyJavaScriptObject","PublicKeyCredentialRpEntity":"LegacyJavaScriptObject","PublicKeyCredentialUserEntity":"LegacyJavaScriptObject","AuthenticatorSelectionCriteria":"LegacyJavaScriptObject","PublicKeyCredentialRequestOptions":"LegacyJavaScriptObject","AuthenticationExtensionsClientInputs":"LegacyJavaScriptObject","AuthenticationExtensionsClientOutputs":"LegacyJavaScriptObject","CollectedClientData":"LegacyJavaScriptObject","TokenBinding":"LegacyJavaScriptObject","PublicKeyCredentialDescriptor":"LegacyJavaScriptObject","CredentialPropertiesOutput":"LegacyJavaScriptObject","AuthenticationExtensionsPRFValues":"LegacyJavaScriptObject","AuthenticationExtensionsPRFInputs":"LegacyJavaScriptObject","AuthenticationExtensionsPRFOutputs":"LegacyJavaScriptObject","AuthenticationExtensionsLargeBlobInputs":"LegacyJavaScriptObject","AuthenticationExtensionsLargeBlobOutputs":"LegacyJavaScriptObject","AuthenticationExtensionsDevicePublicKeyInputs":"LegacyJavaScriptObject","AuthenticationExtensionsDevicePublicKeyOutputs":"LegacyJavaScriptObject","AudioDecoder":"LegacyJavaScriptObject","AudioDecoderInit":"LegacyJavaScriptObject","VideoDecoder":"LegacyJavaScriptObject","VideoDecoderInit":"LegacyJavaScriptObject","AudioEncoder":"LegacyJavaScriptObject","AudioEncoderInit":"LegacyJavaScriptObject","EncodedAudioChunkMetadata":"LegacyJavaScriptObject","VideoEncoder":"LegacyJavaScriptObject","VideoEncoderInit":"LegacyJavaScriptObject","EncodedVideoChunkMetadata":"LegacyJavaScriptObject","SvcOutputMetadata":"LegacyJavaScriptObject","AudioDecoderSupport":"LegacyJavaScriptObject","VideoDecoderSupport":"LegacyJavaScriptObject","AudioEncoderSupport":"LegacyJavaScriptObject","VideoEncoderSupport":"LegacyJavaScriptObject","AudioDecoderConfig":"LegacyJavaScriptObject","VideoDecoderConfig":"LegacyJavaScriptObject","AudioEncoderConfig":"LegacyJavaScriptObject","VideoEncoderConfig":"LegacyJavaScriptObject","VideoEncoderEncodeOptions":"LegacyJavaScriptObject","EncodedAudioChunk":"LegacyJavaScriptObject","EncodedAudioChunkInit":"LegacyJavaScriptObject","EncodedVideoChunk":"LegacyJavaScriptObject","EncodedVideoChunkInit":"LegacyJavaScriptObject","AudioData":"LegacyJavaScriptObject","AudioDataInit":"LegacyJavaScriptObject","AudioDataCopyToOptions":"LegacyJavaScriptObject","VideoFrame":"LegacyJavaScriptObject","VideoFrameInit":"LegacyJavaScriptObject","VideoFrameBufferInit":"LegacyJavaScriptObject","VideoFrameMetadata":"LegacyJavaScriptObject","VideoFrameCopyToOptions":"LegacyJavaScriptObject","PlaneLayout":"LegacyJavaScriptObject","VideoColorSpace":"LegacyJavaScriptObject","VideoColorSpaceInit":"LegacyJavaScriptObject","ImageDecoder":"LegacyJavaScriptObject","ImageDecoderInit":"LegacyJavaScriptObject","ImageDecodeOptions":"LegacyJavaScriptObject","ImageDecodeResult":"LegacyJavaScriptObject","ImageTrackList":"LegacyJavaScriptObject","ImageTrack":"LegacyJavaScriptObject","AacEncoderConfig":"LegacyJavaScriptObject","AvcEncoderConfig":"LegacyJavaScriptObject","FlacEncoderConfig":"LegacyJavaScriptObject","HevcEncoderConfig":"LegacyJavaScriptObject","OpusEncoderConfig":"LegacyJavaScriptObject","Ed448Params":"LegacyJavaScriptObject","Crypto":"LegacyJavaScriptObject","Algorithm":"LegacyJavaScriptObject","KeyAlgorithm":"LegacyJavaScriptObject","CryptoKey":"LegacyJavaScriptObject","SubtleCrypto":"LegacyJavaScriptObject","RsaOtherPrimesInfo":"LegacyJavaScriptObject","JsonWebKey":"LegacyJavaScriptObject","CryptoKeyPair":"LegacyJavaScriptObject","RsaKeyGenParams":"LegacyJavaScriptObject","RsaHashedKeyGenParams":"LegacyJavaScriptObject","RsaKeyAlgorithm":"LegacyJavaScriptObject","RsaHashedKeyAlgorithm":"LegacyJavaScriptObject","RsaHashedImportParams":"LegacyJavaScriptObject","RsaPssParams":"LegacyJavaScriptObject","RsaOaepParams":"LegacyJavaScriptObject","EcdsaParams":"LegacyJavaScriptObject","EcKeyGenParams":"LegacyJavaScriptObject","EcKeyAlgorithm":"LegacyJavaScriptObject","EcKeyImportParams":"LegacyJavaScriptObject","EcdhKeyDeriveParams":"LegacyJavaScriptObject","AesCtrParams":"LegacyJavaScriptObject","AesKeyAlgorithm":"LegacyJavaScriptObject","AesKeyGenParams":"LegacyJavaScriptObject","AesDerivedKeyParams":"LegacyJavaScriptObject","AesCbcParams":"LegacyJavaScriptObject","AesGcmParams":"LegacyJavaScriptObject","HmacImportParams":"LegacyJavaScriptObject","HmacKeyAlgorithm":"LegacyJavaScriptObject","HmacKeyGenParams":"LegacyJavaScriptObject","HkdfParams":"LegacyJavaScriptObject","Pbkdf2Params":"LegacyJavaScriptObject","NavigatorAutomationInformation":"LegacyJavaScriptObject","WebGLContextAttributes":"LegacyJavaScriptObject","WebGLObject":"LegacyJavaScriptObject","WebGLBuffer":"LegacyJavaScriptObject","WebGLFramebuffer":"LegacyJavaScriptObject","WebGLProgram":"LegacyJavaScriptObject","WebGLRenderbuffer":"LegacyJavaScriptObject","WebGLShader":"LegacyJavaScriptObject","WebGLTexture":"LegacyJavaScriptObject","WebGLUniformLocation":"LegacyJavaScriptObject","WebGLActiveInfo":"LegacyJavaScriptObject","WebGLShaderPrecisionFormat":"LegacyJavaScriptObject","WebGLRenderingContextBase":"LegacyJavaScriptObject","WebGLRenderingContextOverloads":"LegacyJavaScriptObject","WebGLRenderingContext":"LegacyJavaScriptObject","WebGLContextEvent":"LegacyJavaScriptObject","WebGLContextEventInit":"LegacyJavaScriptObject","WebGLQuery":"LegacyJavaScriptObject","WebGLSampler":"LegacyJavaScriptObject","WebGLSync":"LegacyJavaScriptObject","WebGLTransformFeedback":"LegacyJavaScriptObject","WebGLVertexArrayObject":"LegacyJavaScriptObject","WebGL2RenderingContextBase":"LegacyJavaScriptObject","WebGL2RenderingContextOverloads":"LegacyJavaScriptObject","WebGL2RenderingContext":"LegacyJavaScriptObject","WEBGL_blend_equation_advanced_coherent":"LegacyJavaScriptObject","WEBGL_clip_cull_distance":"LegacyJavaScriptObject","WEBGL_color_buffer_float":"LegacyJavaScriptObject","WEBGL_compressed_texture_astc":"LegacyJavaScriptObject","WEBGL_compressed_texture_etc":"LegacyJavaScriptObject","WEBGL_compressed_texture_etc1":"LegacyJavaScriptObject","WEBGL_compressed_texture_pvrtc":"LegacyJavaScriptObject","WEBGL_compressed_texture_s3tc":"LegacyJavaScriptObject","WEBGL_compressed_texture_s3tc_srgb":"LegacyJavaScriptObject","WEBGL_debug_renderer_info":"LegacyJavaScriptObject","WEBGL_debug_shaders":"LegacyJavaScriptObject","WEBGL_depth_texture":"LegacyJavaScriptObject","WEBGL_draw_buffers":"LegacyJavaScriptObject","WEBGL_draw_instanced_base_vertex_base_instance":"LegacyJavaScriptObject","WEBGL_lose_context":"LegacyJavaScriptObject","WEBGL_multi_draw":"LegacyJavaScriptObject","WEBGL_multi_draw_instanced_base_vertex_base_instance":"LegacyJavaScriptObject","WEBGL_provoking_vertex":"LegacyJavaScriptObject","GPUObjectBase":"LegacyJavaScriptObject","GPUObjectDescriptorBase":"LegacyJavaScriptObject","GPUSupportedLimits":"LegacyJavaScriptObject","GPUSupportedFeatures":"LegacyJavaScriptObject","GPUAdapterInfo":"LegacyJavaScriptObject","NavigatorGPU":"LegacyJavaScriptObject","GPU":"LegacyJavaScriptObject","GPURequestAdapterOptions":"LegacyJavaScriptObject","GPUAdapter":"LegacyJavaScriptObject","GPUDeviceDescriptor":"LegacyJavaScriptObject","GPUDevice":"LegacyJavaScriptObject","GPUBuffer":"LegacyJavaScriptObject","GPUBufferDescriptor":"LegacyJavaScriptObject","$GPUBufferUsage":"LegacyJavaScriptObject","$GPUMapMode":"LegacyJavaScriptObject","GPUTexture":"LegacyJavaScriptObject","GPUTextureDescriptor":"LegacyJavaScriptObject","$GPUTextureUsage":"LegacyJavaScriptObject","GPUTextureView":"LegacyJavaScriptObject","GPUTextureViewDescriptor":"LegacyJavaScriptObject","GPUExternalTexture":"LegacyJavaScriptObject","GPUExternalTextureDescriptor":"LegacyJavaScriptObject","GPUSampler":"LegacyJavaScriptObject","GPUSamplerDescriptor":"LegacyJavaScriptObject","GPUBindGroupLayout":"LegacyJavaScriptObject","GPUBindGroupLayoutDescriptor":"LegacyJavaScriptObject","GPUBindGroupLayoutEntry":"LegacyJavaScriptObject","$GPUShaderStage":"LegacyJavaScriptObject","GPUBufferBindingLayout":"LegacyJavaScriptObject","GPUSamplerBindingLayout":"LegacyJavaScriptObject","GPUTextureBindingLayout":"LegacyJavaScriptObject","GPUStorageTextureBindingLayout":"LegacyJavaScriptObject","GPUExternalTextureBindingLayout":"LegacyJavaScriptObject","GPUBindGroup":"LegacyJavaScriptObject","GPUBindGroupDescriptor":"LegacyJavaScriptObject","GPUBindGroupEntry":"LegacyJavaScriptObject","GPUBufferBinding":"LegacyJavaScriptObject","GPUPipelineLayout":"LegacyJavaScriptObject","GPUPipelineLayoutDescriptor":"LegacyJavaScriptObject","GPUShaderModule":"LegacyJavaScriptObject","GPUShaderModuleDescriptor":"LegacyJavaScriptObject","GPUShaderModuleCompilationHint":"LegacyJavaScriptObject","GPUCompilationMessage":"LegacyJavaScriptObject","GPUCompilationInfo":"LegacyJavaScriptObject","GPUPipelineError":"LegacyJavaScriptObject","GPUPipelineErrorInit":"LegacyJavaScriptObject","GPUPipelineDescriptorBase":"LegacyJavaScriptObject","GPUPipelineBase":"LegacyJavaScriptObject","GPUProgrammableStage":"LegacyJavaScriptObject","GPUComputePipeline":"LegacyJavaScriptObject","GPUComputePipelineDescriptor":"LegacyJavaScriptObject","GPURenderPipeline":"LegacyJavaScriptObject","GPURenderPipelineDescriptor":"LegacyJavaScriptObject","GPUPrimitiveState":"LegacyJavaScriptObject","GPUMultisampleState":"LegacyJavaScriptObject","GPUFragmentState":"LegacyJavaScriptObject","GPUColorTargetState":"LegacyJavaScriptObject","GPUBlendState":"LegacyJavaScriptObject","$GPUColorWrite":"LegacyJavaScriptObject","GPUBlendComponent":"LegacyJavaScriptObject","GPUDepthStencilState":"LegacyJavaScriptObject","GPUStencilFaceState":"LegacyJavaScriptObject","GPUVertexState":"LegacyJavaScriptObject","GPUVertexBufferLayout":"LegacyJavaScriptObject","GPUVertexAttribute":"LegacyJavaScriptObject","GPUImageDataLayout":"LegacyJavaScriptObject","GPUImageCopyBuffer":"LegacyJavaScriptObject","GPUImageCopyTexture":"LegacyJavaScriptObject","GPUImageCopyTextureTagged":"LegacyJavaScriptObject","GPUImageCopyExternalImage":"LegacyJavaScriptObject","GPUCommandBuffer":"LegacyJavaScriptObject","GPUCommandBufferDescriptor":"LegacyJavaScriptObject","GPUCommandsMixin":"LegacyJavaScriptObject","GPUCommandEncoder":"LegacyJavaScriptObject","GPUCommandEncoderDescriptor":"LegacyJavaScriptObject","GPUBindingCommandsMixin":"LegacyJavaScriptObject","GPUDebugCommandsMixin":"LegacyJavaScriptObject","GPUComputePassEncoder":"LegacyJavaScriptObject","GPUComputePassTimestampWrite":"LegacyJavaScriptObject","GPUComputePassDescriptor":"LegacyJavaScriptObject","GPURenderPassEncoder":"LegacyJavaScriptObject","GPURenderPassTimestampWrite":"LegacyJavaScriptObject","GPURenderPassDescriptor":"LegacyJavaScriptObject","GPURenderPassColorAttachment":"LegacyJavaScriptObject","GPURenderPassDepthStencilAttachment":"LegacyJavaScriptObject","GPURenderPassLayout":"LegacyJavaScriptObject","GPURenderCommandsMixin":"LegacyJavaScriptObject","GPURenderBundle":"LegacyJavaScriptObject","GPURenderBundleDescriptor":"LegacyJavaScriptObject","GPURenderBundleEncoder":"LegacyJavaScriptObject","GPURenderBundleEncoderDescriptor":"LegacyJavaScriptObject","GPUQueueDescriptor":"LegacyJavaScriptObject","GPUQueue":"LegacyJavaScriptObject","GPUQuerySet":"LegacyJavaScriptObject","GPUQuerySetDescriptor":"LegacyJavaScriptObject","GPUCanvasContext":"LegacyJavaScriptObject","GPUCanvasConfiguration":"LegacyJavaScriptObject","GPUDeviceLostInfo":"LegacyJavaScriptObject","GPUError":"LegacyJavaScriptObject","GPUValidationError":"LegacyJavaScriptObject","GPUOutOfMemoryError":"LegacyJavaScriptObject","GPUInternalError":"LegacyJavaScriptObject","GPUUncapturedErrorEvent":"LegacyJavaScriptObject","GPUUncapturedErrorEventInit":"LegacyJavaScriptObject","GPUColorDict":"LegacyJavaScriptObject","GPUOrigin2DDict":"LegacyJavaScriptObject","GPUOrigin3DDict":"LegacyJavaScriptObject","GPUExtent3DDict":"LegacyJavaScriptObject","HID":"LegacyJavaScriptObject","HIDDeviceRequestOptions":"LegacyJavaScriptObject","HIDDeviceFilter":"LegacyJavaScriptObject","HIDDevice":"LegacyJavaScriptObject","HIDConnectionEvent":"LegacyJavaScriptObject","HIDConnectionEventInit":"LegacyJavaScriptObject","HIDInputReportEvent":"LegacyJavaScriptObject","HIDInputReportEventInit":"LegacyJavaScriptObject","HIDCollectionInfo":"LegacyJavaScriptObject","HIDReportInfo":"LegacyJavaScriptObject","HIDReportItem":"LegacyJavaScriptObject","DOMException":"LegacyJavaScriptObject","MidiPermissionDescriptor":"LegacyJavaScriptObject","MIDIOptions":"LegacyJavaScriptObject","MIDIInputMap":"LegacyJavaScriptObject","MIDIOutputMap":"LegacyJavaScriptObject","MIDIAccess":"LegacyJavaScriptObject","MIDIPort":"LegacyJavaScriptObject","MIDIInput":"LegacyJavaScriptObject","MIDIOutput":"LegacyJavaScriptObject","MIDIMessageEvent":"LegacyJavaScriptObject","MIDIMessageEventInit":"LegacyJavaScriptObject","MIDIConnectionEvent":"LegacyJavaScriptObject","MIDIConnectionEventInit":"LegacyJavaScriptObject","NavigatorML":"LegacyJavaScriptObject","MLContextOptions":"LegacyJavaScriptObject","ML":"LegacyJavaScriptObject","MLGraph":"LegacyJavaScriptObject","MLOperandDescriptor":"LegacyJavaScriptObject","MLOperand":"LegacyJavaScriptObject","MLActivation":"LegacyJavaScriptObject","MLContext":"LegacyJavaScriptObject","MLComputeResult":"LegacyJavaScriptObject","MLCommandEncoder":"LegacyJavaScriptObject","MLBufferResourceView":"LegacyJavaScriptObject","MLGraphBuilder":"LegacyJavaScriptObject","MLBatchNormalizationOptions":"LegacyJavaScriptObject","MLClampOptions":"LegacyJavaScriptObject","MLConv2dOptions":"LegacyJavaScriptObject","MLConvTranspose2dOptions":"LegacyJavaScriptObject","MLEluOptions":"LegacyJavaScriptObject","MLGemmOptions":"LegacyJavaScriptObject","MLGruOptions":"LegacyJavaScriptObject","MLGruCellOptions":"LegacyJavaScriptObject","MLHardSigmoidOptions":"LegacyJavaScriptObject","MLInstanceNormalizationOptions":"LegacyJavaScriptObject","MLLeakyReluOptions":"LegacyJavaScriptObject","MLLinearOptions":"LegacyJavaScriptObject","MLLstmOptions":"LegacyJavaScriptObject","MLLstmCellOptions":"LegacyJavaScriptObject","MLPadOptions":"LegacyJavaScriptObject","MLPool2dOptions":"LegacyJavaScriptObject","MLReduceOptions":"LegacyJavaScriptObject","MLResample2dOptions":"LegacyJavaScriptObject","MLSliceOptions":"LegacyJavaScriptObject","MLSoftplusOptions":"LegacyJavaScriptObject","MLSplitOptions":"LegacyJavaScriptObject","MLSqueezeOptions":"LegacyJavaScriptObject","MLTransposeOptions":"LegacyJavaScriptObject","RTCConfiguration":"LegacyJavaScriptObject","RTCIceServer":"LegacyJavaScriptObject","RTCOfferAnswerOptions":"LegacyJavaScriptObject","RTCOfferOptions":"LegacyJavaScriptObject","RTCAnswerOptions":"LegacyJavaScriptObject","RTCPeerConnection":"LegacyJavaScriptObject","RTCSessionDescription":"LegacyJavaScriptObject","RTCSessionDescriptionInit":"LegacyJavaScriptObject","RTCLocalSessionDescriptionInit":"LegacyJavaScriptObject","RTCIceCandidate":"LegacyJavaScriptObject","RTCIceCandidateInit":"LegacyJavaScriptObject","RTCPeerConnectionIceEvent":"LegacyJavaScriptObject","RTCPeerConnectionIceEventInit":"LegacyJavaScriptObject","RTCPeerConnectionIceErrorEvent":"LegacyJavaScriptObject","RTCPeerConnectionIceErrorEventInit":"LegacyJavaScriptObject","RTCCertificateExpiration":"LegacyJavaScriptObject","RTCCertificate":"LegacyJavaScriptObject","RTCRtpTransceiverInit":"LegacyJavaScriptObject","RTCRtpSender":"LegacyJavaScriptObject","RTCRtpParameters":"LegacyJavaScriptObject","RTCRtpSendParameters":"LegacyJavaScriptObject","RTCRtpReceiveParameters":"LegacyJavaScriptObject","RTCRtpCodingParameters":"LegacyJavaScriptObject","RTCRtpEncodingParameters":"LegacyJavaScriptObject","RTCRtcpParameters":"LegacyJavaScriptObject","RTCRtpHeaderExtensionParameters":"LegacyJavaScriptObject","RTCRtpCodecParameters":"LegacyJavaScriptObject","RTCRtpCapabilities":"LegacyJavaScriptObject","RTCRtpCodecCapability":"LegacyJavaScriptObject","RTCRtpHeaderExtensionCapability":"LegacyJavaScriptObject","RTCRtpReceiver":"LegacyJavaScriptObject","RTCRtpContributingSource":"LegacyJavaScriptObject","RTCRtpSynchronizationSource":"LegacyJavaScriptObject","RTCRtpTransceiver":"LegacyJavaScriptObject","RTCDtlsTransport":"LegacyJavaScriptObject","RTCDtlsFingerprint":"LegacyJavaScriptObject","RTCIceTransport":"LegacyJavaScriptObject","RTCIceParameters":"LegacyJavaScriptObject","RTCIceCandidatePair":"LegacyJavaScriptObject","RTCTrackEvent":"LegacyJavaScriptObject","RTCTrackEventInit":"LegacyJavaScriptObject","RTCSctpTransport":"LegacyJavaScriptObject","RTCDataChannel":"LegacyJavaScriptObject","RTCDataChannelInit":"LegacyJavaScriptObject","RTCDataChannelEvent":"LegacyJavaScriptObject","RTCDataChannelEventInit":"LegacyJavaScriptObject","RTCDTMFSender":"LegacyJavaScriptObject","RTCDTMFToneChangeEvent":"LegacyJavaScriptObject","RTCDTMFToneChangeEventInit":"LegacyJavaScriptObject","RTCStatsReport":"LegacyJavaScriptObject","RTCStats":"LegacyJavaScriptObject","RTCError":"LegacyJavaScriptObject","RTCErrorInit":"LegacyJavaScriptObject","RTCErrorEvent":"LegacyJavaScriptObject","RTCErrorEventInit":"LegacyJavaScriptObject","SFrameTransformOptions":"LegacyJavaScriptObject","SFrameTransform":"LegacyJavaScriptObject","SFrameTransformErrorEvent":"LegacyJavaScriptObject","SFrameTransformErrorEventInit":"LegacyJavaScriptObject","RTCEncodedVideoFrameMetadata":"LegacyJavaScriptObject","RTCEncodedVideoFrame":"LegacyJavaScriptObject","RTCEncodedAudioFrameMetadata":"LegacyJavaScriptObject","RTCEncodedAudioFrame":"LegacyJavaScriptObject","RTCTransformEvent":"LegacyJavaScriptObject","RTCRtpScriptTransformer":"LegacyJavaScriptObject","RTCRtpScriptTransform":"LegacyJavaScriptObject","RTCIceGatherOptions":"LegacyJavaScriptObject","RTCIdentityProviderGlobalScope":"LegacyJavaScriptObject","RTCIdentityProviderRegistrar":"LegacyJavaScriptObject","RTCIdentityProvider":"LegacyJavaScriptObject","RTCIdentityAssertionResult":"LegacyJavaScriptObject","RTCIdentityProviderDetails":"LegacyJavaScriptObject","RTCIdentityValidationResult":"LegacyJavaScriptObject","RTCIdentityProviderOptions":"LegacyJavaScriptObject","RTCIdentityAssertion":"LegacyJavaScriptObject","RTCRtpStreamStats":"LegacyJavaScriptObject","RTCCodecStats":"LegacyJavaScriptObject","RTCReceivedRtpStreamStats":"LegacyJavaScriptObject","RTCInboundRtpStreamStats":"LegacyJavaScriptObject","RTCRemoteInboundRtpStreamStats":"LegacyJavaScriptObject","RTCSentRtpStreamStats":"LegacyJavaScriptObject","RTCOutboundRtpStreamStats":"LegacyJavaScriptObject","RTCRemoteOutboundRtpStreamStats":"LegacyJavaScriptObject","RTCMediaSourceStats":"LegacyJavaScriptObject","RTCAudioSourceStats":"LegacyJavaScriptObject","RTCVideoSourceStats":"LegacyJavaScriptObject","RTCAudioPlayoutStats":"LegacyJavaScriptObject","RTCPeerConnectionStats":"LegacyJavaScriptObject","RTCDataChannelStats":"LegacyJavaScriptObject","RTCTransportStats":"LegacyJavaScriptObject","RTCIceCandidateStats":"LegacyJavaScriptObject","RTCIceCandidatePairStats":"LegacyJavaScriptObject","RTCCertificateStats":"LegacyJavaScriptObject","WebSocket":"LegacyJavaScriptObject","CloseEvent":"LegacyJavaScriptObject","CloseEventInit":"LegacyJavaScriptObject","WebTransportDatagramDuplexStream":"LegacyJavaScriptObject","WebTransport":"LegacyJavaScriptObject","WebTransportHash":"LegacyJavaScriptObject","WebTransportOptions":"LegacyJavaScriptObject","WebTransportCloseInfo":"LegacyJavaScriptObject","WebTransportSendStreamOptions":"LegacyJavaScriptObject","WebTransportStats":"LegacyJavaScriptObject","WebTransportDatagramStats":"LegacyJavaScriptObject","WebTransportSendStream":"LegacyJavaScriptObject","WebTransportSendStreamStats":"LegacyJavaScriptObject","WebTransportReceiveStream":"LegacyJavaScriptObject","WebTransportReceiveStreamStats":"LegacyJavaScriptObject","WebTransportBidirectionalStream":"LegacyJavaScriptObject","WebTransportError":"LegacyJavaScriptObject","WebTransportErrorInit":"LegacyJavaScriptObject","USBDeviceFilter":"LegacyJavaScriptObject","USBDeviceRequestOptions":"LegacyJavaScriptObject","USB":"LegacyJavaScriptObject","USBConnectionEventInit":"LegacyJavaScriptObject","USBConnectionEvent":"LegacyJavaScriptObject","USBInTransferResult":"LegacyJavaScriptObject","USBOutTransferResult":"LegacyJavaScriptObject","USBIsochronousInTransferPacket":"LegacyJavaScriptObject","USBIsochronousInTransferResult":"LegacyJavaScriptObject","USBIsochronousOutTransferPacket":"LegacyJavaScriptObject","USBIsochronousOutTransferResult":"LegacyJavaScriptObject","USBDevice":"LegacyJavaScriptObject","USBControlTransferParameters":"LegacyJavaScriptObject","USBConfiguration":"LegacyJavaScriptObject","USBInterface":"LegacyJavaScriptObject","USBAlternateInterface":"LegacyJavaScriptObject","USBEndpoint":"LegacyJavaScriptObject","USBPermissionDescriptor":"LegacyJavaScriptObject","AllowedUSBDevice":"LegacyJavaScriptObject","USBPermissionStorage":"LegacyJavaScriptObject","USBPermissionResult":"LegacyJavaScriptObject","VTTCue":"LegacyJavaScriptObject","VTTRegion":"LegacyJavaScriptObject","XRSystem":"LegacyJavaScriptObject","XRSessionInit":"LegacyJavaScriptObject","XRSession":"LegacyJavaScriptObject","XRRenderStateInit":"LegacyJavaScriptObject","XRRenderState":"LegacyJavaScriptObject","XRFrame":"LegacyJavaScriptObject","XRSpace":"LegacyJavaScriptObject","XRReferenceSpace":"LegacyJavaScriptObject","XRBoundedReferenceSpace":"LegacyJavaScriptObject","XRView":"LegacyJavaScriptObject","XRViewport":"LegacyJavaScriptObject","XRRigidTransform":"LegacyJavaScriptObject","XRPose":"LegacyJavaScriptObject","XRViewerPose":"LegacyJavaScriptObject","XRInputSource":"LegacyJavaScriptObject","XRInputSourceArray":"LegacyJavaScriptObject","XRLayer":"LegacyJavaScriptObject","XRWebGLLayerInit":"LegacyJavaScriptObject","XRWebGLLayer":"LegacyJavaScriptObject","XRSessionEvent":"LegacyJavaScriptObject","XRSessionEventInit":"LegacyJavaScriptObject","XRInputSourceEvent":"LegacyJavaScriptObject","XRInputSourceEventInit":"LegacyJavaScriptObject","XRInputSourcesChangeEvent":"LegacyJavaScriptObject","XRInputSourcesChangeEventInit":"LegacyJavaScriptObject","XRReferenceSpaceEvent":"LegacyJavaScriptObject","XRReferenceSpaceEventInit":"LegacyJavaScriptObject","XRSessionSupportedPermissionDescriptor":"LegacyJavaScriptObject","XRPermissionDescriptor":"LegacyJavaScriptObject","XRPermissionStatus":"LegacyJavaScriptObject","XRDepthStateInit":"LegacyJavaScriptObject","XRDepthInformation":"LegacyJavaScriptObject","XRCPUDepthInformation":"LegacyJavaScriptObject","XRWebGLDepthInformation":"LegacyJavaScriptObject","XRDOMOverlayInit":"LegacyJavaScriptObject","XRDOMOverlayState":"LegacyJavaScriptObject","XRHand":"LegacyJavaScriptObject","XRJointSpace":"LegacyJavaScriptObject","XRJointPose":"LegacyJavaScriptObject","XRHitTestOptionsInit":"LegacyJavaScriptObject","XRTransientInputHitTestOptionsInit":"LegacyJavaScriptObject","XRHitTestSource":"LegacyJavaScriptObject","XRTransientInputHitTestSource":"LegacyJavaScriptObject","XRHitTestResult":"LegacyJavaScriptObject","XRTransientInputHitTestResult":"LegacyJavaScriptObject","XRRayDirectionInit":"LegacyJavaScriptObject","XRRay":"LegacyJavaScriptObject","XRLightProbe":"LegacyJavaScriptObject","XRLightEstimate":"LegacyJavaScriptObject","XRLightProbeInit":"LegacyJavaScriptObject","XRCompositionLayer":"LegacyJavaScriptObject","XRProjectionLayer":"LegacyJavaScriptObject","XRQuadLayer":"LegacyJavaScriptObject","XRCylinderLayer":"LegacyJavaScriptObject","XREquirectLayer":"LegacyJavaScriptObject","XRCubeLayer":"LegacyJavaScriptObject","XRSubImage":"LegacyJavaScriptObject","XRWebGLSubImage":"LegacyJavaScriptObject","XRProjectionLayerInit":"LegacyJavaScriptObject","XRLayerInit":"LegacyJavaScriptObject","XRQuadLayerInit":"LegacyJavaScriptObject","XRCylinderLayerInit":"LegacyJavaScriptObject","XREquirectLayerInit":"LegacyJavaScriptObject","XRCubeLayerInit":"LegacyJavaScriptObject","XRWebGLBinding":"LegacyJavaScriptObject","XRMediaLayerInit":"LegacyJavaScriptObject","XRMediaQuadLayerInit":"LegacyJavaScriptObject","XRMediaCylinderLayerInit":"LegacyJavaScriptObject","XRMediaEquirectLayerInit":"LegacyJavaScriptObject","XRMediaBinding":"LegacyJavaScriptObject","XRLayerEvent":"LegacyJavaScriptObject","XRLayerEventInit":"LegacyJavaScriptObject","WindowControlsOverlay":"LegacyJavaScriptObject","WindowControlsOverlayGeometryChangeEvent":"LegacyJavaScriptObject","WindowControlsOverlayGeometryChangeEventInit":"LegacyJavaScriptObject","ScreenDetails":"LegacyJavaScriptObject","ScreenDetailed":"LegacyJavaScriptObject","XMLHttpRequestEventTarget":"LegacyJavaScriptObject","XMLHttpRequestUpload":"LegacyJavaScriptObject","XMLHttpRequest":"LegacyJavaScriptObject","FormData":"LegacyJavaScriptObject","ProgressEvent":"LegacyJavaScriptObject","ProgressEventInit":"LegacyJavaScriptObject","NativeFloat32List":"NativeTypedArrayOfDouble","NativeByteData":"NativeTypedData","NativeByteBuffer":"JavaScriptObject","JSBool":{"bool":[]},"LegacyJavaScriptObject":{"JavaScriptObject":[]},"JSArray":{"JavaScriptObject":[],"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"JavaScriptObject":[],"Iterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"NativeTypedData":{"JavaScriptObject":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JavaScriptObject":[]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"JavaScriptObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"ListMixin.E":"double"},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"JavaScriptObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"ListMixin.E":"int"},"double":{"num":[]},"int":{"num":[]}}'));
+  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"NativeTypedArray":1}'));
   var type$ = (function rtii() {
     var findType = A.findType;
     return {
       Function: findType("Function"),
-      Iterable_dynamic: findType("Iterable<@>"),
       JSArray_String: findType("JSArray<String>"),
       JSArray_dynamic: findType("JSArray<@>"),
       JSNull: findType("JSNull"),
@@ -5109,26 +8756,21 @@
       Null: findType("Null"),
       Object: findType("Object"),
       Record: findType("Record"),
-      Rectangle_num: findType("Rectangle<num>"),
       String: findType("String"),
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
       bool: findType("bool"),
       double: findType("double"),
-      dynamic: findType("@"),
       int: findType("int"),
       legacy_Never: findType("0&*"),
       legacy_Object: findType("Object*"),
       nullable_Future_Null: findType("Future<Null>?"),
       nullable_Object: findType("Object?"),
-      num: findType("num"),
-      void_Function_String_String: findType("~(String,String)"),
-      void_Function_String_dynamic: findType("~(String,@)")
+      num: findType("num")
     };
   })();
   (function constants() {
     B.Interceptor_methods = J.Interceptor.prototype;
     B.JSArray_methods = J.JSArray.prototype;
-    B.JSNumber_methods = J.JSNumber.prototype;
     B.JSString_methods = J.JSString.prototype;
     B.JavaScriptFunction_methods = J.JavaScriptFunction.prototype;
     B.JavaScriptObject_methods = J.JavaScriptObject.prototype;
@@ -5254,12 +8896,9 @@
 };
     B.C_JS_CONST3 = function(hooks) { return hooks; }
 ;
-    B.C_SentinelValue = new A.SentinelValue();
-    B.Type_Object_xQ6 = A.typeLiteral("Object");
   })();
   (function staticFields() {
     $._JS_INTEROP_INTERCEPTOR_TAG = null;
-    $.Primitives__identityHashCodeProperty = null;
     $.BoundClosure__receiverFieldNameCache = null;
     $.BoundClosure__interceptorFieldNameCache = null;
     $.getTagFunction = null;
@@ -5273,7 +8912,6 @@
   (function lazyInitializers() {
     var _lazyFinal = hunkHelpers.lazyFinal;
     _lazyFinal($, "DART_CLOSURE_PROPERTY_NAME", "$get$DART_CLOSURE_PROPERTY_NAME", () => A.getIsolateAffinityTag("_$dart_dartClosure"));
-    _lazyFinal($, "_hashSeed", "$get$_hashSeed", () => A.objectHashCode(B.Type_Object_xQ6));
   })();
   (function nativeSupport() {
     !function() {
@@ -5298,8 +8936,8 @@
       }
       init.dispatchPropertyName = init.getIsolateTag("dispatch_record");
     }();
-    hunkHelpers.setOrUpdateInterceptorsByTag({WebGL: J.Interceptor, ArrayBuffer: J.JavaScriptObject, AbortPaymentEvent: J.JavaScriptObject, AnimationEffectReadOnly: J.JavaScriptObject, AnimationEffectTiming: J.JavaScriptObject, AnimationEffectTimingReadOnly: J.JavaScriptObject, AnimationEvent: J.JavaScriptObject, AnimationPlaybackEvent: J.JavaScriptObject, AnimationTimeline: J.JavaScriptObject, AnimationWorkletGlobalScope: J.JavaScriptObject, ApplicationCacheErrorEvent: J.JavaScriptObject, AuthenticatorAssertionResponse: J.JavaScriptObject, AuthenticatorAttestationResponse: J.JavaScriptObject, AuthenticatorResponse: J.JavaScriptObject, BackgroundFetchClickEvent: J.JavaScriptObject, BackgroundFetchEvent: J.JavaScriptObject, BackgroundFetchFailEvent: J.JavaScriptObject, BackgroundFetchFetch: J.JavaScriptObject, BackgroundFetchManager: J.JavaScriptObject, BackgroundFetchSettledFetch: J.JavaScriptObject, BackgroundFetchedEvent: J.JavaScriptObject, BarProp: J.JavaScriptObject, BarcodeDetector: J.JavaScriptObject, BeforeInstallPromptEvent: J.JavaScriptObject, BeforeUnloadEvent: J.JavaScriptObject, BlobEvent: J.JavaScriptObject, BluetoothRemoteGATTDescriptor: J.JavaScriptObject, Body: J.JavaScriptObject, BudgetState: J.JavaScriptObject, CacheStorage: J.JavaScriptObject, CanMakePaymentEvent: J.JavaScriptObject, CanvasGradient: J.JavaScriptObject, CanvasPattern: J.JavaScriptObject, CanvasRenderingContext2D: J.JavaScriptObject, Client: J.JavaScriptObject, Clients: J.JavaScriptObject, ClipboardEvent: J.JavaScriptObject, CloseEvent: J.JavaScriptObject, CompositionEvent: J.JavaScriptObject, CookieStore: J.JavaScriptObject, Coordinates: J.JavaScriptObject, Credential: J.JavaScriptObject, CredentialUserData: J.JavaScriptObject, CredentialsContainer: J.JavaScriptObject, Crypto: J.JavaScriptObject, CryptoKey: J.JavaScriptObject, CSS: J.JavaScriptObject, CSSVariableReferenceValue: J.JavaScriptObject, CustomElementRegistry: J.JavaScriptObject, CustomEvent: J.JavaScriptObject, DataTransfer: J.JavaScriptObject, DataTransferItem: J.JavaScriptObject, DeprecatedStorageInfo: J.JavaScriptObject, DeprecatedStorageQuota: J.JavaScriptObject, DeprecationReport: J.JavaScriptObject, DetectedBarcode: J.JavaScriptObject, DetectedFace: J.JavaScriptObject, DetectedText: J.JavaScriptObject, DeviceAcceleration: J.JavaScriptObject, DeviceMotionEvent: J.JavaScriptObject, DeviceOrientationEvent: J.JavaScriptObject, DeviceRotationRate: J.JavaScriptObject, DirectoryEntry: J.JavaScriptObject, webkitFileSystemDirectoryEntry: J.JavaScriptObject, FileSystemDirectoryEntry: J.JavaScriptObject, DirectoryReader: J.JavaScriptObject, WebKitDirectoryReader: J.JavaScriptObject, webkitFileSystemDirectoryReader: J.JavaScriptObject, FileSystemDirectoryReader: J.JavaScriptObject, DocumentOrShadowRoot: J.JavaScriptObject, DocumentTimeline: J.JavaScriptObject, DOMError: J.JavaScriptObject, DOMImplementation: J.JavaScriptObject, Iterator: J.JavaScriptObject, DOMMatrix: J.JavaScriptObject, DOMMatrixReadOnly: J.JavaScriptObject, DOMParser: J.JavaScriptObject, DOMPoint: J.JavaScriptObject, DOMPointReadOnly: J.JavaScriptObject, DOMQuad: J.JavaScriptObject, DOMStringMap: J.JavaScriptObject, Entry: J.JavaScriptObject, webkitFileSystemEntry: J.JavaScriptObject, FileSystemEntry: J.JavaScriptObject, ErrorEvent: J.JavaScriptObject, Event: J.JavaScriptObject, InputEvent: J.JavaScriptObject, SubmitEvent: J.JavaScriptObject, ExtendableEvent: J.JavaScriptObject, ExtendableMessageEvent: J.JavaScriptObject, External: J.JavaScriptObject, FaceDetector: J.JavaScriptObject, FederatedCredential: J.JavaScriptObject, FetchEvent: J.JavaScriptObject, FileEntry: J.JavaScriptObject, webkitFileSystemFileEntry: J.JavaScriptObject, FileSystemFileEntry: J.JavaScriptObject, DOMFileSystem: J.JavaScriptObject, WebKitFileSystem: J.JavaScriptObject, webkitFileSystem: J.JavaScriptObject, FileSystem: J.JavaScriptObject, FocusEvent: J.JavaScriptObject, FontFace: J.JavaScriptObject, FontFaceSetLoadEvent: J.JavaScriptObject, FontFaceSource: J.JavaScriptObject, ForeignFetchEvent: J.JavaScriptObject, FormData: J.JavaScriptObject, GamepadButton: J.JavaScriptObject, GamepadEvent: J.JavaScriptObject, GamepadPose: J.JavaScriptObject, Geolocation: J.JavaScriptObject, Position: J.JavaScriptObject, GeolocationPosition: J.JavaScriptObject, HashChangeEvent: J.JavaScriptObject, Headers: J.JavaScriptObject, HTMLHyperlinkElementUtils: J.JavaScriptObject, IdleDeadline: J.JavaScriptObject, ImageBitmap: J.JavaScriptObject, ImageBitmapRenderingContext: J.JavaScriptObject, ImageCapture: J.JavaScriptObject, ImageData: J.JavaScriptObject, InputDeviceCapabilities: J.JavaScriptObject, InstallEvent: J.JavaScriptObject, IntersectionObserver: J.JavaScriptObject, IntersectionObserverEntry: J.JavaScriptObject, InterventionReport: J.JavaScriptObject, KeyboardEvent: J.JavaScriptObject, KeyframeEffect: J.JavaScriptObject, KeyframeEffectReadOnly: J.JavaScriptObject, MediaCapabilities: J.JavaScriptObject, MediaCapabilitiesInfo: J.JavaScriptObject, MediaDeviceInfo: J.JavaScriptObject, MediaEncryptedEvent: J.JavaScriptObject, MediaError: J.JavaScriptObject, MediaKeyMessageEvent: J.JavaScriptObject, MediaKeyStatusMap: J.JavaScriptObject, MediaKeySystemAccess: J.JavaScriptObject, MediaKeys: J.JavaScriptObject, MediaKeysPolicy: J.JavaScriptObject, MediaMetadata: J.JavaScriptObject, MediaQueryListEvent: J.JavaScriptObject, MediaSession: J.JavaScriptObject, MediaSettingsRange: J.JavaScriptObject, MediaStreamEvent: J.JavaScriptObject, MediaStreamTrackEvent: J.JavaScriptObject, MemoryInfo: J.JavaScriptObject, MessageChannel: J.JavaScriptObject, MessageEvent: J.JavaScriptObject, Metadata: J.JavaScriptObject, MIDIConnectionEvent: J.JavaScriptObject, MIDIMessageEvent: J.JavaScriptObject, MouseEvent: J.JavaScriptObject, DragEvent: J.JavaScriptObject, MutationEvent: J.JavaScriptObject, MutationObserver: J.JavaScriptObject, WebKitMutationObserver: J.JavaScriptObject, MutationRecord: J.JavaScriptObject, NavigationPreloadManager: J.JavaScriptObject, Navigator: J.JavaScriptObject, NavigatorAutomationInformation: J.JavaScriptObject, NavigatorConcurrentHardware: J.JavaScriptObject, NavigatorCookies: J.JavaScriptObject, NavigatorUserMediaError: J.JavaScriptObject, NodeFilter: J.JavaScriptObject, NodeIterator: J.JavaScriptObject, NonDocumentTypeChildNode: J.JavaScriptObject, NonElementParentNode: J.JavaScriptObject, NoncedElement: J.JavaScriptObject, NotificationEvent: J.JavaScriptObject, OffscreenCanvasRenderingContext2D: J.JavaScriptObject, OverconstrainedError: J.JavaScriptObject, PageTransitionEvent: J.JavaScriptObject, PaintRenderingContext2D: J.JavaScriptObject, PaintSize: J.JavaScriptObject, PaintWorkletGlobalScope: J.JavaScriptObject, PasswordCredential: J.JavaScriptObject, Path2D: J.JavaScriptObject, PaymentAddress: J.JavaScriptObject, PaymentInstruments: J.JavaScriptObject, PaymentManager: J.JavaScriptObject, PaymentRequestEvent: J.JavaScriptObject, PaymentRequestUpdateEvent: J.JavaScriptObject, PaymentResponse: J.JavaScriptObject, PerformanceEntry: J.JavaScriptObject, PerformanceLongTaskTiming: J.JavaScriptObject, PerformanceMark: J.JavaScriptObject, PerformanceMeasure: J.JavaScriptObject, PerformanceNavigation: J.JavaScriptObject, PerformanceNavigationTiming: J.JavaScriptObject, PerformanceObserver: J.JavaScriptObject, PerformanceObserverEntryList: J.JavaScriptObject, PerformancePaintTiming: J.JavaScriptObject, PerformanceResourceTiming: J.JavaScriptObject, PerformanceServerTiming: J.JavaScriptObject, PerformanceTiming: J.JavaScriptObject, Permissions: J.JavaScriptObject, PhotoCapabilities: J.JavaScriptObject, PointerEvent: J.JavaScriptObject, PopStateEvent: J.JavaScriptObject, PositionError: J.JavaScriptObject, GeolocationPositionError: J.JavaScriptObject, Presentation: J.JavaScriptObject, PresentationConnectionAvailableEvent: J.JavaScriptObject, PresentationConnectionCloseEvent: J.JavaScriptObject, PresentationReceiver: J.JavaScriptObject, ProgressEvent: J.JavaScriptObject, PromiseRejectionEvent: J.JavaScriptObject, PublicKeyCredential: J.JavaScriptObject, PushEvent: J.JavaScriptObject, PushManager: J.JavaScriptObject, PushMessageData: J.JavaScriptObject, PushSubscription: J.JavaScriptObject, PushSubscriptionOptions: J.JavaScriptObject, Range: J.JavaScriptObject, RelatedApplication: J.JavaScriptObject, ReportBody: J.JavaScriptObject, ReportingObserver: J.JavaScriptObject, ResizeObserver: J.JavaScriptObject, ResizeObserverEntry: J.JavaScriptObject, RTCCertificate: J.JavaScriptObject, RTCDataChannelEvent: J.JavaScriptObject, RTCDTMFToneChangeEvent: J.JavaScriptObject, RTCIceCandidate: J.JavaScriptObject, mozRTCIceCandidate: J.JavaScriptObject, RTCLegacyStatsReport: J.JavaScriptObject, RTCPeerConnectionIceEvent: J.JavaScriptObject, RTCRtpContributingSource: J.JavaScriptObject, RTCRtpReceiver: J.JavaScriptObject, RTCRtpSender: J.JavaScriptObject, RTCSessionDescription: J.JavaScriptObject, mozRTCSessionDescription: J.JavaScriptObject, RTCStatsResponse: J.JavaScriptObject, RTCTrackEvent: J.JavaScriptObject, Screen: J.JavaScriptObject, ScrollState: J.JavaScriptObject, ScrollTimeline: J.JavaScriptObject, SecurityPolicyViolationEvent: J.JavaScriptObject, Selection: J.JavaScriptObject, SensorErrorEvent: J.JavaScriptObject, SharedArrayBuffer: J.JavaScriptObject, SpeechRecognitionAlternative: J.JavaScriptObject, SpeechRecognitionError: J.JavaScriptObject, SpeechRecognitionEvent: J.JavaScriptObject, SpeechSynthesisEvent: J.JavaScriptObject, SpeechSynthesisVoice: J.JavaScriptObject, StaticRange: J.JavaScriptObject, StorageEvent: J.JavaScriptObject, StorageManager: J.JavaScriptObject, StyleMedia: J.JavaScriptObject, StylePropertyMap: J.JavaScriptObject, StylePropertyMapReadonly: J.JavaScriptObject, SyncEvent: J.JavaScriptObject, SyncManager: J.JavaScriptObject, TaskAttributionTiming: J.JavaScriptObject, TextDetector: J.JavaScriptObject, TextEvent: J.JavaScriptObject, TextMetrics: J.JavaScriptObject, TouchEvent: J.JavaScriptObject, TrackDefault: J.JavaScriptObject, TrackEvent: J.JavaScriptObject, TransitionEvent: J.JavaScriptObject, WebKitTransitionEvent: J.JavaScriptObject, TreeWalker: J.JavaScriptObject, TrustedHTML: J.JavaScriptObject, TrustedScriptURL: J.JavaScriptObject, TrustedURL: J.JavaScriptObject, UIEvent: J.JavaScriptObject, UnderlyingSourceBase: J.JavaScriptObject, URLSearchParams: J.JavaScriptObject, VRCoordinateSystem: J.JavaScriptObject, VRDeviceEvent: J.JavaScriptObject, VRDisplayCapabilities: J.JavaScriptObject, VRDisplayEvent: J.JavaScriptObject, VREyeParameters: J.JavaScriptObject, VRFrameData: J.JavaScriptObject, VRFrameOfReference: J.JavaScriptObject, VRPose: J.JavaScriptObject, VRSessionEvent: J.JavaScriptObject, VRStageBounds: J.JavaScriptObject, VRStageBoundsPoint: J.JavaScriptObject, VRStageParameters: J.JavaScriptObject, ValidityState: J.JavaScriptObject, VideoPlaybackQuality: J.JavaScriptObject, VideoTrack: J.JavaScriptObject, VTTRegion: J.JavaScriptObject, WheelEvent: J.JavaScriptObject, WindowClient: J.JavaScriptObject, WorkletAnimation: J.JavaScriptObject, WorkletGlobalScope: J.JavaScriptObject, XPathEvaluator: J.JavaScriptObject, XPathExpression: J.JavaScriptObject, XPathNSResolver: J.JavaScriptObject, XPathResult: J.JavaScriptObject, XMLSerializer: J.JavaScriptObject, XSLTProcessor: J.JavaScriptObject, Bluetooth: J.JavaScriptObject, BluetoothCharacteristicProperties: J.JavaScriptObject, BluetoothRemoteGATTServer: J.JavaScriptObject, BluetoothRemoteGATTService: J.JavaScriptObject, BluetoothUUID: J.JavaScriptObject, BudgetService: J.JavaScriptObject, Cache: J.JavaScriptObject, DOMFileSystemSync: J.JavaScriptObject, DirectoryEntrySync: J.JavaScriptObject, DirectoryReaderSync: J.JavaScriptObject, EntrySync: J.JavaScriptObject, FileEntrySync: J.JavaScriptObject, FileReaderSync: J.JavaScriptObject, FileWriterSync: J.JavaScriptObject, HTMLAllCollection: J.JavaScriptObject, Mojo: J.JavaScriptObject, MojoHandle: J.JavaScriptObject, MojoInterfaceRequestEvent: J.JavaScriptObject, MojoWatcher: J.JavaScriptObject, NFC: J.JavaScriptObject, PagePopupController: J.JavaScriptObject, Report: J.JavaScriptObject, Request: J.JavaScriptObject, ResourceProgressEvent: J.JavaScriptObject, Response: J.JavaScriptObject, SubtleCrypto: J.JavaScriptObject, USBAlternateInterface: J.JavaScriptObject, USBConfiguration: J.JavaScriptObject, USBConnectionEvent: J.JavaScriptObject, USBDevice: J.JavaScriptObject, USBEndpoint: J.JavaScriptObject, USBInTransferResult: J.JavaScriptObject, USBInterface: J.JavaScriptObject, USBIsochronousInTransferPacket: J.JavaScriptObject, USBIsochronousInTransferResult: J.JavaScriptObject, USBIsochronousOutTransferPacket: J.JavaScriptObject, USBIsochronousOutTransferResult: J.JavaScriptObject, USBOutTransferResult: J.JavaScriptObject, WorkerLocation: J.JavaScriptObject, WorkerNavigator: J.JavaScriptObject, Worklet: J.JavaScriptObject, IDBCursor: J.JavaScriptObject, IDBCursorWithValue: J.JavaScriptObject, IDBFactory: J.JavaScriptObject, IDBIndex: J.JavaScriptObject, IDBKeyRange: J.JavaScriptObject, IDBObjectStore: J.JavaScriptObject, IDBObservation: J.JavaScriptObject, IDBObserver: J.JavaScriptObject, IDBObserverChanges: J.JavaScriptObject, IDBVersionChangeEvent: J.JavaScriptObject, SVGAngle: J.JavaScriptObject, SVGAnimatedAngle: J.JavaScriptObject, SVGAnimatedBoolean: J.JavaScriptObject, SVGAnimatedEnumeration: J.JavaScriptObject, SVGAnimatedInteger: J.JavaScriptObject, SVGAnimatedLength: J.JavaScriptObject, SVGAnimatedLengthList: J.JavaScriptObject, SVGAnimatedNumber: J.JavaScriptObject, SVGAnimatedNumberList: J.JavaScriptObject, SVGAnimatedPreserveAspectRatio: J.JavaScriptObject, SVGAnimatedRect: J.JavaScriptObject, SVGAnimatedString: J.JavaScriptObject, SVGAnimatedTransformList: J.JavaScriptObject, SVGMatrix: J.JavaScriptObject, SVGPoint: J.JavaScriptObject, SVGPreserveAspectRatio: J.JavaScriptObject, SVGRect: J.JavaScriptObject, SVGUnitTypes: J.JavaScriptObject, AudioListener: J.JavaScriptObject, AudioParam: J.JavaScriptObject, AudioProcessingEvent: J.JavaScriptObject, AudioTrack: J.JavaScriptObject, AudioWorkletGlobalScope: J.JavaScriptObject, AudioWorkletProcessor: J.JavaScriptObject, OfflineAudioCompletionEvent: J.JavaScriptObject, PeriodicWave: J.JavaScriptObject, WebGLActiveInfo: J.JavaScriptObject, ANGLEInstancedArrays: J.JavaScriptObject, ANGLE_instanced_arrays: J.JavaScriptObject, WebGLBuffer: J.JavaScriptObject, WebGLCanvas: J.JavaScriptObject, WebGLColorBufferFloat: J.JavaScriptObject, WebGLCompressedTextureASTC: J.JavaScriptObject, WebGLCompressedTextureATC: J.JavaScriptObject, WEBGL_compressed_texture_atc: J.JavaScriptObject, WebGLCompressedTextureETC1: J.JavaScriptObject, WEBGL_compressed_texture_etc1: J.JavaScriptObject, WebGLCompressedTextureETC: J.JavaScriptObject, WebGLCompressedTexturePVRTC: J.JavaScriptObject, WEBGL_compressed_texture_pvrtc: J.JavaScriptObject, WebGLCompressedTextureS3TC: J.JavaScriptObject, WEBGL_compressed_texture_s3tc: J.JavaScriptObject, WebGLCompressedTextureS3TCsRGB: J.JavaScriptObject, WebGLContextEvent: J.JavaScriptObject, WebGLDebugRendererInfo: J.JavaScriptObject, WEBGL_debug_renderer_info: J.JavaScriptObject, WebGLDebugShaders: J.JavaScriptObject, WEBGL_debug_shaders: J.JavaScriptObject, WebGLDepthTexture: J.JavaScriptObject, WEBGL_depth_texture: J.JavaScriptObject, WebGLDrawBuffers: J.JavaScriptObject, WEBGL_draw_buffers: J.JavaScriptObject, EXTsRGB: J.JavaScriptObject, EXT_sRGB: J.JavaScriptObject, EXTBlendMinMax: J.JavaScriptObject, EXT_blend_minmax: J.JavaScriptObject, EXTColorBufferFloat: J.JavaScriptObject, EXTColorBufferHalfFloat: J.JavaScriptObject, EXTDisjointTimerQuery: J.JavaScriptObject, EXTDisjointTimerQueryWebGL2: J.JavaScriptObject, EXTFragDepth: J.JavaScriptObject, EXT_frag_depth: J.JavaScriptObject, EXTShaderTextureLOD: J.JavaScriptObject, EXT_shader_texture_lod: J.JavaScriptObject, EXTTextureFilterAnisotropic: J.JavaScriptObject, EXT_texture_filter_anisotropic: J.JavaScriptObject, WebGLFramebuffer: J.JavaScriptObject, WebGLGetBufferSubDataAsync: J.JavaScriptObject, WebGLLoseContext: J.JavaScriptObject, WebGLExtensionLoseContext: J.JavaScriptObject, WEBGL_lose_context: J.JavaScriptObject, OESElementIndexUint: J.JavaScriptObject, OES_element_index_uint: J.JavaScriptObject, OESStandardDerivatives: J.JavaScriptObject, OES_standard_derivatives: J.JavaScriptObject, OESTextureFloat: J.JavaScriptObject, OES_texture_float: J.JavaScriptObject, OESTextureFloatLinear: J.JavaScriptObject, OES_texture_float_linear: J.JavaScriptObject, OESTextureHalfFloat: J.JavaScriptObject, OES_texture_half_float: J.JavaScriptObject, OESTextureHalfFloatLinear: J.JavaScriptObject, OES_texture_half_float_linear: J.JavaScriptObject, OESVertexArrayObject: J.JavaScriptObject, OES_vertex_array_object: J.JavaScriptObject, WebGLProgram: J.JavaScriptObject, WebGLQuery: J.JavaScriptObject, WebGLRenderbuffer: J.JavaScriptObject, WebGLRenderingContext: J.JavaScriptObject, WebGL2RenderingContext: J.JavaScriptObject, WebGLSampler: J.JavaScriptObject, WebGLShader: J.JavaScriptObject, WebGLShaderPrecisionFormat: J.JavaScriptObject, WebGLSync: J.JavaScriptObject, WebGLTexture: J.JavaScriptObject, WebGLTimerQueryEXT: J.JavaScriptObject, WebGLTransformFeedback: J.JavaScriptObject, WebGLUniformLocation: J.JavaScriptObject, WebGLVertexArrayObject: J.JavaScriptObject, WebGLVertexArrayObjectOES: J.JavaScriptObject, WebGL2RenderingContextBase: J.JavaScriptObject, DataView: A.NativeTypedData, ArrayBufferView: A.NativeTypedData, Float32Array: A.NativeTypedArrayOfDouble, Float64Array: A.NativeTypedArrayOfDouble, Int16Array: A.NativeInt16List, Int32Array: A.NativeInt32List, Int8Array: A.NativeInt8List, Uint16Array: A.NativeUint16List, Uint32Array: A.NativeUint32List, Uint8ClampedArray: A.NativeUint8ClampedList, CanvasPixelArray: A.NativeUint8ClampedList, Uint8Array: A.NativeUint8List, HTMLAudioElement: A.HtmlElement, HTMLBRElement: A.HtmlElement, HTMLBaseElement: A.HtmlElement, HTMLBodyElement: A.HtmlElement, HTMLButtonElement: A.HtmlElement, HTMLCanvasElement: A.HtmlElement, HTMLContentElement: A.HtmlElement, HTMLDListElement: A.HtmlElement, HTMLDataElement: A.HtmlElement, HTMLDataListElement: A.HtmlElement, HTMLDetailsElement: A.HtmlElement, HTMLDialogElement: A.HtmlElement, HTMLDivElement: A.HtmlElement, HTMLEmbedElement: A.HtmlElement, HTMLFieldSetElement: A.HtmlElement, HTMLHRElement: A.HtmlElement, HTMLHeadElement: A.HtmlElement, HTMLHeadingElement: A.HtmlElement, HTMLHtmlElement: A.HtmlElement, HTMLIFrameElement: A.HtmlElement, HTMLImageElement: A.HtmlElement, HTMLInputElement: A.HtmlElement, HTMLLIElement: A.HtmlElement, HTMLLabelElement: A.HtmlElement, HTMLLegendElement: A.HtmlElement, HTMLLinkElement: A.HtmlElement, HTMLMapElement: A.HtmlElement, HTMLMediaElement: A.HtmlElement, HTMLMenuElement: A.HtmlElement, HTMLMetaElement: A.HtmlElement, HTMLMeterElement: A.HtmlElement, HTMLModElement: A.HtmlElement, HTMLOListElement: A.HtmlElement, HTMLObjectElement: A.HtmlElement, HTMLOptGroupElement: A.HtmlElement, HTMLOptionElement: A.HtmlElement, HTMLOutputElement: A.HtmlElement, HTMLParagraphElement: A.HtmlElement, HTMLParamElement: A.HtmlElement, HTMLPictureElement: A.HtmlElement, HTMLPreElement: A.HtmlElement, HTMLProgressElement: A.HtmlElement, HTMLQuoteElement: A.HtmlElement, HTMLScriptElement: A.HtmlElement, HTMLShadowElement: A.HtmlElement, HTMLSlotElement: A.HtmlElement, HTMLSourceElement: A.HtmlElement, HTMLSpanElement: A.HtmlElement, HTMLStyleElement: A.HtmlElement, HTMLTableCaptionElement: A.HtmlElement, HTMLTableCellElement: A.HtmlElement, HTMLTableDataCellElement: A.HtmlElement, HTMLTableHeaderCellElement: A.HtmlElement, HTMLTableColElement: A.HtmlElement, HTMLTableElement: A.HtmlElement, HTMLTableRowElement: A.HtmlElement, HTMLTableSectionElement: A.HtmlElement, HTMLTemplateElement: A.HtmlElement, HTMLTextAreaElement: A.HtmlElement, HTMLTimeElement: A.HtmlElement, HTMLTitleElement: A.HtmlElement, HTMLTrackElement: A.HtmlElement, HTMLUListElement: A.HtmlElement, HTMLUnknownElement: A.HtmlElement, HTMLVideoElement: A.HtmlElement, HTMLDirectoryElement: A.HtmlElement, HTMLFontElement: A.HtmlElement, HTMLFrameElement: A.HtmlElement, HTMLFrameSetElement: A.HtmlElement, HTMLMarqueeElement: A.HtmlElement, HTMLElement: A.HtmlElement, AccessibleNodeList: A.AccessibleNodeList, HTMLAnchorElement: A.AnchorElement, HTMLAreaElement: A.AreaElement, Blob: A.Blob, CDATASection: A.CharacterData, CharacterData: A.CharacterData, Comment: A.CharacterData, ProcessingInstruction: A.CharacterData, Text: A.CharacterData, CSSPerspective: A.CssPerspective, CSSCharsetRule: A.CssRule, CSSConditionRule: A.CssRule, CSSFontFaceRule: A.CssRule, CSSGroupingRule: A.CssRule, CSSImportRule: A.CssRule, CSSKeyframeRule: A.CssRule, MozCSSKeyframeRule: A.CssRule, WebKitCSSKeyframeRule: A.CssRule, CSSKeyframesRule: A.CssRule, MozCSSKeyframesRule: A.CssRule, WebKitCSSKeyframesRule: A.CssRule, CSSMediaRule: A.CssRule, CSSNamespaceRule: A.CssRule, CSSPageRule: A.CssRule, CSSRule: A.CssRule, CSSStyleRule: A.CssRule, CSSSupportsRule: A.CssRule, CSSViewportRule: A.CssRule, CSSStyleDeclaration: A.CssStyleDeclaration, MSStyleCSSProperties: A.CssStyleDeclaration, CSS2Properties: A.CssStyleDeclaration, CSSImageValue: A.CssStyleValue, CSSKeywordValue: A.CssStyleValue, CSSNumericValue: A.CssStyleValue, CSSPositionValue: A.CssStyleValue, CSSResourceValue: A.CssStyleValue, CSSUnitValue: A.CssStyleValue, CSSURLImageValue: A.CssStyleValue, CSSStyleValue: A.CssStyleValue, CSSMatrixComponent: A.CssTransformComponent, CSSRotation: A.CssTransformComponent, CSSScale: A.CssTransformComponent, CSSSkew: A.CssTransformComponent, CSSTranslation: A.CssTransformComponent, CSSTransformComponent: A.CssTransformComponent, CSSTransformValue: A.CssTransformValue, CSSUnparsedValue: A.CssUnparsedValue, DataTransferItemList: A.DataTransferItemList, DOMException: A.DomException, ClientRectList: A.DomRectList, DOMRectList: A.DomRectList, DOMRectReadOnly: A.DomRectReadOnly, DOMStringList: A.DomStringList, DOMTokenList: A.DomTokenList, MathMLElement: A.Element, SVGAElement: A.Element, SVGAnimateElement: A.Element, SVGAnimateMotionElement: A.Element, SVGAnimateTransformElement: A.Element, SVGAnimationElement: A.Element, SVGCircleElement: A.Element, SVGClipPathElement: A.Element, SVGDefsElement: A.Element, SVGDescElement: A.Element, SVGDiscardElement: A.Element, SVGEllipseElement: A.Element, SVGFEBlendElement: A.Element, SVGFEColorMatrixElement: A.Element, SVGFEComponentTransferElement: A.Element, SVGFECompositeElement: A.Element, SVGFEConvolveMatrixElement: A.Element, SVGFEDiffuseLightingElement: A.Element, SVGFEDisplacementMapElement: A.Element, SVGFEDistantLightElement: A.Element, SVGFEFloodElement: A.Element, SVGFEFuncAElement: A.Element, SVGFEFuncBElement: A.Element, SVGFEFuncGElement: A.Element, SVGFEFuncRElement: A.Element, SVGFEGaussianBlurElement: A.Element, SVGFEImageElement: A.Element, SVGFEMergeElement: A.Element, SVGFEMergeNodeElement: A.Element, SVGFEMorphologyElement: A.Element, SVGFEOffsetElement: A.Element, SVGFEPointLightElement: A.Element, SVGFESpecularLightingElement: A.Element, SVGFESpotLightElement: A.Element, SVGFETileElement: A.Element, SVGFETurbulenceElement: A.Element, SVGFilterElement: A.Element, SVGForeignObjectElement: A.Element, SVGGElement: A.Element, SVGGeometryElement: A.Element, SVGGraphicsElement: A.Element, SVGImageElement: A.Element, SVGLineElement: A.Element, SVGLinearGradientElement: A.Element, SVGMarkerElement: A.Element, SVGMaskElement: A.Element, SVGMetadataElement: A.Element, SVGPathElement: A.Element, SVGPatternElement: A.Element, SVGPolygonElement: A.Element, SVGPolylineElement: A.Element, SVGRadialGradientElement: A.Element, SVGRectElement: A.Element, SVGScriptElement: A.Element, SVGSetElement: A.Element, SVGStopElement: A.Element, SVGStyleElement: A.Element, SVGElement: A.Element, SVGSVGElement: A.Element, SVGSwitchElement: A.Element, SVGSymbolElement: A.Element, SVGTSpanElement: A.Element, SVGTextContentElement: A.Element, SVGTextElement: A.Element, SVGTextPathElement: A.Element, SVGTextPositioningElement: A.Element, SVGTitleElement: A.Element, SVGUseElement: A.Element, SVGViewElement: A.Element, SVGGradientElement: A.Element, SVGComponentTransferFunctionElement: A.Element, SVGFEDropShadowElement: A.Element, SVGMPathElement: A.Element, Element: A.Element, AbsoluteOrientationSensor: A.EventTarget, Accelerometer: A.EventTarget, AccessibleNode: A.EventTarget, AmbientLightSensor: A.EventTarget, Animation: A.EventTarget, ApplicationCache: A.EventTarget, DOMApplicationCache: A.EventTarget, OfflineResourceList: A.EventTarget, BackgroundFetchRegistration: A.EventTarget, BatteryManager: A.EventTarget, BroadcastChannel: A.EventTarget, CanvasCaptureMediaStreamTrack: A.EventTarget, DedicatedWorkerGlobalScope: A.EventTarget, EventSource: A.EventTarget, FileReader: A.EventTarget, FontFaceSet: A.EventTarget, Gyroscope: A.EventTarget, XMLHttpRequest: A.EventTarget, XMLHttpRequestEventTarget: A.EventTarget, XMLHttpRequestUpload: A.EventTarget, LinearAccelerationSensor: A.EventTarget, Magnetometer: A.EventTarget, MediaDevices: A.EventTarget, MediaKeySession: A.EventTarget, MediaQueryList: A.EventTarget, MediaRecorder: A.EventTarget, MediaSource: A.EventTarget, MediaStream: A.EventTarget, MediaStreamTrack: A.EventTarget, MessagePort: A.EventTarget, MIDIAccess: A.EventTarget, MIDIInput: A.EventTarget, MIDIOutput: A.EventTarget, MIDIPort: A.EventTarget, NetworkInformation: A.EventTarget, Notification: A.EventTarget, OffscreenCanvas: A.EventTarget, OrientationSensor: A.EventTarget, PaymentRequest: A.EventTarget, Performance: A.EventTarget, PermissionStatus: A.EventTarget, PresentationAvailability: A.EventTarget, PresentationConnection: A.EventTarget, PresentationConnectionList: A.EventTarget, PresentationRequest: A.EventTarget, RelativeOrientationSensor: A.EventTarget, RemotePlayback: A.EventTarget, RTCDataChannel: A.EventTarget, DataChannel: A.EventTarget, RTCDTMFSender: A.EventTarget, RTCPeerConnection: A.EventTarget, webkitRTCPeerConnection: A.EventTarget, mozRTCPeerConnection: A.EventTarget, ScreenOrientation: A.EventTarget, Sensor: A.EventTarget, ServiceWorker: A.EventTarget, ServiceWorkerContainer: A.EventTarget, ServiceWorkerGlobalScope: A.EventTarget, ServiceWorkerRegistration: A.EventTarget, SharedWorker: A.EventTarget, SharedWorkerGlobalScope: A.EventTarget, SpeechRecognition: A.EventTarget, SpeechSynthesis: A.EventTarget, SpeechSynthesisUtterance: A.EventTarget, VR: A.EventTarget, VRDevice: A.EventTarget, VRDisplay: A.EventTarget, VRSession: A.EventTarget, VisualViewport: A.EventTarget, WebSocket: A.EventTarget, Window: A.EventTarget, DOMWindow: A.EventTarget, Worker: A.EventTarget, WorkerGlobalScope: A.EventTarget, WorkerPerformance: A.EventTarget, BluetoothDevice: A.EventTarget, BluetoothRemoteGATTCharacteristic: A.EventTarget, Clipboard: A.EventTarget, MojoInterfaceInterceptor: A.EventTarget, USB: A.EventTarget, IDBDatabase: A.EventTarget, IDBOpenDBRequest: A.EventTarget, IDBVersionChangeRequest: A.EventTarget, IDBRequest: A.EventTarget, IDBTransaction: A.EventTarget, AnalyserNode: A.EventTarget, RealtimeAnalyserNode: A.EventTarget, AudioBufferSourceNode: A.EventTarget, AudioDestinationNode: A.EventTarget, AudioNode: A.EventTarget, AudioScheduledSourceNode: A.EventTarget, AudioWorkletNode: A.EventTarget, BiquadFilterNode: A.EventTarget, ChannelMergerNode: A.EventTarget, AudioChannelMerger: A.EventTarget, ChannelSplitterNode: A.EventTarget, AudioChannelSplitter: A.EventTarget, ConstantSourceNode: A.EventTarget, ConvolverNode: A.EventTarget, DelayNode: A.EventTarget, DynamicsCompressorNode: A.EventTarget, GainNode: A.EventTarget, AudioGainNode: A.EventTarget, IIRFilterNode: A.EventTarget, MediaElementAudioSourceNode: A.EventTarget, MediaStreamAudioDestinationNode: A.EventTarget, MediaStreamAudioSourceNode: A.EventTarget, OscillatorNode: A.EventTarget, Oscillator: A.EventTarget, PannerNode: A.EventTarget, AudioPannerNode: A.EventTarget, webkitAudioPannerNode: A.EventTarget, ScriptProcessorNode: A.EventTarget, JavaScriptAudioNode: A.EventTarget, StereoPannerNode: A.EventTarget, WaveShaperNode: A.EventTarget, EventTarget: A.EventTarget, File: A.File, FileList: A.FileList, FileWriter: A.FileWriter, HTMLFormElement: A.FormElement, Gamepad: A.Gamepad, History: A.History, HTMLCollection: A.HtmlCollection, HTMLFormControlsCollection: A.HtmlCollection, HTMLOptionsCollection: A.HtmlCollection, Location: A.Location, MediaList: A.MediaList, MIDIInputMap: A.MidiInputMap, MIDIOutputMap: A.MidiOutputMap, MimeType: A.MimeType, MimeTypeArray: A.MimeTypeArray, Document: A.Node, DocumentFragment: A.Node, HTMLDocument: A.Node, ShadowRoot: A.Node, XMLDocument: A.Node, Attr: A.Node, DocumentType: A.Node, Node: A.Node, NodeList: A.NodeList, RadioNodeList: A.NodeList, Plugin: A.Plugin, PluginArray: A.PluginArray, RTCStatsReport: A.RtcStatsReport, HTMLSelectElement: A.SelectElement, SourceBuffer: A.SourceBuffer, SourceBufferList: A.SourceBufferList, SpeechGrammar: A.SpeechGrammar, SpeechGrammarList: A.SpeechGrammarList, SpeechRecognitionResult: A.SpeechRecognitionResult, Storage: A.Storage, CSSStyleSheet: A.StyleSheet, StyleSheet: A.StyleSheet, TextTrack: A.TextTrack, TextTrackCue: A.TextTrackCue, VTTCue: A.TextTrackCue, TextTrackCueList: A.TextTrackCueList, TextTrackList: A.TextTrackList, TimeRanges: A.TimeRanges, Touch: A.Touch, TouchList: A.TouchList, TrackDefaultList: A.TrackDefaultList, URL: A.Url, VideoTrackList: A.VideoTrackList, CSSRuleList: A._CssRuleList, ClientRect: A._DomRect, DOMRect: A._DomRect, GamepadList: A._GamepadList, NamedNodeMap: A._NamedNodeMap, MozNamedAttrMap: A._NamedNodeMap, SpeechRecognitionResultList: A._SpeechRecognitionResultList, StyleSheetList: A._StyleSheetList, SVGLength: A.Length, SVGLengthList: A.LengthList, SVGNumber: A.Number, SVGNumberList: A.NumberList, SVGPointList: A.PointList, SVGStringList: A.StringList, SVGTransform: A.Transform, SVGTransformList: A.TransformList, AudioBuffer: A.AudioBuffer, AudioParamMap: A.AudioParamMap, AudioTrackList: A.AudioTrackList, AudioContext: A.BaseAudioContext, webkitAudioContext: A.BaseAudioContext, BaseAudioContext: A.BaseAudioContext, OfflineAudioContext: A.OfflineAudioContext});
-    hunkHelpers.setOrUpdateLeafTags({WebGL: true, ArrayBuffer: true, AbortPaymentEvent: true, AnimationEffectReadOnly: true, AnimationEffectTiming: true, AnimationEffectTimingReadOnly: true, AnimationEvent: true, AnimationPlaybackEvent: true, AnimationTimeline: true, AnimationWorkletGlobalScope: true, ApplicationCacheErrorEvent: true, AuthenticatorAssertionResponse: true, AuthenticatorAttestationResponse: true, AuthenticatorResponse: true, BackgroundFetchClickEvent: true, BackgroundFetchEvent: true, BackgroundFetchFailEvent: true, BackgroundFetchFetch: true, BackgroundFetchManager: true, BackgroundFetchSettledFetch: true, BackgroundFetchedEvent: true, BarProp: true, BarcodeDetector: true, BeforeInstallPromptEvent: true, BeforeUnloadEvent: true, BlobEvent: true, BluetoothRemoteGATTDescriptor: true, Body: true, BudgetState: true, CacheStorage: true, CanMakePaymentEvent: true, CanvasGradient: true, CanvasPattern: true, CanvasRenderingContext2D: true, Client: true, Clients: true, ClipboardEvent: true, CloseEvent: true, CompositionEvent: true, CookieStore: true, Coordinates: true, Credential: true, CredentialUserData: true, CredentialsContainer: true, Crypto: true, CryptoKey: true, CSS: true, CSSVariableReferenceValue: true, CustomElementRegistry: true, CustomEvent: true, DataTransfer: true, DataTransferItem: true, DeprecatedStorageInfo: true, DeprecatedStorageQuota: true, DeprecationReport: true, DetectedBarcode: true, DetectedFace: true, DetectedText: true, DeviceAcceleration: true, DeviceMotionEvent: true, DeviceOrientationEvent: true, DeviceRotationRate: true, DirectoryEntry: true, webkitFileSystemDirectoryEntry: true, FileSystemDirectoryEntry: true, DirectoryReader: true, WebKitDirectoryReader: true, webkitFileSystemDirectoryReader: true, FileSystemDirectoryReader: true, DocumentOrShadowRoot: true, DocumentTimeline: true, DOMError: true, DOMImplementation: true, Iterator: true, DOMMatrix: true, DOMMatrixReadOnly: true, DOMParser: true, DOMPoint: true, DOMPointReadOnly: true, DOMQuad: true, DOMStringMap: true, Entry: true, webkitFileSystemEntry: true, FileSystemEntry: true, ErrorEvent: true, Event: true, InputEvent: true, SubmitEvent: true, ExtendableEvent: true, ExtendableMessageEvent: true, External: true, FaceDetector: true, FederatedCredential: true, FetchEvent: true, FileEntry: true, webkitFileSystemFileEntry: true, FileSystemFileEntry: true, DOMFileSystem: true, WebKitFileSystem: true, webkitFileSystem: true, FileSystem: true, FocusEvent: true, FontFace: true, FontFaceSetLoadEvent: true, FontFaceSource: true, ForeignFetchEvent: true, FormData: true, GamepadButton: true, GamepadEvent: true, GamepadPose: true, Geolocation: true, Position: true, GeolocationPosition: true, HashChangeEvent: true, Headers: true, HTMLHyperlinkElementUtils: true, IdleDeadline: true, ImageBitmap: true, ImageBitmapRenderingContext: true, ImageCapture: true, ImageData: true, InputDeviceCapabilities: true, InstallEvent: true, IntersectionObserver: true, IntersectionObserverEntry: true, InterventionReport: true, KeyboardEvent: true, KeyframeEffect: true, KeyframeEffectReadOnly: true, MediaCapabilities: true, MediaCapabilitiesInfo: true, MediaDeviceInfo: true, MediaEncryptedEvent: true, MediaError: true, MediaKeyMessageEvent: true, MediaKeyStatusMap: true, MediaKeySystemAccess: true, MediaKeys: true, MediaKeysPolicy: true, MediaMetadata: true, MediaQueryListEvent: true, MediaSession: true, MediaSettingsRange: true, MediaStreamEvent: true, MediaStreamTrackEvent: true, MemoryInfo: true, MessageChannel: true, MessageEvent: true, Metadata: true, MIDIConnectionEvent: true, MIDIMessageEvent: true, MouseEvent: true, DragEvent: true, MutationEvent: true, MutationObserver: true, WebKitMutationObserver: true, MutationRecord: true, NavigationPreloadManager: true, Navigator: true, NavigatorAutomationInformation: true, NavigatorConcurrentHardware: true, NavigatorCookies: true, NavigatorUserMediaError: true, NodeFilter: true, NodeIterator: true, NonDocumentTypeChildNode: true, NonElementParentNode: true, NoncedElement: true, NotificationEvent: true, OffscreenCanvasRenderingContext2D: true, OverconstrainedError: true, PageTransitionEvent: true, PaintRenderingContext2D: true, PaintSize: true, PaintWorkletGlobalScope: true, PasswordCredential: true, Path2D: true, PaymentAddress: true, PaymentInstruments: true, PaymentManager: true, PaymentRequestEvent: true, PaymentRequestUpdateEvent: true, PaymentResponse: true, PerformanceEntry: true, PerformanceLongTaskTiming: true, PerformanceMark: true, PerformanceMeasure: true, PerformanceNavigation: true, PerformanceNavigationTiming: true, PerformanceObserver: true, PerformanceObserverEntryList: true, PerformancePaintTiming: true, PerformanceResourceTiming: true, PerformanceServerTiming: true, PerformanceTiming: true, Permissions: true, PhotoCapabilities: true, PointerEvent: true, PopStateEvent: true, PositionError: true, GeolocationPositionError: true, Presentation: true, PresentationConnectionAvailableEvent: true, PresentationConnectionCloseEvent: true, PresentationReceiver: true, ProgressEvent: true, PromiseRejectionEvent: true, PublicKeyCredential: true, PushEvent: true, PushManager: true, PushMessageData: true, PushSubscription: true, PushSubscriptionOptions: true, Range: true, RelatedApplication: true, ReportBody: true, ReportingObserver: true, ResizeObserver: true, ResizeObserverEntry: true, RTCCertificate: true, RTCDataChannelEvent: true, RTCDTMFToneChangeEvent: true, RTCIceCandidate: true, mozRTCIceCandidate: true, RTCLegacyStatsReport: true, RTCPeerConnectionIceEvent: true, RTCRtpContributingSource: true, RTCRtpReceiver: true, RTCRtpSender: true, RTCSessionDescription: true, mozRTCSessionDescription: true, RTCStatsResponse: true, RTCTrackEvent: true, Screen: true, ScrollState: true, ScrollTimeline: true, SecurityPolicyViolationEvent: true, Selection: true, SensorErrorEvent: true, SharedArrayBuffer: true, SpeechRecognitionAlternative: true, SpeechRecognitionError: true, SpeechRecognitionEvent: true, SpeechSynthesisEvent: true, SpeechSynthesisVoice: true, StaticRange: true, StorageEvent: true, StorageManager: true, StyleMedia: true, StylePropertyMap: true, StylePropertyMapReadonly: true, SyncEvent: true, SyncManager: true, TaskAttributionTiming: true, TextDetector: true, TextEvent: true, TextMetrics: true, TouchEvent: true, TrackDefault: true, TrackEvent: true, TransitionEvent: true, WebKitTransitionEvent: true, TreeWalker: true, TrustedHTML: true, TrustedScriptURL: true, TrustedURL: true, UIEvent: true, UnderlyingSourceBase: true, URLSearchParams: true, VRCoordinateSystem: true, VRDeviceEvent: true, VRDisplayCapabilities: true, VRDisplayEvent: true, VREyeParameters: true, VRFrameData: true, VRFrameOfReference: true, VRPose: true, VRSessionEvent: true, VRStageBounds: true, VRStageBoundsPoint: true, VRStageParameters: true, ValidityState: true, VideoPlaybackQuality: true, VideoTrack: true, VTTRegion: true, WheelEvent: true, WindowClient: true, WorkletAnimation: true, WorkletGlobalScope: true, XPathEvaluator: true, XPathExpression: true, XPathNSResolver: true, XPathResult: true, XMLSerializer: true, XSLTProcessor: true, Bluetooth: true, BluetoothCharacteristicProperties: true, BluetoothRemoteGATTServer: true, BluetoothRemoteGATTService: true, BluetoothUUID: true, BudgetService: true, Cache: true, DOMFileSystemSync: true, DirectoryEntrySync: true, DirectoryReaderSync: true, EntrySync: true, FileEntrySync: true, FileReaderSync: true, FileWriterSync: true, HTMLAllCollection: true, Mojo: true, MojoHandle: true, MojoInterfaceRequestEvent: true, MojoWatcher: true, NFC: true, PagePopupController: true, Report: true, Request: true, ResourceProgressEvent: true, Response: true, SubtleCrypto: true, USBAlternateInterface: true, USBConfiguration: true, USBConnectionEvent: true, USBDevice: true, USBEndpoint: true, USBInTransferResult: true, USBInterface: true, USBIsochronousInTransferPacket: true, USBIsochronousInTransferResult: true, USBIsochronousOutTransferPacket: true, USBIsochronousOutTransferResult: true, USBOutTransferResult: true, WorkerLocation: true, WorkerNavigator: true, Worklet: true, IDBCursor: true, IDBCursorWithValue: true, IDBFactory: true, IDBIndex: true, IDBKeyRange: true, IDBObjectStore: true, IDBObservation: true, IDBObserver: true, IDBObserverChanges: true, IDBVersionChangeEvent: true, SVGAngle: true, SVGAnimatedAngle: true, SVGAnimatedBoolean: true, SVGAnimatedEnumeration: true, SVGAnimatedInteger: true, SVGAnimatedLength: true, SVGAnimatedLengthList: true, SVGAnimatedNumber: true, SVGAnimatedNumberList: true, SVGAnimatedPreserveAspectRatio: true, SVGAnimatedRect: true, SVGAnimatedString: true, SVGAnimatedTransformList: true, SVGMatrix: true, SVGPoint: true, SVGPreserveAspectRatio: true, SVGRect: true, SVGUnitTypes: true, AudioListener: true, AudioParam: true, AudioProcessingEvent: true, AudioTrack: true, AudioWorkletGlobalScope: true, AudioWorkletProcessor: true, OfflineAudioCompletionEvent: true, PeriodicWave: true, WebGLActiveInfo: true, ANGLEInstancedArrays: true, ANGLE_instanced_arrays: true, WebGLBuffer: true, WebGLCanvas: true, WebGLColorBufferFloat: true, WebGLCompressedTextureASTC: true, WebGLCompressedTextureATC: true, WEBGL_compressed_texture_atc: true, WebGLCompressedTextureETC1: true, WEBGL_compressed_texture_etc1: true, WebGLCompressedTextureETC: true, WebGLCompressedTexturePVRTC: true, WEBGL_compressed_texture_pvrtc: true, WebGLCompressedTextureS3TC: true, WEBGL_compressed_texture_s3tc: true, WebGLCompressedTextureS3TCsRGB: true, WebGLContextEvent: true, WebGLDebugRendererInfo: true, WEBGL_debug_renderer_info: true, WebGLDebugShaders: true, WEBGL_debug_shaders: true, WebGLDepthTexture: true, WEBGL_depth_texture: true, WebGLDrawBuffers: true, WEBGL_draw_buffers: true, EXTsRGB: true, EXT_sRGB: true, EXTBlendMinMax: true, EXT_blend_minmax: true, EXTColorBufferFloat: true, EXTColorBufferHalfFloat: true, EXTDisjointTimerQuery: true, EXTDisjointTimerQueryWebGL2: true, EXTFragDepth: true, EXT_frag_depth: true, EXTShaderTextureLOD: true, EXT_shader_texture_lod: true, EXTTextureFilterAnisotropic: true, EXT_texture_filter_anisotropic: true, WebGLFramebuffer: true, WebGLGetBufferSubDataAsync: true, WebGLLoseContext: true, WebGLExtensionLoseContext: true, WEBGL_lose_context: true, OESElementIndexUint: true, OES_element_index_uint: true, OESStandardDerivatives: true, OES_standard_derivatives: true, OESTextureFloat: true, OES_texture_float: true, OESTextureFloatLinear: true, OES_texture_float_linear: true, OESTextureHalfFloat: true, OES_texture_half_float: true, OESTextureHalfFloatLinear: true, OES_texture_half_float_linear: true, OESVertexArrayObject: true, OES_vertex_array_object: true, WebGLProgram: true, WebGLQuery: true, WebGLRenderbuffer: true, WebGLRenderingContext: true, WebGL2RenderingContext: true, WebGLSampler: true, WebGLShader: true, WebGLShaderPrecisionFormat: true, WebGLSync: true, WebGLTexture: true, WebGLTimerQueryEXT: true, WebGLTransformFeedback: true, WebGLUniformLocation: true, WebGLVertexArrayObject: true, WebGLVertexArrayObjectOES: true, WebGL2RenderingContextBase: true, DataView: true, ArrayBufferView: false, Float32Array: true, Float64Array: true, Int16Array: true, Int32Array: true, Int8Array: true, Uint16Array: true, Uint32Array: true, Uint8ClampedArray: true, CanvasPixelArray: true, Uint8Array: false, HTMLAudioElement: true, HTMLBRElement: true, HTMLBaseElement: true, HTMLBodyElement: true, HTMLButtonElement: true, HTMLCanvasElement: true, HTMLContentElement: true, HTMLDListElement: true, HTMLDataElement: true, HTMLDataListElement: true, HTMLDetailsElement: true, HTMLDialogElement: true, HTMLDivElement: true, HTMLEmbedElement: true, HTMLFieldSetElement: true, HTMLHRElement: true, HTMLHeadElement: true, HTMLHeadingElement: true, HTMLHtmlElement: true, HTMLIFrameElement: true, HTMLImageElement: true, HTMLInputElement: true, HTMLLIElement: true, HTMLLabelElement: true, HTMLLegendElement: true, HTMLLinkElement: true, HTMLMapElement: true, HTMLMediaElement: true, HTMLMenuElement: true, HTMLMetaElement: true, HTMLMeterElement: true, HTMLModElement: true, HTMLOListElement: true, HTMLObjectElement: true, HTMLOptGroupElement: true, HTMLOptionElement: true, HTMLOutputElement: true, HTMLParagraphElement: true, HTMLParamElement: true, HTMLPictureElement: true, HTMLPreElement: true, HTMLProgressElement: true, HTMLQuoteElement: true, HTMLScriptElement: true, HTMLShadowElement: true, HTMLSlotElement: true, HTMLSourceElement: true, HTMLSpanElement: true, HTMLStyleElement: true, HTMLTableCaptionElement: true, HTMLTableCellElement: true, HTMLTableDataCellElement: true, HTMLTableHeaderCellElement: true, HTMLTableColElement: true, HTMLTableElement: true, HTMLTableRowElement: true, HTMLTableSectionElement: true, HTMLTemplateElement: true, HTMLTextAreaElement: true, HTMLTimeElement: true, HTMLTitleElement: true, HTMLTrackElement: true, HTMLUListElement: true, HTMLUnknownElement: true, HTMLVideoElement: true, HTMLDirectoryElement: true, HTMLFontElement: true, HTMLFrameElement: true, HTMLFrameSetElement: true, HTMLMarqueeElement: true, HTMLElement: false, AccessibleNodeList: true, HTMLAnchorElement: true, HTMLAreaElement: true, Blob: false, CDATASection: true, CharacterData: true, Comment: true, ProcessingInstruction: true, Text: true, CSSPerspective: true, CSSCharsetRule: true, CSSConditionRule: true, CSSFontFaceRule: true, CSSGroupingRule: true, CSSImportRule: true, CSSKeyframeRule: true, MozCSSKeyframeRule: true, WebKitCSSKeyframeRule: true, CSSKeyframesRule: true, MozCSSKeyframesRule: true, WebKitCSSKeyframesRule: true, CSSMediaRule: true, CSSNamespaceRule: true, CSSPageRule: true, CSSRule: true, CSSStyleRule: true, CSSSupportsRule: true, CSSViewportRule: true, CSSStyleDeclaration: true, MSStyleCSSProperties: true, CSS2Properties: true, CSSImageValue: true, CSSKeywordValue: true, CSSNumericValue: true, CSSPositionValue: true, CSSResourceValue: true, CSSUnitValue: true, CSSURLImageValue: true, CSSStyleValue: false, CSSMatrixComponent: true, CSSRotation: true, CSSScale: true, CSSSkew: true, CSSTranslation: true, CSSTransformComponent: false, CSSTransformValue: true, CSSUnparsedValue: true, DataTransferItemList: true, DOMException: true, ClientRectList: true, DOMRectList: true, DOMRectReadOnly: false, DOMStringList: true, DOMTokenList: true, MathMLElement: true, SVGAElement: true, SVGAnimateElement: true, SVGAnimateMotionElement: true, SVGAnimateTransformElement: true, SVGAnimationElement: true, SVGCircleElement: true, SVGClipPathElement: true, SVGDefsElement: true, SVGDescElement: true, SVGDiscardElement: true, SVGEllipseElement: true, SVGFEBlendElement: true, SVGFEColorMatrixElement: true, SVGFEComponentTransferElement: true, SVGFECompositeElement: true, SVGFEConvolveMatrixElement: true, SVGFEDiffuseLightingElement: true, SVGFEDisplacementMapElement: true, SVGFEDistantLightElement: true, SVGFEFloodElement: true, SVGFEFuncAElement: true, SVGFEFuncBElement: true, SVGFEFuncGElement: true, SVGFEFuncRElement: true, SVGFEGaussianBlurElement: true, SVGFEImageElement: true, SVGFEMergeElement: true, SVGFEMergeNodeElement: true, SVGFEMorphologyElement: true, SVGFEOffsetElement: true, SVGFEPointLightElement: true, SVGFESpecularLightingElement: true, SVGFESpotLightElement: true, SVGFETileElement: true, SVGFETurbulenceElement: true, SVGFilterElement: true, SVGForeignObjectElement: true, SVGGElement: true, SVGGeometryElement: true, SVGGraphicsElement: true, SVGImageElement: true, SVGLineElement: true, SVGLinearGradientElement: true, SVGMarkerElement: true, SVGMaskElement: true, SVGMetadataElement: true, SVGPathElement: true, SVGPatternElement: true, SVGPolygonElement: true, SVGPolylineElement: true, SVGRadialGradientElement: true, SVGRectElement: true, SVGScriptElement: true, SVGSetElement: true, SVGStopElement: true, SVGStyleElement: true, SVGElement: true, SVGSVGElement: true, SVGSwitchElement: true, SVGSymbolElement: true, SVGTSpanElement: true, SVGTextContentElement: true, SVGTextElement: true, SVGTextPathElement: true, SVGTextPositioningElement: true, SVGTitleElement: true, SVGUseElement: true, SVGViewElement: true, SVGGradientElement: true, SVGComponentTransferFunctionElement: true, SVGFEDropShadowElement: true, SVGMPathElement: true, Element: false, AbsoluteOrientationSensor: true, Accelerometer: true, AccessibleNode: true, AmbientLightSensor: true, Animation: true, ApplicationCache: true, DOMApplicationCache: true, OfflineResourceList: true, BackgroundFetchRegistration: true, BatteryManager: true, BroadcastChannel: true, CanvasCaptureMediaStreamTrack: true, DedicatedWorkerGlobalScope: true, EventSource: true, FileReader: true, FontFaceSet: true, Gyroscope: true, XMLHttpRequest: true, XMLHttpRequestEventTarget: true, XMLHttpRequestUpload: true, LinearAccelerationSensor: true, Magnetometer: true, MediaDevices: true, MediaKeySession: true, MediaQueryList: true, MediaRecorder: true, MediaSource: true, MediaStream: true, MediaStreamTrack: true, MessagePort: true, MIDIAccess: true, MIDIInput: true, MIDIOutput: true, MIDIPort: true, NetworkInformation: true, Notification: true, OffscreenCanvas: true, OrientationSensor: true, PaymentRequest: true, Performance: true, PermissionStatus: true, PresentationAvailability: true, PresentationConnection: true, PresentationConnectionList: true, PresentationRequest: true, RelativeOrientationSensor: true, RemotePlayback: true, RTCDataChannel: true, DataChannel: true, RTCDTMFSender: true, RTCPeerConnection: true, webkitRTCPeerConnection: true, mozRTCPeerConnection: true, ScreenOrientation: true, Sensor: true, ServiceWorker: true, ServiceWorkerContainer: true, ServiceWorkerGlobalScope: true, ServiceWorkerRegistration: true, SharedWorker: true, SharedWorkerGlobalScope: true, SpeechRecognition: true, SpeechSynthesis: true, SpeechSynthesisUtterance: true, VR: true, VRDevice: true, VRDisplay: true, VRSession: true, VisualViewport: true, WebSocket: true, Window: true, DOMWindow: true, Worker: true, WorkerGlobalScope: true, WorkerPerformance: true, BluetoothDevice: true, BluetoothRemoteGATTCharacteristic: true, Clipboard: true, MojoInterfaceInterceptor: true, USB: true, IDBDatabase: true, IDBOpenDBRequest: true, IDBVersionChangeRequest: true, IDBRequest: true, IDBTransaction: true, AnalyserNode: true, RealtimeAnalyserNode: true, AudioBufferSourceNode: true, AudioDestinationNode: true, AudioNode: true, AudioScheduledSourceNode: true, AudioWorkletNode: true, BiquadFilterNode: true, ChannelMergerNode: true, AudioChannelMerger: true, ChannelSplitterNode: true, AudioChannelSplitter: true, ConstantSourceNode: true, ConvolverNode: true, DelayNode: true, DynamicsCompressorNode: true, GainNode: true, AudioGainNode: true, IIRFilterNode: true, MediaElementAudioSourceNode: true, MediaStreamAudioDestinationNode: true, MediaStreamAudioSourceNode: true, OscillatorNode: true, Oscillator: true, PannerNode: true, AudioPannerNode: true, webkitAudioPannerNode: true, ScriptProcessorNode: true, JavaScriptAudioNode: true, StereoPannerNode: true, WaveShaperNode: true, EventTarget: false, File: true, FileList: true, FileWriter: true, HTMLFormElement: true, Gamepad: true, History: true, HTMLCollection: true, HTMLFormControlsCollection: true, HTMLOptionsCollection: true, Location: true, MediaList: true, MIDIInputMap: true, MIDIOutputMap: true, MimeType: true, MimeTypeArray: true, Document: true, DocumentFragment: true, HTMLDocument: true, ShadowRoot: true, XMLDocument: true, Attr: true, DocumentType: true, Node: false, NodeList: true, RadioNodeList: true, Plugin: true, PluginArray: true, RTCStatsReport: true, HTMLSelectElement: true, SourceBuffer: true, SourceBufferList: true, SpeechGrammar: true, SpeechGrammarList: true, SpeechRecognitionResult: true, Storage: true, CSSStyleSheet: true, StyleSheet: true, TextTrack: true, TextTrackCue: true, VTTCue: true, TextTrackCueList: true, TextTrackList: true, TimeRanges: true, Touch: true, TouchList: true, TrackDefaultList: true, URL: true, VideoTrackList: true, CSSRuleList: true, ClientRect: true, DOMRect: true, GamepadList: true, NamedNodeMap: true, MozNamedAttrMap: true, SpeechRecognitionResultList: true, StyleSheetList: true, SVGLength: true, SVGLengthList: true, SVGNumber: true, SVGNumberList: true, SVGPointList: true, SVGStringList: true, SVGTransform: true, SVGTransformList: true, AudioBuffer: true, AudioParamMap: true, AudioTrackList: true, AudioContext: true, webkitAudioContext: true, BaseAudioContext: false, OfflineAudioContext: true});
+    hunkHelpers.setOrUpdateInterceptorsByTag({ArrayBuffer: J.JavaScriptObject, DataView: A.NativeTypedData, ArrayBufferView: A.NativeTypedData, Float32Array: A.NativeTypedArrayOfDouble, Float64Array: A.NativeTypedArrayOfDouble, Int16Array: A.NativeInt16List, Int32Array: A.NativeInt32List, Int8Array: A.NativeInt8List, Uint16Array: A.NativeUint16List, Uint32Array: A.NativeUint32List, Uint8ClampedArray: A.NativeUint8ClampedList, CanvasPixelArray: A.NativeUint8ClampedList, Uint8Array: A.NativeUint8List});
+    hunkHelpers.setOrUpdateLeafTags({ArrayBuffer: true, DataView: true, ArrayBufferView: false, Float32Array: true, Float64Array: true, Int16Array: true, Int32Array: true, Int8Array: true, Uint16Array: true, Uint32Array: true, Uint8ClampedArray: true, CanvasPixelArray: true, Uint8Array: false});
     A.NativeTypedArray.$nativeSuperclassTag = "ArrayBufferView";
     A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin.$nativeSuperclassTag = "ArrayBufferView";
     A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin.$nativeSuperclassTag = "ArrayBufferView";
@@ -5307,19 +8945,15 @@
     A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin.$nativeSuperclassTag = "ArrayBufferView";
     A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin.$nativeSuperclassTag = "ArrayBufferView";
     A.NativeTypedArrayOfInt.$nativeSuperclassTag = "ArrayBufferView";
-    A._SourceBufferList_EventTarget_ListMixin.$nativeSuperclassTag = "EventTarget";
-    A._SourceBufferList_EventTarget_ListMixin_ImmutableListMixin.$nativeSuperclassTag = "EventTarget";
-    A._TextTrackList_EventTarget_ListMixin.$nativeSuperclassTag = "EventTarget";
-    A._TextTrackList_EventTarget_ListMixin_ImmutableListMixin.$nativeSuperclassTag = "EventTarget";
   })();
-  Function.prototype.call$2 = function(a, b) {
-    return this(a, b);
+  Function.prototype.call$0 = function() {
+    return this();
   };
   Function.prototype.call$1 = function(a) {
     return this(a);
   };
-  Function.prototype.call$0 = function() {
-    return this();
+  Function.prototype.call$2 = function(a, b) {
+    return this(a, b);
   };
   convertAllToFastObject(holders);
   convertToFastObject($);
